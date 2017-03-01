@@ -1,0 +1,4 @@
+D:\VS\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.dll
+D:\VS\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.pdb
+D:\VS\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.dll
+D:\VS\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.pdb

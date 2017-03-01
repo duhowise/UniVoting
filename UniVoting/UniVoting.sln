@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Model", "Src\UniVoting.Model\UniVoting.Model.csproj", "{5A3BCA0C-5F45-4CCB-80E5-B87CCBB77BA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Services", "Src\UniVoting.Services\UniVoting.Services.csproj", "{5E9B869F-3471-4A30-A28E-6F422DCEF34E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Data", "Src\UniVoting.Data\UniVoting.Data.csproj", "{84425EE4-65F7-43FF-80A3-02A0E1A067F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.WPF", "Src\UniVoting.WPF\UniVoting.WPF.csproj", "{D94D308F-F26B-4D6E-829F-954ED6D170BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A3BCA0C-5F45-4CCB-80E5-B87CCBB77BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3BCA0C-5F45-4CCB-80E5-B87CCBB77BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3BCA0C-5F45-4CCB-80E5-B87CCBB77BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3BCA0C-5F45-4CCB-80E5-B87CCBB77BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E9B869F-3471-4A30-A28E-6F422DCEF34E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E9B869F-3471-4A30-A28E-6F422DCEF34E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E9B869F-3471-4A30-A28E-6F422DCEF34E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E9B869F-3471-4A30-A28E-6F422DCEF34E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84425EE4-65F7-43FF-80A3-02A0E1A067F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84425EE4-65F7-43FF-80A3-02A0E1A067F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84425EE4-65F7-43FF-80A3-02A0E1A067F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84425EE4-65F7-43FF-80A3-02A0E1A067F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
