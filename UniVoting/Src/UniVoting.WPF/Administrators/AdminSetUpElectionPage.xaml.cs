@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace UniVoting.WPF.Administrators
 {
@@ -23,6 +24,24 @@ namespace UniVoting.WPF.Administrators
         public AdminSetUpElectionPage()
         {
             InitializeComponent();
+            BtnUploadImage.Click += BtnUploadImage_Click;
+        }
+
+        private void BtnUploadImage_Click(object sender, RoutedEventArgs e)
+        {
+            var op = new OpenFileDialog
+            {
+                Title = "Select a picture",
+                Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                         "Portable Network Graphic (*.png)|*.png"
+            };
+            if (op.ShowDialog() == true)
+            {
+               var image=new BitmapImage(new Uri(op.FileName));
+                System.Drawing.Image converted = Util.ConvertImage(image);
+               Logo = Util.ResizeImage(converted,300, 300);
+            }
         }
     }
 }

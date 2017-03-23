@@ -54,11 +54,13 @@ namespace UniVoting.WPF.Administrators
 
         private void BtnUploadImage_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select a picture";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-              "Portable Network Graphic (*.png)|*.png";
+            var op = new OpenFileDialog
+            {
+                Title = "Select a picture",
+                Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                         "Portable Network Graphic (*.png)|*.png"
+            };
             if (op.ShowDialog() == true)
             {
                 CandidateImage.Source = new BitmapImage(new Uri(op.FileName));

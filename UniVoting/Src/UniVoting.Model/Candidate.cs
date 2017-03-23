@@ -7,7 +7,7 @@ namespace UniVoting.Model
     /// </summary>
     public partial class Candidate
     {
-        public virtual int ID { get; set; }
+        public virtual int Id { get; set; }
         public virtual int? PositionId { get; set; }
         public virtual string CandidateName { get; set; }
         public virtual byte[] CandidatePicture { get; set; }

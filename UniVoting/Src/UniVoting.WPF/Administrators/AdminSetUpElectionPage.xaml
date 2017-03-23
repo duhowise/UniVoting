@@ -89,14 +89,7 @@
                                           materialDesign:HintAssist.Hint="Select Colour Theme" materialDesign:HintAssist.IsFloating="True"
                                   MaxDropDownHeight="200"
                                   Margin="10">
-                                    <ComboBoxItem>25%</ComboBoxItem>
-                                    <ComboBoxItem>50%</ComboBoxItem>
-                                    <ComboBoxItem>75%</ComboBoxItem>
-                                    <ComboBoxItem>100%</ComboBoxItem>
-                                    <ComboBoxItem>150%</ComboBoxItem>
-                                    <ComboBoxItem>200%</ComboBoxItem>
-                                    <ComboBoxItem>250%</ComboBoxItem>
-                                    <ComboBoxItem>501%</ComboBoxItem>
+                                    
                                 </ComboBox>
                             </StackPanel>
                             </Grid>
