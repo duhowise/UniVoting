@@ -80,17 +80,21 @@
                                 <Button FontSize="20" FontFamily="Segoe UI Bold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnUploadImage"
                         TabIndex="4"
-                        ToolTip="Save">
+                        ToolTip="Upload image">
                                     Upload image
                                 </Button>
+                               
                             </StackPanel>
                             <StackPanel Grid.Column="1" Grid.Row="1" Margin="10" >
-                                <ComboBox FontSize="16" Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light"
+                                <TextBox Name="Colorbox" FontSize="16" Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light"
                                           materialDesign:HintAssist.Hint="Select Colour Theme" materialDesign:HintAssist.IsFloating="True"
-                                  MaxDropDownHeight="200"
                                   Margin="10">
                                     
-                                </ComboBox>
+                                </TextBox>
+                 <Button FontSize="20" FontFamily="Segoe UI Bold" Name="SaveElection"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10,295,10,0" Height="40" 
+                        TabIndex="10"
+                        ToolTip="Save Election Details" Content="Save Election Details"/>
                             </StackPanel>
                             </Grid>
                     </GroupBox>

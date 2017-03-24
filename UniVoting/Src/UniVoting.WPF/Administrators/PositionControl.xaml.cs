@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UniVoting.Model;
+using UniVoting.Services;
 
 namespace UniVoting.WPF.Administrators
 {
@@ -45,7 +47,10 @@ namespace UniVoting.WPF.Administrators
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            //Save and set IsEnabled="False"
+           new ElectionService().AddPosition(new Position
+           {
+               
+           });
 
 
         }
@@ -53,6 +58,10 @@ namespace UniVoting.WPF.Administrators
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
             //set TextBoxPosition IsEnabled="true" after updating set TextBoxPosition IsEnabled="False"
+            new ElectionService().UpdatePosition(new Position
+            {
+                
+            });
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs a)
@@ -63,6 +72,10 @@ namespace UniVoting.WPF.Administrators
             if (response == MessageBoxResult.Yes)
             {
                AdminSetUpPositionPage.Instance.RemovePosition(this);
+                new ElectionService().RemovePosition(new Position
+                {
+                    
+                });
             }
         }
     }
