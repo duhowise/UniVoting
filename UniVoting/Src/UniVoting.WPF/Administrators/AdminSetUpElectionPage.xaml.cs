@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UniVoting.Model;
 using UniVoting.Services;
+using Color = System.Windows.Media.Color;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace UniVoting.WPF.Administrators
@@ -26,6 +27,7 @@ namespace UniVoting.WPF.Administrators
     /// </summary>
     public partial class AdminSetUpElectionPage : Page
     {
+        private System.Windows.Media.Color _chosencolor;
         public AdminSetUpElectionPage()
         {
             InitializeComponent();
@@ -34,7 +36,18 @@ namespace UniVoting.WPF.Administrators
             Colorbox.GotFocus += Colorbox_GotFocus;
             SaveElection.Click += SaveElection_Click;                                             
         }
-
+        private void Colorbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            using (var color = new ColorDialog())
+            {
+                if (color.ShowDialog() != DialogResult.None)
+                {
+                    Colorbox.Text = color.Color.Name;
+                    _chosencolor = System.Windows.Media.Color.FromRgb(color.Color.R, color.Color.G, color.Color.B);
+                    ColoView.Fill = new SolidColorBrush(_chosencolor);
+                }
+            }
+        }
         private void SaveElection_Click(object sender, RoutedEventArgs e)
         {
             if (
@@ -44,7 +57,7 @@ namespace UniVoting.WPF.Administrators
                 {
                     ElectionName = TextBoxElectionName.Text,
                     EletionSubTitle = TextBoxSubtitle.Text,
-                    Colour = Colorbox.Text,
+                    Colour = string.Join(",", _chosencolor.R.ToString(),_chosencolor.G.ToString(),_chosencolor.B.ToString()),
                     Logo = Util.ConvertToBytes(Logo)
                     
                 });
@@ -52,16 +65,7 @@ namespace UniVoting.WPF.Administrators
             }
         }
 
-        private void Colorbox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            using (var color = new ColorDialog())
-            {
-                if (color.ShowDialog() != DialogResult.None)
-                {
-                    Colorbox.Text = color.Color.Name;
-                }
-            }
-        }
+        
 
 
 

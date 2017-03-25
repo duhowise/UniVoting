@@ -83,17 +83,19 @@
                         ToolTip="Upload image">
                                     Upload image
                                 </Button>
-                               
+                                <Rectangle Height="100"/>
+
                             </StackPanel>
                             <StackPanel Grid.Column="1" Grid.Row="1" Margin="10" >
                                 <TextBox Name="Colorbox" FontSize="16" Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light"
                                           materialDesign:HintAssist.Hint="Select Colour Theme" materialDesign:HintAssist.IsFloating="True"
-                                  Margin="10">
+                                  Margin="10,5,10,50">
                                     
                                 </TextBox>
-                 <Button FontSize="20" FontFamily="Segoe UI Bold" Name="SaveElection"
-                        Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10,295,10,0" Height="40" 
-                        TabIndex="10"
+                 <Rectangle Name="ColoView" Height="250" Width="auto" Margin="5,5,5,8"></Rectangle>
+                 <Button FontSize="20"  FontFamily="Segoe UI Bold" Name="SaveElection"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"  Height="40" 
+                        TabIndex="10" Margin="5,1"
                         ToolTip="Save Election Details" Content="Save Election Details"/>
                             </StackPanel>
                             </Grid>
