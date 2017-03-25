@@ -8,11 +8,11 @@ namespace UniVoting.Services
     public class ElectionService
     {
         #region Election
-        public Settings ConfigureElection(Settings settings)
+        public static Settings ConfigureElection(Settings settings)
         {
             return ElectionBaseRepository.GetAll<Settings>().Single();
         }
-        public void NewElection(Settings settings)
+        public static void NewElection(Settings settings)
         {
             new ElectionBaseRepository().Insert(settings);
         }
@@ -32,15 +32,20 @@ namespace UniVoting.Services
         }
         #endregion
         #region Position
-        public void AddPosition(Position position)
+        public static Position AddPosition(Position position)
         {
-            new ElectionBaseRepository().Insert(position);
+          var data=  new ElectionBaseRepository().Insert(position);
+            return data;
         }
-        public void UpdatePosition(Position position)
+        public static IEnumerable<Position> GetAllPositions()
         {
-            ElectionBaseRepository.Update(position);
+            return ElectionBaseRepository.GetAll<Position>();
         }
-        public void RemovePosition(Position position)
+        public static void UpdatePosition(Position position)
+        {ElectionBaseRepository.Update(position);
+        }
+       
+        public static void RemovePosition(Position position)
         {
             ElectionBaseRepository.Delete(position);
         }

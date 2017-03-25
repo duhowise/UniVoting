@@ -40,7 +40,6 @@ namespace UniVoting.Data.Implementations
                 return _connection.Get<T>(member);
             }
         }
-
         public static void Update<T>(T member)
         {
             using (_connection)

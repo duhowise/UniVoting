@@ -53,7 +53,7 @@ namespace UniVoting.WPF.Administrators
             if (
                 !string.IsNullOrWhiteSpace(TextBoxElectionName.Text)||!string.IsNullOrWhiteSpace(TextBoxElectionName.Text))
             {
-                new ElectionService().NewElection(new Settings
+                ElectionService.NewElection(new Settings
                 {
                     ElectionName = TextBoxElectionName.Text,
                     EletionSubTitle = TextBoxSubtitle.Text,

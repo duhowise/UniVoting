@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Services;
 
 namespace UniVoting.WPF.Administrators
 {
     /// <summary>
-    /// Interaction logic for AdminSetUpPositionPage.xaml
+    ///     Interaction logic for AdminSetUpPositionPage.xaml
     /// </summary>
     public partial class AdminSetUpPositionPage : Page
     {
-        public static AdminSetUpPositionPage Instance = null;
+        public static AdminSetUpPositionPage Instance;
+
         public AdminSetUpPositionPage()
         {
             InitializeComponent();
-            Instance = this;
+           Instance = this;
+            //Loaded += AdminSetUpPositionPage_Loaded;
+            Instance.Loaded += Instance_Loaded;
             /*async load all positons from db 
             *foreach postion in results
             * 
@@ -37,9 +31,32 @@ namespace UniVoting.WPF.Administrators
             */
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        private void Instance_Loaded(object sender, RoutedEventArgs e)
         {
-            PositionControlHolder.Children.Add(new PositionControl());
+            PositionControlHolder.Children.Clear();
+           var positions = ElectionService.GetAllPositions();
+            foreach (var position in positions)
+                PositionControlHolder.Children.Add(new PositionControl
+                {
+                    TextBoxPosition = {Text = position.PositionName},
+                    Id = position.Id
+                });
+        }
+
+
+        private async void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var metroWindow = Window.GetWindow(this) as MetroWindow;
+            var settings = new MetroDialogSettings
+            {
+                ColorScheme = MetroDialogColorScheme.Accented,
+                AffirmativeButtonText = "OK",
+                AnimateShow = true,
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel"
+            };
+            var result = await metroWindow.ShowInputAsync("Enter New Position ", "Position Name", settings);
+            PositionControlHolder.Children.Add(new PositionControl(result));
         }
 
         public void RemovePosition(UserControl c)

@@ -13,7 +13,8 @@
                      Name="TextBoxPosition" TabIndex="0" VerticalAlignment="Center"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <Rectangle Width="1.5" Height="40" Fill="{DynamicResource GrayBrush6}"></Rectangle>
-            <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+            
+            <!--<Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                          HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="10" Name="BtnSave" TabIndex="1"
                     Height="48" Width="48"
@@ -21,7 +22,7 @@
                 <materialDesign:PackIcon Kind="ContentSave"
                                  Margin="10" Width="24" Height="24" VerticalAlignment="Center"
                                  Foreground="{DynamicResource WhiteColorBrush}" />
-            </Button>
+            </Button>-->
             <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                          HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="10" TabIndex="2" Name="BtnEdit" Height="48" Width="48"
