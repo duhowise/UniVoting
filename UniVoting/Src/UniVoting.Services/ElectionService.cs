@@ -22,6 +22,11 @@ namespace UniVoting.Services
         {
             new ElectionBaseRepository().Insert(candidate);
         }
+
+        public static IEnumerable<Candidate> GetAllCandidates()
+        {
+            return ElectionBaseRepository.GetAll<Candidate>();
+        }
         public void UpdateCandidate(Candidate candidate)
         {
             ElectionBaseRepository.Update(candidate);

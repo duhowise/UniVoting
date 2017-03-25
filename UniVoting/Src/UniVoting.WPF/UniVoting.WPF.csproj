@@ -150,7 +150,6 @@
     <Compile Include="Clients\ClientsLoginWindow.xaml.cs">
       <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Item.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

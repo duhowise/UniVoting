@@ -12,9 +12,9 @@ DEBUG;TRACE
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.WPF\App.xaml
 11813312295
 
-20-205984404
+191578944779
 24-296269264
 Administrators\AdminCreateAccountPage.xaml;Administrators\AdminLoginWindow.xaml;Administrators\AdminMenuPage.xaml;Administrators\AdminSetUpCandidatesPage.xaml;Administrators\AdminSetUpElectionPage.xaml;Administrators\AdminSetUpPositionPage.xaml;Administrators\PositionControl.xaml;Clients\ClientsLoginWindow.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;
 
-False
+True
 

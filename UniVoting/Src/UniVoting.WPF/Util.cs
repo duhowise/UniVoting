@@ -65,6 +65,13 @@ namespace UniVoting.WPF
             return destImage;
         }
 
+        public static Bitmap ConvertBytesToImage(byte[] bytes)
+        {
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+               return new Bitmap(ms);
+            }
+        }
         public static byte[] ConvertToBytes(Image image)
         {
             byte[] buffer;
@@ -82,7 +89,7 @@ namespace UniVoting.WPF
         {
             using (MemoryStream memory = new MemoryStream())
             {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+                bitmap.Save(memory, ImageFormat.Bmp);
                 memory.Position = 0;
                 BitmapImage bitmapimage = new BitmapImage();
                 bitmapimage.BeginInit();
