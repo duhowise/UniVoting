@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="600"
       Title="AdminCreateAccountPage">
-    <materialDesign:Card Margin="3" UniformCornerRadius="5" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+    <materialDesign:Card Margin="3" UniformCornerRadius="5" Padding="5" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{DynamicResource MaterialDesignBackground}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -59,7 +59,7 @@
                     <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" FontFamily="Segoe UI Bold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnSave"
                         TabIndex="4"
-                        ToolTip="Save">
+                        ToolTip="Save New Ec Member">
                        Save
                     </Button>
                 </Grid>

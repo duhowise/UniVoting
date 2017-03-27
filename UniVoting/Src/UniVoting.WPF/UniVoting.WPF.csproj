@@ -35,6 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dapper.SimpleCRUD, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.SimpleCRUD.1.13.0\lib\net45\Dapper.SimpleCRUD.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.1.5.0-alpha005\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Util.cs" />
     <Page Include="Administrators\AdminCreateAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,7 +150,6 @@
     <Compile Include="Clients\ClientsLoginWindow.xaml.cs">
       <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Item.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -198,6 +206,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\images\people_on_the_beach_300x300.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj">
+      <Project>{5a3bca0c-5f45-4ccb-80e5-b87ccbb77ba9}</Project>
+      <Name>UniVoting.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj">
+      <Project>{5e9b869f-3471-4a30-a28e-6f422dcef34e}</Project>
+      <Name>UniVoting.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

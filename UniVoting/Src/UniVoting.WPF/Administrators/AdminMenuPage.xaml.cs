@@ -27,50 +27,29 @@ namespace UniVoting.WPF.Administrators
 
         private void BtnCreateAccount_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NavigationService.Navigate(new AdminCreateAccountPage());
-            }
-            catch (NullReferenceException exception)
-            {
-                Console.WriteLine(exception);
-            }
+              NavigationService?.Navigate(new AdminCreateAccountPage());
+            
         }
 
         private void BtnSetUpElection_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NavigationService.Navigate(new AdminSetUpElectionPage());
-            }
-            catch (NullReferenceException exception)
-            {
-                Console.WriteLine(exception);
-            }
+            
+                NavigationService?.Navigate(new AdminSetUpElectionPage());
+            
         }
 
         private void BtnSetUpPostions_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NavigationService.Navigate(new AdminSetUpPositionPage());
-            }
-            catch (NullReferenceException exception)
-            {
-                Console.WriteLine(exception);
-            }
+            
+                NavigationService?.Navigate(new AdminSetUpPositionPage());
+            
         }
 
         private void BtnSetUpCandidates_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NavigationService.Navigate(new AdminSetUpCandidatesPage());
-            }
-            catch (NullReferenceException exception)
-            {
-                Console.WriteLine(exception);
-            }
+            
+                NavigationService?.Navigate(new AdminSetUpCandidatesPage());
+            
         }
     }
 }

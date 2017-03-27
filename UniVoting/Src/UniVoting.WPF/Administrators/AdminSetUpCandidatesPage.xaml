@@ -32,11 +32,11 @@
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding PictureString}" Name="ImageName" Height="150" Width="150"/>
+                        <!--<Image Source="{Binding Path="PictureString,=}" Name="ImageName" Height="150" Width="150"/>-->
                         <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
-                            <Label Content="{Binding Name}" FontSize="18" FontFamily="Segoe Ui Bold" HorizontalAlignment="Center"/>
-                            <Label Content="{Binding Name}" FontSize="16" FontFamily="Segoe Ui SemiBold" HorizontalAlignment="Center"/>
-                            <Label Content="{Binding Name}" FontSize="14" FontFamily="Segoe Ui Light" HorizontalAlignment="Center"/>
+                            <Label Content="{Binding CandidateName}" FontSize="18" FontFamily="Segoe Ui Bold" HorizontalAlignment="Center"/>
+                            <Label Content="{Binding RankId}" FontSize="16" FontFamily="Segoe Ui SemiBold" HorizontalAlignment="Center"/>
+                            <Label Content="{Binding PositionId}" FontSize="14" FontFamily="Segoe Ui Light" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                 </materialDesign:Card>
@@ -76,45 +76,49 @@
                                 image size should be 256x256
                             </Label>
                             <Image Name="CandidateImage" Width="250" Source="../Resources/images/people_on_the_beach_300x300.jpg" Height="250"/>
-                            <Button FontSize="20" FontFamily="Segoe UI SemiBold"
+       <Button FontSize="20" FontFamily="Segoe UI SemiBold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnUploadImage"
                         TabIndex="3"
                         ToolTip="Save" Click="BtnUploadImage_Click">
                                 Upload image
-                            </Button>
+      </Button>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Candidate details" Grid.Row="0">
+                    <GroupBox Grid.Column="1" Header="Candidate's details" Grid.Row="0">
                         <StackPanel>
-                            <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
-                     materialDesign:HintAssist.Hint="Name" FontSize="24" Margin="10" 
-                     Name="TextBox" TabIndex="0" VerticalAlignment="Center"
+    <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
+                     materialDesign:HintAssist.Hint=" Candidate's Name" FontSize="24" Margin="10" 
+                     Name="CandidateName" TabIndex="0" VerticalAlignment="Center"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                            <ComboBox  materialDesign:HintAssist.Hint="Position" TabIndex="1"
-                                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                          Name="PositionCombo"  FontSize="24" Margin="10" 
-                                            Foreground="{DynamicResource PrimaryColorBrush}"
-                                          Width="260" >
-                                <ComboBoxItem IsSelected="True">Apple</ComboBoxItem>
-                                <ComboBoxItem>Banana</ComboBoxItem>
-                                <ComboBoxItem>Pear</ComboBoxItem>
-                                <ComboBoxItem>Orange</ComboBoxItem>
-                            </ComboBox>
-                            <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260"
-                     materialDesign:HintAssist.Hint="Rank" FontSize="24" Margin="10" 
-                      TabIndex="2" VerticalAlignment="Center"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                            <Button FontSize="20" FontFamily="Segoe UI SemiBold"
-                        Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnSave"
-                        TabIndex="4"
-                        ToolTip="Save">
-                                Save
+     <ComboBox DisplayMemberPath="PositionName" SelectedValuePath="Id"  
+               materialDesign:HintAssist.Hint="Candidate's Position" TabIndex="1"
+                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Name="PositionCombo"  FontSize="24" Margin="10" 
+                  Foreground="{DynamicResource PrimaryColorBrush}"
+                      Width="260" >
+                                
+      </ComboBox>
+      <ComboBox
+                materialDesign:HintAssist.Hint="Candidate's Rank" TabIndex="2"
+                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Name="RankCombo"  FontSize="24" Margin="10" 
+                  Foreground="{DynamicResource PrimaryColorBrush}"
+                      Width="260" >
+                                
+      </ComboBox>
+        <Button FontSize="20" FontFamily="Segoe UI SemiBold"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Margin="10,65,10,5" Height="40" Name="SaveCandidate"
+                        TabIndex="3"
+                        ToolTip="Save Candidate">
+                                Save Candidate
                             </Button>
+
                         </StackPanel>
                     </GroupBox>
                 </Grid>
             </materialDesign:Card>
-            <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Items}"/>
+            <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Candidates}"/>
             </Grid>
     </Grid>
 </Page>

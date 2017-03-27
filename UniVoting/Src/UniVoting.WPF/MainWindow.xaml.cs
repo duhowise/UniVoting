@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using UniVoting.Services;
 using UniVoting.WPF.Administrators;
 
 namespace UniVoting.WPF
@@ -25,7 +26,9 @@ namespace UniVoting.WPF
         public MainWindow()
         {
             InitializeComponent();
-            PageHolder.Content = new AdminMenuPage();
+            
+           PageHolder.Content = new AdminMenuPage();
+
         }
     }
 }
