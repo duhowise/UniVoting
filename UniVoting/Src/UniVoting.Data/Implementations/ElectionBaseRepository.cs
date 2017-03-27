@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using Dapper;
 
 namespace UniVoting.Data.Implementations
@@ -14,6 +15,15 @@ namespace UniVoting.Data.Implementations
                 if (_connection.State == ConnectionState.Closed)
                     _connection.Open();
                 return _connection.GetList<T>();
+            }
+
+        }  public static Task<IEnumerable<T>> GetAllAsync<T>()
+        {
+            using (_connection)
+            {
+                if (_connection.State == ConnectionState.Closed)
+                    _connection.Open();
+                return _connection.GetListAsync<T>();
             }
 
         }

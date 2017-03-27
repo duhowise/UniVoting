@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
 using UniVoting.Model;
 
@@ -27,9 +28,21 @@ namespace UniVoting.Services
         {
             return ElectionBaseRepository.GetAll<Candidate>();
         }
-        public void UpdateCandidate(Candidate candidate)
+        public static Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
         {
+            return ElectionBaseRepository.GetAllAsync<Candidate>();
+        }
+        public static void SaveCandidate(Candidate candidate)
+        {
+            if (candidate.Id==0)
+            {
+                new ElectionBaseRepository().Insert(candidate);
+            }
+            else
+            {
             ElectionBaseRepository.Update(candidate);
+
+            }
         }
         public void RemoveCandidate(Candidate candidate)
         {
@@ -42,9 +55,18 @@ namespace UniVoting.Services
           var data=  new ElectionBaseRepository().Insert(position);
             return data;
         }
+        public static Position GetPosition(int positionid)
+        {
+          return ElectionBaseRepository.GetById<Position>(positionid);
+           
+        }
         public static IEnumerable<Position> GetAllPositions()
         {
             return ElectionBaseRepository.GetAll<Position>();
+        }
+        public static Task<IEnumerable<Position>> GetAllPositionsAsync()
+        {
+            return ElectionBaseRepository.GetAllAsync<Position>();
         }
         public static void UpdatePosition(Position position)
         {ElectionBaseRepository.Update(position);
