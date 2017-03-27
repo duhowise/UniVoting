@@ -1,0 +1,13 @@
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\UniVoting.Client.exe.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\UniVoting.Client.exe
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\UniVoting.Client.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\MainWindow.g.cs
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\App.g.cs
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client_MarkupCompile.cache
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client_MarkupCompile.lref
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\MainWindow.baml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.g.resources
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.Properties.Resources.resources
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.csproj.GenerateResource.Cache
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.exe
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.pdb
