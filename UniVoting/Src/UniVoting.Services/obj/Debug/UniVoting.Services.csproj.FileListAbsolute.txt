@@ -2,6 +2,7 @@ D:\VS\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.dl
 D:\VS\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.pdb
 D:\VS\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 D:\VS\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojResolveAssemblyReference.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.dll
@@ -13,6 +14,5 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Model
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.SimpleCRUD.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.SimpleCRUD.xml
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojResolveAssemblyReference.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb

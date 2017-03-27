@@ -68,6 +68,7 @@ namespace UniVoting.WPF.Administrators
                 };
               ElectionService.SaveCandidate(candidate);
                 Util.Clear(this);
+                CandidateImage.Source=new BitmapImage(new Uri("../Resources/images/people_on_the_beach_300x300.jpg", UriKind.Relative));
               Page_Loaded(this, e);
 
 

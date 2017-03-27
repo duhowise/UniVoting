@@ -17,7 +17,8 @@ namespace UniVoting.Data.Implementations
                 return _connection.GetList<T>();
             }
 
-        }  public static Task<IEnumerable<T>> GetAllAsync<T>()
+        }
+        public static Task<IEnumerable<T>> GetAllAsync<T>()
         {
             using (_connection)
             {
@@ -27,7 +28,7 @@ namespace UniVoting.Data.Implementations
             }
 
         }
-
+       
         public  T Insert<T>(T member)
         {
             using (_connection)
@@ -52,6 +53,13 @@ namespace UniVoting.Data.Implementations
             using (_connection)
             {
                 _connection.Update(member);
+            }
+        }
+        public static int InsertBulk<T>(IEnumerable<T> member)
+        {
+            using (_connection)
+            {
+             return   (int)_connection.Insert(member);
             }
         }
 

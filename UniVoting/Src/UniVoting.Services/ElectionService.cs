@@ -8,6 +8,13 @@ namespace UniVoting.Services
 {
     public class ElectionService
     {
+        #region Voters
+        public static int AddVoters(IEnumerable<Voter> voters)
+        {
+          return  ElectionBaseRepository.InsertBulk(voters);
+        }
+        #endregion
+
         #region Election
         public static Settings ConfigureElection(Settings settings)
         {
@@ -23,6 +30,7 @@ namespace UniVoting.Services
         {
             new ElectionBaseRepository().Insert(candidate);
         }
+       
 
         public static IEnumerable<Candidate> GetAllCandidates()
         {
@@ -69,7 +77,8 @@ namespace UniVoting.Services
             return ElectionBaseRepository.GetAllAsync<Position>();
         }
         public static void UpdatePosition(Position position)
-        {ElectionBaseRepository.Update(position);
+        {
+            ElectionBaseRepository.Update(position);
         }
        
         public static void RemovePosition(Position position)

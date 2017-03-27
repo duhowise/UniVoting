@@ -1,0 +1,8 @@
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.VoteCountReport.resources
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.csproj.GenerateResource.Cache
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll.licenses
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.pdb
