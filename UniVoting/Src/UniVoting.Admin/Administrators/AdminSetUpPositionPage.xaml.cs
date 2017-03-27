@@ -34,7 +34,7 @@ namespace UniVoting.WPF.Administrators
         private void Instance_Loaded(object sender, RoutedEventArgs e)
         {
             PositionControlHolder.Children.Clear();
-           var positions = ElectionService.GetAllPositions();
+           var positions = ElectionConfigurationService.GetAllPositions();
             foreach (var position in positions)
                 PositionControlHolder.Children.Add(new PositionControl
                 {

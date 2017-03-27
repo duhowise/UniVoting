@@ -48,11 +48,12 @@ namespace UniVoting.Data.Implementations
                 return _connection.Get<T>(member);
             }
         }
-        public static void Update<T>(T member)
+        public static T Update<T>(T member)
         {
             using (_connection)
             {
-                _connection.Update(member);
+             var id=  _connection.Update(member);
+                return GetById<T>(id);
             }
         }
         public static int InsertBulk<T>(IEnumerable<T> member)

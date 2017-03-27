@@ -33,7 +33,7 @@ namespace UniVoting.WPF.Administrators
             TextBoxPosition.Text=name;
             if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
             {
-              var value= ElectionService.AddPosition(new Position { PositionName = TextBoxPosition.Text });
+              var value= ElectionConfigurationService.AddPosition(new Position { PositionName = TextBoxPosition.Text });
                 Id = value.Id;
             }
         }
@@ -61,7 +61,7 @@ namespace UniVoting.WPF.Administrators
             {
                 
                 //var value = ElectionService.GetPosition(_position);
-              ElectionService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+              ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
             }
 
             //set TextBoxPosition IsEnabled = "true" after updating set TextBoxPosition IsEnabled = "False"
@@ -78,7 +78,7 @@ namespace UniVoting.WPF.Administrators
                 if (response == MessageBoxResult.Yes)
                 {
                     AdminSetUpPositionPage.Instance.RemovePosition(this);
-                  ElectionService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+                  ElectionConfigurationService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
                 }
             }
             

@@ -48,8 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ElectionService.cs" />
+    <Compile Include="ElectionConfigurationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VotingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniVoting.Data\UniVoting.Data.csproj">

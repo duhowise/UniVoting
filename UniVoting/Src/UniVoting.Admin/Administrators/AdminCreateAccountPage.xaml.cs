@@ -26,7 +26,7 @@ namespace UniVoting.WPF.Administrators
                 var metroWindow = (Window.GetWindow(this) as MetroWindow);
                 try
                 {
-                    new ElectionService().AddUser(new User
+                    new ElectionConfigurationService().AddUser(new User
                     {
                         FullName = TextBoxName.Text,
                         UserName =Username.Text,
