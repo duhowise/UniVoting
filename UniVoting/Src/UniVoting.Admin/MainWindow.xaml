@@ -1,0 +1,62 @@
+﻿<controls:MetroWindow x:Class="UniVoting.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UniVoting.WPF"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" GlowBrush="{DynamicResource AccentBaseColorBrush}"
+                WindowState="Maximized"
+                Background="{DynamicResource WhiteColorBrush}"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Medium"
+                TextElement.FontSize="16"
+                FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+                Title="UNIVOTING" Height="350" Width="525">
+    <Window.Resources>
+        <ControlTemplate x:Key="ControlTemplate" TargetType="Frame">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <Button Foreground="{StaticResource WhiteColorBrush}" Grid.Column="3" Grid.Row="0"
+                        Width="36" Height="36"
+                        Style="{DynamicResource MetroCircleButtonStyle}" Command="{x:Static NavigationCommands.BrowseBack}">
+                        <materialDesign:PackIcon HorizontalAlignment="Left" 
+                                                     VerticalAlignment="Top" Height="30" Width="30"
+                                             Foreground="{DynamicResource AccentColorBrush}" Kind="ArrowLeftBoldCircle" />
+                    </Button>
+                    <Button Foreground="{StaticResource WhiteColorBrush}" Grid.Column="3" Grid.Row="0"
+                        Width="36" Height="36"
+                        Style="{DynamicResource MetroCircleButtonStyle}" Command="{x:Static NavigationCommands.BrowseForward}">
+                        <materialDesign:PackIcon HorizontalAlignment="Left" 
+                                                     VerticalAlignment="Top" Height="30" Width="30"
+                                             Foreground="{DynamicResource AccentColorBrush}" Kind="ArrowRightBoldCircle" />
+                    </Button>
+                </StackPanel>
+                <ContentPresenter></ContentPresenter>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="PageFrage" TargetType="Frame">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Frame">
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                <Button Foreground="{DynamicResource WhiteColorBrush}" Grid.Column="3" Grid.Row="0"
+                        Width="36" Height="36"
+                        Style="{DynamicResource MetroCircleButtonStyle}" Command="{x:Static NavigationCommands.BrowseBack}">
+                                    <materialDesign:PackIcon HorizontalAlignment="Left" 
+                                                     VerticalAlignment="Top" Height="30" Width="30"
+                                             Foreground="{DynamicResource AccentColorBrush}" Kind="ArrowLeftBoldCircle" />
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Frame Name="PageHolder" Template="{StaticResource ControlTemplate}"/>
+    </Grid>
+</controls:MetroWindow>
