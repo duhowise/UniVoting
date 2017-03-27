@@ -2,23 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Win32;
 using UniVoting.Model;
 using UniVoting.Services;
-using Image = System.Windows.Controls.Image;
+using Image = System.Drawing.Image;
 
 namespace UniVoting.WPF.Administrators
 {
@@ -27,14 +19,14 @@ namespace UniVoting.WPF.Administrators
     /// </summary>
     public partial class AdminSetUpCandidatesPage : Page
     {
-        public ObservableCollection<CandidateDto> Candidates { get; set; }
+        public  ObservableCollection<CandidateDto> Candidates =new ObservableCollection<CandidateDto>();
 
         public  class CandidateDto
         {
             public  int Id { get; set; }
             public  int? PositionId { get; set; }
             public  string CandidateName { get; set; }
-            public Bitmap CandidatePicture { get; set; }
+            public BitmapImage CandidatePicture { get; set; }
             public  int? RankId { get; set; }
             
         }
@@ -73,16 +65,18 @@ namespace UniVoting.WPF.Administrators
                 var newcandidate=new CandidateDto
                {
                    CandidateName = candidate.CandidateName,
-                   CandidatePicture =Util.ConvertBytesToImage(candidate.CandidatePicture),
+                  CandidatePicture =Util.ByteToImageSource(candidate.CandidatePicture) ,
                    Id = candidate.Id,
                    PositionId = candidate.PositionId,
                    RankId = candidate.RankId
 
 
                 };
+                Candidates.Add(newcandidate);
                  
             }
-            this.CandidatesList.DataContext = this;
+
+            CandidatesList.ItemsSource = Candidates;
         }
 
         //private string _generateRandomString(int length, Random r)

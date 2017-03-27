@@ -2,8 +2,6 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using Color = System.Drawing.Color;
 
 namespace UniVoting.WPF

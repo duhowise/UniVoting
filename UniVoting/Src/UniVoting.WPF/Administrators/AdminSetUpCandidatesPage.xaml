@@ -32,7 +32,7 @@
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <!--<Image Source="{Binding Path="PictureString,=}" Name="ImageName" Height="150" Width="150"/>-->
+                        <Image Source="{Binding CandidatePicture }"  Name="ImageName" Height="150" Width="150"/>
                         <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
                             <Label Content="{Binding CandidateName}" FontSize="18" FontFamily="Segoe Ui Bold" HorizontalAlignment="Center"/>
                             <Label Content="{Binding RankId}" FontSize="16" FontFamily="Segoe Ui SemiBold" HorizontalAlignment="Center"/>
@@ -118,7 +118,7 @@
                     </GroupBox>
                 </Grid>
             </materialDesign:Card>
-            <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Candidates}"/>
+            <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
             </Grid>
     </Grid>
 </Page>

@@ -5,7 +5,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -99,6 +98,20 @@ namespace UniVoting.WPF
 
                 return bitmapimage;
             }
+        }
+        public static BitmapImage ByteToImageSource(byte[] bytes)
+        {
+            using (MemoryStream memory = new MemoryStream(bytes))
+            {
+                BitmapImage bitmapimage = new BitmapImage();
+                bitmapimage.BeginInit();
+                bitmapimage.StreamSource = memory;
+                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapimage.EndInit();
+                return bitmapimage;
+
+            }
+
         }
         public static byte[] GetSaltedPasswordHash(string username, string password)
         {

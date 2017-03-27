@@ -1,1 +1,0 @@
-D:\VS\Repos\UniVoting\UniVoting\UniVoting.Client\bin\Debug\UniVoting.Client.exe.config
