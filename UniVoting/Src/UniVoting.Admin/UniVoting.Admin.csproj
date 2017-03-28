@@ -88,6 +88,7 @@
     <Compile Include="Clients\ClientsLoginWindow.xaml.cs">
       <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Util.cs" />
     <Page Include="Administrators\AdminCreateAccountPage.xaml">
       <SubType>Designer</SubType>
