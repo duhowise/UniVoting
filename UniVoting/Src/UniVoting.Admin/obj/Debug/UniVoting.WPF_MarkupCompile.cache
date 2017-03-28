@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\
+C:\Repository\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\
 UniVoting.WPF
 none
 false
 DEBUG;TRACE
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\App.xaml
-11813312295
+C:\Repository\UniVoting\UniVoting\Src\UniVoting.Admin\App.xaml
+12-993254338
 
-161156679775
-24-296269264
-Administrators\AdminCreateAccountPage.xaml;Administrators\AdminLoginWindow.xaml;Administrators\AdminMenuPage.xaml;Administrators\AdminSetUpCandidatesPage.xaml;Administrators\AdminSetUpElectionPage.xaml;Administrators\AdminSetUpPositionPage.xaml;Administrators\PositionControl.xaml;Clients\ClientsLoginWindow.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;
+171335542233
+24-1277767760
+Administrators\AdminCreateAccountPage.xaml;Administrators\AdminLoginWindow.xaml;Administrators\AdminMenuPage.xaml;Administrators\AdminSetUpCandidatesPage.xaml;Administrators\AdminSetUpElectionPage.xaml;Administrators\AdminSetUpPositionPage.xaml;Administrators\PositionControl.xaml;Clients\ClientsLoginWindow.xaml;CustomAccents\CustomAccent.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;
 
 False
 

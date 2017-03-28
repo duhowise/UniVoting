@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\
+C:\Repository\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\
 UniVoting.LiveView
 none
 false
 DEBUG;TRACE
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\App.xaml
-11151548125
+C:\Repository\UniVoting\UniVoting\Src\UniVoting.LiveView\App.xaml
+6-1488296667
 
-9-1838978673
-15-122938958
-MainWindow.xaml;
+121004535683
+21-1155233561
+CustomAccents\CustomAccent.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;TileControlLarge.xaml;TileControlSmall.xaml;
 
-True
+False
 
