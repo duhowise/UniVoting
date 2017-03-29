@@ -30,3 +30,7 @@ C:\Repository\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.Simple
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojResolveAssemblyReference.cache
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\System.Windows.Interactivity.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.xml

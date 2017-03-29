@@ -161,3 +161,4 @@ C:\Repository\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.g.
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.Properties.Resources.resources
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.csproj.GenerateResource.Cache
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\CustomAccents\CustomAccent.baml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\CustomAccents\CustomAccent.baml
