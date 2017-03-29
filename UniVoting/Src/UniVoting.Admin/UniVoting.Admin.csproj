@@ -85,12 +85,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Administrators\AdminAddVotersPage.xaml.cs">
+      <DependentUpon>AdminAddVotersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients\ClientsLoginWindow.xaml.cs">
       <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="ThemeManagerHelper.cs" />
     <Compile Include="Util.cs" />
+    <Page Include="Administrators\AdminAddVotersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Administrators\AdminCreateAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

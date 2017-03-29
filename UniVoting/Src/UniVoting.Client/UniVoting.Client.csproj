@@ -75,7 +75,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CandidateControl.xaml.cs">
+      <DependentUpon>CandidateControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClientsLoginWindow.xaml.cs">
+      <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClientVoteCompletedPage.xaml.cs">
+      <DependentUpon>ClientVoteCompletedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClientVotingPage.xaml.cs">
+      <DependentUpon>ClientVotingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThemeManagerHelper.cs" />
+    <Page Include="CandidateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClientsLoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ClientVoteCompletedPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClientVotingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomAccents\CustomAccent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,7 +164,9 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\images\user.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -27,7 +27,7 @@
                    Foreground="{DynamicResource AccentColorBrush}">Casted Votes</Label>
 
             <ScrollViewer Grid.Column="0" Grid.Row="1">
-                <WrapPanel Name="CastedVotesHolder" ItemWidth="220"></WrapPanel>
+                <WrapPanel Name="CastedVotesHolder" ItemWidth="300"></WrapPanel>
             </ScrollViewer>
             <Label FontSize="16" Grid.Column="1" Grid.Row="0"
                    FontFamily="Segoe Ui Bold" Margin="0,0,0,0"

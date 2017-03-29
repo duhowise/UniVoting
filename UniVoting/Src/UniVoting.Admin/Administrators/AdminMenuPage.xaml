@@ -53,6 +53,15 @@
                             <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election candidates</Label>
                         </StackPanel>
                     </Button>
+                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="150" Margin="5"
+                            Name="BtnSetUpVoters"
+                        ToolTip="Set up an voters" Click="BtnSetUpVoters_Click">
+                        <StackPanel>
+                            <materialDesign:PackIcon Kind="HumanMaleFemale" HorizontalAlignment="Center" Width="80" Height="80" />
+                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Voters</Label>
+                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election Voters</Label>
+                        </StackPanel>
+                    </Button>
                 </WrapPanel>
             </ScrollViewer>
             
