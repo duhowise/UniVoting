@@ -5,6 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using MahApps.Metro;
+using UniVoting.LiveView;
 
 namespace UniVoting.Client
 {
@@ -13,5 +16,18 @@ namespace UniVoting.Client
     /// </summary>
     public partial class App : Application
     {
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            // add custom accent and theme resource dictionaries
+            ThemeManager.AddAccent("CustomAccent1", new Uri("pack://application:,,,/UniVoting.Client;component/CustomAccents/CustomAccent.xaml"));
+
+            // create custom accents
+            ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
+            ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
+            ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
+
+            base.OnStartup(e);
+        }
     }
 }
