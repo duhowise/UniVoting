@@ -27,12 +27,12 @@ namespace UniVoting.LiveView
 
             for (int i = 0; i < 10; i++)
             {
-                CastedVotesHolder.Children.Add(new TileControlLarge("President", "5000"));
+                CastedVotesHolder.Children.Add(new TileControlLarge("Public Relations Officer"));
             }
 
             for (int i = 0; i < 20; i++)
             {
-                SkippedVotesHolder.Children.Add(new TileControlSmall("Secretary", "5000"));
+                SkippedVotesHolder.Children.Add(new TileControlSmall("Secretary"));
             }
         }
     }

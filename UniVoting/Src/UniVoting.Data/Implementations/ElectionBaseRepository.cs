@@ -2,6 +2,7 @@
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
@@ -41,6 +42,26 @@ namespace UniVoting.Data.Implementations
 
         }
 
+        public static int VoteCount(Position position)
+        {
+            using (_connection)
+            {
+                if (_connection.State == ConnectionState.Closed)
+                    _connection.Open();
+                return _connection.ExecuteScalar<int>(@"SELECT [Count] FROM dbo.vw_LiveView
+                                        WHERE PositionName = @positionName", position);
+            }
+        }
+        public static int VoteSkipCount(Position position)
+        {
+            using (_connection)
+            {
+                if (_connection.State == ConnectionState.Closed)
+                    _connection.Open();
+                return _connection.ExecuteScalar<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
+                                        WHERE PositionName = @positionName", position);
+            }
+        }
         public static T GetById<T>(int member)
         {
             using (_connection)
