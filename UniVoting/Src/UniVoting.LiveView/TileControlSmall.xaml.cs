@@ -28,8 +28,8 @@ namespace UniVoting.LiveView
         public TileControlSmall(String position, String votes)
         {
             InitializeComponent();
-            this.Tile.Title = position;
-            this.VoteCount.Content = votes;
+            this.Position.Text= position;
+            this.VoteCount.Text = votes;
         }
     }
 }
