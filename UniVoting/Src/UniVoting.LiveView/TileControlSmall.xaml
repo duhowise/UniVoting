@@ -11,8 +11,8 @@
                        Foreground="White"
                        Background="DodgerBlue"
                        HorizontalTitleAlignment="Center"
-                    Width="150" Height="140">
-            <Label FontSize="48" HorizontalAlignment="Center" Name="VoteCount"
+                    Width="150" Height="120">
+            <Label FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Name="VoteCount"
                    FontFamily="Segoe Ui Bold" Margin="0,50,0,0"
                    Foreground="White">800</Label>
         </controls:Tile>

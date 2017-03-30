@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using UniVoting.Services;
 
 namespace UniVoting.LiveView
 {
@@ -11,15 +12,14 @@ namespace UniVoting.LiveView
         {
             InitializeComponent();
 
-            for (int i = 0; i < 10; i++)
+            var positions = ElectionConfigurationService.GetAllPositions();
+            
+            foreach (var position in positions)
             {
-                CastedVotesHolder.Children.Add(new TileControlLarge("Public Relations Officer"));
+                CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
+                SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
             }
-
-            for (int i = 0; i < 20; i++)
-            {
-                SkippedVotesHolder.Children.Add(new TileControlSmall("Secretary"));
-            }
+           
         }
     }
 }
