@@ -22,3 +22,4 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csprojResolveAssemblyReference.cache
