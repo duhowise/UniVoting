@@ -1,0 +1,62 @@
+﻿<Controls:MetroWindow x:Class="UniVoting.Client.ClientsLoginWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                       WindowState="Maximized"
+                Background="{DynamicResource WhiteColorBrush}"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Medium"
+                TextElement.FontSize="16"
+                FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+                      Title="UNIVOTING" Height="350" Width="525">
+   
+    <!--<Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Name="ConfigurationBtton" Content="Configuration"></Button>
+</Controls:WindowCommands>
+        
+    </Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Name="ConfigurationFlyout">
+                <Grid>
+                    <TextBox Name="ElectionUId"></TextBox>
+                </Grid>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>-->
+    <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel  Background="{DynamicResource WhiteColorBrush}" 
+                        Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Key" 
+                                 Margin="10" Width="50" Height="50"
+                                 Foreground="{DynamicResource PrimaryColorBrush}" />
+                    <PasswordBox Name="Pin" TabIndex="0"
+                     Width="250" Foreground="{DynamicResource PrimaryColorBrush}" Margin="10"
+                     materialDesign:HintAssist.Hint="SECRET PIN" FontSize="24" FontWeight="Bold"
+                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                </StackPanel>
+                <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                         HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Name="BtnGo" TabIndex="1"
+                        ToolTip="Go">
+                    <Label Foreground="{DynamicResource WhiteColorBrush}" FontSize="24">GO</Label>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="0">
+                <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">VOTING NAME</Label>
+                <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
+                	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Content="Voting Subtitle"/>
+            </StackPanel>
+
+        </Grid>
+    </materialDesign:Card>
+    </Controls:MetroWindow>

@@ -39,5 +39,10 @@ namespace UniVoting.WPF.Administrators
                 NavigationService?.Navigate(new AdminSetUpCandidatesPage());
             
         }
+
+        private void BtnSetUpVoters_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new AdminAddVotersPage());
+        }
     }
 }

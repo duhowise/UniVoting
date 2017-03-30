@@ -1,0 +1,39 @@
+﻿<Page x:Class="UniVoting.Client.ClientVotingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UniVoting.Client"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="ClientVotingPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label FontSize="24" FontFamily="Segoe Ui Light" HorizontalAlignment="Left">Voting Page</Label>
+            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" FontFamily="Segoe Ui Light" HorizontalAlignment="Right">Welcome student voter</Label>
+        </Grid>
+        <Label FontSize="28" Grid.Row="1" Name="PositionName" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">President</Label>
+        
+        <ScrollViewer Grid.Row="2" HorizontalAlignment="Center">
+            <WrapPanel Name="candidatesHolder" ItemWidth="250">
+                
+            </WrapPanel>
+        </ScrollViewer>
+        <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" FontFamily="Segoe UI SemiBold"
+                        Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnSkipVote"
+                        TabIndex="6">
+            SKIP >>
+        </Button>
+    </Grid>
+</Page>

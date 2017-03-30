@@ -52,6 +52,22 @@ namespace UniVoting.Data.Implementations
                                         WHERE PositionName = @positionName", position);
             }
         }
+        public static IEnumerable<Position> GetPositionsWithDetails()
+        {
+           IEnumerable<Position>positions=new List<Position>();
+            using (_connection)
+            {
+                if (_connection.State == ConnectionState.Closed)
+                    _connection.Open();
+                positions = _connection.GetList<Position>();
+                foreach ( var position in positions)
+                {
+                    position.Candidates = _connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName ,CandidatePicture
+                     ,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id", position);
+                }
+            }
+            return positions ;
+        }
         public static int VoteSkipCount(Position position)
         {
             using (_connection)
