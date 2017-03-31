@@ -21,11 +21,12 @@ namespace UniVoting.LiveView
             _timer.Tick += _timer_Tick;
             _timer.Start();
             _position = position;
+            Position.Text = _position;
         }
 
         private void _timer_Tick(object sender, EventArgs e)
         {
-           // VoteCount.Content = $"{LiveViewService.VotesSkipppedCount(_position)}";
+            VoteCount.Text = $"{LiveViewService.VotesSkipppedCount(_position)}";
             
         }
     }
