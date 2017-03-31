@@ -19,14 +19,13 @@ namespace UniVoting.LiveView
             _timer.Interval=new TimeSpan(0,0,0,2);
             _timer.Tick += _timer_Tick;
             _timer.Start();
-            this.Tile.Title = position;
             _position = position;
         }
 
         private void _timer_Tick(object sender, EventArgs e)
         {
             
-            VoteCount.Content = $"{LiveViewService.VoteCount(_position)}";
+           // VoteCount.Content = $"{LiveViewService.VoteCount(_position)}";
         }
     }
 }
