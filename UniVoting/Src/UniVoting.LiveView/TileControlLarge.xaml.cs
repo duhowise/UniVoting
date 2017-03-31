@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using UniVoting.Services;
 
 namespace UniVoting.LiveView
 {
@@ -20,16 +10,23 @@ namespace UniVoting.LiveView
     /// </summary>
     public partial class TileControlLarge : UserControl
     {
-        public TileControlLarge()
+        private DispatcherTimer _timer;
+        private string _position;
+        public TileControlLarge(String position)
         {
             InitializeComponent();
+            _timer=new DispatcherTimer();
+            _timer.Interval=new TimeSpan(0,0,0,2);
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+            this.Tile.Title = position;
+            _position = position;
         }
 
-        public TileControlLarge(String position, String votes)
+        private void _timer_Tick(object sender, EventArgs e)
         {
-            InitializeComponent();
-            Position.Text = position;
-            this.VoteCount.Text = votes;
+            
+            VoteCount.Content = $"{LiveViewService.VoteCount(_position)}";
         }
     }
 }

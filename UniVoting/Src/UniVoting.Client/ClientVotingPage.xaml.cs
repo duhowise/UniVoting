@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using UniVoting.Model;
 
 namespace UniVoting.Client
 {
@@ -20,16 +10,42 @@ namespace UniVoting.Client
     /// </summary>
     public partial class ClientVotingPage : Page
     {
-        public ClientVotingPage()
+        private List<Vote> _votes;
+        private Position _position;
+        private Voter _voter;
+        public ClientVotingPage(Voter voter, Position position)
         {
             InitializeComponent();
+            this._voter = voter;
+            this._position = position;
+            BtnSkipVote.Click += BtnSkipVote_Click;
+            Loaded += ClientVotingPage_Loaded;
+            _votes = new List<Vote>();
 
-            for (int i = 0; i < 10; i++)
+            foreach (var candidate in _position.Candidates)
             {
-                this.candidatesHolder.Children.Add(new CandidateControl());
+                this.candidatesHolder.Children.Add(new CandidateControl(_votes, _position,candidate, _voter));
+
             }
+
+        }
+        public delegate void VoteCompletedEventHandler (object source, EventArgs args);
+
+        public event VoteCompletedEventHandler VoteCompleted;
+        private void ClientVotingPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            PositionName.Content = _position.PositionName;
+            TextBoxWelcome.Content = _voter.VoterName ?? String.Empty;
         }
 
+        private void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+             OnVoteCompleted(this);
+        }
 
+        protected virtual void OnVoteCompleted(object source)
+        {
+            VoteCompleted?.Invoke(source, EventArgs.Empty);
+        }
     }
 }

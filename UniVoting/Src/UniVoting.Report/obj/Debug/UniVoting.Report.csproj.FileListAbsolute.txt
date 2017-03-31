@@ -1,12 +1,3 @@
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll.config
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.pdb
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.VoteCountReport.resources
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.csproj.GenerateResource.Cache
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll.licenses
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.pdb
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.csprojResolveAssemblyReference.cache
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll.config
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.pdb
@@ -16,3 +7,12 @@ C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Repor
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll.licenses
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll
 C:\Repository\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\bin\Debug\VoteReport.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.csprojResolveAssemblyReference.cache
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.VoteCountReport.resources
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.csproj.GenerateResource.Cache
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll.licenses
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.pdb

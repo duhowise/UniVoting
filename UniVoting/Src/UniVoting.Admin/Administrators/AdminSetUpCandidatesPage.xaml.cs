@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,7 +8,6 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using UniVoting.Model;
 using UniVoting.Services;
-using Image = System.Drawing.Image;
 
 namespace UniVoting.WPF.Administrators
 {

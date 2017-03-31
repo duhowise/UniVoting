@@ -13,6 +13,6 @@
                 FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
                       Title="UNIVOTING" Height="350" Width="525">
     <Grid>
-        <Frame Name="PageHolder"/>
+        <Frame Name="PageHolder" NavigationUIVisibility="Hidden"/>
     </Grid>
 </controls:MetroWindow>

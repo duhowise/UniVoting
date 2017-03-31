@@ -1,4 +1,4 @@
-﻿<Controls:MetroWindow x:Class="UniVoting.WPF.Clients.ClientsLoginWindow"
+﻿<Controls:MetroWindow x:Class="UniVoting.Client.ClientsLoginWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -10,7 +10,22 @@
                 TextElement.FontSize="16"
                 FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
                       Title="UNIVOTING" Height="350" Width="525">
-
+   
+    <!--<Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Name="ConfigurationBtton" Content="Configuration"></Button>
+</Controls:WindowCommands>
+        
+    </Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Name="ConfigurationFlyout">
+                <Grid>
+                    <TextBox Name="ElectionUId"></TextBox>
+                </Grid>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>-->
     <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
         <Grid>
             <Grid.RowDefinitions>

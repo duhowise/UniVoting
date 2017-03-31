@@ -32,8 +32,7 @@
         </ScrollViewer>
         <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" FontFamily="Segoe UI SemiBold"
                         Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnSkipVote"
-                        TabIndex="6"
-                        ToolTip="skip vote for this position">
+                        TabIndex="6">
             SKIP >>
         </Button>
     </Grid>

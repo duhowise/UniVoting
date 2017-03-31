@@ -8,6 +8,6 @@
       Title="ClientVoteCompletedPage">
 
     <Grid>
-        <Label FontSize="48" Name="Text" FontFamily="Segoe Ui Light" HorizontalAlignment="Center" VerticalAlignment="Center">Thank You Student Name For Voting</Label>
+        <Label FontSize="48" Name="Text" FontFamily="Segoe Ui Light" HorizontalAlignment="Center" VerticalAlignment="Center">Thank You For Voting</Label>
     </Grid>
 </Page>

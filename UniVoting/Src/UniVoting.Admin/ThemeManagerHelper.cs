@@ -7,7 +7,7 @@ using MahApps.Metro;
 namespace UniVoting.LiveView
 {
 
-    public static class ThemeManagerHelper
+    internal static class ThemeManagerHelper
     {
         public static void CreateAppStyleBy(Color color, bool changeImmediately = false)
         {

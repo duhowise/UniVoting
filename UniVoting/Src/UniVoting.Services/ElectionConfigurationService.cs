@@ -16,7 +16,7 @@ namespace UniVoting.Services
         #endregion
 
         #region Election
-        public static Settings ConfigureElection(Settings settings)
+        public static Settings ConfigureElection()
         {
             return ElectionBaseRepository.GetAll<Settings>().Single();
         }
@@ -51,6 +51,7 @@ namespace UniVoting.Services
 
             }
         }
+       
         public void RemoveCandidate(Candidate candidate)
         {
             ElectionBaseRepository.Delete(candidate);
@@ -69,7 +70,7 @@ namespace UniVoting.Services
         }
         public static IEnumerable<Position> GetAllPositions()
         {
-            return ElectionBaseRepository.GetAll<Position>();
+            return ElectionBaseRepository.GetPositionsWithDetails();
         }
         public static Task<IEnumerable<Position>> GetAllPositionsAsync()
         {

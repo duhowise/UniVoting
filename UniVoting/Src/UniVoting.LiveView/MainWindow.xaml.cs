@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
+using UniVoting.Services;
 
 namespace UniVoting.LiveView
 {
@@ -25,15 +12,14 @@ namespace UniVoting.LiveView
         {
             InitializeComponent();
 
-            for (int i = 0; i < 15; i++)
+            var positions = ElectionConfigurationService.GetAllPositions();
+            
+            foreach (var position in positions)
             {
-                CastedVotesHolder.Children.Add(new TileControlLarge("President Secretary", "5000"));
+                CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
+                SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
             }
-
-            for (int i = 0; i < 14; i++)
-            {
-                SkippedVotesHolder.Children.Add(new TileControlSmall("Secretary", "5000"));
-            }
+           
         }
     }
 }

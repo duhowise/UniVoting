@@ -145,10 +145,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UniVoting.Admin\UniVoting.Admin.csproj">
-      <Project>{D94D308F-F26B-4D6E-829F-954ED6D170BD}</Project>
-      <Name>UniVoting.Admin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UniVoting.Data\UniVoting.Data.csproj">
       <Project>{84425ee4-65f7-43ff-80a3-02a0e1a067f6}</Project>
       <Name>UniVoting.Data</Name>
@@ -156,6 +152,10 @@
     <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj">
       <Project>{5a3bca0c-5f45-4ccb-80e5-b87ccbb77ba9}</Project>
       <Name>UniVoting.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj">
+      <Project>{5e9b869f-3471-4a30-a28e-6f422dcef34e}</Project>
+      <Name>UniVoting.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
