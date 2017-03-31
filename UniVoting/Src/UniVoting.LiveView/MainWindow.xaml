@@ -15,7 +15,7 @@
     <controls:TransitioningContentControl>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -26,16 +26,16 @@
                    FontFamily="Segoe Ui Bold" Margin="0,0,0,0"
                    Foreground="{DynamicResource AccentColorBrush}">Casted Votes</Label>
 
-            <ScrollViewer Grid.Column="0" Grid.Row="1">
-                <WrapPanel Name="CastedVotesHolder" ItemWidth="300"></WrapPanel>
-            </ScrollViewer>
+            
+                <UniformGrid Grid.Column="0"  Grid.Row="1" Name="CastedVotesHolder"></UniformGrid>
+           
             <Label FontSize="16" Grid.Column="1" Grid.Row="0"
                    FontFamily="Segoe Ui Bold" Margin="0,0,0,0"
                    Foreground="{DynamicResource AccentColorBrush}">Skipped Votes</Label>
 
-            <ScrollViewer Grid.Row="1" Grid.Column="1">
-                <WrapPanel Name="SkippedVotesHolder" ItemWidth="150"></WrapPanel>
-            </ScrollViewer>
+
+            <UniformGrid Grid.Row="1" Grid.Column="1" Name="SkippedVotesHolder"></UniformGrid>
+            
 
 
 

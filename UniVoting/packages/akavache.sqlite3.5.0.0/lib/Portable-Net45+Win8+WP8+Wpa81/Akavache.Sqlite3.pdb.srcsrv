@@ -1,0 +1,19 @@
+SRCSRV: ini ------------------------------------------------
+VERSION=2
+SRCSRV: variables ------------------------------------------
+RAWURL=https://raw.github.com/akavache/akavache/3516bcbd43f656df28fbd3ad629ece7ca090bbd2/%var2%
+SRCSRVVERCTRL=https
+SRCSRVTRG=%RAWURL%
+SRCSRV: source files ---------------------------------------
+C:\projects\akavache\src\Akavache.Sqlite3\AsyncLock.cs*src/Akavache.Sqlite3/AsyncLock.cs
+C:\projects\akavache\src\Akavache.Sqlite3\BlockingCollection.cs*src/Akavache.Sqlite3/BlockingCollection.cs
+C:\projects\akavache\src\Akavache.Sqlite3\OperationQueue.cs*src/Akavache.Sqlite3/OperationQueue.cs
+C:\projects\akavache\src\Akavache.Sqlite3\Operations.cs*src/Akavache.Sqlite3/Operations.cs
+C:\projects\akavache\src\CommonAssemblyInfo.cs*src/CommonAssemblyInfo.cs
+C:\projects\akavache\src\Akavache.Sqlite3\Properties\AssemblyInfo.cs*src/Akavache.Sqlite3/Properties/AssemblyInfo.cs
+C:\projects\akavache\src\Akavache.Sqlite3\Registrations.cs*src/Akavache.Sqlite3/Registrations.cs
+C:\projects\akavache\src\Akavache.Sqlite3\SQLite.cs*src/Akavache.Sqlite3/SQLite.cs
+C:\projects\akavache\src\Akavache.Sqlite3\SqlitePersistentBlobCacheNext.cs*src/Akavache.Sqlite3/SqlitePersistentBlobCacheNext.cs
+C:\projects\akavache\src\Akavache.Sqlite3\SQLiteEncryptedBlobCache.cs*src/Akavache.Sqlite3/SQLiteEncryptedBlobCache.cs
+C:\projects\akavache\src\Akavache.Sqlite3\OperationQueueCoalescing.cs*src/Akavache.Sqlite3/OperationQueueCoalescing.cs
+SRCSRV: end ------------------------------------------------

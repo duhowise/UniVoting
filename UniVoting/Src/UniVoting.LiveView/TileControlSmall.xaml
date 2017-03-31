@@ -4,17 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UniVoting.LiveView"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls">
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid>
-        <controls:Tile TitleFontSize="28" Name="Tile" Title="position"
-                        VerticalTitleAlignment="Top"
-                       Foreground="White"
-                       Background="DodgerBlue"
-                       HorizontalTitleAlignment="Center"
-                    Width="150" Height="120">
-            <Label FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Name="VoteCount"
-                   FontFamily="Segoe Ui Bold" Margin="0,50,0,0"
-                   Foreground="White">800</Label>
-        </controls:Tile>
+        <materialDesign:Card Margin="2" UniformCornerRadius="1" HorizontalAlignment="Stretch" Padding="2" VerticalAlignment="Stretch" Background="DodgerBlue">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow" Name="Position" FontSize="18" HorizontalAlignment="Center"
+                           FontFamily="Segoe Ui Light" Margin="0" VerticalAlignment="Top"
+                   Foreground="White">
+                    445454545
+                </TextBlock>
+                <TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="VoteCount"
+                   FontFamily="Segoe Ui Bold" Margin="0,10,0,0"
+                   Foreground="White">100000</TextBlock>
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </UserControl>
