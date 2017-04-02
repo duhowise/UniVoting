@@ -9,9 +9,13 @@ namespace UniVoting.Services
     public class ElectionConfigurationService
     {
         #region Voters
-        public static int AddVoters(IEnumerable<Voter> voters)
+        public static int AddVoters(List<Voter> voters)
         {
-          return  ElectionBaseRepository.InsertBulk(voters);
+            return  ElectionBaseRepository.InsertBulk(voters);
+        }
+        public static Voter LoginVoter(Voter voter)
+        {
+          return  ElectionBaseRepository.Login(voter);
         }
         #endregion
 
@@ -71,6 +75,9 @@ namespace UniVoting.Services
         public static IEnumerable<Position> GetAllPositions()
         {
             return ElectionBaseRepository.GetPositionsWithDetails();
+        }public static IEnumerable<Position> GetPositionsSlim()
+        {
+            return ElectionBaseRepository.GetAll<Position>();
         }
         public static Task<IEnumerable<Position>> GetAllPositionsAsync()
         {

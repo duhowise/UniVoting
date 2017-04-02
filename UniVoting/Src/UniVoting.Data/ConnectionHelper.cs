@@ -6,21 +6,16 @@ namespace UniVoting.Data
 {
     public class ConnectionHelper
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["VotingSystem"].ConnectionString;
-        public IDbConnection Connection;
+       
+        public static string Connection;
 
         public ConnectionHelper()
         {
-            if (Connection == null)
-            { Connection = new SqlConnection(_connectionString); }
+
+            Connection = ConfigurationManager.ConnectionStrings["VotingSystem"].ConnectionString;
         }
 
 
-        public void State()
-        {
-            if (Connection.State==ConnectionState.Closed)
-                Connection.Open();
-            
-        }
+
     }
 }

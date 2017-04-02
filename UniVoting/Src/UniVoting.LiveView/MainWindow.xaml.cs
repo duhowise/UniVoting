@@ -12,7 +12,7 @@ namespace UniVoting.LiveView
         {
             InitializeComponent();
 
-            var positions = ElectionConfigurationService.GetAllPositions();
+            var positions = ElectionConfigurationService.GetPositionsSlim();
             
             foreach (var position in positions)
             {

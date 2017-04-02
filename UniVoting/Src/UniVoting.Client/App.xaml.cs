@@ -15,10 +15,10 @@ namespace UniVoting.Client
     public partial class App : Application
     {
        private IEnumerable<Position> _positions;
-
+        
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            ClientVoteCompletedPage.RestartDue += ClientVoteCompletedPage_RestartDue;
             BlobCache.ApplicationName = "VotingApplication";
             //if (Settings.Default.FirstRun)
             //{
@@ -38,10 +38,16 @@ namespace UniVoting.Client
             // create custom accents
             ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
             ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
-            ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
+            ThemeManagerHelper.CreateAppStyleBy(new Color{R=12,G = 130,B = 144}, true);
             MainWindow = new ClientsLoginWindow();
             MainWindow.Show();
             base.OnStartup(e);
+        }
+
+        private void ClientVoteCompletedPage_RestartDue(object source, EventArgs args)
+        {
+           new ClientsLoginWindow().Show();
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using UniVoting.Services;
@@ -24,10 +25,27 @@ namespace UniVoting.LiveView
             Position.Text = _position;
         }
 
-        private void _timer_Tick(object sender, EventArgs e)
+        private async void _timer_Tick(object sender, EventArgs e)
         {
-            VoteCount.Text = $"{LiveViewService.VotesSkipppedCount(_position)}";
-            
+            try
+            {
+                VoteCount.Text = $"{await LiveViewService.VotesSkipppedCountAsync(_position)}";
+            }
+            catch (SqlException exception)
+            {
+                Console.WriteLine(exception);
+                //show connection Error
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+               // throw;
+            }
+            finally
+            {
+                VoteCount.Text = $"{await LiveViewService.VotesSkipppedCountAsync(_position)}";
+            }
+
         }
     }
 }

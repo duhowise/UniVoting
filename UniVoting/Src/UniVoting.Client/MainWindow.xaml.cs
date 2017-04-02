@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using MahApps.Metro.Controls;
 using UniVoting.Model;
+using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
 namespace UniVoting.Client
@@ -14,13 +15,38 @@ namespace UniVoting.Client
     {
         private readonly Stack<Position> _positionsStack;
         private ClientVotingPage _votingPage;
+        private Voter _voter;
+        private List<Vote> _votes;
 
-        public MainWindow(Stack<Position> positionsStack)
+        public MainWindow(Stack<Position> positionsStack, Voter voter)
         {
             InitializeComponent();
             _positionsStack = positionsStack;
+            this._voter = voter;
+            _votes=new List<Vote>();
             Loaded += MainWindow_Loaded;
             PageHolder.Navigated += PageHolder_Navigated;
+            CandidateControl.VoteCast += CandidateControl_VoteCast;
+        }
+
+        private void CandidateControl_VoteCast(object source, EventArgs args)
+        {
+            if (_positionsStack.Count != 0)
+            {
+
+                //  PageHolder.RemoveBackEntry();
+                PageHolder.Content = VotingPageMaker(_positionsStack);
+
+
+            }
+            else
+            {
+                _voter.Voted = true;
+                VotingService.UpdateVoter(_voter);
+                VotingService.CastVote(_votes);
+                PageHolder.Content = new ClientVoteCompletedPage();
+
+            }
         }
 
         private void PageHolder_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
@@ -30,7 +56,8 @@ namespace UniVoting.Client
 
         private ClientVotingPage VotingPageMaker(Stack<Position> positions)
         {
-            _votingPage = new ClientVotingPage(new Voter(), positions.Pop());
+            
+            _votingPage = new ClientVotingPage(_voter, positions.Pop(),_votes);
            _votingPage.VoteCompleted += VotingPage_VoteCompleted;
             return _votingPage;
         }
@@ -38,6 +65,8 @@ namespace UniVoting.Client
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
          PageHolder.Content = VotingPageMaker(_positionsStack);
+            _voter.VoteInProgress = true;
+            VotingService.UpdateVoter(_voter);
         }
 
         private void VotingPage_VoteCompleted(object source, EventArgs args)
@@ -48,9 +77,13 @@ namespace UniVoting.Client
                   //  PageHolder.RemoveBackEntry();
                     PageHolder.Content = VotingPageMaker(_positionsStack);
 
+
             }
             else
             {
+                _voter.Voted=true;
+                VotingService.UpdateVoter(_voter);
+                VotingService.CastVote(_votes);
                 PageHolder.Content = new ClientVoteCompletedPage();
 
             }

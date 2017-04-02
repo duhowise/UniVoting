@@ -6,13 +6,17 @@ namespace UniVoting.Services
 {
     public class VotingService
     {
-        public static void SkipVote(SkippedVote skipped)
+        public static void SkipVote(SkippedVotes skipped)
         {
             new ElectionBaseRepository().Insert(skipped);
         }
-        public static void CastVote(IEnumerable<Vote> votes)
+        public static void CastVote(List<Vote> votes)
         {
             ElectionBaseRepository.InsertBulk(votes);
+        }
+        public static void UpdateVoter(Voter voter)
+        {
+            ElectionBaseRepository.Update(voter);
         }
     }
 }

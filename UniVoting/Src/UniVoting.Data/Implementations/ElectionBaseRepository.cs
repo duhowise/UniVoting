@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
 using UniVoting.Model;
@@ -8,104 +9,134 @@ namespace UniVoting.Data.Implementations
 {
     public class ElectionBaseRepository
     {
-        private static IDbConnection _connection => new ConnectionHelper().Connection;
+        private static string Connectionstring => ConnectionHelper.Connection;
         public static IEnumerable<T> GetAll<T>()
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                return _connection.GetList<T>();
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                return connection.GetList<T>();
             }
 
         }
         public static Task<IEnumerable<T>> GetAllAsync<T>()
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                return _connection.GetListAsync<T>();
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                return connection.GetListAsync<T>();
             }
 
         }
        
         public  T Insert<T>(T member)
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                var insert =(int) _connection.Insert(member);
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                var insert =(int) connection.Insert(member);
                  return GetById<T>(insert);
             }
 
         }
 
-        public static int VoteCount(Position position)
+        public static async Task<int> VoteCount(Position position)
         {
-            using (_connection)
+           
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                return _connection.ExecuteScalar<int>(@"SELECT [Count] FROM dbo.vw_LiveView
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveView
                                         WHERE PositionName = @positionName", position);
+              
+            }
+           
+        }
+        
+        public static Voter Login(Voter voter )
+        {
+            using (var connection = new SqlConnection(Connectionstring))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                return connection.QueryFirstOrDefault<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Voted ,VoteInProgress
+                        FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
             }
         }
         public static IEnumerable<Position> GetPositionsWithDetails()
         {
            IEnumerable<Position>positions=new List<Position>();
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                positions = _connection.GetList<Position>();
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                positions = connection.GetList<Position>();
                 foreach ( var position in positions)
                 {
-                    position.Candidates = _connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName ,CandidatePicture
+                    position.Candidates = connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName ,CandidatePicture
                      ,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id", position);
                 }
             }
             return positions ;
         }
-        public static int VoteSkipCount(Position position)
+
+        public static async Task<int> VoteSkipCount(Position position)
         {
-            using (_connection)
+           
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                if (_connection.State == ConnectionState.Closed)
-                    _connection.Open();
-                return _connection.ExecuteScalar<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+                return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
                                         WHERE PositionName = @positionName", position);
+               
             }
+           
         }
         public static T GetById<T>(int member)
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                return _connection.Get<T>(member);
+                return connection.Get<T>(member);
             }
         }
         public static T Update<T>(T member)
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-             var id=  _connection.Update(member);
+             var id=  connection.Update(member);
                 return GetById<T>(id);
             }
         }
-        public static int InsertBulk<T>(IEnumerable<T> member)
+        public static int InsertBulk<T>(List<T> member)
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-             return   (int)_connection.Insert(member);
+                return
+                    (int)
+                    connection.Execute(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
+            }
+        }
+        public static int InsertBulk<T>(List<Voter> member)
+        {
+            using (var connection = new SqlConnection(Connectionstring))
+            {
+                return
+                    (int)
+                    connection.Execute(@"INSERT INTO dbo.Voter(  VoterName ,VoterCode ,IndexNumber)
+                VALUES(@VoterName,@VoterCode,@IndexNumber)", member);
             }
         }
 
         public static void Delete<T>(T member)
         {
-            using (_connection)
+            using (var connection = new SqlConnection(Connectionstring))
             {
-                _connection.Delete(member);
+                connection.Delete(member);
             }
         }
     }

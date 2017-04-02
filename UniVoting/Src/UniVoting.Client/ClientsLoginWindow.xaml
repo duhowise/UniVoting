@@ -26,7 +26,7 @@
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>-->
-    <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+    <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryColorBrush}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
@@ -38,10 +38,10 @@
                     <materialDesign:PackIcon Kind="Key" 
                                  Margin="10" Width="50" Height="50"
                                  Foreground="{DynamicResource PrimaryColorBrush}" />
-                    <PasswordBox Name="Pin" TabIndex="0"
-                     Width="250" Foreground="{DynamicResource PrimaryColorBrush}" Margin="10"
-                     materialDesign:HintAssist.Hint="SECRET PIN" FontSize="24" FontWeight="Bold"
-                     Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                    <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
+                     materialDesign:HintAssist.Hint=" Enter Code Here.." FontSize="24" Margin="10" 
+                     Name="Pin" TabIndex="0" VerticalAlignment="Center"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </StackPanel>
                 <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                          HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -52,9 +52,9 @@
             </StackPanel>
             <StackPanel Grid.Row="0">
                 <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">VOTING NAME</Label>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70">VOTING NAME</Label>
                 <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
-                	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Content="Voting Subtitle"/>
+                	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Content="Voting Subtitle"/>
             </StackPanel>
 
         </Grid>
