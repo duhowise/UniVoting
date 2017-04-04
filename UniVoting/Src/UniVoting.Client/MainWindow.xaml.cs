@@ -21,6 +21,7 @@ namespace UniVoting.Client
         public MainWindow(Stack<Position> positionsStack, Voter voter)
         {
             InitializeComponent();
+            IgnoreTaskbarOnMaximize = true;
             _positionsStack = positionsStack;
             this._voter = voter;
             _votes=new List<Vote>();
@@ -33,22 +34,16 @@ namespace UniVoting.Client
         {
             if (_positionsStack.Count != 0)
             {
-
-                //  PageHolder.RemoveBackEntry();
                 PageHolder.Content = VotingPageMaker(_positionsStack);
-
-
             }
             else
             {
                 _voter.Voted = true;
                 VotingService.UpdateVoter(_voter);
-                VotingService.CastVote(_votes);
-                PageHolder.Content = new ClientVoteCompletedPage();
-
+                new ClientVoteCompletedPage(_votes).Show();
+                Hide();
             }
         }
-
         private void PageHolder_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             PageHolder.NavigationService.RemoveBackEntry();
@@ -56,7 +51,6 @@ namespace UniVoting.Client
 
         private ClientVotingPage VotingPageMaker(Stack<Position> positions)
         {
-            
             _votingPage = new ClientVotingPage(_voter, positions.Pop(),_votes);
            _votingPage.VoteCompleted += VotingPage_VoteCompleted;
             return _votingPage;
@@ -73,18 +67,16 @@ namespace UniVoting.Client
         {
             if (_positionsStack.Count != 0)
             {
+               PageHolder.Content = VotingPageMaker(_positionsStack);
                 
-                  //  PageHolder.RemoveBackEntry();
-                    PageHolder.Content = VotingPageMaker(_positionsStack);
-
-
             }
             else
             {
                 _voter.Voted=true;
+
                 VotingService.UpdateVoter(_voter);
-                VotingService.CastVote(_votes);
-                PageHolder.Content = new ClientVoteCompletedPage();
+               new ClientVoteCompletedPage(_votes).Show();
+                Hide();
 
             }
         }

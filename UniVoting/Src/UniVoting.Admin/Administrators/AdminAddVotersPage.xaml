@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UniVoting.WPF.Administrators"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       Title="AdminAddVotersPage">
 
     <materialDesign:Card Margin="3" UniformCornerRadius="5" HorizontalAlignment="Stretch" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
@@ -14,7 +14,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0"> 
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -37,47 +37,54 @@
                     <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Setup Voters</Label>
                 </StackPanel>
             </Grid>
-           
-            <ScrollViewer Padding="5" Grid.Row="1">
-                <Grid HorizontalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    
-                    <TextBox Grid.Row="0" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <ScrollViewer Padding="5" Grid.Column="0">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBox Grid.Row="0" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
                         
                      materialDesign:HintAssist.Hint="Fullname" FontSize="24" Margin="10" Name="TextBoxName" TabIndex="2"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <TextBox Grid.Row="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+                        <TextBox Grid.Row="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
                         
                      materialDesign:HintAssist.Hint="Index Number" FontSize="24" Margin="10" Name="TextBoxIndexNumber" TabIndex="3"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Grid.Row="2" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
-                         
-                     materialDesign:HintAssist.Hint="Code" FontSize="24" Margin="10" Name="TextBoxCode" TabIndex="4"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-                        <Button HorizontalAlignment="Left" FontSize="20" FontFamily="Segoe UI SemiBold"
+                        <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
+                            <Button HorizontalAlignment="Left" FontSize="20" FontFamily="Segoe UI SemiBold"
                         Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnImportFile"
                         TabIndex="6"
                         ToolTip="import voters for file">
-                            Import From File
-                        </Button>
-                        <Button FontSize="20" FontFamily="Segoe UI Bold" HorizontalAlignment="Right"
+                                Import From File
+                            </Button>
+                            <Button FontSize="20" FontFamily="Segoe UI Bold" HorizontalAlignment="Right"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnSave"
                         TabIndex="5"
                         ToolTip="Save Voter">
-                            Save
-                        </Button>
-                    </StackPanel>
-                    <Label FontSize="14" Grid.Row="4" Name="ImportedFilename" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Imported Filename</Label>
-                </Grid>
-            </ScrollViewer>
+                                Save
+                            </Button>
+                        </StackPanel>
+                        <Label FontSize="14" Grid.Row="4" Name="ImportedFilename" FontFamily="Segoe Ui Light" HorizontalAlignment="Left">Imported Filename:</Label>
+                    </Grid>
+                </ScrollViewer>
+                <DataGrid Grid.Column="1" AlternatingRowBackground="MediumSlateBlue" Name="VoterGrid" Margin="0,10,10,10"
+                  AutoGenerateColumns="True"
+                  Style="{StaticResource AzureDataGrid}">
+
+                </DataGrid>
+            </Grid>
         </Grid>
     </materialDesign:Card>
 </Page>

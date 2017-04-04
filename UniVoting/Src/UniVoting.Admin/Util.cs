@@ -14,6 +14,20 @@ namespace UniVoting.WPF
 {
     public class Util
     {
+        public static string GenerateRandomPassword(int length)
+        {
+           
+            string range = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz";
+            Random r = new Random();
+
+            char[] chars = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = range[r.Next(0, range.Length)];
+            }
+
+            return new string(chars);
+        }
         public static void Clear(Visual myMainWindow)
         {
             int childrenCount = VisualTreeHelper.GetChildrenCount(myMainWindow);

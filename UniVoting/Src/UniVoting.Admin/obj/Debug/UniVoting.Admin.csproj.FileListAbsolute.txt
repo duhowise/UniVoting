@@ -164,3 +164,6 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.Prop
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.csproj.GenerateResource.Cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Excel.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Excel.pdb

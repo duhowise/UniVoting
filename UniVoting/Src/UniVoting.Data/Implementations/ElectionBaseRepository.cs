@@ -9,13 +9,13 @@ namespace UniVoting.Data.Implementations
 {
     public class ElectionBaseRepository
     {
-        private static string Connectionstring => ConnectionHelper.Connection;
+        private static string Connectionstring => new ConnectionHelper().Connection;
         public static IEnumerable<T> GetAll<T>()
         {
             using (var connection = new SqlConnection(Connectionstring))
             {
                 if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                     connection.Open();
                 return connection.GetList<T>();
             }
 

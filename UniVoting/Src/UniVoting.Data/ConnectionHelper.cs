@@ -7,7 +7,7 @@ namespace UniVoting.Data
     public class ConnectionHelper
     {
        
-        public static string Connection;
+        public string Connection;
 
         public ConnectionHelper()
         {

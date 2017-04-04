@@ -22,7 +22,7 @@
                 <Label FontSize="18" FontFamily="Segoe Ui Light">Vote</Label>
                 <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                          HorizontalAlignment="Right" VerticalAlignment="Top"
-                         Name="BtnVote" TabIndex="0"
+                         Name="BtnVote" TabIndex="0" Foreground="AliceBlue"
                          ToolTip="Vote for this candidate">
                     <materialDesign:PackIcon Kind="ThumbUp" Grid.Row="0" Grid.Column="0"
                                  Margin="10" Width="30" Height="30"

@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using UniVoting.Model;
+using UniVoting.Services;
+using static System.Diagnostics.Process;
 
 namespace UniVoting.Client
 {
     /// <summary>
     /// Interaction logic for ClientVoteCompletedPage.xaml
     /// </summary>
-    public partial class ClientVoteCompletedPage : Page
+    public partial class ClientVoteCompletedPage
     {
-        public delegate void RestartDueEventHandler(object source, EventArgs args);
-        public static event RestartDueEventHandler RestartDue;
-        private int count;
-        public ClientVoteCompletedPage()
+       private int count;
+        public ClientVoteCompletedPage(List<Vote> votes)
         {
             InitializeComponent();
-           var _timer = new DispatcherTimer();
+            IgnoreTaskbarOnMaximize = true;
+            VotingService.CastVote(votes);
+            var _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 0, 2);
             _timer.Tick += _timer_Tick;
             _timer.Start();
@@ -34,18 +37,16 @@ namespace UniVoting.Client
         {
             if (count == 2)
             {
-                var metroWindow = (Window.GetWindow(this) as MetroWindow);
-                metroWindow?.Hide();
-                OnRestartDue(this);
+                this.Hide();
+                if (Application.ResourceAssembly != null) Start(Application.ResourceAssembly.Location);
+                if (Application.Current != null)Application.Current.Shutdown();
+                // OnRestartDue(this);
 
             }
 
 
         }
 
-        protected static void OnRestartDue(object source)
-        {
-            RestartDue?.Invoke(source, EventArgs.Empty);
-        }
+        
     }
 }

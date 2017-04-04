@@ -22,7 +22,7 @@ namespace UniVoting.Client
             _positionsStack=new Stack<Model.Position>();
             Loaded += ClientsLoginWindow_Loaded;
             _voter=new Voter();
-            //IgnoreTaskbarOnMaximize = true;
+            IgnoreTaskbarOnMaximize = true;
             BtnGo.Click += BtnGo_Click;
         }
 
