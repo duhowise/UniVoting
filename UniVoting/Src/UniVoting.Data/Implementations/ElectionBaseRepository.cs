@@ -9,47 +9,60 @@ namespace UniVoting.Data.Implementations
 {
     public class ElectionBaseRepository
     {
-        private static string Connectionstring => new ConnectionHelper().Connection;
-        public static IEnumerable<T> GetAll<T>()
+        
+        public  IEnumerable<T> GetAll<T>()
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                     connection.Open();
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 return connection.GetList<T>();
             }
 
         }
-        public static Task<IEnumerable<T>> GetAllAsync<T>()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-                return connection.GetListAsync<T>();
+                if (connection.State != ConnectionState.Open)
+                {
+                   
+                  await  connection.OpenAsync();
+
+                }
+            return await connection.GetListAsync<T>();
             }
 
         }
        
         public  T Insert<T>(T member)
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 var insert =(int) connection.Insert(member);
                  return GetById<T>(insert);
             }
 
         }
 
-        public static async Task<int> VoteCount(Position position)
+        public  async Task<int> VoteCount(Position position)
         {
            
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                if (connection.State != ConnectionState.Open)
+                {
+                    await connection.OpenAsync();
+
+                }
                 return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveView
                                         WHERE PositionName = @positionName", position);
               
@@ -57,23 +70,29 @@ namespace UniVoting.Data.Implementations
            
         }
         
-        public static Voter Login(Voter voter )
+        public  Voter Login(Voter voter )
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 return connection.QueryFirstOrDefault<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Voted ,VoteInProgress
                         FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
             }
         }
-        public static IEnumerable<Position> GetPositionsWithDetails()
+        public  IEnumerable<Position> GetPositionsWithDetails()
         {
            IEnumerable<Position>positions=new List<Position>();
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 positions = connection.GetList<Position>();
                 foreach ( var position in positions)
                 {
@@ -84,47 +103,70 @@ namespace UniVoting.Data.Implementations
             return positions ;
         }
 
-        public static async Task<int> VoteSkipCount(Position position)
+        public  async Task<int> VoteSkipCount(Position position)
         {
            
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
+                if (connection.State != ConnectionState.Open)
+                {
+                    await connection.OpenAsync();
+
+                }
                 return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
                                         WHERE PositionName = @positionName", position);
                
             }
            
         }
-        public static T GetById<T>(int member)
+        public  T GetById<T>(int member)
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 return connection.Get<T>(member);
             }
         }
-        public static T Update<T>(T member)
+        public  T Update<T>(T member)
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
-             var id=  connection.Update(member);
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
+                var id=  connection.Update(member);
                 return GetById<T>(id);
             }
         }
-        public static int InsertBulk<T>(List<T> member)
+        public  int InsertBulk<T>(List<T> member)
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 return
                     (int)
                     connection.Execute(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
             }
         }
-        public static int InsertBulk<T>(List<Voter> member)
+        public  int InsertBulk<T>(List<Voter> member)
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
+                if (connection.State!= ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 return
                     (int)
                     connection.Execute(@"INSERT INTO dbo.Voter(  VoterName ,VoterCode ,IndexNumber)
@@ -132,10 +174,15 @@ namespace UniVoting.Data.Implementations
             }
         }
 
-        public static void Delete<T>(T member)
+        public  void Delete<T>(T member)
         {
-            using (var connection = new SqlConnection(Connectionstring))
+            using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
+                if (connection.State != ConnectionState.Open)
+                {
+                    connection.OpenAsync();
+
+                }
                 connection.Delete(member);
             }
         }

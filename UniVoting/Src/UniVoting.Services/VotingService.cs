@@ -12,11 +12,11 @@ namespace UniVoting.Services
         }
         public static void CastVote(List<Vote> votes)
         {
-            ElectionBaseRepository.InsertBulk(votes);
+            new ElectionBaseRepository().InsertBulk(votes);
         }
         public static void UpdateVoter(Voter voter)
         {
-            ElectionBaseRepository.Update(voter);
+            new ElectionBaseRepository().Update(voter);
         }
     }
 }

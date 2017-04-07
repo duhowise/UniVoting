@@ -11,18 +11,18 @@ namespace UniVoting.Services
         #region Voters
         public static int AddVoters(List<Voter> voters)
         {
-            return  ElectionBaseRepository.InsertBulk(voters);
+            return  new ElectionBaseRepository().InsertBulk(voters);
         }
         public static Voter LoginVoter(Voter voter)
         {
-          return  ElectionBaseRepository.Login(voter);
+          return  new ElectionBaseRepository().Login(voter);
         }
         #endregion
 
         #region Election
         public static Settings ConfigureElection()
         {
-            return ElectionBaseRepository.GetAll<Settings>().Single();
+            return new ElectionBaseRepository().GetAll<Settings>().Single();
         }
         public static void NewElection(Settings settings)
         {
@@ -35,13 +35,13 @@ namespace UniVoting.Services
             new ElectionBaseRepository().Insert(candidate);
         }
        
-        public static IEnumerable<Candidate> GetAllCandidates()
+        public  Task<IEnumerable<Candidate>> GetAllCandidates()
         {
-            return ElectionBaseRepository.GetAll<Candidate>();
+            return new ElectionBaseRepository().GetAllAsync<Candidate>();
         }
-        public static Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
+        public Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
         {
-            return ElectionBaseRepository.GetAllAsync<Candidate>();
+            return new ElectionBaseRepository().GetAllAsync<Candidate>();
         }
         public static Candidate SaveCandidate(Candidate candidate)
         {
@@ -51,14 +51,14 @@ namespace UniVoting.Services
             }
             else
             {
-            return ElectionBaseRepository.Update(candidate);
+            return new ElectionBaseRepository().Update(candidate);
 
             }
         }
        
         public void RemoveCandidate(Candidate candidate)
         {
-            ElectionBaseRepository.Delete(candidate);
+            new ElectionBaseRepository().Delete(candidate);
         }
         #endregion
         #region Position
@@ -69,28 +69,28 @@ namespace UniVoting.Services
         }
         public static Position GetPosition(int positionid)
         {
-          return ElectionBaseRepository.GetById<Position>(positionid);
+          return new ElectionBaseRepository().GetById<Position>(positionid);
            
         }
         public static IEnumerable<Position> GetAllPositions()
         {
-            return ElectionBaseRepository.GetPositionsWithDetails();
+            return new ElectionBaseRepository().GetPositionsWithDetails();
         }public static IEnumerable<Position> GetPositionsSlim()
         {
-            return ElectionBaseRepository.GetAll<Position>();
+            return new ElectionBaseRepository().GetAll<Position>();
         }
-        public static Task<IEnumerable<Position>> GetAllPositionsAsync()
+        public Task<IEnumerable<Position>> GetAllPositionsAsync()
         {
-            return ElectionBaseRepository.GetAllAsync<Position>();
+            return new ElectionBaseRepository().GetAllAsync<Position>();
         }
         public static void UpdatePosition(Position position)
         {
-            ElectionBaseRepository.Update(position);
+            new ElectionBaseRepository().Update(position);
         }
        
         public static void RemovePosition(Position position)
         {
-            ElectionBaseRepository.Delete(position);
+            new ElectionBaseRepository().Delete(position);
         }
         #endregion   
         #region User

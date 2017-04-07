@@ -9,15 +9,15 @@ namespace UniVoting.Services
     {
         public static Task<int> VoteCountAsync(string position)
         {
-            return ElectionBaseRepository.VoteCount(new Position {PositionName = position});
+            return new ElectionBaseRepository().VoteCount(new Position {PositionName = position});
         }public static Task<int> VotesSkipppedCountAsync(string position)
         {
-            return ElectionBaseRepository.VoteSkipCount(new Position {PositionName = position});
+            return new ElectionBaseRepository().VoteSkipCount(new Position {PositionName = position});
         }
 
         public static IEnumerable<Position> Positions()
         {
-            return ElectionBaseRepository.GetAll<Position>();
+            return new ElectionBaseRepository().GetAll<Position>();
         }
 
     }

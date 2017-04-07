@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Client", "Src\Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Admin", "Src\UniVoting.Admin\UniVoting.Admin.csproj", "{D94D308F-F26B-4D6E-829F-954ED6D170BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Report", "Src\UniVoting.Report\UniVoting.Report.csproj", "{99FAA5B7-8C65-498E-9ABD-B915297774C6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Univoting.Reporting", "Src\Univoting.Reporting\Univoting.Reporting.csproj", "{3975D407-C2EA-4D46-BE5C-FBA087706D84}"
 EndProject
 Global
@@ -62,12 +60,6 @@ Global
 		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99FAA5B7-8C65-498E-9ABD-B915297774C6}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
-		{99FAA5B7-8C65-498E-9ABD-B915297774C6}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
-		{99FAA5B7-8C65-498E-9ABD-B915297774C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99FAA5B7-8C65-498E-9ABD-B915297774C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99FAA5B7-8C65-498E-9ABD-B915297774C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99FAA5B7-8C65-498E-9ABD-B915297774C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3975D407-C2EA-4D46-BE5C-FBA087706D84}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
 		{3975D407-C2EA-4D46-BE5C-FBA087706D84}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
 		{3975D407-C2EA-4D46-BE5C-FBA087706D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

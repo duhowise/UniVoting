@@ -74,13 +74,13 @@ namespace UniVoting.WPF.Administrators
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
+            PositionCombo.ItemsSource = await new ElectionConfigurationService().GetAllPositionsAsync();
             RefreshCandidateList();
         }
 
         private async void RefreshCandidateList()
         {
-            var candidates = new ObservableCollection<Candidate>(await ElectionConfigurationService.GetAllCandidatesAsync());
+            var candidates = new ObservableCollection<Candidate>(await new ElectionConfigurationService().GetAllCandidates());
             foreach (var candidate in candidates)
             {
                 var newcandidate = new CandidateDto
