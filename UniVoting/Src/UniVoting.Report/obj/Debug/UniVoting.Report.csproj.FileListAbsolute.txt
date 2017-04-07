@@ -15,3 +15,4 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll.licenses
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\VoteReport.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Report\obj\Debug\UniVoting.Report.csprojResolveAssemblyReference.cache
