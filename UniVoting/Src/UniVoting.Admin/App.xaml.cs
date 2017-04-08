@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro;
 using UniVoting.LiveView;
+using UniVoting.WPF.Administrators;
 
 namespace UniVoting.WPF
 {
@@ -21,7 +22,8 @@ namespace UniVoting.WPF
             ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
             ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
             ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
-
+            MainWindow=new ReportViewerWindow();
+            MainWindow.Show();
             base.OnStartup(e);
         }
     }

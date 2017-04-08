@@ -11,6 +11,12 @@ namespace UniVoting.WPF.Administrators
         public AdminMenuPage()
         {
             InitializeComponent();
+            BtnDeclareVotes.Click += BtnDeclareVotes_Click;
+        }
+
+        private void BtnDeclareVotes_Click(object sender, RoutedEventArgs e)
+        {
+            new PresidentLoginWindow().ShowDialog();
         }
 
         private void BtnCreateAccount_Click(object sender, RoutedEventArgs e)

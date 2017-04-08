@@ -84,6 +84,27 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Telerik.Reporting, Version=10.1.16.615, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Reporting.XpsRendering, Version=10.1.16.615, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Wpf, Version=10.1.16.615, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>bin\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>bin\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>bin\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>bin\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -95,6 +116,15 @@
     </ApplicationDefinition>
     <Compile Include="Administrators\AdminAddVotersPage.xaml.cs">
       <DependentUpon>AdminAddVotersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Administrators\ECChairmanLoginWindow.xaml.cs">
+      <DependentUpon>ECChairmanLoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Administrators\PresidentLoginWindow.xaml.cs">
+      <DependentUpon>PresidentLoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Administrators\ReportViewerWindow.xaml.cs">
+      <DependentUpon>ReportViewerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clients\ClientsLoginWindow.xaml.cs">
       <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
@@ -130,7 +160,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Administrators\ECChairmanLoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Administrators\PositionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\PresidentLoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Administrators\ReportViewerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\Themes\OfficeBlack\System.Windows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\Themes\OfficeBlack\Telerik.ReportViewer.Wpf.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.Input.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.Navigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,6 +294,10 @@
     <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj">
       <Project>{5a3bca0c-5f45-4ccb-80e5-b87ccbb77ba9}</Project>
       <Name>UniVoting.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Univoting.Reporting\Univoting.Reporting.csproj">
+      <Project>{3975D407-C2EA-4D46-BE5C-FBA087706D84}</Project>
+      <Name>Univoting.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj">
       <Project>{5e9b869f-3471-4a30-a28e-6f422dcef34e}</Project>
