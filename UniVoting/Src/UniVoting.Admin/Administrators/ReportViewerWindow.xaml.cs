@@ -1,4 +1,6 @@
-﻿namespace UniVoting.WPF.Administrators
+﻿using Telerik.ReportViewer.Wpf;
+
+namespace UniVoting.WPF.Administrators
 {
     using System;
     using System.Windows;
@@ -9,6 +11,8 @@
         public ReportViewerWindow()
         {
             InitializeComponent();
+            WindowState=WindowState.Maximized;
+            this.ReportViewer1.ZoomMode=ZoomMode.PageWidth;
         }
     }
 }
