@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Services;
@@ -28,7 +29,7 @@ namespace UniVoting.LiveView
             }
             catch (Exception e)
             {
-                this.ShowMessageAsync("Error",$"Database Unreacheable \n {e.Message}");
+                MessageBox.Show(e.Message,"Error");
             }
 
            

@@ -35,7 +35,7 @@ namespace UniVoting.Client
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show("Error",exception.Message);
+                    MessageBox.Show(exception.Message, "Error");
                 }
                
                 Settings.Default.FirstRun = false;

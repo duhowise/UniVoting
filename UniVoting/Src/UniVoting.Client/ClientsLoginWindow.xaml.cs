@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Windows;
 using Akavache;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -28,15 +30,22 @@ namespace UniVoting.Client
 
         private async void ClientsLoginWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            var election = await BlobCache.LocalMachine.GetObject<Settings>("ElectionSettings");
-            VotingName.Content = election.ElectionName.ToUpper();
-            VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
-            
-            _positions = new List<Model.Position>();
-            _positions = await BlobCache.LocalMachine.GetObject<IEnumerable<Model.Position>>("ElectionPositions");
-            foreach (var position in _positions)
+            try
             {
-                _positionsStack.Push(position);
+                var election = await BlobCache.LocalMachine.GetObject<Settings>("ElectionSettings");
+                VotingName.Content = election.ElectionName.ToUpper();
+                VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
+
+                _positions = new List<Model.Position>();
+                _positions = await BlobCache.LocalMachine.GetObject<IEnumerable<Model.Position>>("ElectionPositions");
+                foreach (var position in _positions)
+                {
+                    _positionsStack.Push(position);
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error");
             }
         }
 
