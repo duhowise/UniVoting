@@ -22,11 +22,22 @@ namespace UniVoting.Client
             BlobCache.ApplicationName = "VotingApplication";
             if (Settings.Default.FirstRun)
             {
-                var electionData = ElectionConfigurationService.ConfigureElection();
                 _positions = new List<Position>();
-                _positions = ElectionConfigurationService.GetAllPositions();
-                BlobCache.LocalMachine.InsertObject("ElectionSettings", electionData);
-                BlobCache.LocalMachine.InsertObject("ElectionPositions", _positions);
+                
+
+                try
+                {
+                    var electionData = ElectionConfigurationService.ConfigureElection();
+                    _positions = ElectionConfigurationService.GetAllPositions();
+                    BlobCache.LocalMachine.InsertObject("ElectionSettings", electionData);
+                    BlobCache.LocalMachine.InsertObject("ElectionPositions", _positions);
+
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error",exception.Message);
+                }
+               
                 Settings.Default.FirstRun = false;
                 Settings.Default.Save();
             }

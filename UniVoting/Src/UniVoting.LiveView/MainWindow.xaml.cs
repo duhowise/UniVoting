@@ -1,5 +1,10 @@
-﻿using MahApps.Metro.Controls;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Services;
+using Position = UniVoting.Model.Position;
 
 namespace UniVoting.LiveView
 {
@@ -8,18 +13,35 @@ namespace UniVoting.LiveView
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        IEnumerable<Position> _positions;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            var positions = ElectionConfigurationService.GetPositionsSlim();
-            
-            foreach (var position in positions)
+            _positions=new List<Position>();
+            Loaded += MainWindow_Loaded;
+            try
+            {
+                _positions = ElectionConfigurationService.GetPositionsSlim();
+
+            }
+            catch (Exception e)
+            {
+                this.ShowMessageAsync("Error",$"Database Unreacheable \n {e.Message}");
+            }
+
+           
+           
+        }
+
+        private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            foreach (var position in _positions)
             {
                 CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
                 SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
             }
-           
         }
     }
 }
