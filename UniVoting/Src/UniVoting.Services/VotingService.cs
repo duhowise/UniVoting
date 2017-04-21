@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UniVoting.Data.Implementations;
 using UniVoting.Model;
 
@@ -8,15 +9,42 @@ namespace UniVoting.Services
     {
         public static void SkipVote(SkippedVotes skipped)
         {
-            new ElectionBaseRepository().Insert(skipped);
+            try
+            {
+                new ElectionBaseRepository().Insert(skipped);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public static void CastVote(List<Vote> votes)
         {
-            new ElectionBaseRepository().InsertBulk(votes);
+            try
+            {
+                new ElectionBaseRepository().InsertBulk(votes);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public static void UpdateVoter(Voter voter)
         {
-            new ElectionBaseRepository().Update(voter);
+            try
+            {
+                new ElectionBaseRepository().Update(voter);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

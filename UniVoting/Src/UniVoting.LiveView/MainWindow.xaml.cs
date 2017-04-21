@@ -22,22 +22,20 @@ namespace UniVoting.LiveView
 
             _positions=new List<Position>();
             Loaded += MainWindow_Loaded;
-            try
-            {
-                _positions = ElectionConfigurationService.GetPositionsSlim();
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message,"Error");
-            }
-
-           
            
         }
 
-        private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private async void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            try
+            {
+                _positions = await LiveViewService.Positions();
+
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error");
+            }
             foreach (var position in _positions)
             {
                 CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));

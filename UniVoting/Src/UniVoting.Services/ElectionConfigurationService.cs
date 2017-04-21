@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
@@ -11,92 +12,246 @@ namespace UniVoting.Services
         #region Voters
         public static int AddVoters(List<Voter> voters)
         {
-            return  new ElectionBaseRepository().InsertBulk(voters);
+            try
+            {
+                return new ElectionBaseRepository().InsertBulk(voters);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public static Voter LoginVoter(Voter voter)
         {
-          return  new ElectionBaseRepository().Login(voter);
+            try
+            {
+                return new ElectionBaseRepository().Login(voter);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         #endregion
 
         #region Election
         public static Settings ConfigureElection()
         {
-            return new ElectionBaseRepository().GetAll<Settings>().Single();
+            try
+            {
+                return new ElectionBaseRepository().GetAll<Settings>().Single();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public static void NewElection(Settings settings)
         {
-            new ElectionBaseRepository().Insert(settings);
+            try
+            {
+                new ElectionBaseRepository().Insert(settings);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         #endregion
         #region Candidate
         public void AddCandidate(Candidate candidate)
         {
-            new ElectionBaseRepository().Insert(candidate);
+            try
+            {
+                new ElectionBaseRepository().Insert(candidate);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
        
         public  Task<IEnumerable<Candidate>> GetAllCandidates()
         {
-            return new ElectionBaseRepository().GetAllAsync<Candidate>();
+            try
+            {
+                return new ElectionBaseRepository().GetAllAsync<Candidate>();
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
         {
-            return new ElectionBaseRepository().GetAllAsync<Candidate>();
+            try
+            {
+                return new ElectionBaseRepository().GetAllAsync<Candidate>();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public static Candidate SaveCandidate(Candidate candidate)
         {
-            if (candidate.Id==0)
+            try
             {
-              return  new ElectionBaseRepository().Insert(candidate);
-            }
-            else
-            {
-            return new ElectionBaseRepository().Update(candidate);
+                if (candidate.Id == 0)
+                {
+                    return new ElectionBaseRepository().Insert(candidate);
+                }
+                else
+                {
+                    return new ElectionBaseRepository().Update(candidate);
 
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
        
         public void RemoveCandidate(Candidate candidate)
         {
-            new ElectionBaseRepository().Delete(candidate);
+            try
+            {
+                new ElectionBaseRepository().Delete(candidate);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         #endregion
         #region Position
         public static Position AddPosition(Position position)
         {
-          var data=  new ElectionBaseRepository().Insert(position);
-            return data;
+            try
+            {
+                var data = new ElectionBaseRepository().Insert(position);
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+         
         }
         public static Position GetPosition(int positionid)
         {
-          return new ElectionBaseRepository().GetById<Position>(positionid);
+            try
+            {
+                return new ElectionBaseRepository().GetById<Position>(positionid);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
            
         }
         public static IEnumerable<Position> GetAllPositions()
         {
-            return new ElectionBaseRepository().GetPositionsWithDetails();
-        }public static IEnumerable<Position> GetPositionsSlim()
+            try
+            {
+                return new ElectionBaseRepository().GetPositionsWithDetails();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public static IEnumerable<Position> GetPositionsSlim()
         {
-            return new ElectionBaseRepository().GetAll<Position>();
+            try
+            {
+                return new ElectionBaseRepository().GetAll<Position>();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public Task<IEnumerable<Position>> GetAllPositionsAsync()
         {
-            return new ElectionBaseRepository().GetAllAsync<Position>();
+            try
+            {
+                return new ElectionBaseRepository().GetAllAsync<Position>();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public static void UpdatePosition(Position position)
         {
-            new ElectionBaseRepository().Update(position);
+            try
+            {
+                new ElectionBaseRepository().Update(position);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
        
         public static void RemovePosition(Position position)
         {
-            new ElectionBaseRepository().Delete(position);
+            try
+            {
+                new ElectionBaseRepository().Delete(position);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         #endregion   
         #region User
         public void AddUser(User user)
         {
-            new ElectionBaseRepository().Insert(user);
+            try
+            {
+                new ElectionBaseRepository().Insert(user);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         #endregion
         

@@ -51,9 +51,9 @@
                 </Button>
             </StackPanel>
             <StackPanel Grid.Row="0">
-                <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
+                <Label  Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70">VOTING NAME</Label>
-                <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
+                <Label  Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
                 	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Content="Voting Subtitle"/>
             </StackPanel>
 

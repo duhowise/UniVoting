@@ -22,7 +22,7 @@ namespace UniVoting.WPF
             ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
             ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
             ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
-            MainWindow=new ReportViewerWindow();
+            MainWindow=new MainWindow();
             MainWindow.Show();
             base.OnStartup(e);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
 using UniVoting.Model;
@@ -9,15 +10,43 @@ namespace UniVoting.Services
     {
         public static Task<int> VoteCountAsync(string position)
         {
-            return new ElectionBaseRepository().VoteCount(new Position {PositionName = position});
-        }public static Task<int> VotesSkipppedCountAsync(string position)
+            try
+            {
+                return new ElectionBaseRepository().VoteCount(new Position { PositionName = position });
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public static Task<int> VotesSkipppedCountAsync(string position)
         {
-            return new ElectionBaseRepository().VoteSkipCount(new Position {PositionName = position});
+            try
+            {
+                return new ElectionBaseRepository().VoteSkipCount(new Position { PositionName = position });
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
-        public static IEnumerable<Position> Positions()
+        public static Task<IEnumerable<Position>> Positions()
         {
-            return new ElectionBaseRepository().GetAll<Position>();
+            try
+            {
+                return new ElectionBaseRepository().GetAllAsync<Position>();
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
     }
