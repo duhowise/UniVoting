@@ -23,7 +23,7 @@ namespace UniVoting.Services
                 throw;
             }
         }
-        public static Voter LoginVoter(Voter voter)
+        public static Task<Voter> LoginVoter(Voter voter)
         {
             try
             {
@@ -39,11 +39,11 @@ namespace UniVoting.Services
         #endregion
 
         #region Election
-        public static Settings ConfigureElection()
+        public static  Settings ConfigureElection()
         {
             try
             {
-                return new ElectionBaseRepository().GetAll<Settings>().Single();
+                return   new ElectionBaseRepository().GetAll<Settings>().Single();
 
             }
             catch (Exception e)

@@ -70,7 +70,7 @@ namespace UniVoting.Data.Implementations
            
         }
         
-        public  Voter Login(Voter voter )
+        public async Task<Voter> Login(Voter voter )
         {
             using (var connection = new SqlConnection(new ConnectionHelper().Connection))
             {
@@ -79,7 +79,7 @@ namespace UniVoting.Data.Implementations
                     connection.OpenAsync();
 
                 }
-                return connection.QueryFirstOrDefault<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Voted ,VoteInProgress
+                return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Voted ,VoteInProgress
                         FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
             }
         }

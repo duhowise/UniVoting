@@ -35,7 +35,7 @@ namespace UniVoting.Client
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(exception.Message, "Error");
+                    MessageBox.Show(exception.Message, " ElectionSettings Error");
                 }
                
                 Settings.Default.FirstRun = false;
@@ -43,8 +43,8 @@ namespace UniVoting.Client
             }
 
             // add custom accent and theme resource dictionaries
-            ThemeManager.AddAccent("CustomAccent1",
-                new Uri("pack://application:,,,/UniVoting.Client;component/CustomAccents/CustomAccent.xaml"));
+            //ThemeManager.AddAccent("CustomAccent1",
+            //    new Uri("pack://application:,,,/UniVoting.Client;component/CustomAccents/CustomAccent.xaml"));
 
             // create custom accents
             ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
