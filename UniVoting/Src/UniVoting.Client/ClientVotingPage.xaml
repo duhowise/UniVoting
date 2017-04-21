@@ -20,20 +20,20 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label FontSize="24" FontFamily="Segoe Ui Light" HorizontalAlignment="Left">Voting Page</Label>
-            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" FontFamily="Segoe Ui Light" HorizontalAlignment="Right">Welcome student voter</Label>
+            <Label FontSize="24" FontFamily="Segoe Ui Light" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Left">Voting Page</Label>
+            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" FontFamily="Segoe Ui Light" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Right">Welcome student voter</Label>
         </Grid>
-        <Label FontSize="28" Grid.Row="1" Name="PositionName" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">President</Label>
+        <Label FontSize="28" Grid.Row="1" Name="PositionName" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">President</Label>
         
         <ScrollViewer Grid.Row="2" HorizontalAlignment="Center">
             <WrapPanel Name="candidatesHolder" ItemWidth="250">
                 
             </WrapPanel>
         </ScrollViewer>
-        <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" FontFamily="Segoe UI SemiBold"
+        <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI SemiBold"
                         Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnSkipVote"
-                        TabIndex="6">
-            SKIP >>
+                        TabIndex="6" Content="SKIP >>">
+            
         </Button>
     </Grid>
 </Page>

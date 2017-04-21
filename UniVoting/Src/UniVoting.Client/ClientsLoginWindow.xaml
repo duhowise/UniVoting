@@ -10,7 +10,7 @@
                 TextElement.FontSize="16"
                 FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
                       Title="UNIVOTING" Height="350" Width="525" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-   
+
     <!--<Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Name="ConfigurationBtton" Content="Configuration"></Button>
@@ -43,20 +43,20 @@
                      Name="Pin" TabIndex="0" VerticalAlignment="Center"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </StackPanel>
-                <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource WhiteColorBrush}"
                          HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="10" Name="BtnGo" TabIndex="1"
-                        ToolTip="Go">
-                    <Label Foreground="{DynamicResource WhiteColorBrush}" FontSize="24">GO</Label>
+                        Margin="10,10,10,0" x:Name="BtnGo" TabIndex="1"
+                        ToolTip="Go" Content="Go" FontSize="24" RenderTransformOrigin="0.4,1.275" Height="43" Width="47">
+                    <!--<Label Foreground="{DynamicResource WhiteColorBrush}" FontSize="24">GO</Label>-->
                 </Button>
             </StackPanel>
             <StackPanel Grid.Row="0">
-                <Label  Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
+                <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70">VOTING NAME</Label>
-                <Label  Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
+                <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
                 	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Content="Voting Subtitle"/>
             </StackPanel>
 
         </Grid>
     </materialDesign:Card>
-    </Controls:MetroWindow>
+</Controls:MetroWindow>
