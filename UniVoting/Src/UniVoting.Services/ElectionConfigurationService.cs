@@ -39,11 +39,11 @@ namespace UniVoting.Services
         #endregion
 
         #region Election
-        public static  Settings ConfigureElection()
+        public static  Task<Settings> ConfigureElection(int id)
         {
             try
             {
-                return   new ElectionBaseRepository().GetAll<Settings>().Single();
+                return   new ElectionBaseRepository().GetByIdAsync<Settings>(id);
 
             }
             catch (Exception e)

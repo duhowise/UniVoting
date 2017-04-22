@@ -27,7 +27,7 @@ namespace UniVoting.Client
 
                 try
                 {
-                    var electionData = ElectionConfigurationService.ConfigureElection();
+                    var electionData = ElectionConfigurationService.ConfigureElection(Convert.ToInt32(Settings.Default.ElectionId));
                     _positions = ElectionConfigurationService.GetAllPositions();
                     BlobCache.LocalMachine.InsertObject("ElectionSettings", electionData);
                     BlobCache.LocalMachine.InsertObject("ElectionPositions", _positions);
@@ -35,7 +35,7 @@ namespace UniVoting.Client
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(exception.Message, " ElectionSettings Error");
+                    MessageBox.Show(exception.Message, " Election Settings Error");
                 }
                
                 Settings.Default.FirstRun = false;
