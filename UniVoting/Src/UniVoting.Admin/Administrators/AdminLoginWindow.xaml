@@ -14,7 +14,7 @@
                       Width="525">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="../Resources/images/univoting_bg_1.png" TileMode="Tile" Opacity="0.7"/>
+            <ImageBrush ImageSource="../Resources/images/univoting_bg_1.png" TileMode="Tile" Opacity="0.2"/>
         </Grid.Background>
 
         <Grid.RowDefinitions>
@@ -22,9 +22,9 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Bold"
+            <Label  Foreground="{DynamicResource AccentColorBrush}"  FontFamily="Segoe UI Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">UNIVOTING</Label>
-            <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Light"
+            <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Light"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36">Comprehensive Voting App For Desktop And Mobile</Label>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center">
@@ -41,14 +41,14 @@
                 <materialDesign:PackIcon Kind="Account" Grid.Row="0" Grid.Column="0"
                                  Margin="10" Width="50" Height="50"
                                  Foreground="{DynamicResource PrimaryColorBrush}" />
-                <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource WhiteColorBrush}" Width="250"
+                <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Username" FontSize="24" Margin="10" Name="Username" TabIndex="0"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
                 <materialDesign:PackIcon Kind="Key" Grid.Row="1" Grid.Column="0"
                                  Margin="10" Width="50" Height="50"
                                  Foreground="{DynamicResource PrimaryColorBrush}" />
-                <PasswordBox Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource WhiteColorBrush}" Width="250"
+                <PasswordBox Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Password" FontSize="24" Margin="10" Name="Password" TabIndex="1"
                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
 

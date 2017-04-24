@@ -14,65 +14,64 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Menu</Label>
-            <ScrollViewer Padding="5" Grid.Row="1">
-                <WrapPanel ItemWidth="250">
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+            <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Election Manager</Label>
+
+            <WrapPanel ItemWidth="250" Grid.Row="1">
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
                             Name="BtnCreateAccount"
                             ToolTip="Create Account" Click="BtnCreateAccount_Click">
-                        <StackPanel>
-                            <materialDesign:PackIcon Kind="AccountPlus" HorizontalAlignment="Center" Width="80" Height="80" />
-                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Create Account</Label>
-                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Create a new user Account</Label>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="AccountPlus" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Create Account</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Create a new user Account</Label>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
                             Name="BtnSetUpElection"
                             ToolTip="Set up an election" Click="BtnSetUpElection_Click">
-                        <StackPanel>
-                            <materialDesign:PackIcon Kind="ThumbUp" HorizontalAlignment="Center" Width="80" Height="80" />
-                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Election</Label>
-                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Set up an election</Label>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="ThumbUp" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Election</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Set up an election</Label>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
                             Name="BtnSetUpPostions"
                             ToolTip="Set up an election" Click="BtnSetUpPostions_Click">
-                        <StackPanel>
-                            <materialDesign:PackIcon Kind="AccountLocation" HorizontalAlignment="Center" Width="80" Height="80" />
-                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Positions</Label>
-                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election postions</Label>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="AccountLocation" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Positions</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election postions</Label>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
                             Name="BtnSetUpCandidates"
                             ToolTip="Set up an election" Click="BtnSetUpCandidates_Click">
-                        <StackPanel>
-                            <materialDesign:PackIcon Kind="AccountCardDetails" HorizontalAlignment="Center" Width="80" Height="80" />
-                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Candidates</Label>
-                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election candidates</Label>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="AccountCardDetails" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Candidates</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election candidates</Label>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
                             Name="BtnSetUpVoters"
                             ToolTip="Set up an voters" Click="BtnSetUpVoters_Click">
-                        <StackPanel>
-                            <materialDesign:PackIcon Kind="HumanMaleFemale" HorizontalAlignment="Center" Width="80" Height="80" />
-                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Voters</Label>
-                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election Voters</Label>
-                        </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="HumanMaleFemale" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Voters</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add election Voters</Label>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
                             Name="BtnDeclareVotes"
                             ToolTip="declare results">
-                        <StackPanel>
-                            <materialDesign:PackIcon Kind="ContentPaste" HorizontalAlignment="Center" Width="80" Height="80" />
-                            <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Declare Result</Label>
-                            <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">display vote results</Label>
-                        </StackPanel>
-                    </Button>
-                </WrapPanel>
-            </ScrollViewer>
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="ContentPaste" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Declare Result</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">display vote results</Label>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
 
         </Grid>
     </materialDesign:Card>

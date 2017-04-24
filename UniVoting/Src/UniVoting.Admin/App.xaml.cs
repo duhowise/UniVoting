@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro;
-using UniVoting.LiveView;
 using UniVoting.WPF.Administrators;
 
 namespace UniVoting.WPF

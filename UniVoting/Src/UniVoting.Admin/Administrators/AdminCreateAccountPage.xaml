@@ -15,9 +15,11 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Create Account</Label>
-                <ScrollViewer Padding="5" Grid.Row="1">
+            <ScrollViewer Padding="5" Grid.Row="1">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
@@ -30,40 +32,36 @@
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Kind="AccountCardDetails" Grid.Row="0" Grid.Column="0"
                                  Margin="10" Width="50" Height="50"
-                                 Foreground="{DynamicResource PrimaryColorBrush}" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+                                 Foreground="{DynamicResource AccentColorBrush}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Full Name" FontSize="24" Margin="10" Name="TextBoxName" TabIndex="0"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <materialDesign:PackIcon Kind="Account" Grid.Row="1" Grid.Column="0"
                                  Margin="10" Width="50" Height="50"
-                                 Foreground="{DynamicResource PrimaryColorBrush}" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+                                 Foreground="{DynamicResource AccentColorBrush}" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Username" FontSize="24" Margin="10" Name="Username" TabIndex="1"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                         HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="10" Name="BtnGenerate" TabIndex="2"
-                         ToolTip="Autogenerate Username and Password">
-                        <materialDesign:PackIcon Kind="KeyPlus" Grid.Row="0" Grid.Column="0"
-                                 Margin="10" Width="30" Height="30"
-                                 Foreground="{DynamicResource WhiteColorBrush}" />
-                    </Button>
-
                     <materialDesign:PackIcon Kind="Key" Grid.Row="2" Grid.Column="0"
                                  Margin="10" Width="50" Height="50"
-                                 Foreground="{DynamicResource PrimaryColorBrush}" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+                                 Foreground="{DynamicResource AccentColorBrush}" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Password" FontSize="24" Margin="10" Name="Password" TabIndex="3"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
+                     materialDesign:HintAssist.Hint="Repeat Password" FontSize="24" Margin="10" Name="RepeatPassword" TabIndex="3"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <CheckBox Name="IsChairman" Grid.Row="4" Foreground="{DynamicResource AccentColorBrush}" Margin="10" HorizontalAlignment="Left" FontSize="16" Style="{StaticResource MaterialDesignCheckBox}" Content="Ec Chairman" Grid.Column="1"></CheckBox>
+                    <CheckBox Name="IsPresident" Grid.Row="4" Margin="10" FontSize="16" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox }" Content="President" Grid.Column="1"></CheckBox>
 
-                    <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" FontFamily="Segoe UI Bold"
+                    <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource AccentColorBrush}" FontSize="20" FontFamily="Segoe UI Bold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnSave"
                         TabIndex="4"
                         ToolTip="Save New Ec Member">
-                       Save
+                        Save
                     </Button>
                 </Grid>
-                </ScrollViewer>
-            </Grid>
-        </materialDesign:Card>
+            </ScrollViewer>
+        </Grid>
+    </materialDesign:Card>
 </Page>

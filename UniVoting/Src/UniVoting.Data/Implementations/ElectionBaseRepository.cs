@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -38,16 +39,16 @@ namespace UniVoting.Data.Implementations
 
 		}
 	   
-		public  T Insert<T>(T member)
+		public async Task<T> Insert<T>(T member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
 				if (connection.State != ConnectionState.Open)
 				{
-					connection.OpenAsync();
+					await connection.OpenAsync();
 
 				}
-				var insert =(int) connection.Insert(member);
+				var insert = Convert.ToInt32(await connection.InsertAsync(member));
 				 return GetById<T>(insert);
 			}
 
@@ -143,17 +144,17 @@ namespace UniVoting.Data.Implementations
 				return await connection.GetAsync<T>(member);
 			}
 		}
-		public  T Update<T>(T member)
+		public async Task<Candidate> Update<T>(T member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
 				if (connection.State != ConnectionState.Open)
 				{
-					connection.OpenAsync();
+				await	connection.OpenAsync();
 
 				}
-				var id=  connection.Update(member);
-				return GetById<T>(id);
+				var id= Convert.ToInt32(await connection.UpdateAsync(member));
+				return GetById<Candidate>(id);
 			}
 		}
 		public  int InsertBulk<T>(List<T> member)

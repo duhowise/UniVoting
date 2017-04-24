@@ -49,9 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Candidate.cs" />
+    <Compile Include="Comissioner.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Rank.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Setting.cs" />
     <Compile Include="SkippedVotes.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserType.cs" />

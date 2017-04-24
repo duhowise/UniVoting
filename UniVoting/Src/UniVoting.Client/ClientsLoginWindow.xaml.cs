@@ -32,7 +32,7 @@ namespace UniVoting.Client
 		{
 			try
 			{
-				var election = await BlobCache.LocalMachine.GetObject<Settings>("ElectionSettings");
+				var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
 				VotingName.Content = election.ElectionName.ToUpper();
 				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
 
