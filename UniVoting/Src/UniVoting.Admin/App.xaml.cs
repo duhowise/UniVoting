@@ -21,7 +21,7 @@ namespace UniVoting.WPF
             ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
             ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
             ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
-            MainWindow=new MainWindow();
+            MainWindow=new AdminLoginWindow();
             MainWindow.Show();
             base.OnStartup(e);
         }

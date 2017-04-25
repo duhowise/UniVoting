@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
+using UniVoting.Model;
+using UniVoting.Services;
 
 namespace UniVoting.WPF.Administrators
 {
@@ -15,10 +17,19 @@ namespace UniVoting.WPF.Administrators
 			BtnLogin.Click += BtnLogin_Click;
 		}
 
-		private void BtnLogin_Click(object sender, RoutedEventArgs e)
+		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{
-			new EcChairmanLoginWindow().Show();
-			Close();
+			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
+			{
+				var president = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password, IsPresident = true });
+				if (president != null)
+				{
+					new EcChairmanLoginWindow().Show();
+					Close();
+				}
+			}
+			
+			
 
 		}
 	}

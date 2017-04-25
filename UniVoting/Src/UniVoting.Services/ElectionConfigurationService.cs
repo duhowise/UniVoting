@@ -80,18 +80,35 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public async void AddComissioner(Comissioner comissioner)
+		public async void SaveComissioner(Comissioner comissioner)
 		{
-			try
+			if (comissioner.Id==0)
 			{
-				await new ElectionBaseRepository().Insert(comissioner);
+				try
+				{
+					await new ElectionBaseRepository().Insert(comissioner);
 
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
 			}
-			catch (Exception e)
+			else
 			{
-				Console.WriteLine(e);
-				throw;
+				try
+				{
+					await new ElectionBaseRepository().Update(comissioner);
+
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
 			}
+			
 		}
 	   
 		public  Task<IEnumerable<Candidate>> GetAllCandidates()
@@ -265,6 +282,51 @@ namespace UniVoting.Services
 				Console.WriteLine(e);
 				throw;
 			}
+		}
+		public static async Task<Comissioner> Login(Comissioner comissioner)
+		{
+			Comissioner user=new Comissioner();
+			if (comissioner.IsChairman)
+			{
+				try
+				{ user= await new ElectionBaseRepository().LoginChairman(comissioner);}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			else if (comissioner.IsPresident)
+			{
+				try
+				{ user= await new ElectionBaseRepository().LoginPresident(comissioner);}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}else if (comissioner.IsAdmin)
+			{
+				try
+				{ user= await new ElectionBaseRepository().LoginAdmin(comissioner);}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			else
+			{
+				try
+				{  user= await new ElectionBaseRepository().LoginPresident(comissioner);}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}
+			
+			return user;
 		}
 		#endregion
 		

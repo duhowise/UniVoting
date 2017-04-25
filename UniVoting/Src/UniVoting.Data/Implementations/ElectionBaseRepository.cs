@@ -84,6 +84,53 @@ namespace UniVoting.Data.Implementations
 						FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
 			}
 		}
+		public async Task<Comissioner> Login(Comissioner comissioner )
+		{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+					await connection.OpenAsync();
+
+				}
+				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password", comissioner);
+			}
+		}
+		public async Task<Comissioner> LoginPresident(Comissioner comissioner )
+		{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+					await connection.OpenAsync();
+
+				}
+				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.IsPresident =1", comissioner);
+			}
+		}public async Task<Comissioner> LoginAdmin(Comissioner comissioner )
+		{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+					await connection.OpenAsync();
+
+				}
+				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.isAdmin=1", comissioner);
+			}
+		}
+		public async Task<Comissioner> LoginChairman(Comissioner comissioner )
+		{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+					await connection.OpenAsync();
+
+				}
+				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password AND c.IsChairman=1", comissioner);
+			}
+		}
 		public  IEnumerable<Position> GetPositionsWithDetails()
 		{
 		   IEnumerable<Position>positions=new List<Position>();

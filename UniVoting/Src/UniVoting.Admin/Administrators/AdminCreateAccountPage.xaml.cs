@@ -22,37 +22,17 @@ namespace UniVoting.WPF.Administrators
 			BtnSave.Click += BtnSave_Click;
 			IsChairman.Checked += IsChairman_Checked;
 			IsPresident.Checked += IsPresident_Checked;
-			RepeatPassword.PasswordChanged += RepeatPassword_PasswordChanged; ;
-			
-		}
+			RepeatPassword.TextChanged += RepeatPassword_TextChanged;
 
-		private void RepeatPassword_PasswordChanged(object sender, RoutedEventArgs e)
-		{
-			if (!Password.Password.Equals(RepeatPassword.Password))
-			{
-				RepeatPassword.Foreground = new SolidColorBrush(Colors.OrangeRed);
-
-			}
-			else
-			{
-				RepeatPassword.Foreground = Password.Foreground;
-			}
 		}
 
 		private void RepeatPassword_TextChanged(object sender, TextChangedEventArgs e)
 		{
-
-			if (!Password.Password.Equals(RepeatPassword.Password))
-			{
-				RepeatPassword.Foreground = new SolidColorBrush(Colors.OrangeRed);
-				
-			}
-			else
-			{
-				RepeatPassword.Foreground=Password.Foreground;
-			}
+			RepeatPassword.Foreground = !Password.Text.Equals(RepeatPassword.Text) ? new SolidColorBrush(Colors.OrangeRed) : Password.Foreground;
 		}
 
+		
+		
 		private void IsPresident_Checked(object sender, RoutedEventArgs e)
 		{
 			IsChairman.IsChecked = false;
@@ -66,16 +46,19 @@ namespace UniVoting.WPF.Administrators
 
 		private async void BtnSave_Click(object sender, RoutedEventArgs e)
 		{
-			if (!string.IsNullOrWhiteSpace(TextBoxName.Text)||!string.IsNullOrWhiteSpace(Password.Password))
+			if (!string.IsNullOrWhiteSpace(TextBoxName.Text) || !string.IsNullOrWhiteSpace(Password.Text))
 			{
 				var metroWindow = (Window.GetWindow(this) as MetroWindow);
 				try
 				{
-					new ElectionConfigurationService().AddUser(new User
+					new ElectionConfigurationService().SaveComissioner(new Comissioner
 					{
 						FullName = TextBoxName.Text,
-						UserName =Username.Text,
-						Password = Password.Password
+						UserName = Username.Text,
+						Password = Password.Text,
+						IsChairman = Convert.ToBoolean(IsChairman.IsChecked),
+						IsPresident = Convert.ToBoolean(IsPresident.IsChecked)
+						
 					});
 					await metroWindow.ShowMessageAsync("Success !", "Action Successful");
 					Util.Clear(this);

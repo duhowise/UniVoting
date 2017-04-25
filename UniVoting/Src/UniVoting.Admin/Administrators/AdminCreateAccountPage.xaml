@@ -14,7 +14,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Create Account</Label>
+            <Label FontSize="24" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Ec Members Account Creation</Label>
             <ScrollViewer Padding="5" Grid.Row="1">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
@@ -31,26 +31,26 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Kind="AccountCardDetails" Grid.Row="0" Grid.Column="0"
-                                 Margin="10" Width="50" Height="50"
+                                 Margin="10" Width="50" Height="30"
                                  Foreground="{DynamicResource AccentColorBrush}" />
                     <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
-                     materialDesign:HintAssist.Hint="Full Name" FontSize="24" Margin="10" Name="TextBoxName" TabIndex="0"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                     materialDesign:HintAssist.Hint="Full Name" FontSize="16" Margin="5" Name="TextBoxName" TabIndex="0"
+                 Style="{StaticResource MaterialDesignTextBox}" />
                     <materialDesign:PackIcon Kind="Account" Grid.Row="1" Grid.Column="0"
-                                 Margin="10" Width="50" Height="50"
+                                 Margin="10" Width="50" Height="30"
                                  Foreground="{DynamicResource AccentColorBrush}" />
                     <TextBox Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
-                     materialDesign:HintAssist.Hint="Username" FontSize="24" Margin="10" Name="Username" TabIndex="1"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                     materialDesign:HintAssist.Hint="Username" FontSize="16" Margin="5" Name="Username" TabIndex="1"
+                 Style="{StaticResource MaterialDesignTextBox}" />
                     <materialDesign:PackIcon Kind="Key" Grid.Row="2" Grid.Column="0"
-                                 Margin="10" Width="50" Height="50"
+                                 Margin="10" Width="50" Height="30"
                                  Foreground="{DynamicResource AccentColorBrush}" />
                     <TextBox Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
-                     materialDesign:HintAssist.Hint="Password" FontSize="24" Margin="10" Name="Password" TabIndex="3"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                     materialDesign:HintAssist.Hint="Password" FontSize="16" Margin="10" Name="Password" TabIndex="3"
+                 Style="{StaticResource MaterialDesignTextBox}" />
                     <TextBox Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
-                     materialDesign:HintAssist.Hint="Repeat Password" FontSize="24" Margin="10" Name="RepeatPassword" TabIndex="3"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                     materialDesign:HintAssist.Hint="Repeat Password" FontSize="16" Margin="10" Name="RepeatPassword" TabIndex="3"
+                 Style="{StaticResource MaterialDesignTextBox}" />
                     <CheckBox Name="IsChairman" Grid.Row="4" Foreground="{DynamicResource AccentColorBrush}" Margin="10" HorizontalAlignment="Left" FontSize="16" Style="{StaticResource MaterialDesignCheckBox}" Content="Ec Chairman" Grid.Column="1"></CheckBox>
                     <CheckBox Name="IsPresident" Grid.Row="4" Margin="10" FontSize="16" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox }" Content="President" Grid.Column="1"></CheckBox>
 
