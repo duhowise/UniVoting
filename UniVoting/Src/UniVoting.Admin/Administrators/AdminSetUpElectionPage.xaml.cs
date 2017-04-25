@@ -45,7 +45,7 @@ namespace UniVoting.WPF.Administrators
                 {
                     ElectionName = TextBoxElectionName.Text,
                     EletionSubTitle = TextBoxSubtitle.Text,
-                    Colour = string.Join(",", _chosencolor.R.ToString(),_chosencolor.G.ToString(),_chosencolor.B.ToString()),
+                    Colour = string.Join(",", _chosencolor.R.ToString(),_chosencolor.B.ToString(),_chosencolor.G.ToString()),
                     Logo = Util.ConvertToBytes(Logo)
                     
                 });

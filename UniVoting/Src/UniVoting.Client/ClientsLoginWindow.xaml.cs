@@ -1,7 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reactive.Linq;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Akavache;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -27,12 +34,19 @@ namespace UniVoting.Client
 			IgnoreTaskbarOnMaximize = true;
 			BtnGo.Click += BtnGo_Click;
 		}
-
+		
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			e.Cancel = true;
+		}
+		
 		private async void ClientsLoginWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
 		{
 			try
 			{
 				var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
+				MainGrid.Background = new ImageBrush(Util.BitmapToImageSource(Util.ConvertBytesToImage(election.Logo)));
+				MainGrid.Background.Opacity = 0.2;
 				VotingName.Content = election.ElectionName.ToUpper();
 				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
 

@@ -12,7 +12,8 @@
                 TextElement.FontSize="16"
                 FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
                       Title="UNIVOTING" Height="350" Width="525" WindowStartupLocation="CenterScreen" Topmost="True" ResizeMode="NoResize">
-    <Grid>
+    <Grid Name="MainGrid">
+       
         <Frame Name="PageHolder" NavigationUIVisibility="Hidden"/>
     </Grid>
 </controls:MetroWindow>

@@ -43,8 +43,7 @@ namespace UniVoting.WPF
             }
 
         }
-
-        public static System.Drawing.Image ConvertImage(BitmapImage img)
+		public static System.Drawing.Image ConvertImage(BitmapImage img)
         {
             MemoryStream ms = new MemoryStream();
             BmpBitmapEncoder bbe = new BmpBitmapEncoder();
@@ -77,8 +76,7 @@ namespace UniVoting.WPF
             //destImage
             return destImage;
         }
-
-        public static Bitmap ConvertBytesToImage(byte[] bytes)
+		public static Bitmap ConvertBytesToImage(byte[] bytes)
         {
             using (MemoryStream ms = new MemoryStream(bytes))
             {

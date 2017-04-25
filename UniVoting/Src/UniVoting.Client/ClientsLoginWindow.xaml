@@ -27,7 +27,7 @@
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>-->
     <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryColorBrush}">
-        <Grid>
+        <Grid Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
