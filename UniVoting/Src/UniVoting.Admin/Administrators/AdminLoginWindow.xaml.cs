@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -12,7 +13,10 @@ namespace UniVoting.WPF.Administrators
 		public AdminLoginWindow()
 		{
 			InitializeComponent();
+			BtnLogin.IsDefault = true;
+			Username.Focus();
 			BtnLogin.Click += BtnLogin_Click;
+			
 		}
 
 		private async void BtnLogin_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -25,6 +29,21 @@ namespace UniVoting.WPF.Administrators
 					new MainWindow().Show();
 					Close();
 				}
+				else
+				{
+					await this.ShowMessageAsync("Login Error", "Wrong username or password.");
+					Util.Clear(this);
+					BtnLogin.IsEnabled = true;
+					Username.Focus();
+
+				}
+			}
+			else
+			{
+				await this.ShowMessageAsync("Login Error", "Wrong username or password.");
+				Util.Clear(this);
+				Username.Focus();
+
 			}
 		}
 	}

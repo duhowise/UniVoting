@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Transactions;
 using Dapper;
 using UniVoting.Model;
 
@@ -213,27 +214,39 @@ namespace UniVoting.Data.Implementations
 					connection.OpenAsync();
 
 				}
-				return
-					(int)
-					connection.Execute(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
+				return(int)connection.Execute(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
 			}
 		}
-		public  int InsertBulk<T>(List<Voter> member)
+		public async Task<int> InsertBulk(List<Voter> member)
 		{
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			int count = 0;
+			using (var transaction = new TransactionScope())
 			{
-				if (connection.State!= ConnectionState.Open)
+				using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 				{
-					connection.OpenAsync();
+					if (connection.State != ConnectionState.Open)
+					{
+						await connection.OpenAsync();
 
+					}
+					try
+					{
+					count=await connection.ExecuteAsync(@"INSERT INTO dbo.Voter(  VoterName ,VoterCode ,IndexNumber) VALUES(@VoterName,@VoterCode,@IndexNumber)", member);
+						transaction.Complete();
+					}
+					catch (Exception)
+					{
+						// ignored
+					}
+					
 				}
-				return
-					(int)
-					connection.Execute(@"INSERT INTO dbo.Voter(  VoterName ,VoterCode ,IndexNumber)
-				VALUES(@VoterName,@VoterCode,@IndexNumber)", member);
-			}
-		}
 
+
+
+			}
+
+			return count;
+		}
 		public  void Delete<T>(T member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))

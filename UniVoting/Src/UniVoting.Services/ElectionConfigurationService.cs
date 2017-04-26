@@ -10,7 +10,7 @@ namespace UniVoting.Services
 	public class ElectionConfigurationService
 	{
 		#region Voters
-		public static int AddVoters(List<Voter> voters)
+		public static Task<int> AddVotersAsync(List<Voter> voters)
 		{
 			try
 			{
