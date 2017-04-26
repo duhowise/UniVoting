@@ -49,7 +49,7 @@ namespace UniVoting.Data.Implementations
 
 				}
 				var insert = Convert.ToInt32(await connection.InsertAsync(member));
-				 return GetById<T>(insert);
+				 return await GetByIdAsync<T>(insert);
 			}
 
 		}
@@ -167,16 +167,16 @@ namespace UniVoting.Data.Implementations
 			}
 		   
 		}
-		public  T GetById<T>(int member)
+		public async Task<T> GetById<T>(int member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
 				if (connection.State != ConnectionState.Open)
 				{
-					connection.OpenAsync();
+				await	connection.OpenAsync();
 
 				}
-				return connection.Get<T>(member);
+				return await connection.GetAsync<T>(member);
 			}
 		}
 		public async Task<T> GetByIdAsync<T>(int member)
@@ -201,7 +201,7 @@ namespace UniVoting.Data.Implementations
 
 				}
 				var id= Convert.ToInt32(await connection.UpdateAsync(member));
-				return GetById<Candidate>(id);
+				return await GetByIdAsync<Candidate>(id);
 			}
 		}
 		public  int InsertBulk<T>(List<T> member)

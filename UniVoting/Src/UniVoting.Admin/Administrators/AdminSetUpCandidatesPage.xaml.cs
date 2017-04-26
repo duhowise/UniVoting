@@ -90,7 +90,7 @@ namespace UniVoting.WPF.Administrators
                     Id = candidate.Id,
                     PositionId = candidate.PositionId,
                     RankId = candidate.RankId,
-                    Position = ElectionConfigurationService.GetPosition(candidate.PositionId.Value)?.PositionName ?? String.Empty
+                    Position = ElectionConfigurationService.GetPosition(candidate.PositionId.Value).Result.PositionName ?? String.Empty
                 };
                 Candidates.Add(newcandidate);
             }

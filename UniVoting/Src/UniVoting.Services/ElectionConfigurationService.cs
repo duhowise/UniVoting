@@ -188,11 +188,11 @@ namespace UniVoting.Services
 			}
 		 
 		}
-		public static Position GetPosition(int positionid)
+		public static async Task<Position> GetPosition(int positionid)
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetById<Position>(positionid);
+				return await new ElectionBaseRepository().GetById<Position>(positionid);
 
 			}
 			catch (Exception e)

@@ -32,5 +32,17 @@ namespace Univoting.Reporting.Properties {
                 return ((string)(this["VotingSystemV2"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ElectionId {
+            get {
+                return ((int)(this["ElectionId"]));
+            }
+            set {
+                this["ElectionId"] = value;
+            }
+        }
     }
 }

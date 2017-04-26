@@ -21,7 +21,7 @@ namespace UniVoting.WPF.Administrators
         private DataSet _dataSet = null;
         private int indexName;
         private int indexNUmber;
-        private int added;
+        private int _added;
         private List<Voter> voters;
         public AdminAddVotersPage()
         {
@@ -53,7 +53,7 @@ namespace UniVoting.WPF.Administrators
                 var dialogResult = await window.ShowMessageAsync("Save Voter List", "Are You Sure You Want To Add this List Of Voters", MessageDialogStyle.AffirmativeAndNegative);
                 if (dialogResult == MessageDialogResult.Affirmative)
                 {
-                    added = ElectionConfigurationService.AddVoters(voters);
+                    _added = ElectionConfigurationService.AddVoters(voters);
 
                 }
             }

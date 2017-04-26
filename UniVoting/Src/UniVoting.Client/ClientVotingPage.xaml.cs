@@ -39,7 +39,7 @@ namespace UniVoting.Client
       
         private void ClientVotingPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            PositionName.Content = _position.PositionName;
+            PositionName.Content = _position.PositionName.ToUpper();
             TextBoxWelcome.Content = $"Welcome, {_voter.VoterName ?? String.Empty} !";
         }
 

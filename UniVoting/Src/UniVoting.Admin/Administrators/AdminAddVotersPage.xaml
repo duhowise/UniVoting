@@ -22,7 +22,7 @@
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
                     <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
                          HorizontalAlignment="Right"
-                     materialDesign:HintAssist.Hint="Search for voter" FontSize="24" Margin="30 0 0 20" Name="TextBoxSearch" TabIndex="0"
+                     materialDesign:HintAssist.Hint="Search for voter" FontSize="16" Margin="30 0 0 20" Name="TextBoxSearch" TabIndex="0"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                          HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -55,21 +55,21 @@
 
                         <TextBox Grid.Row="0" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
                         
-                     materialDesign:HintAssist.Hint="Fullname" FontSize="24" Margin="10" Name="TextBoxName" TabIndex="2"
+                     materialDesign:HintAssist.Hint="Fullname" FontSize="16" Margin="10" Name="TextBoxName" TabIndex="2"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
                         <TextBox Grid.Row="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
                         
-                     materialDesign:HintAssist.Hint="Index Number" FontSize="24" Margin="10" Name="TextBoxIndexNumber" TabIndex="3"
+                     materialDesign:HintAssist.Hint="Index Number" FontSize="16" Margin="10" Name="TextBoxIndexNumber" TabIndex="3"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
-                            <Button HorizontalAlignment="Left" FontSize="20" FontFamily="Segoe UI SemiBold"
+                            <Button HorizontalAlignment="Left" FontSize="16" FontFamily="Segoe UI SemiBold"
                         Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnImportFile"
                         TabIndex="6"
                         ToolTip="import voters for file">
                                 Import From File
                             </Button>
-                            <Button FontSize="20" FontFamily="Segoe UI Bold" HorizontalAlignment="Right"
+                            <Button FontSize="16" FontFamily="Segoe UI Bold" HorizontalAlignment="Right"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnSave"
                         TabIndex="5"
                         ToolTip="Save Voter">
@@ -80,7 +80,7 @@
                     </Grid>
                 </ScrollViewer>
                 <DataGrid Grid.Column="1" AlternatingRowBackground="MediumSlateBlue" Name="VoterGrid" Margin="0,10,10,10"
-                  AutoGenerateColumns="True"
+                  AutoGenerateColumns="True" FontSize="16"
                   Style="{StaticResource AzureDataGrid}">
 
                 </DataGrid>
