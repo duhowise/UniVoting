@@ -31,9 +31,33 @@ namespace UniVoting.WPF.Administrators
 			InitializeComponent();
 			_dataSet=new DataSet();
 			voters=new List<Voter>();
+			BtnSearch.Click += BtnSearch_Click;
 			BtnImportFile.Click += BtnImportFile_Click;
 			BtnSave.Click += BtnSave_Click;
 			TextBoxIndexNumber.LostFocus += TextBoxIndexNumber_LostFocus;
+		}
+
+		private async void BtnSearch_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Window.GetWindow(this) as MetroWindow);
+			if (!string.IsNullOrWhiteSpace(Searchterm.Text))
+			{
+				var voter=	await VotingService.GetVoterPass(new Voter { IndexNumber = Searchterm.Text });
+				if (voter!=null)
+				{
+
+					
+					var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 20, AffirmativeButtonText = "Ok" };
+					await metroWindow.ShowMessageAsync("Password", $"{voter.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
+					Searchterm.Text = String.Empty;
+				}
+				else
+				{
+					await metroWindow.ShowMessageAsync("Password",$"Voter with Index Number: {Searchterm.Text} not found!");
+					Searchterm.Text=String.Empty;
+					
+				}
+			}
 		}
 
 		private void TextBoxIndexNumber_LostFocus(object sender, RoutedEventArgs e)

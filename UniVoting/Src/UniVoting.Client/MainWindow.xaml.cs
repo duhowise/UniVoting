@@ -20,13 +20,14 @@ namespace UniVoting.Client
 		private ClientVotingPage _votingPage;
 		private Voter _voter;
 		private List<Vote> _votes;
-
+		private List<SkippedVotes> _skippedVotes;
 		public MainWindow(Stack<Position> positionsStack, Voter voter)
 		{
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
 			_positionsStack = positionsStack;
 			this._voter = voter;
+			_skippedVotes = new List<SkippedVotes>();
 			_votes=new List<Vote>();
 			Loaded += MainWindow_Loaded;
 			PageHolder.Navigated += PageHolder_Navigated;
@@ -51,7 +52,7 @@ namespace UniVoting.Client
 			{
 				_voter.Voted = true;
 				VotingService.UpdateVoter(_voter);
-				new ClientVoteCompletedPage(_votes).Show();
+				new ClientVoteCompletedPage(_votes, _voter,_skippedVotes).Show();
 				Hide();
 			}
 		}
@@ -62,7 +63,7 @@ namespace UniVoting.Client
 
 		private ClientVotingPage VotingPageMaker(Stack<Position> positions)
 		{
-			_votingPage = new ClientVotingPage(_voter, positions.Pop(),_votes);
+			_votingPage = new ClientVotingPage(_voter, positions.Pop(),_votes,_skippedVotes);
 		   _votingPage.VoteCompleted += VotingPage_VoteCompleted;
 			return _votingPage;
 		}
@@ -86,7 +87,7 @@ namespace UniVoting.Client
 				_voter.Voted=true;
 
 				VotingService.UpdateVoter(_voter);
-			   new ClientVoteCompletedPage(_votes).Show();
+			   new ClientVoteCompletedPage(_votes,_voter,_skippedVotes).Show();
 				Hide();
 
 			}

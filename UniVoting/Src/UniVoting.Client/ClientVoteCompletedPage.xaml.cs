@@ -18,12 +18,19 @@ namespace UniVoting.Client
 	/// </summary>
 	public partial class ClientVoteCompletedPage
 	{
-	   private int count;
-		public ClientVoteCompletedPage(List<Vote> votes)
+		private  List<Vote> _votes;
+		private  Voter _voter;
+		private List<SkippedVotes> _skippedVotes;
+
+		private int count;
+		public ClientVoteCompletedPage(List<Vote> votes,Voter voter, List<SkippedVotes> skippedVotes)
 		{
+			_votes = votes;
+			_voter = voter;
+			_skippedVotes = skippedVotes;
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
-			VotingService.CastVote(votes);
+			
 			var _timer = new DispatcherTimer();
 			_timer.Interval = new TimeSpan(0, 0, 0, 2);
 			_timer.Tick += _timer_Tick;
@@ -34,6 +41,15 @@ namespace UniVoting.Client
 
 		private async void ClientVoteCompletedPage_Loaded(object sender, RoutedEventArgs e)
 		{
+			try
+			{
+				VotingService.CastVote(_votes, _voter,_skippedVotes);
+
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
 			var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
 			MainGrid.Background = new ImageBrush(Util.BitmapToImageSource(Util.ConvertBytesToImage(election.Logo)));
 			MainGrid.Background.Opacity = 0.2;

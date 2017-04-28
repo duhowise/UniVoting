@@ -9,7 +9,7 @@
       mc:Ignorable="d"
       Title="AdminAddVotersPage">
 
-    <materialDesign:Card Margin="3" UniformCornerRadius="5" HorizontalAlignment="Stretch" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+    <materialDesign:Card Margin="3" UniformCornerRadius="5" HorizontalAlignment="Stretch" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}" Height="583" Width="866">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -21,9 +21,9 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                    <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
-                         HorizontalAlignment="Right"
-                     materialDesign:HintAssist.Hint="Search for voter" FontSize="16" Margin="30 0 0 20" Name="TextBoxSearch" TabIndex="0"
+                    <TextBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
+                         HorizontalAlignment="Right" Name="Searchterm"
+                     materialDesign:HintAssist.Hint="Search for voter" FontSize="16" Margin="30 0 0 20"  TabIndex="0"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                     <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                          HorizontalAlignment="Right" VerticalAlignment="Top"

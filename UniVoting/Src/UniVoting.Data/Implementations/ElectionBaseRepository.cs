@@ -54,6 +54,19 @@ namespace UniVoting.Data.Implementations
 			}
 
 		}
+		public async Task<Voter> GetVoterPass(Voter member)
+		{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+					await connection.OpenAsync();
+
+				}
+			return	await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT * FROM dbo.Voter WHERE IndexNumber=@IndexNumber", member);
+			}
+
+		}
 
 		public  async Task<int> VoteCount(Position position)
 		{
@@ -205,17 +218,65 @@ namespace UniVoting.Data.Implementations
 				return await GetByIdAsync<Candidate>(id);
 			}
 		}
-		public  int InsertBulk<T>(List<T> member)
+		public async Task ResetVoter(Voter member)
 		{
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			using (var transaction = new TransactionScope())
 			{
-				if (connection.State != ConnectionState.Open)
+				using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 				{
-					connection.OpenAsync();
+					if (connection.State != ConnectionState.Open)
+					{
+						await connection.OpenAsync();
+
+					}
+					try
+					{
+					 await connection.ExecuteAsync(@"DELETE FROM Vote WHERE VoterID=@Id", member);
+					 await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", member);
+					 await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE ID=@Id", member);
+						transaction.Complete();
+					}
+					catch (Exception)
+					{
+						// ignored
+					}
 
 				}
-				return(int)connection.Execute(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
+
+
+
 			}
+		}
+		public async Task<int> InsertBulk<T>(List<T> member,Voter voter,List<SkippedVotes> skippedVotes)
+		{
+			var task = 0;
+			using (var transaction=new TransactionScope())
+			{
+				try
+				{
+					using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+					{
+						if (connection.State != ConnectionState.Open)
+						{
+							await connection.OpenAsync();
+
+						}
+					task=(int) await connection.ExecuteAsync(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
+						//save skipped
+						 await connection.ExecuteAsync(@"INSERT INTO dbo.SkippedVotes(Positionid,VoterId)VALUES(@Positionid,@VoterId)", skippedVotes);
+						//update voter					
+						await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=1 WHERE ID=@Id", voter);
+
+						transaction.Complete();
+					}
+				}
+				catch (Exception)
+				{
+					// ignored
+				await ResetVoter(voter);
+				}
+			}
+			return task;
 		}
 		public async Task<int> InsertBulk(List<Voter> member)
 		{
@@ -231,7 +292,7 @@ namespace UniVoting.Data.Implementations
 					}
 					try
 					{
-					count=await connection.ExecuteAsync(@"INSERT INTO dbo.Voter(  VoterName ,VoterCode ,IndexNumber) VALUES(@VoterName,@VoterCode,@IndexNumber)", member);
+					count=await connection.ExecuteAsync(@"INSERT INTO dbo.Voter(VoterName ,VoterCode ,IndexNumber) VALUES(@VoterName,@VoterCode,@IndexNumber)", member);
 						transaction.Complete();
 					}
 					catch (Exception)
