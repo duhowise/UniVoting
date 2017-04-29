@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:UniVoting.Client"
       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d"  WindowState="Maximized"
-      Title="ClientVoteCompletedPage" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+      Title="ClientVoteCompletedPage" WindowStartupLocation="CenterScreen"  ResizeMode="NoResize">
 
     <Grid Name="MainGrid">
         <Label FontSize="48" Name="Text" FontFamily="Segoe Ui Light" HorizontalAlignment="Center" VerticalAlignment="Center">Thank You For Voting</Label>

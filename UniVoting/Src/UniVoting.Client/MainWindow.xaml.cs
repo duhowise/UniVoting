@@ -51,7 +51,7 @@ namespace UniVoting.Client
 			else
 			{
 				_voter.Voted = true;
-				VotingService.UpdateVoter(_voter);
+				//VotingService.UpdateVoter(_voter);
 				new ClientVoteCompletedPage(_votes, _voter,_skippedVotes).Show();
 				Hide();
 			}
@@ -86,7 +86,7 @@ namespace UniVoting.Client
 			{
 				_voter.Voted=true;
 
-				VotingService.UpdateVoter(_voter);
+				//VotingService.UpdateVoter(_voter);
 			   new ClientVoteCompletedPage(_votes,_voter,_skippedVotes).Show();
 				Hide();
 

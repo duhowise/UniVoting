@@ -44,11 +44,12 @@ namespace UniVoting.Client
 			try
 			{
 				VotingService.CastVote(_votes, _voter,_skippedVotes);
-
+				Text.Content = $"Hi There {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
 			catch (Exception)
 			{
-				// ignored
+				Text.Content = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
+
 			}
 			var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
 			MainGrid.Background = new ImageBrush(Util.BitmapToImageSource(Util.ConvertBytesToImage(election.Logo)));

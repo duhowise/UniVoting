@@ -25,7 +25,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().InsertBulk(votes, voter,skippedVotes);
+				await new ElectionBaseRepository().InsertBulkVotes(votes, voter,skippedVotes);
 
 			}
 			catch (Exception e)

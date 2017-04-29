@@ -45,25 +45,12 @@ namespace UniVoting.Client
             Loaded += CandidateControl_Loaded;
             BtnVote.Click += BtnVote_Click;
         }
-        public static BitmapImage ByteToImageSource(byte[] bytes)
-        {
-            using (MemoryStream memory = new MemoryStream(bytes))
-            {
-                BitmapImage bitmapimage = new BitmapImage();
-                bitmapimage.BeginInit();
-                bitmapimage.StreamSource = memory;
-                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapimage.EndInit();
-                return bitmapimage;
-
-            }
-
-        }
+        
         private void CandidateControl_Loaded(object sender, RoutedEventArgs e)
         {
             CandidateId = _candidate.Id;
             CandidateName.Content = _candidate.CandidateName;
-            CandidateImage.Source =ByteToImageSource(_candidate.CandidatePicture);
+            CandidateImage.Source =Util.ByteToImageSource(_candidate.CandidatePicture);
         }
 
         private async void BtnVote_Click(object sender, RoutedEventArgs e)

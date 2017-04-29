@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!--<Label FontSize="24" FontFamily="Segoe Ui Light" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Left">Voting Page</Label>-->
-            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" FontFamily="Segoe Ui Light" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Right">Welcome student voter</Label>
+            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" FontFamily="Segoe Ui semibold" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Right">Welcome student voter</Label>
         </Grid>
         <Label FontSize="30" Margin="10" Grid.Row="1" Name="PositionName" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold" HorizontalAlignment="Center">President</Label>
         

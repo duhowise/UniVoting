@@ -247,7 +247,7 @@ namespace UniVoting.Data.Implementations
 
 			}
 		}
-		public async Task<int> InsertBulk<T>(List<T> member,Voter voter,List<SkippedVotes> skippedVotes)
+		public async Task<int> InsertBulkVotes(List<Vote> votes,Voter voter,List<SkippedVotes> skippedVotes)
 		{
 			var task = 0;
 			using (var transaction=new TransactionScope())
@@ -261,9 +261,10 @@ namespace UniVoting.Data.Implementations
 							await connection.OpenAsync();
 
 						}
-					task=(int) await connection.ExecuteAsync(@"INSERT INTO dbo.Vote(  VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", member);
+						//save votes
+						task=(int) await connection.ExecuteAsync(@"INSERT INTO dbo.Vote(VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", votes);
 						//save skipped
-						 await connection.ExecuteAsync(@"INSERT INTO dbo.SkippedVotes(Positionid,VoterId)VALUES(@Positionid,@VoterId)", skippedVotes);
+						await connection.ExecuteAsync(@"INSERT INTO dbo.SkippedVotes(Positionid,VoterId)VALUES(@Positionid,@VoterId)", skippedVotes);
 						//update voter					
 						await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=1 WHERE ID=@Id", voter);
 
