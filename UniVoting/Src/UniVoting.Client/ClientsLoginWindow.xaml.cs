@@ -45,7 +45,7 @@ namespace UniVoting.Client
 			try
 			{
 				var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
-				MainGrid.Background = new ImageBrush(Util.BitmapToImageSource(Util.ConvertBytesToImage(election.Logo)));
+				MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo));
 				MainGrid.Background.Opacity = 0.2;
 				VotingName.Content = election.ElectionName.ToUpper();
 				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();

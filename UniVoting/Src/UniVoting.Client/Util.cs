@@ -33,19 +33,18 @@ namespace UniVoting.Client
 			}
 
 		}
-		public static BitmapImage BitmapToImageSource(Bitmap bitmap)
+		public static BitmapImage BytesToBitmapImage(byte[] bytes)
 		{
-			using (MemoryStream memory = new MemoryStream())
+			using (MemoryStream memory = new MemoryStream(bytes))
 			{
-				bitmap.Save(memory, ImageFormat.Bmp);
-				memory.Position = 0;
 				BitmapImage bitmapimage = new BitmapImage();
 				bitmapimage.BeginInit();
-				bitmapimage.StreamSource = memory;
 				bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+				bitmapimage.StreamSource = memory;
 				bitmapimage.EndInit();
 				return bitmapimage;
 			}
+				
 		}
 	}
 }

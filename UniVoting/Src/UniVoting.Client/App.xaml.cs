@@ -17,7 +17,6 @@ namespace UniVoting.Client
 	public partial class App : Application
 	{
 		private IEnumerable<Position> _positions;
-		AppDomain currentDomain = AppDomain.CurrentDomain;
 		protected override async void OnStartup(StartupEventArgs e)
 		{
 			Setting data =new Setting();
@@ -33,8 +32,8 @@ namespace UniVoting.Client
 				
 			}
 			
-			if (Settings.Default.FirstRun)
-			{
+			//if (Settings.Default.FirstRun)
+			//{
 				_positions = new List<Position>();
 				
 				try
@@ -51,7 +50,7 @@ namespace UniVoting.Client
 			   
 				Settings.Default.FirstRun = false;
 				Settings.Default.Save();
-			}
+		//	}
 
 			try
 			{

@@ -162,7 +162,7 @@ namespace UniVoting.Data.Implementations
 					foreach (var position in positions)
 					{
 						position.Candidates = await connection.QueryAsync<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
-						,CandidatePicture,RankId FROM dbo.Candidate C WHERE c.ID=@Id ORDER BY C.RankId ASC", position);
+						,CandidatePicture,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
 					}
 				}
 				return positions;
