@@ -35,7 +35,7 @@ namespace Univoting.Reporting.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1002")]
         public int ElectionId {
             get {
                 return ((int)(this["ElectionId"]));

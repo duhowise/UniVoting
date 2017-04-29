@@ -226,8 +226,8 @@ namespace Univoting.Reporting
 			// 
 			this.subReport1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.041667301207780838D), Telerik.Reporting.Drawing.Unit.Inch(0D));
 			this.subReport1.Name = "subReport1";
-			typeReportSource1.TypeName = "Univoting.Reporting.VoteHeader, Univoting.Reporting, Version=1.0.0.0, Culture=neu" +
-    "tral, PublicKeyToken=null";
+			typeReportSource1.TypeName = "Univoting.Reporting.HeadSection, Univoting.Reporting, Version=1.0.0.0, Culture=ne" +
+    "utral, PublicKeyToken=null";
 			this.subReport1.ReportSource = typeReportSource1;
 			this.subReport1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(6.4166660308837891D), Telerik.Reporting.Drawing.Unit.Inch(0.78736215829849243D));
 			// 

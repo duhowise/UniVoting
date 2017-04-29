@@ -11,7 +11,7 @@
       <Value Profile="(Default)">Data Source=DUHO-PC;Initial Catalog=VotingSystemV2;Integrated Security=True</Value>
     </Setting>
     <Setting Name="ElectionId" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1002</Value>
     </Setting>
   </Settings>
 </SettingsFile>

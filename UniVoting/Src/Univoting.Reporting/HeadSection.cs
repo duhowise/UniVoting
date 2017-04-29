@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace Univoting.Reporting
 {
 	using System;
@@ -8,17 +10,17 @@ namespace Univoting.Reporting
 	using Telerik.Reporting.Drawing;
 
 	/// <summary>
-	/// Summary description for VoteHeader.
+	/// Summary description for HeadSection.
 	/// </summary>
-	public partial class VoteHeader : Telerik.Reporting.Report
+	public partial class HeadSection : Telerik.Reporting.Report
 	{
-		public VoteHeader()
+		public HeadSection()
 		{
 			//
 			// Required for telerik Reporting designer support
 			//
 			InitializeComponent();
-
+			HeadSectionDataSource.Parameters.Add("@Id",DbType.Int32,Univoting.Reporting.Properties.Settings.Default.ElectionId);
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
