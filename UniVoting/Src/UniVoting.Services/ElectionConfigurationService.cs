@@ -52,7 +52,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async void NewElection(Setting setting)
+		public static async Task NewElection(Setting setting)
 		{
 			try
 			{
@@ -67,7 +67,7 @@ namespace UniVoting.Services
 		}
 		#endregion
 		#region Candidate
-		public async void AddCandidate(Candidate candidate)
+		public async Task AddCandidate(Candidate candidate)
 		{
 			try
 			{
@@ -80,7 +80,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public async void SaveComissioner(Comissioner comissioner)
+		public async Task SaveComissioner(Comissioner comissioner)
 		{
 			if (comissioner.Id==0)
 			{
@@ -202,11 +202,11 @@ namespace UniVoting.Services
 			}
 		   
 		}
-		public static IEnumerable<Position> GetAllPositions()
+		public static async Task<IEnumerable<Position>> GetAllPositions()
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetPositionsWithDetails();
+				return await new ElectionBaseRepository().GetPositionsWithDetails();
 
 			}
 			catch (Exception e)
@@ -241,7 +241,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async void UpdatePosition(Position position)
+		public static async Task UpdatePosition(Position position)
 		{
 			try
 			{
@@ -270,7 +270,7 @@ namespace UniVoting.Services
 		}
 		#endregion   
 		#region User
-		public async void AddUser(User user)
+		public async Task AddUser(User user)
 		{
 			try
 			{

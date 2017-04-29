@@ -121,7 +121,8 @@ namespace UniVoting.Data.Implementations
 				}
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.IsPresident =1", comissioner);
 			}
-		}public async Task<Comissioner> LoginAdmin(Comissioner comissioner )
+		}
+		public async Task<Comissioner> LoginAdmin(Comissioner comissioner )
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
@@ -145,40 +146,57 @@ namespace UniVoting.Data.Implementations
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password AND c.IsChairman=1", comissioner);
 			}
 		}
-		public  IEnumerable<Position> GetPositionsWithDetails()
+		public async Task<IEnumerable<Position>> GetPositionsWithDetails()
 		{
-		   IEnumerable<Position>positions=new List<Position>();
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			try
 			{
-				if (connection.State != ConnectionState.Open)
+				IEnumerable<Position> positions = new List<Position>();
+				using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 				{
-					connection.OpenAsync();
+					if (connection.State != ConnectionState.Open)
+					{
+						await connection.OpenAsync();
 
+					}
+					positions = await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
+					foreach (var position in positions)
+					{
+						position.Candidates = await connection.QueryAsync<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
+						,CandidatePicture,RankId FROM dbo.Candidate C WHERE c.ID=@Id ORDER BY C.RankId ASC", position);
+					}
 				}
-				positions = connection.GetList<Position>();
-				foreach ( var position in positions)
-				{
-					position.Candidates = connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName ,CandidatePicture
-					 ,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id", position);
-				}
+				return positions;
 			}
-			return positions ;
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		  
 		}
 
 		public  async Task<int> VoteSkipCount(Position position)
 		{
-		   
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			try
 			{
-				if (connection.State != ConnectionState.Open)
+				using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 				{
-					await connection.OpenAsync();
+					if (connection.State != ConnectionState.Open)
+					{
+						await connection.OpenAsync();
+
+					}
+					return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
+										WHERE PositionName = @positionName", position);
 
 				}
-				return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
-										WHERE PositionName = @positionName", position);
-			   
 			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			} 
+			
 		   
 		}
 		public async Task<T> GetById<T>(int member)

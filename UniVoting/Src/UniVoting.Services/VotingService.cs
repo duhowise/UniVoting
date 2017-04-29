@@ -8,7 +8,7 @@ namespace UniVoting.Services
 {
 	public class VotingService
 	{
-		public static async void SkipVote(SkippedVotes skipped)
+		public static async Task SkipVote(SkippedVotes skipped)
 		{
 			try
 			{
@@ -21,7 +21,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async void CastVote(List<Vote> votes,Voter voter,List<SkippedVotes> skippedVotes)
+		public static async Task CastVote(List<Vote> votes,Voter voter,List<SkippedVotes> skippedVotes)
 		{
 			try
 			{
@@ -34,7 +34,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async void UpdateVoter(Voter voter)
+		public static async Task UpdateVoter(Voter voter)
 		{
 			try
 			{
@@ -47,7 +47,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async void ResetVoter(Voter voter)
+		public static async Task ResetVoter(Voter voter)
 		{
 			try
 			{

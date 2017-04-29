@@ -61,7 +61,7 @@ namespace UniVoting.WPF.Administrators
             {
                 
                 //var value = ElectionService.GetPosition(_position);
-              ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+              await ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
             }
 
             //set TextBoxPosition IsEnabled = "true" after updating set TextBoxPosition IsEnabled = "False"

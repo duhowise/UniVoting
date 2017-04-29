@@ -43,7 +43,7 @@ namespace UniVoting.Client
 		{
 			try
 			{
-				VotingService.CastVote(_votes, _voter,_skippedVotes);
+				await VotingService.CastVote(_votes, _voter,_skippedVotes);
 				Text.Content = $"Hi There {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
 			catch (Exception)

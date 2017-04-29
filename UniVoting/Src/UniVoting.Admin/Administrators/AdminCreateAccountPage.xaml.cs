@@ -51,7 +51,7 @@ namespace UniVoting.WPF.Administrators
 				var metroWindow = (Window.GetWindow(this) as MetroWindow);
 				try
 				{
-					new ElectionConfigurationService().SaveComissioner(new Comissioner
+					await new ElectionConfigurationService().SaveComissioner(new Comissioner
 					{
 						FullName = TextBoxName.Text,
 						UserName = Username.Text,

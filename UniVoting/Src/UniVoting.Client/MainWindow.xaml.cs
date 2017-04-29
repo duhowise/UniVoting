@@ -68,11 +68,11 @@ namespace UniVoting.Client
 			return _votingPage;
 		}
 
-		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 		 PageHolder.Content = VotingPageMaker(_positionsStack);
 			_voter.VoteInProgress = true;
-			VotingService.UpdateVoter(_voter);
+			await VotingService.UpdateVoter(_voter);
 		}
 
 		private void VotingPage_VoteCompleted(object source, EventArgs args)
