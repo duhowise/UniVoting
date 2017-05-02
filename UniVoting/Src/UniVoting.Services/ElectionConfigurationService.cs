@@ -328,10 +328,19 @@ namespace UniVoting.Services
 					throw;
 				}
 			}
-			else
+			else if (comissioner.IsPresident)
 			{
 				try
 				{  user= await new ElectionBaseRepository().LoginPresident(comissioner);}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
+			}else
+			{
+				try
+				{  user= await new ElectionBaseRepository().Login(comissioner);}
 				catch (Exception e)
 				{
 					Console.WriteLine(e);
