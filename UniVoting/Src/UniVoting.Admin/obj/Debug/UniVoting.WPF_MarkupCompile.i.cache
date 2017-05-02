@@ -12,7 +12,7 @@ DEBUG;TRACE
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\App.xaml
 21627856196
 
-24-669201928
+25115205402
 34-2058866389
 Administrators\AdminAddVotersPage.xaml;Administrators\AdminCreateAccountPage.xaml;Administrators\AdminLoginWindow.xaml;Administrators\AdminMenuPage.xaml;Administrators\AdminSetUpCandidatesPage.xaml;Administrators\AdminSetUpElectionPage.xaml;Administrators\AdminSetUpPositionPage.xaml;Administrators\ECChairmanLoginWindow.xaml;Administrators\PositionControl.xaml;Administrators\PresidentLoginWindow.xaml;Administrators\ReportViewerWindow.xaml;Administrators\Themes\OfficeBlack\System.Windows.xaml;Administrators\Themes\OfficeBlack\Telerik.ReportViewer.Wpf.xaml;Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.Input.xaml;Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.Navigation.xaml;Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.xaml;Clients\ClientsLoginWindow.xaml;CustomAccents\CustomAccent.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;
 

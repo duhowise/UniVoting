@@ -39,6 +39,26 @@ namespace UniVoting.Data.Implementations
 			}
 
 		}
+		public async Task<IEnumerable<Candidate>> GetAllCandidates()
+		{
+			var candidates=new List<Candidate>();
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+				   
+				  await  connection.OpenAsync();
+
+				}
+				candidates=	(List<Candidate>) await connection.GetListAsync<Candidate>();
+				foreach (var candidate in candidates)
+				{
+					candidate.Position = await GetByIdAsync<Position>(Convert.ToInt32(candidate.PositionId));
+				}
+			}
+
+			return candidates;
+		}
 	   
 		public async Task<T> Insert<T>(T member)
 		{
@@ -146,7 +166,35 @@ namespace UniVoting.Data.Implementations
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password AND c.IsChairman=1", comissioner);
 			}
 		}
-		public async Task<IEnumerable<Position>> GetPositionsWithDetails()
+		public IEnumerable<Position> GetPositionsWithDetails()
+		{
+			try
+			{
+				IEnumerable<Position> positions = new List<Position>();
+				using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+				{
+					if (connection.State != ConnectionState.Open)
+					{
+						 connection.Open();
+
+					}
+					positions = connection.Query<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
+					foreach (var position in positions)
+					{
+						position.Candidates = connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
+						,CandidatePicture,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
+					}
+				}
+				return positions;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		  
+		}
+		public async Task<IEnumerable<Position>> GetPositionsWithDetailsAsync()
 		{
 			try
 			{
@@ -188,6 +236,29 @@ namespace UniVoting.Data.Implementations
 					}
 					return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
 										WHERE PositionName = @positionName", position);
+
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			} 
+			
+		   
+		}
+		public   Setting ConfigureElection(int id)
+		{
+			try
+			{
+				using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+				{
+					if (connection.State != ConnectionState.Open)
+					{
+						 connection.Open();
+
+					}
+					return connection.QueryFirstOrDefault<Setting>(@"SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=@id", new Setting {Id = id});
 
 				}
 			}

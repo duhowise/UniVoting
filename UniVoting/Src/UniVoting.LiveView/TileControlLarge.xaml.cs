@@ -17,7 +17,7 @@ namespace UniVoting.LiveView
         {
             InitializeComponent();
             _timer=new DispatcherTimer();
-            _timer.Interval=new TimeSpan(0,0,0,2);
+            _timer.Interval=new TimeSpan(0,0,0,1);
             _timer.Tick += _timer_Tick;
             _timer.Start();
             _position = position;

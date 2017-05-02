@@ -48,7 +48,7 @@ namespace UniVoting.WPF.Administrators
 
 					
 					var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 20, AffirmativeButtonText = "Ok" };
-					await metroWindow.ShowMessageAsync("Password", $"{voter.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
+					await metroWindow.ShowMessageAsync($"Name:{voter.VoterName}", $"Password: {voter.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
 					Searchterm.Text = String.Empty;
 				}
 				else

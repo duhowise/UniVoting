@@ -44,14 +44,14 @@ namespace UniVoting.Client
 		{
 			try
 			{
-				var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
+				var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
 				MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo));
 				MainGrid.Background.Opacity = 0.2;
 				VotingName.Content = election.ElectionName.ToUpper();
 				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
 
 				_positions = new List<Model.Position>();
-				_positions = await BlobCache.LocalMachine.GetObject<IEnumerable<Model.Position>>("ElectionPositions");
+				_positions = await BlobCache.UserAccount.GetObject<IEnumerable<Model.Position>>("ElectionPositions");
 				foreach (var position in _positions)
 				{
 					_positionsStack.Push(position);

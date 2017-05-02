@@ -39,11 +39,24 @@ namespace UniVoting.Services
 		#endregion
 
 		#region Election
-		public static  Task<Setting> ConfigureElection(int id)
+		//public static  Task<Setting> ConfigureElection(int id)
+		//{
+		//	try
+		//	{
+		//		return   new ElectionBaseRepository().GetByIdAsync<Setting>(id);
+
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		Console.WriteLine(e);
+		//		throw;
+		//	}
+		//}
+		public static Setting ConfigureElection(int id)
 		{
 			try
 			{
-				return   new ElectionBaseRepository().GetByIdAsync<Setting>(id);
+				return   new ElectionBaseRepository().ConfigureElection(id);
 
 			}
 			catch (Exception e)
@@ -115,7 +128,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetAllAsync<Candidate>();
+				return new ElectionBaseRepository().GetAllCandidates();
 				
 			}
 			catch (Exception e)
@@ -202,11 +215,11 @@ namespace UniVoting.Services
 			}
 		   
 		}
-		public static async Task<IEnumerable<Position>> GetAllPositions()
+		public static IEnumerable<Position> GetAllPositions()
 		{
 			try
 			{
-				return await new ElectionBaseRepository().GetPositionsWithDetails();
+				return new ElectionBaseRepository().GetPositionsWithDetails();
 
 			}
 			catch (Exception e)
@@ -228,11 +241,11 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public Task<IEnumerable<Position>> GetAllPositionsAsync()
+		public static Task<IEnumerable<Position>> GetAllPositionsAsync()
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetAllAsync<Position>();
+				return new ElectionBaseRepository().GetPositionsWithDetailsAsync();
 
 			}
 			catch (Exception e)

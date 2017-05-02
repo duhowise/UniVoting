@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Akavache;
-using MahApps.Metro;
+using UniVoting.Client;
+using UniVoting.Client.Properties;
 using UniVoting.Model;
 using UniVoting.Services;
-using Settings = UniVoting.Client.Properties.Settings;
 
 namespace UniVoting.Client
 {
@@ -17,61 +18,63 @@ namespace UniVoting.Client
 	public partial class App : Application
 	{
 		private IEnumerable<Position> _positions;
-		protected override async void OnStartup(StartupEventArgs e)
+		public App()
 		{
-			Setting data =new Setting();
+			BlobCache.ApplicationName = $"VotingApplication";
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+		}
 
-			try
+		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			var exp = e.ExceptionObject as Exception;
+			if (exp != null) MessageBox.Show(exp.InnerException?.ToString());
+		}
+	
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			var data = new Setting();
+			if (Settings.Default.FirstRun)
 			{
-				BlobCache.ApplicationName = $"VotingApplication";
-
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message, " BlobCache Settings Error");
-				
-			}
-			
-			//if (Settings.Default.FirstRun)
-			//{
-				_positions = new List<Position>();
-				
-				try
-				{
-					var electionData = await ElectionConfigurationService.ConfigureElection(Convert.ToInt32(Settings.Default.ElectionId));
-					_positions =await ElectionConfigurationService.GetAllPositions();
-					await BlobCache.LocalMachine.InsertObject("ElectionSettings", electionData);
-					await BlobCache.LocalMachine.InsertObject("ElectionPositions", _positions);
-				}
-				catch (Exception exception)
-				{
-					MessageBox.Show(exception.Message, " Election Settings Error");
-				}
-			   
+				GetSettings();
 				Settings.Default.FirstRun = false;
 				Settings.Default.Save();
-		//	}
+			}
 
 			try
 			{
 				//get color from  local cache
-				data = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
-				
+				data =  BlobCache.UserAccount.GetObject<Setting>("ElectionSettings").Wait();
 			}
 			catch (Exception exception)
 			{
 				MessageBox.Show(exception.Message, " colour Settings Error");
-				
 			}
 
 			var rgb = data.Colour.Split(',');
 			//ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
-			//ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
-			ThemeManagerHelper.CreateAppStyleBy(new Color {R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
+			//ThemeManagerHelper.CreateAppStyleBy(Colors.Brown, true);
+			ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
 			MainWindow = new ClientsLoginWindow();
 			MainWindow.Show();
 			base.OnStartup(e);
 		}
 
+		private void GetSettings()
+		{
+			_positions = new List<Position>();
+
+			try
+			{
+				var electionData = ElectionConfigurationService.ConfigureElection(Convert.ToInt32(Settings.Default.ElectionId));
+				BlobCache.UserAccount.InsertObject("ElectionSettings", electionData).Wait();
+				_positions = ElectionConfigurationService.GetAllPositions();
+
+				BlobCache.UserAccount.InsertObject("ElectionPositions", _positions).Wait();
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.Message, " Election Settings Error");
+			}
+		}
 	}
 }

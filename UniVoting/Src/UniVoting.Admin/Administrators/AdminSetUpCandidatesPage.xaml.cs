@@ -65,7 +65,7 @@ namespace UniVoting.WPF.Administrators
 				 await ElectionConfigurationService.SaveCandidate(candidate);
 				Util.Clear(this);
 				CandidateImage.Source=new BitmapImage(new Uri("../Resources/images/people_on_the_beach_300x300.jpg", UriKind.Relative));
-				PositionCombo.ItemsSource = await new ElectionConfigurationService().GetAllPositionsAsync();
+				PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
 				RefreshCandidateList();
 
 
@@ -75,13 +75,13 @@ namespace UniVoting.WPF.Administrators
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			PositionCombo.ItemsSource = await new ElectionConfigurationService().GetAllPositionsAsync();
+			PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
 			RefreshCandidateList();
 		}
 
 		private async void RefreshCandidateList()
 		{
-			var candidates = new ObservableCollection<Candidate>(await new ElectionConfigurationService().GetAllCandidates());
+			var candidates = await new ElectionConfigurationService().GetAllCandidates();
 			foreach (var candidate in candidates)
 			{
 				var newcandidate = new CandidateDto
@@ -91,7 +91,7 @@ namespace UniVoting.WPF.Administrators
 					Id = candidate.Id,
 					PositionId = candidate.PositionId,
 					RankId = candidate.RankId,
-					Position = ElectionConfigurationService.GetPosition(candidate.PositionId.Value).Result.PositionName ?? String.Empty
+					Position =candidate.Position.PositionName ?? String.Empty
 				};
 				Candidates.Add(newcandidate);
 			}

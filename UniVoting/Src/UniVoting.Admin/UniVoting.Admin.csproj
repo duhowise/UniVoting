@@ -129,6 +129,11 @@
     <Compile Include="Clients\ClientsLoginWindow.xaml.cs">
       <DependentUpon>ClientsLoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="ThemeManagerHelper.cs" />
     <Compile Include="Util.cs" />
@@ -264,6 +269,10 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Net.Security;
 
 namespace Univoting.Reporting
@@ -63,10 +64,7 @@ namespace Univoting.Reporting
 			// 
 			this.HeadSectionDataSource.ConnectionString = "Univoting.Reporting.Properties.Settings.VotingSystemV2";
 			this.HeadSectionDataSource.Name = "HeadSectionDataSource";
-			this.HeadSectionDataSource.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
-            new Telerik.Reporting.SqlDataSourceParameter("@Id", System.Data.DbType.Int32, 1002)});
-			this.HeadSectionDataSource.SelectCommand = "SELECT  id ,ElectionName ,EletionSubTitle\r\n ,logo\r\n ,Colour\r\nFROM dbo.Settings WH" +
-    "ERE id=@Id";
+			this.HeadSectionDataSource.SelectCommand = "SELECT TOP 1  id ,ElectionName ,EletionSubTitle ,logo FROM dbo.Report;\r\n";
 			// 
 			// HeadSection
 			// 

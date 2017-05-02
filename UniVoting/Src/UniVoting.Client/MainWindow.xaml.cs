@@ -37,7 +37,7 @@ namespace UniVoting.Client
 
 		private async void MainWindow_Loaded1(object sender, RoutedEventArgs e)
 		{
-			var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
+			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
 			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo));
 			MainGrid.Background.Opacity = 0.2;
 		}

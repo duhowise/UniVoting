@@ -32,7 +32,7 @@ namespace UniVoting.Client
 			IgnoreTaskbarOnMaximize = true;
 			
 			var _timer = new DispatcherTimer();
-			_timer.Interval = new TimeSpan(0, 0, 0, 2);
+			_timer.Interval = new TimeSpan(0, 0, 0, 4);
 			_timer.Tick += _timer_Tick;
 			_timer.Start();
 			count = 0;
@@ -44,21 +44,22 @@ namespace UniVoting.Client
 			try
 			{
 				await VotingService.CastVote(_votes, _voter,_skippedVotes);
-				Text.Content = $"Hi There {_voter.VoterName.ToUpper()}, Thank You For Voting";
+				Text.Content = $"Good Bye {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
 			catch (Exception)
 			{
 				Text.Content = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
 
 			}
-			var election = await BlobCache.LocalMachine.GetObject<Setting>("ElectionSettings");
+			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
 			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo));
 			MainGrid.Background.Opacity = 0.2;
 		}
 
-		private void _timer_Tick(object sender, EventArgs e)
+		private  void _timer_Tick(object sender, EventArgs e)
 		{
 			count++;
+			BlobCache.Shutdown().Wait();
 			RestartApplication();
 		}
 		public void RestartApplication()

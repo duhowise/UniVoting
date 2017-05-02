@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Data;
 
 namespace Univoting.Reporting
@@ -20,7 +21,7 @@ namespace Univoting.Reporting
 			// Required for telerik Reporting designer support
 			//
 			InitializeComponent();
-			HeadSectionDataSource.Parameters.Add("@Id",DbType.Int32,Univoting.Reporting.Properties.Settings.Default.ElectionId);
+			HeadSectionDataSource.Parameters.Add("@Id",DbType.Int32,ConfigurationManager.AppSettings["ElectionId"]);
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
