@@ -39,7 +39,7 @@ namespace UniVoting.Services
         {
             try
             {
-                return new ElectionBaseRepository().GetAllAsync<Position>();
+                return new ElectionBaseRepository().GetPositionsAsync();
 
             }
             catch (Exception e)

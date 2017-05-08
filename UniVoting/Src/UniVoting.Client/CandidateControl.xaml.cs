@@ -51,7 +51,7 @@ namespace UniVoting.Client
 			CandidateId = _candidate.Id;
 			CandidateName.Content = _candidate.CandidateName.ToUpper();
 			CandidateImage.Source =Util.ByteToImageSource(_candidate.CandidatePicture);
-			Rank.Content = _candidate.RankId;
+			Rank.Content =$"#{_candidate.RankId}" ;
 		}
 
 		private async void BtnVote_Click(object sender, RoutedEventArgs e)

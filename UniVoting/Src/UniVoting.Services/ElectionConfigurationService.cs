@@ -23,6 +23,19 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
+		public static IEnumerable<Voter> GetAllVotersAsync()
+		{
+			try
+			{
+				return new ElectionBaseRepository().GetAll<Voter>();
+
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
 		public static Task<Voter> LoginVoter(Voter voter)
 		{
 			try
@@ -52,11 +65,11 @@ namespace UniVoting.Services
 		//		throw;
 		//	}
 		//}
-		public static Setting ConfigureElection(int id)
+		public static Setting ConfigureElection()
 		{
 			try
 			{
-				return   new ElectionBaseRepository().ConfigureElection(id);
+				return   new ElectionBaseRepository().ConfigureElection();
 
 			}
 			catch (Exception e)

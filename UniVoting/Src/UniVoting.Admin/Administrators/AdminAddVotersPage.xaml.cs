@@ -62,12 +62,13 @@ namespace UniVoting.WPF.Administrators
 
 		private void TextBoxIndexNumber_LostFocus(object sender, RoutedEventArgs e)
 		{
-			if (string.IsNullOrWhiteSpace(TextBoxName.Text)||string.IsNullOrWhiteSpace(TextBoxIndexNumber.Text))
+			if (!string.IsNullOrWhiteSpace(TextBoxName.Text)||!string.IsNullOrWhiteSpace(TextBoxIndexNumber.Text))
 			{
 				voters.Add(new Voter
 				{
 					VoterName = TextBoxName.Text,
-					IndexNumber = TextBoxIndexNumber.Text
+					IndexNumber = TextBoxIndexNumber.Text,
+					VoterCode = Util.GenerateRandomPassword(6)
 				});
 			}
 		}
@@ -157,6 +158,14 @@ namespace UniVoting.WPF.Administrators
 						MessageBox.Show(exception.Message, "File Read Error");
 					}
 				}
+			}
+		}
+
+		private async void BtnReset_Click(object sender, RoutedEventArgs e)
+		{
+			if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
+			{
+				await VotingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
 			}
 		}
 	}

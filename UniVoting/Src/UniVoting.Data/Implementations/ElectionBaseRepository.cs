@@ -74,6 +74,19 @@ namespace UniVoting.Data.Implementations
 			}
 
 		}
+		public async Task Insert( Setting setting)
+		{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+			{
+				if (connection.State != ConnectionState.Open)
+				{
+					await connection.OpenAsync();
+
+				}
+				await connection.ExecuteAsync(@"UPDATE dbo.Settings SET  ElectionName = @ElectionName ,EletionSubTitle = @EletionSubTitle ,logo = @logo  ,Colour = @Colour WHERE  id = 1", setting);
+			}
+
+		}
 		public async Task<Voter> GetVoterPass(Voter member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
@@ -222,6 +235,29 @@ namespace UniVoting.Data.Implementations
 			}
 		  
 		}
+		public async Task<IEnumerable<Position>> GetPositionsAsync()
+		{
+			try
+			{
+			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+				{
+					if (connection.State != ConnectionState.Open)
+					{
+						await connection.OpenAsync();
+
+					}
+				return	 await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID ASC");
+					
+				}
+				
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		  
+		}
 
 		public  async Task<int> VoteSkipCount(Position position)
 		{
@@ -247,7 +283,7 @@ namespace UniVoting.Data.Implementations
 			
 		   
 		}
-		public   Setting ConfigureElection(int id)
+		public   Setting ConfigureElection()
 		{
 			try
 			{
@@ -258,7 +294,7 @@ namespace UniVoting.Data.Implementations
 						 connection.Open();
 
 					}
-					return connection.QueryFirstOrDefault<Setting>(@"SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=@id", new Setting {Id = id});
+					return connection.QueryFirstOrDefault<Setting>(@"SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=1");
 
 				}
 			}
@@ -320,9 +356,9 @@ namespace UniVoting.Data.Implementations
 					}
 					try
 					{
-					 await connection.ExecuteAsync(@"DELETE FROM Vote WHERE VoterID=@Id", member);
-					 await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", member);
-					 await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE ID=@Id", member);
+					// await connection.ExecuteAsync(@"DELETE FROM Vote WHERE IndexNumber=@IndexNumber", member);
+					// await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", member);
+					 await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE IndexNumber=@IndexNumber", member);
 						transaction.Complete();
 					}
 					catch (Exception)

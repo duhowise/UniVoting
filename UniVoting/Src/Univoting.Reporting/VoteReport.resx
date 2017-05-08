@@ -121,6 +121,7 @@
     <value>SELECT  vw_CandidateVotes.Name, c.CandidatePicture, vw_CandidateVotes.Position,
   vw_CandidateVotes.Vote, vw_CandidateVotes.Percentage AS 'Percentage Votes'
 FROM vw_CandidateVotes INNER JOIN
-   Candidate AS c ON vw_CandidateVotes.ID = c.ID</value>
+   Candidate AS c ON vw_CandidateVotes.ID = c.ID
+ORDER BY c.PositionID</value>
   </data>
 </root>

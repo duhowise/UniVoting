@@ -26,22 +26,10 @@ namespace Univoting.Reporting.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DUHO-PC;Initial Catalog=VotingSystemV2;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DUHO-PC;Initial Catalog=Univoting2017;Integrated Security=True")]
         public string VotingSystemV2 {
             get {
                 return ((string)(this["VotingSystemV2"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1002")]
-        public int ElectionId {
-            get {
-                return ((int)(this["ElectionId"]));
-            }
-            set {
-                this["ElectionId"] = value;
             }
         }
     }

@@ -32,6 +32,7 @@ namespace UniVoting.Client
 			Loaded += ClientsLoginWindow_Loaded;
 			_voter=new Voter();
 			IgnoreTaskbarOnMaximize = true;
+			BtnGo.IsDefault = true;
 			BtnGo.Click += BtnGo_Click;
 		}
 		

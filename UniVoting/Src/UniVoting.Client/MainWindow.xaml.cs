@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -68,7 +69,7 @@ namespace UniVoting.Client
 			return _votingPage;
 		}
 
-		private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+	private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 		 PageHolder.Content = VotingPageMaker(_positionsStack);
 			_voter.VoteInProgress = true;

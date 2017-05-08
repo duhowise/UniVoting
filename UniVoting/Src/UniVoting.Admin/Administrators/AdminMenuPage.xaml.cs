@@ -16,7 +16,13 @@ namespace UniVoting.WPF.Administrators
 			Comissioner = comissioner;
 			InitializeComponent();
 			BtnDeclareVotes.Click += BtnDeclareVotes_Click;
+			BtnDispensePassword.Click += BtnDispensePassword_Click;
 			Loaded += AdminMenuPage_Loaded;
+		}
+
+		private void BtnDispensePassword_Click(object sender, RoutedEventArgs e)
+		{
+			new AdminDispensePasswordWindow().ShowDialog();
 		}
 
 		private void AdminMenuPage_Loaded(object sender, RoutedEventArgs e)

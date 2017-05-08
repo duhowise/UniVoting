@@ -39,12 +39,16 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="107*"/>
+                    <RowDefinition Height="60*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <ScrollViewer Padding="5" Grid.Column="0">
+                <ScrollViewer Padding="5" Grid.Column="0" Margin="0,0,63,51.926">
                     <Grid HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
@@ -55,12 +59,12 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <TextBox Grid.Row="0" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+                        <TextBox Grid.Row="0" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                         
                      materialDesign:HintAssist.Hint="Fullname" FontSize="16" Margin="10" Name="TextBoxName" TabIndex="2"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                        <TextBox Grid.Row="1" Foreground="{DynamicResource PrimaryColorBrush}" Width="250"
+                        <TextBox Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                         
                      materialDesign:HintAssist.Hint="Index Number" FontSize="16" Margin="10" Name="TextBoxIndexNumber" TabIndex="3"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
@@ -77,16 +81,20 @@
                         ToolTip="Save Voter">
                                 Save
                             </Button>
-                           </StackPanel>
+                        </StackPanel>
                         <Label FontSize="14" Grid.Row="4" Name="ImportedFilename" FontFamily="Segoe Ui Light" HorizontalAlignment="Left">Imported Filename:</Label>
                         <Label FontSize="14" Grid.Row="5" Visibility="Hidden" Name="AddedCount" FontFamily="Segoe Ui Light" HorizontalAlignment="Left">Added:</Label>
                     </Grid>
                 </ScrollViewer>
                 <DataGrid Grid.Column="1" AlternatingRowBackground="MediumSlateBlue" Name="VoterGrid" Margin="0,10,10,10"
                   AutoGenerateColumns="True" FontSize="16"
-                  Style="{StaticResource AzureDataGrid}">
+                  Style="{StaticResource AzureDataGrid}" Grid.RowSpan="2">
 
                 </DataGrid>
+                <TextBox x:Name="ResetIndexNumber" materialDesign:HintAssist.Hint="Enetr Student Number to Reset" Style="{StaticResource MaterialDesignFloatingHintTextBox}" HorizontalAlignment="Left" Height="54" Margin="10,33.074,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="376" Grid.Row="1"
+                         Grid.Column="0" />
+                <Button x:Name="BtnReset" Content="Reset" Style="{StaticResource MaterialDesignRaisedDarkButton}" Foreground="{DynamicResource WhiteColorBrush}" HorizontalAlignment="Left" Margin="322,109,0,0" VerticalAlignment="Top" Width="72" Height="24" Grid.Row="1"
+                        Grid.Column="0" Click="BtnReset_Click" />
             </Grid>
         </Grid>
     </materialDesign:Card>

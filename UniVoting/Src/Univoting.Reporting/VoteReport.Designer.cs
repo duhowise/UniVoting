@@ -146,10 +146,8 @@ namespace Univoting.Reporting
 			// 
 			// VotingDataSource
 			// 
-			this.VotingDataSource.ConnectionString = "Data Source=localhost;Initial Catalog=VotingSystemV2;User ID=sa;Password=23m@y199" +
-    "3";
+			this.VotingDataSource.ConnectionString = "Univoting.Reporting.Properties.Settings.VotingSystemV2";
 			this.VotingDataSource.Name = "VotingDataSource";
-			this.VotingDataSource.ProviderName = "System.Data.SqlClient";
 			this.VotingDataSource.SelectCommand = resources.GetString("VotingDataSource.SelectCommand");
 			// 
 			// pageHeader

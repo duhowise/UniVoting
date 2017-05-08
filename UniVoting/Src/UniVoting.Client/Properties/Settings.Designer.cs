@@ -34,14 +34,5 @@ namespace UniVoting.Client.Properties {
                 this["FirstRun"] = value;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int ElectionId {
-            get {
-                return ((int)(this["ElectionId"]));
-            }
-        }
     }
 }

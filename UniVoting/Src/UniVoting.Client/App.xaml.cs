@@ -33,12 +33,12 @@ namespace UniVoting.Client
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			var data = new Setting();
-			if (Settings.Default.FirstRun)
-			{
+			//if (Settings.Default.FirstRun)
+			//{
 				GetSettings();
 				Settings.Default.FirstRun = false;
 				Settings.Default.Save();
-			}
+			//}
 
 			try
 			{
@@ -65,7 +65,7 @@ namespace UniVoting.Client
 
 			try
 			{
-				var electionData = ElectionConfigurationService.ConfigureElection(Convert.ToInt32(Settings.Default.ElectionId));
+				var electionData = ElectionConfigurationService.ConfigureElection();
 				BlobCache.UserAccount.InsertObject("ElectionSettings", electionData).Wait();
 				_positions = ElectionConfigurationService.GetAllPositions();
 
