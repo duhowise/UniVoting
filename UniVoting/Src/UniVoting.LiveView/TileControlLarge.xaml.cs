@@ -21,7 +21,7 @@ namespace UniVoting.LiveView
             _timer.Tick += _timer_Tick;
             _timer.Start();
             _position = position;
-            Position.Text = _position;
+            Position.Text = _position.ToUpper();
 
         }
 

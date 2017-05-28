@@ -49,7 +49,7 @@ namespace UniVoting.WPF.Administrators
 				var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 20, AffirmativeButtonText = "Ok" };
 				await metroWindow.ShowMessageAsync($"Name:{student.VoterName}", $"Password: {student.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
 				StudentName.Text = String.Empty;
-				RefreshStudentList();
+				StudentName.Focus();
 			}
 		}
 
@@ -64,14 +64,14 @@ namespace UniVoting.WPF.Administrators
 
 		private void AdminDispensePasswordWindow_Loaded(object sender, RoutedEventArgs e)
 		{
+			StudentName.Focus();
 			RefreshStudentList();
-
-
 		}
 
-		private void RefreshStudentList()
+		private async void RefreshStudentList()
 		{
-			voters = new List<Voter>(ElectionConfigurationService.GetAllVotersAsync());
+			voters = new List<Voter>();
+		voters=(List<Voter>) await	ElectionConfigurationService.GetAllVotersAsync();
 			StudentsSearchList.ItemsSource = voters;
 		}
 	}

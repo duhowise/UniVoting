@@ -140,7 +140,7 @@ namespace UniVoting.WPF.Administrators
 					}
 					foreach (System.Data.DataRowView row in VoterGrid.ItemsSource)
 					{
-						var data = new Voter
+						var voterInfo = new Voter
 						{
 							VoterName = row[indexName].ToString(),
 							IndexNumber = row[indexNUmber].ToString(),
@@ -149,8 +149,8 @@ namespace UniVoting.WPF.Administrators
 						  
 						};
 						
-						voters.Add(data);
-						Thread.Sleep(15);
+						voters.Add(voterInfo);
+						Thread.Sleep(20);
 						}
 					}
 					catch (Exception exception)

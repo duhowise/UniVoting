@@ -356,10 +356,11 @@ namespace UniVoting.Data.Implementations
 					}
 					try
 					{
-					// await connection.ExecuteAsync(@"DELETE FROM Vote WHERE IndexNumber=@IndexNumber", member);
-					// await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", member);
-					 await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE IndexNumber=@IndexNumber", member);
-						transaction.Complete();
+					var voter= await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName ,VoterCode ,IndexNumber ,Voted ,VoteInProgress FROM dbo.Voter WHERE IndexNumber=@IndexNumber",member);
+					await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", voter);
+					await connection.ExecuteAsync(@"DELETE FROM Vote WHERE VoterId=@Id", voter);
+					await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE IndexNumber=@IndexNumber", voter);
+					transaction.Complete();
 					}
 					catch (Exception)
 					{

@@ -141,6 +141,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MaterialDesignThem
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MaterialDesignThemes.Wpf.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\UniVoting.Data.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.csprojResolveAssemblyReference.cache
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminDispensePasswordWindow.baml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminLoginWindow.baml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\PresidentLoginWindow.baml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\Themes\OfficeBlack\System.Windows.baml
@@ -154,6 +155,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Resources\Icons.ba
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Resources\IconsNonShared.baml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminAddVotersPage.g.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminCreateAccountPage.g.cs
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminDispensePasswordWindow.g.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminLoginWindow.g.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminMenuPage.g.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminSetUpCandidatesPage.g.cs
@@ -184,5 +186,3 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.Prop
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.csproj.GenerateResource.Cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.WPF.pdb
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminDispensePasswordWindow.baml
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\Administrators\AdminDispensePasswordWindow.g.cs

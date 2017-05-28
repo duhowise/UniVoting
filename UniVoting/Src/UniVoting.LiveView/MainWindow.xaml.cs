@@ -24,7 +24,7 @@ namespace UniVoting.LiveView
             Loaded += MainWindow_Loaded;
            
         }
-
+	
         private async void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             try

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniVoting.LiveView"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        WindowState="Maximized"
+        WindowState="Maximized" ShowCloseButton="False" ShowMinButton="False" ShowMaxRestoreButton="False"
                 Background="{DynamicResource WhiteColorBrush}"
                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                 TextElement.FontWeight="Medium"

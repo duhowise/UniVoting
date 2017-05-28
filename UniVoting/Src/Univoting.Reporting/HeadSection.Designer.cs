@@ -64,7 +64,8 @@ namespace Univoting.Reporting
 			// 
 			this.HeadSectionDataSource.ConnectionString = "Univoting.Reporting.Properties.Settings.VotingSystemV2";
 			this.HeadSectionDataSource.Name = "HeadSectionDataSource";
-			this.HeadSectionDataSource.SelectCommand = "SELECT TOP 1  id ,ElectionName ,EletionSubTitle ,logo FROM dbo.Report;\r\n";
+			this.HeadSectionDataSource.SelectCommand = "SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Setti" +
+    "ngs s WHERE s.id=1";
 			// 
 			// HeadSection
 			// 

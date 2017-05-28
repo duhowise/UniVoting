@@ -37,8 +37,6 @@ namespace Univoting.Reporting
 			this.currentTimeTextBox = new Telerik.Reporting.TextBox();
 			this.pageInfoTextBox = new Telerik.Reporting.TextBox();
 			this.reportHeader = new Telerik.Reporting.ReportHeaderSection();
-			this.positionCaptionTextBox1 = new Telerik.Reporting.TextBox();
-			this.positionDataTextBox = new Telerik.Reporting.TextBox();
 			this.subReport1 = new Telerik.Reporting.SubReport();
 			this.reportFooter = new Telerik.Reporting.ReportFooterSection();
 			this.detail = new Telerik.Reporting.DetailSection();
@@ -192,33 +190,10 @@ namespace Univoting.Reporting
 			// 
 			// reportHeader
 			// 
-			this.reportHeader.Height = Telerik.Reporting.Drawing.Unit.Inch(1.6187500953674316D);
+			this.reportHeader.Height = Telerik.Reporting.Drawing.Unit.Inch(0.81875008344650269D);
 			this.reportHeader.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
-            this.positionCaptionTextBox1,
-            this.positionDataTextBox,
             this.subReport1});
 			this.reportHeader.Name = "reportHeader";
-			// 
-			// positionCaptionTextBox1
-			// 
-			this.positionCaptionTextBox1.CanGrow = true;
-			this.positionCaptionTextBox1.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(0.02083333395421505D), Telerik.Reporting.Drawing.Unit.Inch(0.80823493003845215D));
-			this.positionCaptionTextBox1.Name = "positionCaptionTextBox1";
-			this.positionCaptionTextBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(3.1979167461395264D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-			this.positionCaptionTextBox1.Style.LineWidth = Telerik.Reporting.Drawing.Unit.Point(18D);
-			this.positionCaptionTextBox1.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
-			this.positionCaptionTextBox1.StyleName = "Caption";
-			this.positionCaptionTextBox1.Value = "Position:";
-			// 
-			// positionDataTextBox
-			// 
-			this.positionDataTextBox.CanGrow = true;
-			this.positionDataTextBox.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.2395832538604736D), Telerik.Reporting.Drawing.Unit.Inch(0.80823493003845215D));
-			this.positionDataTextBox.Name = "positionDataTextBox";
-			this.positionDataTextBox.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(3.1979167461395264D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
-			this.positionDataTextBox.Style.LineWidth = Telerik.Reporting.Drawing.Unit.Point(18D);
-			this.positionDataTextBox.StyleName = "Data";
-			this.positionDataTextBox.Value = "= Fields.Position";
 			// 
 			// subReport1
 			// 
@@ -271,7 +246,7 @@ namespace Univoting.Reporting
 			this.textBox3.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.2666666507720947D), Telerik.Reporting.Drawing.Unit.Inch(0.20000000298023224D));
 			this.textBox3.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Right;
 			this.textBox3.StyleName = "Data";
-			this.textBox3.Value = "= Fields.[Percentage Votes]";
+			this.textBox3.Value = "= Fields.[Percentage Votes] +\' %\'";
 			// 
 			// pictureBox1
 			// 
@@ -377,14 +352,12 @@ namespace Univoting.Reporting
         private Telerik.Reporting.TextBox currentTimeTextBox;
         private Telerik.Reporting.TextBox pageInfoTextBox;
         private Telerik.Reporting.ReportHeaderSection reportHeader;
-        private Telerik.Reporting.TextBox positionCaptionTextBox1;
         private Telerik.Reporting.ReportFooterSection reportFooter;
         private Telerik.Reporting.DetailSection detail;
         private Telerik.Reporting.TextBox nameDataTextBox;
         private Telerik.Reporting.TextBox voteDataTextBox;
         private Telerik.Reporting.TextBox textBox3;
         private Telerik.Reporting.PictureBox pictureBox1;
-        private Telerik.Reporting.TextBox positionDataTextBox;
         private Telerik.Reporting.SqlDataSource PositionDataSource;
         private Telerik.Reporting.SubReport subReport1;
     }

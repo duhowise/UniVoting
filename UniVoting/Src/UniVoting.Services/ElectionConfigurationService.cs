@@ -23,11 +23,11 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static IEnumerable<Voter> GetAllVotersAsync()
+		public static Task<IEnumerable<Voter>> GetAllVotersAsync()
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetAll<Voter>();
+				return new ElectionBaseRepository().GetAllAsync<Voter>();
 
 			}
 			catch (Exception e)

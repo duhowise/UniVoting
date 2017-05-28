@@ -31,16 +31,15 @@ namespace UniVoting.Client
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
 			
-			var _timer = new DispatcherTimer();
-			_timer.Interval = new TimeSpan(0, 0, 0, 4);
-			_timer.Tick += _timer_Tick;
-			_timer.Start();
+			
 			count = 0;
 			Loaded += ClientVoteCompletedPage_Loaded;
 		}
 
 		private async void ClientVoteCompletedPage_Loaded(object sender, RoutedEventArgs e)
 		{
+			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
+			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
 			try
 			{
 				await VotingService.CastVote(_votes, _voter,_skippedVotes);
@@ -49,11 +48,13 @@ namespace UniVoting.Client
 			catch (Exception)
 			{
 				Text.Content = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
+				await VotingService.ResetVoter(_voter);
 
 			}
-			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
-			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo));
-			MainGrid.Background.Opacity = 0.2;
+			var _timer = new DispatcherTimer();
+			_timer.Interval = new TimeSpan(0, 0, 0, 3);
+			_timer.Tick += _timer_Tick;
+			_timer.Start();
 		}
 
 		private  void _timer_Tick(object sender, EventArgs e)
@@ -64,7 +65,7 @@ namespace UniVoting.Client
 		}
 		public void RestartApplication()
 		{
-			if (count == 2)
+			if (count == 1)
 			{
 				this.Hide();
 				if (Application.ResourceAssembly != null) Start(Application.ResourceAssembly.Location);

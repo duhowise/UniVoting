@@ -96,7 +96,14 @@ namespace UniVoting.Client
 				{
 					var dialogSettings =new MetroDialogSettings {DialogMessageFontSize = 18, AffirmativeButtonText="Ok"};
 					await this.ShowMessageAsync("Error Confirming Voter","Please Contact Admin Your Details May Not Be Available\n Possible Cause: You May Have Already Voted",MessageDialogStyle.Affirmative,dialogSettings);
+				Pin.Text=String.Empty;
 				}
+			}
+			else
+			{
+				var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
+				await this.ShowMessageAsync("Error Confirming Voter", "Wrong Code!", MessageDialogStyle.Affirmative, dialogSettings);
+				Pin.Text=String.Empty;
 			}
 			
 		}
