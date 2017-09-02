@@ -22,14 +22,21 @@ namespace UniVoting.WPF.Administrators
 			BtnSave.Click += BtnSave_Click;
 			IsChairman.Checked += IsChairman_Checked;
 			IsPresident.Checked += IsPresident_Checked;
-			RepeatPassword.TextChanged += RepeatPassword_TextChanged;
+			//RepeatPassword.PasswordChanged += RepeatPassword_TextChanged;
+			RepeatPassword.PasswordChanged += RepeatPassword_PasswordChanged;
 
 		}
 
-		private void RepeatPassword_TextChanged(object sender, TextChangedEventArgs e)
+		private void RepeatPassword_PasswordChanged(object sender, RoutedEventArgs e)
 		{
-			RepeatPassword.Foreground = !Password.Text.Equals(RepeatPassword.Text) ? new SolidColorBrush(Colors.OrangeRed) : Password.Foreground;
+			RepeatPassword.Foreground = !Password.Password.Equals(RepeatPassword.Password) ? new SolidColorBrush(Colors.OrangeRed) : Password.Foreground;
+
 		}
+
+		//private void RepeatPassword_TextChanged(object sender, TextChangedEventArgs e)
+		//{
+		//	RepeatPassword.Foreground = !Password.Text.Equals(RepeatPassword.Text) ? new SolidColorBrush(Colors.OrangeRed) : Password.Foreground;
+		//}
 
 		
 		
@@ -46,7 +53,7 @@ namespace UniVoting.WPF.Administrators
 
 		private async void BtnSave_Click(object sender, RoutedEventArgs e)
 		{
-			if (!string.IsNullOrWhiteSpace(TextBoxName.Text) || !string.IsNullOrWhiteSpace(Password.Text))
+			if (!string.IsNullOrWhiteSpace(TextBoxName.Text) || !string.IsNullOrWhiteSpace(Password.Password))
 			{
 				var metroWindow = (Window.GetWindow(this) as MetroWindow);
 				try
@@ -55,12 +62,12 @@ namespace UniVoting.WPF.Administrators
 					{
 						FullName = TextBoxName.Text,
 						UserName = Username.Text,
-						Password = Password.Text,
+						Password = Password.Password,
 						IsChairman = Convert.ToBoolean(IsChairman.IsChecked),
 						IsPresident = Convert.ToBoolean(IsPresident.IsChecked)
 						
 					});
-					await metroWindow.ShowMessageAsync("Success !", "Action Successful");
+					await metroWindow.ShowMessageAsync("Success !", $"{Username.Text} Successfully created");
 					Util.Clear(this);
 					TextBoxName.Focus();
 				}

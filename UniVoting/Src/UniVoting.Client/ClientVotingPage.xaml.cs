@@ -47,6 +47,7 @@ namespace UniVoting.Client
 
 		private async void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
+
 			var metroWindow = (Window.GetWindow(this) as MetroWindow);
 			var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
 

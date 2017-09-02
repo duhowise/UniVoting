@@ -45,12 +45,12 @@
                     <materialDesign:PackIcon Kind="Key" Grid.Row="2" Grid.Column="0"
                                  Margin="10" Width="50" Height="30"
                                  Foreground="{DynamicResource AccentColorBrush}" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
+                    <PasswordBox Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Password" FontSize="16" Margin="10" Name="Password" TabIndex="3"
-                 Style="{StaticResource MaterialDesignTextBox}" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
+                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                    <PasswordBox Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource AccentColorBrush}" Width="250"
                      materialDesign:HintAssist.Hint="Repeat Password" FontSize="16" Margin="10" Name="RepeatPassword" TabIndex="3"
-                 Style="{StaticResource MaterialDesignTextBox}" />
+                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
                     <CheckBox Name="IsChairman" Grid.Row="4" Foreground="{DynamicResource AccentColorBrush}" Margin="10" HorizontalAlignment="Left" FontSize="16" Style="{StaticResource MaterialDesignCheckBox}" Content="Ec Chairman" Grid.Column="1"></CheckBox>
                     <CheckBox Name="IsPresident" Grid.Row="4" Margin="10" FontSize="16" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Right" Style="{StaticResource MaterialDesignCheckBox }" Content="President" Grid.Column="1"></CheckBox>
 

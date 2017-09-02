@@ -56,15 +56,17 @@ namespace UniVoting.Client
 
 		private async void BtnVote_Click(object sender, RoutedEventArgs e)
 		{
+			BtnVote.IsEnabled = false;
 			var metroWindow = (Window.GetWindow(this) as MetroWindow);
 			var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok", };
-
 			MessageDialogResult result = await metroWindow.ShowMessageAsync("Cast Vote", $"Are You Sure You Want to Vote For {_candidate.CandidateName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
 			if (result==MessageDialogResult.Affirmative)
 			{
 				_votes.Add(new Vote {CandidateId = CandidateId,PositionId =_position.Id,VoterId =_voter.Id });
 				OnVoteCast(this);
 			}
+			BtnVote.IsEnabled = true;
+
 		}
 
 		private static void OnVoteCast(object source)
