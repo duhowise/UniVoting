@@ -6,29 +6,34 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using UniVoting.Data.Implementations;
 using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.WPF.Administrators
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Interaction logic for AdminSetUpCandidatesPage.xaml
 	/// </summary>
+
+
+	internal class CandidateDto
+	{
+		public int Id { get; set; }
+		public int? PositionId { get; set; }
+		public string CandidateName { get; set; }
+		public BitmapImage CandidatePicture { get; set; }
+		public int? RankId { get; set; }
+		public string Position { get; set; }
+		public string Rank => $"Rank: {RankId}";
+
+
+	}
 	public partial class AdminSetUpCandidatesPage : Page
 	{
-		public  ObservableCollection<CandidateDto> Candidates =new ObservableCollection<CandidateDto>();
-		public  class CandidateDto
-		{
-			public  int Id { get; set; }
-			public  int? PositionId { get; set; }
-			public  string CandidateName { get; set; }
-			public BitmapImage CandidatePicture { get; set; }
-			public  int? RankId { get; set; }
-			public string Position { get; set; }
-			public string Rank => $"Rank: {RankId}";
-
-
-		}
+		internal  ObservableCollection<CandidateDto> Candidates =new ObservableCollection<CandidateDto>();
+		
 		private List<int> _rank;
 		private int _candidateId;
 		public AdminSetUpCandidatesPage()

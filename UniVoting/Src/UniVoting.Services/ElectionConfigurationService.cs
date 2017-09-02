@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
 	public class ElectionConfigurationService
 	{
+	private static IService _electionservice=new ElectionService();
+
+		
 		#region Voters
 		public static Task<int> AddVotersAsync(List<Voter> voters)
 		{
 			try
 			{
-				return new ElectionBaseRepository().InsertBulk(voters);
+				return _electionservice.Voters.InsertBulkVoters(voters);
 
 			}
 			catch (Exception e)
@@ -27,7 +31,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetAllAsync<Voter>();
+				return _electionservice.Voters.GetAllAsync();
 
 			}
 			catch (Exception e)
@@ -40,7 +44,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().Login(voter);
+				return _electionservice.Voters.Login(voter);
 
 			}
 			catch (Exception e)
@@ -69,7 +73,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return   new ElectionBaseRepository().ConfigureElection();
+				return _electionservice.Comissioners.ConfigureElection();
 
 			}
 			catch (Exception e)
@@ -82,7 +86,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().Insert(setting);
+				await _electionservice.Comissioners.AddNewConfiguration(setting);
 
 			}
 			catch (Exception e)
@@ -97,7 +101,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().Insert(candidate);
+				await _electionservice.Candidates.InsertAsync(candidate);
 
 			}
 			catch (Exception e)
@@ -112,7 +116,7 @@ namespace UniVoting.Services
 			{
 				try
 				{
-					await new ElectionBaseRepository().Insert(comissioner);
+					await _electionservice.Comissioners.InsertAsync(comissioner);
 
 				}
 				catch (Exception e)
@@ -125,7 +129,7 @@ namespace UniVoting.Services
 			{
 				try
 				{
-					await new ElectionBaseRepository().Update(comissioner);
+					await _electionservice.Comissioners.UpdateAsync(comissioner);
 
 				}
 				catch (Exception e)
@@ -141,7 +145,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetAllCandidates();
+				return _electionservice.Candidates.GetAllAsync();
 				
 			}
 			catch (Exception e)
@@ -150,30 +154,18 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
-		{
-			try
-			{
-				return new ElectionBaseRepository().GetAllAsync<Candidate>();
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
+		
 		public static Task<Candidate> SaveCandidate(Candidate candidate)
 		{
 			try
 			{
 				if (candidate.Id == 0)
 				{
-					return new ElectionBaseRepository().Insert(candidate);
+					return _electionservice.Candidates.InsertAsync(candidate);
 				}
 				else
 				{
-					return new ElectionBaseRepository().Update(candidate);
+					return _electionservice.Candidates.UpdateAsync(candidate);
 
 				}
 			}
@@ -189,7 +181,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				new ElectionBaseRepository().Delete(candidate);
+				_electionservice.Candidates.Delete(candidate);
 
 			}
 			catch (Exception e)
@@ -204,7 +196,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				var data = new ElectionBaseRepository().Insert(position);
+				var data = _electionservice.Positions.InsertAsync(position);
 				return data;
 			}
 			catch (Exception e)
@@ -218,7 +210,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return await new ElectionBaseRepository().GetById<Position>(positionid);
+				return await _electionservice.Positions.GetByIdAsync(positionid);
 
 			}
 			catch (Exception e)
@@ -232,7 +224,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetPositionsWithDetails();
+				return _electionservice.Positions.GetPositionsWithDetails();
 
 			}
 			catch (Exception e)
@@ -245,7 +237,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetAll<Position>();
+				return _electionservice.Positions.GetAll();
 
 			}
 			catch (Exception e)
@@ -258,7 +250,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return new ElectionBaseRepository().GetPositionsWithDetailsAsync();
+				return _electionservice.Positions.GetPositionsWithDetailsAsync();
 
 			}
 			catch (Exception e)
@@ -271,7 +263,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().Update(position);
+				await _electionservice.Positions.UpdateAsync(position);
 
 			}
 			catch (Exception e)
@@ -285,7 +277,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				new ElectionBaseRepository().Delete(position);
+				_electionservice.Positions.Delete(position);
 
 			}
 			catch (Exception e)
@@ -296,26 +288,13 @@ namespace UniVoting.Services
 		}
 		#endregion   
 		#region User
-		public async Task AddUser(User user)
-		{
-			try
-			{
-				await new ElectionBaseRepository().Insert(user);
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
 		public static async Task<Comissioner> Login(Comissioner comissioner)
 		{
 			Comissioner user=new Comissioner();
 			if (comissioner.IsChairman)
 			{
 				try
-				{ user= await new ElectionBaseRepository().LoginChairman(comissioner);}
+				{ user= await _electionservice.Comissioners.LoginChairman(comissioner);}
 				catch (Exception e)
 				{
 					Console.WriteLine(e);
@@ -325,7 +304,7 @@ namespace UniVoting.Services
 			else if (comissioner.IsPresident)
 			{
 				try
-				{ user= await new ElectionBaseRepository().LoginPresident(comissioner);}
+				{ user= await _electionservice.Comissioners.LoginPresident(comissioner);}
 				catch (Exception e)
 				{
 					Console.WriteLine(e);
@@ -334,7 +313,7 @@ namespace UniVoting.Services
 			}else if (comissioner.IsAdmin)
 			{
 				try
-				{ user= await new ElectionBaseRepository().LoginAdmin(comissioner);}
+				{ user= await _electionservice.Comissioners.LoginAdmin(comissioner);}
 				catch (Exception e)
 				{
 					Console.WriteLine(e);
@@ -344,7 +323,7 @@ namespace UniVoting.Services
 			else if (comissioner.IsPresident)
 			{
 				try
-				{  user= await new ElectionBaseRepository().LoginPresident(comissioner);}
+				{  user= await _electionservice.Comissioners.LoginPresident(comissioner);}
 				catch (Exception e)
 				{
 					Console.WriteLine(e);
@@ -353,7 +332,7 @@ namespace UniVoting.Services
 			}else
 			{
 				try
-				{  user= await new ElectionBaseRepository().Login(comissioner);}
+				{  user= await _electionservice.Comissioners.Login(comissioner);}
 				catch (Exception e)
 				{
 					Console.WriteLine(e);

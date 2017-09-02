@@ -51,8 +51,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionHelper.cs" />
-    <Compile Include="Implementations\ElectionBaseRepository.cs" />
+    <Compile Include="DbManager.cs" />
+    <Compile Include="Implementations\CandidateRepository.cs" />
+    <Compile Include="Implementations\ComissionerRepository.cs" />
+    <Compile Include="Implementations\ElectionService.cs" />
+    <Compile Include="Implementations\Repository.cs" />
+    <Compile Include="Implementations\PositionRepository.cs" />
+    <Compile Include="Implementations\VoterRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

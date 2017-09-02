@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UniVoting.Model;
 
 namespace UniVoting.Data.Interfaces
 {
@@ -7,7 +8,7 @@ namespace UniVoting.Data.Interfaces
     {
         IEnumerable<T> GetAll();
        Task<IEnumerable<T>> GetAllAsync();
-        T Insert();
+        T Insert(T member);
        Task<T> InsertAsync(T member);
         T GetById(int member);
        Task<T> GetByIdAsync(int member);

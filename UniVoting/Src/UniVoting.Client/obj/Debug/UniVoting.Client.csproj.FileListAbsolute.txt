@@ -5,6 +5,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\UniVoting.Client.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\UniVoting.Client.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.Sqlite3.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Autofac.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignColors.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignThemes.MahApps.dll
@@ -32,6 +33,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.Sqlite3.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.Sqlite3.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Autofac.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignColors.pdb

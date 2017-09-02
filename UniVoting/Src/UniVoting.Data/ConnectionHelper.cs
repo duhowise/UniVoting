@@ -13,9 +13,13 @@ namespace UniVoting.Data
         {
 
             Connection = ConfigurationManager.ConnectionStrings["VotingSystem"].ConnectionString;
-        }
+	        
 
+		}
 
+		
 
     }
+
+
 }

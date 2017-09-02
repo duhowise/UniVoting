@@ -5,6 +5,7 @@ using UniVoting.Services;
 
 namespace UniVoting.WPF.Administrators
 {
+	
 	/// <summary>
 	/// Interaction logic for AdminLoginWindow.xaml
 	/// </summary>

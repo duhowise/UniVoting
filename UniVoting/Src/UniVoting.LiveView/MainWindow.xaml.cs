@@ -9,38 +9,38 @@ using Position = UniVoting.Model.Position;
 
 namespace UniVoting.LiveView
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : MetroWindow
-    {
-        IEnumerable<Position> _positions;
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : MetroWindow
+	{
+		IEnumerable<Position> _positions;
 
-        public MainWindow()
-        {
-            InitializeComponent();
+		public MainWindow()
+		{
+			InitializeComponent();
 
-            _positions=new List<Position>();
-            Loaded += MainWindow_Loaded;
-           
-        }
+			_positions=new List<Position>();
+			Loaded += MainWindow_Loaded;
+		   
+		}
 	
-        private async void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            try
-            {
-                _positions = await LiveViewService.Positions();
+		private async void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+		{
+			try
+			{
+				_positions = await LiveViewService.Positions();
 
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message, "Error");
-            }
-            foreach (var position in _positions)
-            {
-                CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
-                SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
-            }
-        }
-    }
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.Message, "Error");
+			}
+			foreach (var position in _positions)
+			{
+				CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
+				SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
+			}
+		}
+	}
 }

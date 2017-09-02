@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
 	public class VotingService
 	{
+		private static IService _electionservice=new ElectionService();
+
+		
 		public static async Task SkipVote(SkippedVotes skipped)
 		{
 			try
 			{
-				await new ElectionBaseRepository().Insert(skipped);
+				await _electionservice.Voters.InsertSkippedVotes(skipped);
 
 			}
 			catch (Exception e)
@@ -25,7 +29,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().InsertBulkVotes(votes, voter,skippedVotes);
+				await _electionservice.Voters.InsertBulkVotes(votes, voter,skippedVotes);
 
 			}
 			catch (Exception e)
@@ -38,7 +42,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().Update(voter);
+				await _electionservice.Voters.UpdateAsync(voter);
 
 			}
 			catch (Exception e)
@@ -51,7 +55,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				await new ElectionBaseRepository().ResetVoter(voter);
+				await _electionservice.Voters.ResetVoter(voter);
 
 			}
 			catch (Exception e)
@@ -64,7 +68,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return	await new ElectionBaseRepository().GetVoterPass(voter);
+				return	await _electionservice.Voters.GetVoterPass(voter);
 
 			}
 			catch (Exception e)
