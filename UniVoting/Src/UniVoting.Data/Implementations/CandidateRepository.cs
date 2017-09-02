@@ -15,27 +15,22 @@ namespace UniVoting.Data.Implementations
 		{
 			
 		}
-		public async Task<IEnumerable<Candidate>> GetAllCandidatesWithPositions()
-		{
-			var candidates = new List<Candidate>();
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
-			{
-				if (connection.State != ConnectionState.Open)
-				{
+		//public async Task<IEnumerable<Candidate>> GetAllCandidatesWithPositions()
+		//{
+		//	var candidates = new List<Candidate>();
+		//	using (var connection = new DbManager("VotingSystem"))
+		//	{
+				
+		//		var data
+		//		foreach (var candidate in candidates)
+		//		{
+		//			//todo get positionid from position repository
+		//			candidate.Position = await;
+		//		}
+		//	}
 
-					await connection.OpenAsync();
-
-				}
-				candidates = (List<Candidate>)await connection.GetListAsync<Candidate>();
-				foreach (var candidate in candidates)
-				{
-					//todo get positionid from position repository
-					//candidate.Position = await GetByIdAsync<Position>(Convert.ToInt32(candidate.PositionId));
-				}
-			}
-
-			return candidates;
-		}
+		//	return candidates;
+		//}
 
 
 		

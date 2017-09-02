@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -343,6 +344,17 @@ namespace UniVoting.Services
 			return user;
 		}
 		#endregion
-		
+
+		public async Task<IEnumerable<Candidate>> GetCandidateWithDetails()
+		{
+			var data = await _electionservice.Candidates.GetAllAsync();
+
+			var candidateWithDetails = data as IList<Candidate> ?? data.ToList();
+			foreach (var candidate in candidateWithDetails)
+			{
+				candidate.Position = _electionservice.Positions.GetById(Convert.ToInt32(candidate.PositionId));
+			}
+			return candidateWithDetails;
+		}
 	}
 }

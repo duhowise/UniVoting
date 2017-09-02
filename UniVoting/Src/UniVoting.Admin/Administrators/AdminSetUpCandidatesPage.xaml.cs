@@ -18,20 +18,35 @@ namespace UniVoting.WPF.Administrators
 	/// </summary>
 
 
-	internal class CandidateDto
-	{
-		public int Id { get; set; }
-		public int? PositionId { get; set; }
-		public string CandidateName { get; set; }
-		public BitmapImage CandidatePicture { get; set; }
-		public int? RankId { get; set; }
-		public string Position { get; set; }
-		public string Rank => $"Rank: {RankId}";
-
-
-	}
+	
 	public partial class AdminSetUpCandidatesPage : Page
 	{
+		internal class CandidateDto
+		{
+			public CandidateDto()
+			{
+				Id = 0;
+			}
+			public CandidateDto(int id, int positionid, string candidateName, BitmapImage candidatepicture, int rankId, string position)
+			{
+				Id = id;
+				Positionid = positionid;
+				CandidateName = candidateName;
+				CandidatePicture = candidatepicture;
+				RankId = rankId;
+				Position = position;
+			}
+			public int Id { get; set; }
+			public int Positionid { get; }
+			public int? PositionId { get; set; }
+			public string CandidateName { get; set; }
+			public BitmapImage CandidatePicture { get; set; }
+			public int? RankId { get; set; }
+			public string Position { get; set; }
+			public string Rank => $"Rank: {RankId}";
+
+
+		}
 		internal  ObservableCollection<CandidateDto> Candidates =new ObservableCollection<CandidateDto>();
 		
 		private List<int> _rank;
@@ -86,18 +101,13 @@ namespace UniVoting.WPF.Administrators
 
 		private async void RefreshCandidateList()
 		{
-			var candidates = await new ElectionConfigurationService().GetAllCandidates();
+			var candidates = await new ElectionConfigurationService().GetCandidateWithDetails();
 			foreach (var candidate in candidates)
 			{
-				var newcandidate = new CandidateDto
-				{
-					CandidateName = candidate.CandidateName,
-					CandidatePicture = Util.ByteToImageSource(candidate.CandidatePicture),
-					Id = candidate.Id,
-					PositionId = candidate.PositionId,
-					RankId = candidate.RankId,
-					Position =candidate.Position.PositionName ?? String.Empty
-				};
+				var newcandidate = new CandidateDto(candidate.Id,Convert.ToInt32(candidate.PositionId)
+					,candidate.CandidateName,Util.ByteToImageSource(candidate.CandidatePicture),
+					Convert.ToInt32(candidate.RankId)
+					,candidate.Position.PositionName);
 				Candidates.Add(newcandidate);
 			}
 

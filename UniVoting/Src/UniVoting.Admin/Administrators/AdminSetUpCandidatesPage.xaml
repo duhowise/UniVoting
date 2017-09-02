@@ -70,7 +70,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Candidate image" Grid.Row="0">
+                    <GroupBox Grid.Column="0" Header="Candidate image" Grid.Row="0" Margin="10,-65,0,75">
                         <StackPanel>
                             <Label FontSize="16" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light">
                                 image size should be 256x256
