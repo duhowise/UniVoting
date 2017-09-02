@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 
 namespace UniVoting.Data.Interfaces
 {
-    public interface IRepository
+    public interface IRepository<T> where T: class 
     {
-        IEnumerable<T> GetAll<T>();
-       Task<IEnumerable<T>> GetAllAsync<T>();
-        T Insert<T>(T member);
-       Task<T> InsertAsync<T>(T member);
-        T GetById<T>(int member);
-       Task<T> GetByIdAsync<T>(int member);
-        void Update<T>(T member);
-        Task UpdateAsync<T>(T member);
-        void Delete<T>(T member);
-        Task DeleteAsync<T>(T member);
+        IEnumerable<T> GetAll();
+       Task<IEnumerable<T>> GetAllAsync();
+        T Insert();
+       Task<T> InsertAsync(T member);
+        T GetById(int member);
+       Task<T> GetByIdAsync(int member);
+        T Update(T member);
+        Task<T> UpdateAsync(T member);
+        void Delete(T member);
+        Task DeleteAsync(T member);
     }
 }

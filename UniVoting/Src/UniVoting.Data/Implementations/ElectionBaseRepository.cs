@@ -5,14 +5,15 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Transactions;
 using Dapper;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class ElectionBaseRepository
+	public class ElectionBaseRepository<T> :IRepository<T> where T: class 
 	{
 		
-		public  IEnumerable<T> GetAll<T>()
+		public  IEnumerable<T> GetAll()
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
@@ -25,7 +26,7 @@ namespace UniVoting.Data.Implementations
 			}
 
 		}
-		public async Task<IEnumerable<T>> GetAllAsync<T>()
+		public async Task<IEnumerable<T>> GetAllAsync()
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
@@ -39,41 +40,58 @@ namespace UniVoting.Data.Implementations
 			}
 
 		}
-		public async Task<IEnumerable<Candidate>> GetAllCandidates()
+
+		public T Insert()
 		{
-			var candidates=new List<Candidate>();
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
-			{
-				if (connection.State != ConnectionState.Open)
-				{
+			throw new NotImplementedException();
+		}
+
+		public Task<T> InsertAsync(T member)
+		{
+			throw new NotImplementedException();
+		}
+
+		public T GetById(int member)
+		{
+			throw new NotImplementedException();
+		}
+//todo fix code
+		//public async Task<IEnumerable<Candidate>> GetAllCandidates()
+		//{
+		//	var candidates=new List<Candidate>();
+		//	using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+		//	{
+		//		if (connection.State != ConnectionState.Open)
+		//		{
 				   
-				  await  connection.OpenAsync();
+		//		  await  connection.OpenAsync();
 
-				}
-				candidates=	(List<Candidate>) await connection.GetListAsync<Candidate>();
-				foreach (var candidate in candidates)
-				{
-					candidate.Position = await GetByIdAsync<Position>(Convert.ToInt32(candidate.PositionId));
-				}
-			}
+		//		}
+		//		candidates=	(List<Candidate>) await connection.GetListAsync<Candidate>();
+		//		foreach (var candidate in candidates)
+		//		{
+		//			candidate.Position = await GetByIdAsync<Position>(Convert.ToInt32(candidate.PositionId));
+		//		}
+		//	}
 
-			return candidates;
-		}
+		//	return candidates;
+		//}
 	   
-		public async Task<T> Insert<T>(T member)
-		{
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
-			{
-				if (connection.State != ConnectionState.Open)
-				{
-					await connection.OpenAsync();
+			//todo fix code
+		//public async Task<T> Insert(T member)
+		//{
+		//	using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+		//	{
+		//		if (connection.State != ConnectionState.Open)
+		//		{
+		//			await connection.OpenAsync();
 
-				}
-				var insert = Convert.ToInt32(await connection.InsertAsync(member));
-				 return await GetByIdAsync<T>(insert);
-			}
+		//		}
+		//		var insert = Convert.ToInt32(await connection.InsertAsync(member));
+		//		 return await GetByIdAsync<T>(insert);
+		//	}
 
-		}
+		//}
 		public async Task Insert( Setting setting)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
@@ -306,19 +324,19 @@ namespace UniVoting.Data.Implementations
 			
 		   
 		}
-		public async Task<T> GetById<T>(int member)
-		{
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
-			{
-				if (connection.State != ConnectionState.Open)
-				{
-				await	connection.OpenAsync();
+		//public async Task GetById(int member)
+		//{
+		//	using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+		//	{
+		//		if (connection.State != ConnectionState.Open)
+		//		{
+		//		await	connection.OpenAsync();
 
-				}
-				return await connection.GetAsync<T>(member);
-			}
-		}
-		public async Task<T> GetByIdAsync<T>(int member)
+		//		}
+		//		return await connection.GetAsync(member);
+		//	}
+		//}
+		public async Task<T> GetByIdAsync(int member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
@@ -330,19 +348,31 @@ namespace UniVoting.Data.Implementations
 				return await connection.GetAsync<T>(member);
 			}
 		}
-		public async Task<Candidate> Update<T>(T member)
-		{
-			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
-			{
-				if (connection.State != ConnectionState.Open)
-				{
-				await	connection.OpenAsync();
 
-				}
-				var id= Convert.ToInt32(await connection.UpdateAsync(member));
-				return await GetByIdAsync<Candidate>(id);
-			}
+		public T Update(T member)
+		{
+			throw new NotImplementedException();
 		}
+
+		public Task<T> UpdateAsync(T member)
+		{
+			throw new NotImplementedException();
+		}
+
+		//ToDo move to candidate repository
+		//public async Task<Candidate> Update(T member)
+		//{
+		//	using (var connection = new SqlConnection(new ConnectionHelper().Connection))
+		//	{
+		//		if (connection.State != ConnectionState.Open)
+		//		{
+		//		await	connection.OpenAsync();
+
+		//		}
+		//		var id= Convert.ToInt32(await connection.UpdateAsync(member));
+		//		return await GetByIdAsync<Candidate>(id);
+		//	}
+		//}
 		public async Task ResetVoter(Voter member)
 		{
 			using (var transaction = new TransactionScope())
@@ -435,7 +465,7 @@ namespace UniVoting.Data.Implementations
 
 			return count;
 		}
-		public  void Delete<T>(T member)
+		public  void Delete(T member)
 		{
 			using (var connection = new SqlConnection(new ConnectionHelper().Connection))
 			{
@@ -446,6 +476,11 @@ namespace UniVoting.Data.Implementations
 				}
 				connection.Delete(member);
 			}
+		}
+
+		public Task DeleteAsync(T member)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
