@@ -50,9 +50,9 @@
                     <!--<Label Foreground="{DynamicResource WhiteColorBrush}" FontSize="24">GO</Label>-->
                 </Button>
             </StackPanel>
-            <StackPanel Grid.Row="0">
-                <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70">VOTING NAME</Label>
+            <StackPanel Orientation="Vertical" Grid.Row="0">
+                <TextBlock  Foreground="{DynamicResource AccentColorBrush}" Margin="4" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontFamily="Segoe UI Bold" Name="VotingName"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="70">VOTING NAME</TextBlock>
                 <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold" Name="VotingSubtitle"
                 	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Content="Voting Subtitle"/>
             </StackPanel>
