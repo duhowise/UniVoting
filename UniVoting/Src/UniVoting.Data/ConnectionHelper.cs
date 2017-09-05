@@ -4,22 +4,22 @@ using System.Data.SqlClient;
 
 namespace UniVoting.Data
 {
-    public class ConnectionHelper
-    {
-       
-        public string Connection;
+	public class ConnectionHelper
+	{
+	   
+		public string Connection;
 
-        public ConnectionHelper()
-        {
+		public ConnectionHelper()
+		{
 
-            Connection = ConfigurationManager.ConnectionStrings["VotingSystem"].ConnectionString;
-	        
+			Connection = ConfigurationManager.ConnectionStrings["VotingSystem"].ConnectionString;
+			
 
 		}
 
 		
 
-    }
+	}
 
 
 }

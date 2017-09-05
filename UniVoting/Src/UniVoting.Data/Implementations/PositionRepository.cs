@@ -9,7 +9,7 @@ namespace UniVoting.Data.Implementations
 	public class PositionRepository:Repository<Position>
 	{
 
-		public PositionRepository() : base(new DbManager("VotingSystem"))
+		public PositionRepository() : base("VotingSystem")
 		{
 			
 		}
@@ -17,7 +17,7 @@ namespace UniVoting.Data.Implementations
 		{
 			try
 			{
-				using (var connection = new DbManager("VotingSystem").Connection)
+				using (var connection = new DbManager(connectionName).Connection)
 				{
 					return await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID ASC");
 
@@ -36,7 +36,7 @@ namespace UniVoting.Data.Implementations
 			try
 			{
 				IEnumerable<Position> positions = new List<Position>();
-				using (var connection = new DbManager("VotingSystem").Connection)
+				using (var connection = new DbManager(connectionName).Connection)
 				{
 					positions = await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
 					foreach (var position in positions)
@@ -59,7 +59,7 @@ namespace UniVoting.Data.Implementations
 			try
 			{
 				IEnumerable<Position> positions = new List<Position>();
-				using (var connection = new DbManager("VotingSystem").Connection)
+				using (var connection = new DbManager(connectionName).Connection)
 				{
 					positions = connection.Query<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
 					foreach (var position in positions)

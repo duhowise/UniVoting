@@ -13,15 +13,15 @@ namespace UniVoting.Data.Implementations
 {
 	public abstract class Repository<T> :IRepository<T> where T: class 
 	{
-		protected DbManager _dbManager;
+		protected string connectionName;
 
-		protected Repository(DbManager dbManager)
+		protected Repository(string connection)
 		{
-			_dbManager = dbManager;
+			connectionName = connection;
 		}
 		public virtual async Task<IEnumerable<T>> GetAllAsync()
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return await connection.GetListAsync<T>();
 			}
@@ -29,7 +29,7 @@ namespace UniVoting.Data.Implementations
 		}
 		public virtual  IEnumerable<T> GetAll()
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return connection.GetList<T>();
 			}
@@ -37,7 +37,7 @@ namespace UniVoting.Data.Implementations
 		}
 		public virtual T Insert(T member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				var insert = Convert.ToInt32(connection.Insert(member));
 				return GetById(insert);
@@ -46,7 +46,7 @@ namespace UniVoting.Data.Implementations
 
 		public virtual async Task<T> InsertAsync(T member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				var insert = Convert.ToInt32(await connection.InsertAsync(member));
 				return await GetByIdAsync(insert);
@@ -56,14 +56,14 @@ namespace UniVoting.Data.Implementations
 		
 		public  T GetById(int member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return  connection.Get<T>(member);
 			}
 		}
 		public  virtual async Task<T> GetByIdAsync(int member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return await connection.GetAsync<T>(member);
 			}
@@ -76,7 +76,7 @@ namespace UniVoting.Data.Implementations
 
 		public virtual async Task<T> UpdateAsync(T member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 			return	await GetByIdAsync(Convert.ToInt32(await connection.UpdateAsync(member)));
 			}
@@ -85,7 +85,7 @@ namespace UniVoting.Data.Implementations
 		
 		public virtual void Delete(T member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				connection.Delete(member);
 			}
@@ -93,7 +93,7 @@ namespace UniVoting.Data.Implementations
 
 		public virtual async Task DeleteAsync(T member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 			await	connection.DeleteAsync(member);
 			}

@@ -11,14 +11,14 @@ namespace UniVoting.Data.Implementations
 	public class CandidateRepository:Repository<Candidate>
 	{
 
-		public CandidateRepository():base(new DbManager("VotingSystem"))
+		public CandidateRepository():base("VotingSystem")
 		{
 			
 		}
 		//public async Task<IEnumerable<Candidate>> GetAllCandidatesWithPositions()
 		//{
 		//	var candidates = new List<Candidate>();
-		//	using (var connection = new DbManager("VotingSystem"))
+		//	using (var connection = new DbManager(connectionName))
 		//	{
 				
 		//		var data
@@ -36,7 +36,7 @@ namespace UniVoting.Data.Implementations
 		
 		//public async Task<Candidate>  Update(Candidate member)
 		//{
-		//	using (var connection = new DbManager("VotingSystem").Connection)
+		//	using (var connection = new DbManager(connectionName).Connection)
 		//	{
 		//		if (connection.State != ConnectionState.Open)
 		//		{

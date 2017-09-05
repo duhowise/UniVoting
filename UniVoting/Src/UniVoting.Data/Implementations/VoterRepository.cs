@@ -10,7 +10,7 @@ namespace UniVoting.Data.Implementations
 	public class VoterRepository:Repository<Voter>
 	{
 
-		public VoterRepository() : base(new DbManager("VotingSystem"))
+		public VoterRepository() : base("VotingSystem")
 		{
 			
 		}
@@ -18,7 +18,7 @@ namespace UniVoting.Data.Implementations
 		{
 			using (var transaction = new TransactionScope())
 			{
-				using (var connection = new DbManager("VotingSystem").Connection)
+				using (var connection = new DbManager(connectionName).Connection)
 				{
 					try
 					{
@@ -44,7 +44,7 @@ namespace UniVoting.Data.Implementations
 			int count = 0;
 			using (var transaction = new TransactionScope())
 			{
-				using (var connection = new DbManager("VotingSystem").Connection)
+				using (var connection = new DbManager(connectionName).Connection)
 				{
 					try
 					{
@@ -68,7 +68,7 @@ namespace UniVoting.Data.Implementations
 		{
 			try
 			{
-				using (var connection = new DbManager("VotingSystem").Connection)
+				using (var connection = new DbManager(connectionName).Connection)
 				{
 					return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
 										WHERE PositionName = @positionName", position);
@@ -90,7 +90,7 @@ namespace UniVoting.Data.Implementations
 			{
 				try
 				{
-					using (var connection = new DbManager("VotingSystem").Connection)
+					using (var connection = new DbManager(connectionName).Connection)
 					{
 						//save votes
 						task = (int)await connection.ExecuteAsync(@"INSERT INTO dbo.Vote(VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", votes);
@@ -112,7 +112,7 @@ namespace UniVoting.Data.Implementations
 		}
 		public  async Task<Voter> Login(Voter voter)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Voted ,VoteInProgress
 						FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
@@ -120,7 +120,7 @@ namespace UniVoting.Data.Implementations
 		}
 		public  async Task<Voter> GetVoterPass(Voter member)
 		{
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT * FROM dbo.Voter WHERE IndexNumber=@IndexNumber", member);
 			}
@@ -129,7 +129,7 @@ namespace UniVoting.Data.Implementations
 		public async Task<int> VoteCount(Position position)
 		{
 
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveView
 										WHERE PositionName = @positionName", position);
@@ -141,7 +141,7 @@ namespace UniVoting.Data.Implementations
 		public async Task<int> InsertSkippedVotes(SkippedVotes skipped)
 		{
 
-			using (var connection = new DbManager("VotingSystem").Connection)
+			using (var connection = new DbManager(connectionName).Connection)
 			{
 				return await connection.InsertAsync<int>(skipped);
 
