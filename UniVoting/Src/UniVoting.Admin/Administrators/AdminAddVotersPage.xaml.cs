@@ -16,14 +16,15 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace UniVoting.WPF.Administrators
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Interaction logic for AdminAddVotersPage.xaml
 	/// </summary>
 	public partial class AdminAddVotersPage : Page
 	{
 		private DataSet _dataSet = null;
-		private int indexName;
-		private int indexNUmber;
+		private int _indexName;
+		private int _indexNUmber;
 		private int _added;
 		private List<Voter> voters;
 		public AdminAddVotersPage()
@@ -49,17 +50,16 @@ namespace UniVoting.WPF.Administrators
 					
 					var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 20, AffirmativeButtonText = "Ok" };
 					await metroWindow.ShowMessageAsync($"Name:{voter.VoterName}", $"Password: {voter.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
-					Searchterm.Text = String.Empty;
+					Searchterm.Text = string.Empty;
 				}
 				else
 				{
 					await metroWindow.ShowMessageAsync("Password",$"Voter with Index Number: {Searchterm.Text} not found!");
-					Searchterm.Text=String.Empty;
+					Searchterm.Text=string.Empty;
 					
 				}
 			}
 		}
-
 		private void TextBoxIndexNumber_LostFocus(object sender, RoutedEventArgs e)
 		{
 			if (!string.IsNullOrWhiteSpace(TextBoxName.Text)||!string.IsNullOrWhiteSpace(TextBoxIndexNumber.Text))
@@ -101,7 +101,7 @@ namespace UniVoting.WPF.Administrators
 
 		private void BtnImportFile_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			using (OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2003 Files | *.xls", ValidateNames = true })
+			using (var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2003 Files | *.xls", ValidateNames = true })
 			{
 				if (openFileDialog.ShowDialog() == DialogResult.OK)
 				{
@@ -112,7 +112,7 @@ namespace UniVoting.WPF.Administrators
 
 					
 					ImportedFilename.Content =ImportedFilename.Content+" "+ openFileDialog.SafeFileName;
-					IExcelDataReader reader = ExcelReaderFactory.CreateBinaryReader(fs);
+					var reader = ExcelReaderFactory.CreateBinaryReader(fs);
 					reader.IsFirstRowAsColumnNames = true;
 					_dataSet = reader.AsDataSet();
 					foreach (DataTable table in _dataSet.Tables)
@@ -125,16 +125,16 @@ namespace UniVoting.WPF.Administrators
 					{
 						if (column.Header.ToString().ToLower() == "fullname")
 						{
-							indexName = column.DisplayIndex;
+							_indexName = column.DisplayIndex;
 							break;
 						}
 						
 					}
-					foreach (DataGridColumn column in VoterGrid.Columns)
+					foreach (var column in VoterGrid.Columns)
 					{
 						if (column.Header.ToString().ToLower() == "indexnumber")
 						{
-							indexNUmber = column.DisplayIndex;
+							_indexNUmber = column.DisplayIndex;
 							break;
 						}
 					}
@@ -142,8 +142,8 @@ namespace UniVoting.WPF.Administrators
 					{
 						var voterInfo = new Voter
 						{
-							VoterName = row[indexName].ToString(),
-							IndexNumber = row[indexNUmber].ToString(),
+							VoterName = row[_indexName].ToString(),
+							IndexNumber = row[_indexNUmber].ToString(),
 							VoterCode = Util.GenerateRandomPassword(6)
 							
 						  

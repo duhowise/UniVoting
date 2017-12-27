@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Candidate.cs" />
     <Compile Include="Comissioner.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Rank.cs" />
     <Compile Include="Setting.cs" />

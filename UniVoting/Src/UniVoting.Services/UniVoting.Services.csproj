@@ -60,6 +60,7 @@
     <Compile Include="ElectionConfigurationService.cs" />
     <Compile Include="LiveViewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemEventLoggerService.cs" />
     <Compile Include="VotingService.cs" />
   </ItemGroup>
   <ItemGroup>

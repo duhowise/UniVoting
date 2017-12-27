@@ -86,3 +86,6 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\UniVoting.LiveV
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\UniVoting.LiveView.csproj.GenerateResource.Cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\UniVoting.LiveView.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\UniVoting.LiveView.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.Data.dll.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.Model.dll.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\obj\Debug\UniVoting.LiveView.csproj.CoreCompileInputs.cache

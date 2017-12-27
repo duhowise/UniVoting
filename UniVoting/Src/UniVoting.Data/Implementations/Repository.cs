@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
-using System.Transactions;
 using Dapper;
 using UniVoting.Data.Interfaces;
-using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
@@ -71,8 +66,11 @@ namespace UniVoting.Data.Implementations
 
 		public virtual T Update(T member)
 		{
-			throw new NotImplementedException();
-		}
+		    using (var connection = new DbManager(connectionName).Connection)
+		    {
+		        return  GetById(Convert.ToInt32( connection.Update(member)));
+		    }
+        }
 
 		public virtual async Task<T> UpdateAsync(T member)
 		{

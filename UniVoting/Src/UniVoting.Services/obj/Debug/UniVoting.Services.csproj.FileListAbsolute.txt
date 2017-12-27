@@ -34,3 +34,6 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.x
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojResolveAssemblyReference.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Data.dll.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Model.dll.config
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CoreCompileInputs.cache
