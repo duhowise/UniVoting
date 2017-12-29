@@ -300,6 +300,8 @@
     <SolidColorBrush x:Key="ListBoxDragVisualIconBrush" Color="#FF000000"/>
     <CornerRadius x:Key="GroupBox_CornerRadius">1</CornerRadius>
     <SolidColorBrush x:Key="ControlBackground_ReadOnly" Color="#5EC9C9C9"/>
+    <SolidColorBrush x:Key="PasswordBoxButtonFill" Color="#FF080808"/>
+    <SolidColorBrush x:Key="PasswordBoxButtonFill_MouseOver" Color="#FFFFC92B"/>
     <ControlTemplate x:Key="ErrorTooltipTemplate" TargetType="ToolTip">
         <Grid x:Name="RootVisual" HorizontalAlignment="Right" RenderTransformOrigin="0 0" Opacity="0" Margin="5 0">
             <VisualStateManager.VisualStateGroups>
@@ -1116,7 +1118,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik:RadWatermarkTextBox">
-                    <Grid x:Name="RootElement" Cursor="IBeam">
+                    <Grid x:Name="RootElement">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
@@ -1203,7 +1205,6 @@
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 BorderThickness="0"
                                 IsTabStop="False"
-                                Cursor="Arrow"
                                 Padding="{TemplateBinding Padding}"
                                 Margin="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -3738,6 +3739,7 @@
                                     Style="{TemplateBinding TogglePartStyle}"
                                     FontSize="{TemplateBinding FontSize}"
                                     IsBackgroundVisible="{TemplateBinding IsBackgroundVisible}"
+                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
                                     IsChecked="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                     MinHeight="9"
                                     MinWidth="15"
@@ -3749,7 +3751,6 @@
                                         Canvas.ZIndex="2"
                                         VerticalAlignment="Center"
                                         RenderTransformOrigin="0.5,0.5"
-                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadSplitButton}, Path=DropDownIndicatorVisibility}"
                                         Margin="0 0 0 0">
                                     <Path
                                             Data="M0,0 L2,0 1,1 Z"
@@ -4478,7 +4479,7 @@
                     Visibility="{Binding MatchCaseVisibility, RelativeSource={RelativeSource TemplatedParent}}"
                     FontSize="{Binding FontSize,RelativeSource={RelativeSource TemplatedParent}}"
                     Content="aA"
-                    Margin="2,0,0,0">
+                    Margin="2 0 0 0">
                 <ToolTipService.ToolTip>
                     <ToolTip telerik:LocalizationManager.ResourceKey="GridViewFilterMatchCase"/>
                 </ToolTipService.ToolTip>
@@ -5164,7 +5165,7 @@
         <Setter Property="HeaderTemplate" Value="{Binding GroupTemplate, RelativeSource={RelativeSource AncestorType=telerik:RadTileList}}"/>
         <Setter Property="ItemsPanel" Value="{StaticResource GroupPanelTemplate}"/>
         <Setter Property="ItemsSource" Value="{Binding Items}"/>
-        <Setter Property="Padding" Value="5,0,0,0"/>
+        <Setter Property="Padding" Value="5 0 0 0"/>
         <Setter Property="Header" Value="{Binding Header}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -5251,12 +5252,12 @@
                     <Border x:Name="MouseOverVisual"
                             BorderBrush="{StaticResource TileBorderBrush_Over}"
                             BorderThickness="3"
-                            Margin="-3,-2,-3,-2"
+                            Margin="-3 -2 -3 -2"
                             IsHitTestVisible="False"
                             Background="Transparent"
                             Visibility="Collapsed"/>
                     <Border x:Name="SelectedVisual"
-                            BorderThickness="3,4,3,3"
+                            BorderThickness="3 4 3 3"
                             IsHitTestVisible="False"
                             BorderBrush="{StaticResource TileBorderBrush_Selected}"
                             Background="Transparent"
@@ -5273,7 +5274,7 @@
                             <Path
                                     Data="M13.473633,3.4513931 C13.546549,3.4513931 13.610352,3.4741802 13.665039,3.5197525 L15.039063,4.5793228 C15.066406,4.6021099 15.09261,4.63515 15.117676,4.6784439 C15.14274,4.7217388 15.155272,4.7616148 15.155273,4.7980728 C15.155272,4.8755474 15.132486,4.9484634 15.086914,5.0168228 L7.4169922,14.867409 L2.5087891,9.5832291 L2.0712891,9.1115494 C2.0211587,9.0477476 1.9960938,8.9793882 1.9960938,8.9064713 C1.9960938,8.8198833 2.0302734,8.7424088 2.0986328,8.6740494 L3.3564453,7.4914322 C3.4156899,7.4413023 3.4863279,7.4162374 3.5683594,7.4162369 C3.6093748,7.4162374 3.6503904,7.4242125 3.6914063,7.4401627 C3.7324216,7.4561133 3.7666013,7.4800391 3.7939453,7.51194 L7.2597656,11.251198 L13.227539,3.5676041 C13.295897,3.4901304 13.377929,3.4513931 13.473633,3.4513931 z"
                                     Fill="White"
-                                    Margin="0,1,3,0"
+                                    Margin="0 1 3 0"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
                                     SnapsToDevicePixels="True"/>
@@ -5298,4 +5299,216 @@
     <Style TargetType="telerik:Tile" BasedOn="{StaticResource TileStyle}"/>
     <Style TargetType="telerik:RadTileList" BasedOn="{StaticResource RadTileListStyle}"/>
     <Style TargetType="telerik:TileGroupContainer" BasedOn="{StaticResource TileGroupContainerStyle}"/>
+    <Style x:Key="PasswordBoxButtonStyle" TargetType="telerik:RadButton">
+        <Setter Property="Foreground" Value="{StaticResource PasswordBoxButtonFill}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Padding" Value="4 0 8 0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadButton">
+                    <Border x:Name="BorderVisual"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="Content"
+                                TextBlock.Foreground="{TemplateBinding Foreground}"
+                                Margin="{TemplateBinding Padding}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource PasswordBoxButtonFill_MouseOver}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Content" Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="PasswordButtonContentTemplate">
+        <Path
+                Data="M15,7C16.6,7 18,8.2 18,10C18,11.6 16.6,13 15,13C13.2,13 12,11.6 12,10C12,8.2 13.2,7 15,7zM15,3.7C11.5,3.7 8.7,6.5 8.7,10C8.7,13.3 11.5,16.2 15,16.2C18.3,16.2 21.2,13.3 21.2,10C21.2,6.5 18.3,3.7 15,3.7zM15,0C23.2,0 30,10 30,10C30,10 23.2,20 15,20C6.6,20 0,10 0,10C0,10 6.6,0 15,0z"
+                Stretch="Fill"
+                Width="16"
+                Height="10"
+                Fill="{Binding ElementName=PART_ShowPasswordButton, Path=Foreground}"/>
+    </DataTemplate>
+    <Style x:Key="RadPasswordBoxStyle" TargetType="telerik:RadPasswordBox">
+        <Setter Property="Foreground" Value="{StaticResource PickerForeground_Normal}"/>
+        <Setter Property="Background" Value="{StaticResource PickerBackground_Normal}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlOuterBorder_Normal}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="5 2"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="AllowDrop" Value="True"/>
+        <Setter Property="IsTabStop" Value="True"/>
+        <Setter Property="ShowPasswordButtonContentTemplate" Value="{StaticResource PasswordButtonContentTemplate}"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ValidationTooltipTemplate}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadPasswordBox">
+                    <Grid x:Name="RootElement">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.150" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.150">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Collapsed</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.115" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MouseOverVisual" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="DisabledVisualElement" To="0.6"/>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_ContentHost" To="0.6"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="ReadOnly">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ReadOnlyVisualElement"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimation To="1" Duration="0" Storyboard.TargetName="FocusVisual" Storyboard.TargetProperty="Opacity"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="WatermarkStates">
+                                <VisualState x:Name="WatermarkHidden">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="WatermarkVisualElement"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="WatermarkVisible"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="Border"
+                                Grid.ColumnSpan="2"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
+                                Opacity="1"/>
+                        <Border x:Name="ReadOnlyVisualElement"
+                                Grid.ColumnSpan="2"
+                                Background="{StaticResource ControlBackground_ReadOnly}"
+                                CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
+                                Opacity="0"/>
+                        <Border x:Name="MouseOverVisual"
+                                Grid.ColumnSpan="2"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource SplitButton_SpanCornerRadius}"
+                                IsHitTestVisible="False"
+                                Opacity="0"
+                                Visibility="Collapsed"
+                                BorderBrush="{StaticResource ControlOuterBorder_MouseOver}"/>
+                        <Border x:Name="DisabledVisualElement"
+                                Grid.ColumnSpan="2"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
+                                IsHitTestVisible="False"
+                                Opacity="0"
+                                BorderBrush="{StaticResource ControlOuterBorder_Disabled}"
+                                Background="{StaticResource ControlBackground_Disabled}"/>
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                BorderThickness="0"
+                                IsTabStop="False"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <telerik:RadButton x:Name="PART_ShowPasswordButton"
+                                Content="{TemplateBinding ShowPasswordButtonContent}"
+                                ContentTemplate="{TemplateBinding ShowPasswordButtonContentTemplate}"
+                                IsTabStop="False"
+                                Focusable="False"
+                                Grid.Column="1"
+                                Cursor="Hand"
+                                HorizontalAlignment="Right"
+                                Style="{StaticResource PasswordBoxButtonStyle}"/>
+                        <Border x:Name="FocusVisual"
+                                Opacity="0"
+                                IsHitTestVisible="False"
+                                Grid.ColumnSpan="2"
+                                CornerRadius="{StaticResource SplitButton_SpanCornerRadius}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{StaticResource ControlOuterBorder_Focused}"/>
+                        <ContentControl x:Name="WatermarkVisualElement"
+                                IsTabStop="False"
+                                Opacity="0.5"
+                                FontStyle="Italic"
+                                Content="{TemplateBinding WatermarkContent}"
+                                ContentTemplate="{TemplateBinding WatermarkTemplate}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                IsHitTestVisible="False"
+                                Padding="{TemplateBinding Padding}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Margin="2 0 0 0">
+                            <ContentControl.Template>
+                                <ControlTemplate TargetType="ContentControl">
+                                    <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{x:Null}">
+                                        <ContentPresenter Margin="{TemplateBinding Padding}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </ContentControl.Template>
+                        </ContentControl>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Visibility, ElementName=PART_ShowPasswordButton}" Value="Visible">
+                            <Setter Property="Padding" Value="5 2 0 2"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="telerik:RadPasswordBox" BasedOn="{StaticResource RadPasswordBoxStyle}"/>
 </ResourceDictionary>

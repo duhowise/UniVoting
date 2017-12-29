@@ -122,6 +122,12 @@
     <SolidColorBrush x:Key="ControlOuterBorder_Focused" Color="#FFFFC92B"/>
     <SolidColorBrush x:Key="ControlInnerBorder_Focused" Color="Transparent"/>
     <SolidColorBrush x:Key="ControlBackground_Focused" Color="Transparent"/>
+    <SolidColorBrush x:Key="ControlSubItem_OuterBorder_Selected" Color="#FFFFC92B"/>
+    <SolidColorBrush x:Key="ControlSubItem_InnerBorder_Selected" Color="#FFFFFFFF"/>
+    <LinearGradientBrush x:Key="ControlSubItem_Background_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFCE79F" Offset="1"/>
+        <GradientStop Color="#FFFDD3A8"/>
+    </LinearGradientBrush>
     <SolidColorBrush x:Key="ButtonIconForeground_Disabled" Color="#FF8D8D8D"/>
     <SolidColorBrush x:Key="ButtonIconForeground_Normal" Color="#FF000000"/>
     <SolidColorBrush x:Key="ButtonIconForeground_MouseOver" Color="#FF000000"/>
@@ -2112,6 +2118,7 @@
                                     Style="{TemplateBinding TogglePartStyle}"
                                     FontSize="{TemplateBinding FontSize}"
                                     IsBackgroundVisible="{TemplateBinding IsBackgroundVisible}"
+                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
                                     IsChecked="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                     MinHeight="9"
                                     MinWidth="15"
@@ -2123,7 +2130,6 @@
                                         Canvas.ZIndex="2"
                                         VerticalAlignment="Center"
                                         RenderTransformOrigin="0.5,0.5"
-                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=telerik:RadSplitButton}, Path=DropDownIndicatorVisibility}"
                                         Margin="0 0 0 0">
                                     <Path
                                             Data="M0,0 L2,0 1,1 Z"
@@ -2284,7 +2290,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik:RadWatermarkTextBox">
-                    <Grid x:Name="RootElement" Cursor="IBeam">
+                    <Grid x:Name="RootElement">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
@@ -2371,7 +2377,6 @@
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 BorderThickness="0"
                                 IsTabStop="False"
-                                Cursor="Arrow"
                                 Padding="{TemplateBinding Padding}"
                                 Margin="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -2796,7 +2801,13 @@
                             Content="{TemplateBinding SelectionBoxItem}"
                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                            </Style>
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
                 </Grid>
             </telerik1:RadToggleButton>
             <Popup x:Name="PART_Popup">
@@ -2878,8 +2889,22 @@
                                     CornerRadius="{StaticResource SplitButton_SpanCornerRadius}"
                                     BorderThickness="1"
                                     BorderBrush="{StaticResource ControlOuterBorder_Highlighted}"
-                                    Background="{StaticResource ControlBackground_Highlighted}">
+                                    Background="{StaticResource ControlBackground_Highlighted}"
+                                    AutomationProperties.AutomationId="HighlightVisual">
                                 <Border BorderThickness="1" CornerRadius="{StaticResource SplitButton_SpanInnerCornerRadius}" BorderBrush="{StaticResource ControlInnerBorder_Highlighted}"/>
+                            </Border>
+                            <Border x:Name="SelectedVisual"
+                                    Opacity="0"
+                                    SnapsToDevicePixels="True"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
+                                    BorderBrush="{StaticResource ControlSubItem_OuterBorder_Selected}">
+                                <Border
+                                        Background="{StaticResource ControlSubItem_Background_Selected}"
+                                        BorderBrush="{StaticResource ControlSubItem_InnerBorder_Selected}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource ControlInnerBorder_CornerRadius}"
+                                        SnapsToDevicePixels="True"/>
                             </Border>
                             <ContentPresenter x:Name="Content"
                                     Margin="{TemplateBinding Padding}"
@@ -2887,6 +2912,18 @@
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type telerikInput:RadComboBox}}, Path=AllowMultipleSelection}" Value="True"/>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=Self}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter TargetName="SelectedVisual" Property="Opacity" Value="1"/>
+                                <Setter TargetName="HighlightVisual" Property="Opacity" Value="0"/>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -3605,7 +3642,7 @@
                                         Grid.Row="2"
                                         ItemTemplate="{TemplateBinding PaletteItemsTemplate}"
                                         ColorPropertyPath="{TemplateBinding ColorPropertyPath}"
-                                        Margin="0,0,0,-3"
+                                        Margin="0 0 0 -3"
                                         VerticalAlignment="Center"
                                         BorderBrush="Transparent"
                                         BorderThickness="0">
@@ -6096,7 +6133,7 @@
                                 CornerRadius="1"/>
                         <Border Background="{StaticResource CalculatorResults_TransparentBackground}" Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="2" Margin="3" Opacity="0.5"/>
                         <TextBox x:Name="DisplayTextBox"
-                                Margin="0,-6,5,5"
+                                Margin="0 -6 5 5"
                                 Grid.ColumnSpan="2"
                                 Grid.Row="1"
                                 Foreground="{TemplateBinding Foreground}"
@@ -6110,7 +6147,7 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 FontSize="12"
                                 Text="M"
-                                Margin="4,5,-1,5"
+                                Margin="4 5 -1 5"
                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsMemoryUpdated, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 VerticalAlignment="Center"/>
                         <TextBox x:Name="HistoryTextBox"
@@ -6121,17 +6158,17 @@
                                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=History, Mode=OneWay}"
                                 TextAlignment="Right"
                                 Style="{StaticResource CalculatorHistoryDisplay_Style}"
-                                Margin="4,5,5,0"/>
+                                Margin="4 5 5 0"/>
                     </Grid>
                 </Border>
-                <Grid Grid.Row="1" Margin="0,5,-3,0">
+                <Grid Grid.Row="1" Margin="0 5 -3 0">
                     <Grid.Resources>
                         <Style TargetType="telerik1:RadButton" BasedOn="{StaticResource RadButtonStyle}">
                             <Setter Property="Focusable" Value="False"/>
                             <Setter Property="IsTabStop" Value="False"/>
                             <Setter Property="MinHeight" Value="25"/>
                             <Setter Property="MinWidth" Value="35"/>
-                            <Setter Property="Margin" Value="0,6,4,0"/>
+                            <Setter Property="Margin" Value="0 6 4 0"/>
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
@@ -6844,7 +6881,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik1:RadWatermarkTextBox">
-                    <Grid x:Name="RootElement" Cursor="IBeam">
+                    <Grid x:Name="RootElement">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
@@ -6933,6 +6970,7 @@
                                 IsTabStop="False"
                                 FontStyle="Italic"
                                 Opacity="0.5"
+                                Foreground="{TemplateBinding Foreground}"
                                 Content="{TemplateBinding WatermarkContent}"
                                 ContentTemplate="{TemplateBinding WatermarkTemplate}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -7018,7 +7056,7 @@
                         Margin="{TemplateBinding Padding}">
                     <telerikInput:AutoCompleteBoxesItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <telerikInput:AutoCompleteBoxesWrapPanel Width="{Binding ActualWidth, ElementName=WatermarkTextBox}"/>
+                            <telerikInput:AutoCompleteBoxesWrapPanel/>
                         </ItemsPanelTemplate>
                     </telerikInput:AutoCompleteBoxesItemsControl.ItemsPanel>
                 </telerikInput:AutoCompleteBoxesItemsControl>
@@ -7031,6 +7069,27 @@
                             MinWidth="{TemplateBinding MinDropDownWidth}"
                             MaxHeight="{TemplateBinding MaxDropDownHeight}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    <Border
+                            Background="{Binding Background, ElementName=PART_ListBox}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            Width="{Binding ElementName=PART_ListBox, Path=Width}"
+                            Visibility="{Binding ElementName=PART_NoResultsContentPresenter, Path=Visibility}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_NoResultsContentPresenter"
+                                MinWidth="{TemplateBinding MinDropDownWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                Content="{TemplateBinding NoResultsContent}"
+                                ContentTemplate="{TemplateBinding NoResultsContentTemplate}"
+                                Margin="3 4"
+                                Visibility="Collapsed">
+                            <ContentPresenter.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                </Style>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </Border>
                 </Grid>
             </Popup>
         </Grid>
@@ -7061,15 +7120,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik1:RadWatermarkTextBox">
-                    <Grid x:Name="RootElement" Cursor="IBeam">
+                    <Grid x:Name="RootElement">
                         <ScrollViewer x:Name="PART_ContentHost"
                                 Background="Transparent"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 BorderThickness="0"
                                 IsTabStop="False"
-                                Padding="{TemplateBinding Padding}"
-                                Cursor="Arrow"/>
+                                Padding="{TemplateBinding Padding}"/>
                         <ContentControl x:Name="WatermarkVisualElement"
                                 IsTabStop="False"
                                 FontStyle="Italic"
