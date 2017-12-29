@@ -16,7 +16,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <TextBlock TextWrapping="WrapWithOverflow"  FontSize="20" Grid.Row="1" Name="CandidateName" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe Ui semibold" Margin="-2,0,0,0" HorizontalAlignment="Center" Width="230">Candidate Name</TextBlock>
+            <TextBlock TextWrapping="WrapWithOverflow"  FontSize="20" Grid.Row="1" Name="CandidateName" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe Ui semibold" Margin="-2,0,0,0" HorizontalAlignment="Center" TextAlignment="Center" Width="230">Candidate Name</TextBlock>
             <Image Name="CandidateImage" Grid.Row="2" Source="/Resources/images/user.png"></Image>
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label FontSize="18" Foreground="{DynamicResource AccentColorBrush}"
