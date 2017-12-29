@@ -9,6 +9,7 @@ namespace UniVoting.Services
 {
     public class VotingService
     {
+        private static readonly ILogger _logger=new SystemEventLoggerService();
         private static readonly IService _electionservice = new ElectionService();
 
         public static async Task SkipVote(SkippedVotes skipped)
@@ -19,7 +20,8 @@ namespace UniVoting.Services
             }
             catch (Exception exception)
             {
-                SystemEventLoggerService.Log(exception.StackTrace);
+                _logger.Log(exception);
+                throw;
             }
         }
 
@@ -31,7 +33,8 @@ namespace UniVoting.Services
             }
             catch (Exception exception)
             {
-                SystemEventLoggerService.Log(exception.StackTrace);
+                _logger.Log(exception);
+                throw;
             }
         }
 
@@ -43,7 +46,7 @@ namespace UniVoting.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.Log(e);
                 throw;
             }
         }
@@ -56,7 +59,7 @@ namespace UniVoting.Services
             }
             catch (Exception exception)
             {
-                SystemEventLoggerService.Log(exception.StackTrace);
+                _logger.Log(exception);
             }
         }
 
@@ -68,9 +71,9 @@ namespace UniVoting.Services
             }
             catch (Exception exception)
             {
-                SystemEventLoggerService.Log(exception.StackTrace);
+                _logger.Log(exception);
+                throw;
             }
-            return null;
-        }
+           }
     }
 }
