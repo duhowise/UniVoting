@@ -996,9 +996,7 @@
                                     Margin="{TemplateBinding Padding}"
                                     Content="{TemplateBinding Content}"
                                     ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    CanContentScroll="{TemplateBinding CanContentScroll}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    CanContentScroll="{TemplateBinding CanContentScroll}"/>
                             <Border Grid.Column="1" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Margin="0 0 -1 -1">
                                 <Border
                                         Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
@@ -1622,14 +1620,14 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border
                                 CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
-                                Margin="1,0"
+                                Margin="1 0"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}"/>
                         <Border x:Name="MouseOverState"
                                 Opacity="0"
                                 CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
-                                Margin="1,0"
+                                Margin="1 0"
                                 BorderBrush="{StaticResource ControlOuterBorder_Highlighted}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <Border
@@ -1641,7 +1639,7 @@
                         <Border x:Name="SelectedState"
                                 Opacity="0"
                                 CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
-                                Margin="1,0"
+                                Margin="1 0"
                                 BorderBrush="{StaticResource ControlSubItem_OuterBorder_Selected}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <Border
@@ -1656,7 +1654,7 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         <Border x:Name="FocusVisual"
                                 Opacity="0"
-                                Margin="1,0"
+                                Margin="1 0"
                                 BorderThickness="1"
                                 CornerRadius="{StaticResource ControlOuterBorder_CornerRadius}"
                                 BorderBrush="{StaticResource ControlOuterBorder_Focused}"/>

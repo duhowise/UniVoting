@@ -7,6 +7,7 @@ using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
+using System.Linq;
 
 namespace UniVoting.Client
 {
@@ -33,9 +34,18 @@ namespace UniVoting.Client
 		   
 			foreach (var candidate in _position.Candidates)
 			{
-				candidatesHolder.Children.Add(new CandidateControl(_votes, _position,candidate, _voter));
+                if (_position.Candidates.AsQueryable().Count() > 1)
+                {
+                    candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
 
-			}
+                }
+                else
+                {
+                    candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, candidate, _voter));
+                }
+
+
+            }
 
 		}
 	  

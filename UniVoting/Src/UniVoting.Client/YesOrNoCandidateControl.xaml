@@ -1,15 +1,16 @@
-﻿<UserControl x:Class="UniVoting.Client.CandidateControl"
+﻿<UserControl x:Class="UniVoting.Client.YesOrNoCandidateControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UniVoting.Client"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Width="250"
-             mc:Ignorable="d">
+             mc:Ignorable="d" 
+             Width="250">
     <materialDesign:Card Margin="3" materialDesign:ShadowAssist.ShadowDepth="Depth1" UniformCornerRadius="1" HorizontalAlignment="Stretch" Padding="0" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -18,19 +19,23 @@
 
             <Label FontSize="20" Grid.Row="1" Name="CandidateName" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe Ui semibold" Margin="-2,0,0,0" HorizontalAlignment="Left" Width="230">Candidate Name</Label>
             <Image Name="CandidateImage" Grid.Row="2" Source="/Resources/images/user.png"></Image>
-            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Label FontSize="18" Foreground="{DynamicResource AccentColorBrush}"
-                       VerticalAlignment="Center" Margin="0,0,10,0"
-                       FontFamily="Segoe Ui Light">Vote</Label>
-                <Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                         HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,10"
-                         Name="BtnVote" TabIndex="0" Background="{DynamicResource AccentColorBrush}"
-                         ToolTip="Vote for this candidate">
-                    <materialDesign:PackIcon Kind="ThumbUp" Grid.Row="0" Grid.Column="0"
-                                 Margin="10" Width="30" Height="30"
-                                 Foreground="{DynamicResource WhiteColorBrush}" />
-                </Button>
+            <Label Grid.Row="3" FontSize="18" Foreground="{DynamicResource AccentColorBrush}"
+                       VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Center"
+                       FontFamily="Segoe Ui Light">Vote YES or NO</Label>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+               
+                <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" Foreground="White" FontFamily="Segoe UI Bold"
+                        Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnVoteYes"
+                        Background="LightGreen"
+                        TabIndex="6" Content="YES">
 
+                </Button>
+                <Button Grid.Row="3" HorizontalAlignment="Left" FontSize="20" Foreground="White" FontFamily="Segoe UI Bold"
+                        Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnVoteNo"
+                        TabIndex="6" Content="NO" Background="Red">
+
+                </Button>
+           
             </StackPanel>
             <Label x:Name="Rank" Content="2" HorizontalAlignment="Left" FontSize="30" Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe Ui bold"  VerticalAlignment="Top" Grid.Row="2"/>
         </Grid>

@@ -78,20 +78,8 @@
     <CornerRadius x:Key="Expander_BorderRadius">3</CornerRadius>
     <SolidColorBrush x:Key="BorderLineOuterColor" Color="#26000000"/>
     <SolidColorBrush x:Key="BorderLineInnerColor" Color="#FFFFFFFF"/>
-    <LinearGradientBrush x:Key="ToolBar_InnerBackground" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="White" Offset="0"/>
-        <GradientStop Color="#FFCDCDCD" Offset="1"/>
-        <GradientStop Color="#FFCECECE" Offset="0.42"/>
-        <GradientStop Color="#FFAFAFAF" Offset="0.43"/>
-    </LinearGradientBrush>
     <SolidColorBrush x:Key="ToolBar_OuterBorder" Color="#FF848484"/>
     <SolidColorBrush x:Key="ToolBar_InnerBorder" Color="#FFFFFFFF"/>
-    <LinearGradientBrush x:Key="ToolBar_InnerBackgroundV" EndPoint="1,0.5" StartPoint="0,0.5">
-        <GradientStop Color="White" Offset="0"/>
-        <GradientStop Color="#FFCDCDCD" Offset="1"/>
-        <GradientStop Color="#FFCECECE" Offset="0.42"/>
-        <GradientStop Color="#FFAFAFAF" Offset="0.43"/>
-    </LinearGradientBrush>
     <SolidColorBrush x:Key="ToolBar_OuterSeparator" Color="#80FFFFFF"/>
     <SolidColorBrush x:Key="ToolBar_InnerSeparator" Color="#50000000"/>
     <SolidColorBrush x:Key="ToolBar_OuterGripOrnament" Color="#FFFFFFFF"/>
@@ -488,9 +476,13 @@
         </Grid>
     </ControlTemplate>
     <telerik:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+    <telerik:VisualToVisualBrushConverter x:Key="VisualToVisualBrushConverter"/>
+    <layoutControl:TypeToPathDataConverter x:Key="TypeToPathDataConverter"/>
     <SolidColorBrush x:Key="LayoutControl_OuterBorder" Color="#FF848484"/>
     <SolidColorBrush x:Key="LayoutControl_Background" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="LayoutControl_DropIndicator_Background" Color="#FFFFC92B"/>
+    <SolidColorBrush x:Key="LayoutControlSplitter_Background" Color="#FFEFEFEF"/>
+    <SolidColorBrush x:Key="LayoutControlSplitter_Foreground" Color="#FF000000"/>
     <SolidColorBrush x:Key="LayoutControl_DropIndicator_BorderBrush" Color="#FFFFC92B"/>
     <SolidColorBrush x:Key="Wizard_Background" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="Wizard_BorderBrush" Color="#FF848484"/>
@@ -578,6 +570,12 @@
     <Thickness x:Key="TabItem_InnerBorderThickness">1 1 1 0</Thickness>
     <CornerRadius x:Key="TabItem_OuterCornerRadius">3 3 0 0</CornerRadius>
     <CornerRadius x:Key="TabItem_InnerCornerRadius">2 2 0 0</CornerRadius>
+    <LinearGradientBrush x:Key="ToolBar_OuterBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="White" Offset="0"/>
+        <GradientStop Color="#FFCDCDCD" Offset="1"/>
+        <GradientStop Color="#FFCECECE" Offset="0.42"/>
+        <GradientStop Color="#FFAFAFAF" Offset="0.43"/>
+    </LinearGradientBrush>
     <SolidColorBrush x:Key="OutlookBar_HorizontalSplitterBackground" Color="#FFF0F0F0"/>
     <LinearGradientBrush x:Key="OutlookBar_HorizontalSplitterOpacityMask" EndPoint="0.5,0" StartPoint="0.5,1">
         <GradientStop Color="Black" Offset="0"/>
@@ -4626,6 +4624,7 @@
                                     Style="{TemplateBinding TogglePartStyle}"
                                     FontSize="{TemplateBinding FontSize}"
                                     IsBackgroundVisible="{TemplateBinding IsBackgroundVisible}"
+                                    Visibility="{TemplateBinding DropDownIndicatorVisibility}"
                                     IsChecked="{Binding Path=IsOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                     MinHeight="9"
                                     MinWidth="15"
@@ -4637,7 +4636,6 @@
                                         Canvas.ZIndex="2"
                                         VerticalAlignment="Center"
                                         RenderTransformOrigin="0.5,0.5"
-                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType=telerik1:RadSplitButton}, Path=DropDownIndicatorVisibility}"
                                         Margin="0 0 0 0">
                                     <Path
                                             Data="M0,0 L2,0 1,1 Z"
@@ -4726,12 +4724,12 @@
     <Style x:Key="ToolBarCheckBoxStyle" TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="1"/>
-        <Setter Property="Padding" Value="4,0,0,0"/>
+        <Setter Property="Padding" Value="4 0 0 0"/>
     </Style>
     <Style x:Key="ToolBarRadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource RadioButtonStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="1"/>
-        <Setter Property="Padding" Value="4,0,0,0"/>
+        <Setter Property="Padding" Value="4 0 0 0"/>
     </Style>
     <Style x:Key="RadToolBarSeparatorStyle" TargetType="telerikNavigation:RadToolBarSeparator">
         <Setter Property="Background" Value="{StaticResource ToolBar_OuterSeparator}"/>
@@ -5115,7 +5113,7 @@
                 <Path
                         Fill="#FFFFFFFF"
                         Stretch="Fill"
-                        Margin="2,5,0,0"
+                        Margin="2 5 0 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Width="5"
@@ -5124,17 +5122,17 @@
                 <Path
                         Fill="{StaticResource ControlElement_Normal}"
                         Stretch="Fill"
-                        Margin="0,4,0,0"
+                        Margin="0 4 0 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Width="5"
                         Height="3"
                         Data="M0,0 L5,0 5,1 4,1 4,2 3,2 3,3 2,3 2,2 1,2 1,1 0,1 0,0 z"/>
-                <Path Fill="#FFFFFFFF" Stretch="Fill" Margin="2,1,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="5" Height="1" Data="M0,0 L5,0 5,1 0,1 0,0 z"/>
+                <Path Fill="#FFFFFFFF" Stretch="Fill" Margin="2 1 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="5" Height="1" Data="M0,0 L5,0 5,1 0,1 0,0 z"/>
                 <Path
                         Fill="{StaticResource ControlElement_Normal}"
                         Stretch="Fill"
-                        Margin="0,0,0,0"
+                        Margin="0 0 0 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Width="5"
@@ -5166,6 +5164,9 @@
         <Setter Property="MinWidth" Value="25"/>
         <Setter Property="Margin" Value="1"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource ToolBar_OuterBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ToolBar_OuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerikNavigation:RadToolBar">
@@ -5283,9 +5284,6 @@
                                                     <Visibility>Collapsed</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerBackground" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ToolBar_InnerBackground}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -5413,9 +5411,9 @@
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerBackground" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ToolBar_InnerBackgroundV}"/>
-                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Angle" Storyboard.TargetName="rotateOuterBorder">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="-90"/>
+                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -5446,24 +5444,20 @@
                                 </Border>
                             </Popup>
                         </Grid>
-                        <Border x:Name="InnerBackground"
-                                Grid.ColumnSpan="2"
-                                Grid.RowSpan="2"
-                                BorderBrush="{StaticResource ToolBar_OuterBorder}"
-                                CornerRadius="3"
-                                HorizontalAlignment="Stretch"
-                                BorderThickness="1"
-                                Background="{StaticResource ToolBar_InnerBackground}">
-                            <Border BorderThickness="1" CornerRadius="2" BorderBrush="{StaticResource ToolBar_InnerBorder}"/>
-                        </Border>
-                        <Border x:Name="BindingBackground"
+                        <Border x:Name="OuterBackground"
                                 Grid.ColumnSpan="2"
                                 Grid.RowSpan="2"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 CornerRadius="3"
                                 HorizontalAlignment="Stretch"
+                                RenderTransformOrigin="0.5 0.5"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"/>
+                                Background="{TemplateBinding Background}">
+                            <Border BorderThickness="1" CornerRadius="2" BorderBrush="{StaticResource ToolBar_InnerBorder}"/>
+                            <Border.LayoutTransform>
+                                <RotateTransform x:Name="rotateOuterBorder" Angle="0"/>
+                            </Border.LayoutTransform>
+                        </Border>
                         <Grid Visibility="{TemplateBinding GripVisibility}" Background="Transparent">
                             <Grid x:Name="GripOrnamentH" Visibility="Visible" Margin="5 0 2 0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Path
@@ -7882,7 +7876,7 @@
                         </Grid.RenderTransform>
                         <Path Width="10" Height="10" Stretch="Fill" Stroke="{TemplateBinding Foreground}" StrokeThickness="1" StrokeStartLineCap="Round" Data="M1,0 A1,1,90,1,1,0,-1"/>
                         <Path
-                                Margin="5,-1.5,0,0"
+                                Margin="5 -1.5 0 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Width="4"
@@ -7922,8 +7916,8 @@
                             ContentTemplateSelector="{TemplateBinding HeaderEditTemplateSelector}"
                             ContentTemplate="{TemplateBinding HeaderEditTemplate}"/>
                 </Grid>
-                <CheckBox IsTabStop="False" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0" x:Name="CheckBoxElement" Visibility="Collapsed"/>
-                <RadioButton IsTabStop="False" Grid.Column="2" Margin="5,0,0,0" VerticalAlignment="Center" x:Name="RadioButtonElement" Visibility="Collapsed"/>
+                <CheckBox IsTabStop="False" Grid.Column="2" VerticalAlignment="Center" Margin="5 0 0 0" x:Name="CheckBoxElement" Visibility="Collapsed"/>
+                <RadioButton IsTabStop="False" Grid.Column="2" Margin="5 0 0 0" VerticalAlignment="Center" x:Name="RadioButtonElement" Visibility="Collapsed"/>
             </Grid>
             <ItemsPresenter Grid.Row="1" x:Name="ItemsHost" Visibility="Collapsed"/>
         </Grid>
@@ -8574,6 +8568,14 @@
         <Setter Property="Padding" Value="0 2 0 2"/>
         <Setter Property="Cursor" Value="SizeNS"/>
     </Style>
+    <Style x:Key="OutlookBarVerticalResizerStyle" TargetType="Thumb">
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Width" Value="2"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type telerikNavigation:RadOutlookBar}}, Path=IsVerticalResizerVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Setter Property="HorizontalAlignment" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type telerikNavigation:RadOutlookBar}}, Path=VerticalResizerAlignment, Converter={StaticResource AlignmentConverter}}"/>
+    </Style>
     <ControlTemplate x:Key="OutlookBarMenuItemTemplate" TargetType="telerikNavigation:RadMenuItem">
         <Grid>
             <VisualStateManager.VisualStateGroups>
@@ -8658,6 +8660,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalSplitterStyle" Value="{StaticResource OutlookBarHorizontalSplitterStyle}"/>
+        <Setter Property="VerticalResizerStyle" Value="{StaticResource OutlookBarVerticalResizerStyle}"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
@@ -8774,13 +8777,7 @@
                                 </Grid>
                             </DockPanel>
                         </Border>
-                        <Thumb x:Name="VerticalResizer"
-                                Opacity="0"
-                                Cursor="SizeWE"
-                                VerticalAlignment="Stretch"
-                                Width="2"
-                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsVerticalResizerVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                HorizontalAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VerticalResizerAlignment, Converter={StaticResource AlignmentConverter}}">
+                        <Thumb x:Name="VerticalResizer" Style="{TemplateBinding VerticalResizerStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock Text="{telerik1:LocalizableResource Key=OutlookBarVerticalResizer}"/>
                             </ToolTipService.ToolTip>
@@ -8862,7 +8859,8 @@
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                         Foreground="{TemplateBinding Foreground}"
-                                        IsTabStop="False"/>
+                                        IsTabStop="False"
+                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"/>
                             </telerik1:RadDockPanel>
                         </Grid>
                     </Grid>
@@ -9880,7 +9878,7 @@
     </Style>
     <Style TargetType="{x:Type telerikNavigation:CarouselDataFieldPresenter}" BasedOn="{StaticResource CarouselDataFieldPresenterStyle}"/>
     <ControlTemplate x:Key="CarouselItemScrollViewerTemplate" TargetType="{x:Type telerikNavigation:CarouselScrollViewer}">
-        <Grid x:Name="Grid" Margin="0,-1,-1,-1" Background="Transparent">
+        <Grid x:Name="Grid" Margin="0 -1 -1 -1" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -10038,7 +10036,7 @@
                 <Grid x:Name="Arrow" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Path x:Name="ArrowBackground"
                             Fill="{StaticResource Carousel_ButtonContentShadow}"
-                            Margin="0,1,0,0"
+                            Margin="0 1 0 0"
                             Data="M0,0 L7,0 7,1 6,1 6,2 5,2 5,3 4,3 4,4 3,4 3,3 2,3 2,2 1,2 1,1 0,1 z"
                             RenderTransformOrigin="0.5,0.5"
                             SnapsToDevicePixels="True">
@@ -10053,7 +10051,7 @@
                     </Path>
                     <Path x:Name="ArrowForeground"
                             Fill="{StaticResource Carousel_ButtonContent}"
-                            Margin="0,0,0,1"
+                            Margin="0 0 0 1"
                             Data="M0,0 L7,0 7,1 6,1 6,2 5,2 5,3 4,3 4,4 3,4 3,3 2,3 2,2 1,2 1,1 0,1 z"
                             RenderTransformOrigin="0.5,0.5"
                             SnapsToDevicePixels="True">
@@ -11144,6 +11142,318 @@
         </Setter>
     </Style>
     <Style TargetType="telerik1:RadExpander" BasedOn="{StaticResource RadExpanderStyle}"/>
+    <Style TargetType="Path" x:Key="LayoutControlExpanderButtonPathStyle">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="4 0"/>
+        <Setter Property="Fill" Value="White"/>
+        <Setter Property="Data" Value="M0,0L6,0L3,4z"/>
+    </Style>
+    <Style TargetType="Path" x:Key="LayoutControlToolBoxExpanderButtonPathStyle">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Fill" Value="{StaticResource ControlElement_Normal}"/>
+        <Setter Property="Data" Value="M0,0 L1,0 4,3 7,0 8,0 8,1 4,5 0,1 z"/>
+    </Style>
+    <Style x:Key="LayoutControlExpanderHeaderButtonStyle" TargetType="telerik:RadToggleButton">
+        <Setter Property="Padding" Value="4 7"/>
+        <Setter Property="Background" Value="{StaticResource ControlHeader_Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlHeader_OuterBorderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ControlHeader_Foreground}"/>
+        <Setter Property="Tag" Value="{StaticResource LayoutControlExpanderButtonPathStyle}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="TabIndex" Value="{Binding TabIndex, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="VerticalAlignment" Value="{Binding VerticalAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalHeaderAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalHeaderAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="FontSize" Value="{Binding FontSize, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="FontStyle" Value="{Binding FontStyle, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="FontWeight" Value="{Binding FontWeight, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="FontFamily" Value="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="FontStretch" Value="{Binding FontStretch, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="IsHitTestVisible" Value="{Binding IsExpandable, RelativeSource={RelativeSource AncestorType=telerikNavigation:LayoutControlExpanderGroup}}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:RadToggleButton">
+                    <Border x:Name="BorderVisual"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Margin="-1 -1 -1 0">
+                        <Grid>
+                            <Border BorderBrush="{StaticResource ControlHeader_InnerBorderBrush}" BorderThickness="1"/>
+                            <Grid x:Name="HeaderPanel" Background="Transparent" Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="HeaderContent"
+                                        Margin="5 0"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                <Grid
+                                        Grid.Column="1"
+                                        RenderTransformOrigin="0.5 0.5"
+                                        x:Name="arrowPanel"
+                                        Visibility="{Binding IsExpandable, RelativeSource={RelativeSource AncestorType=telerikNavigation:LayoutControlExpanderGroup}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Grid.RenderTransform>
+                                        <RotateTransform Angle="{Binding ExpandDirection, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}, Converter={StaticResource ExpandDirectionToRotationAngleConverter}}"/>
+                                    </Grid.RenderTransform>
+                                    <Path x:Name="arrow" Stretch="None" RenderTransformOrigin="0.5,0.5" Style="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="0" x:Name="arrowRotateTransform"/>
+                                                <TranslateTransform x:Name="arrowTranslateTransform"/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"/>
+                        <Trigger Property="IsPressed" Value="True"/>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="arrowRotateTransform" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="arrowRotateTransform" Storyboard.TargetProperty="Angle" To="0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="HeaderContent" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ControlElement_Disabled}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LayoutControlToolBoxExpanderHeaderButton" TargetType="telerik:RadToggleButton" BasedOn="{StaticResource LayoutControlExpanderHeaderButtonStyle}">
+        <Setter Property="Tag" Value="{StaticResource LayoutControlToolBoxExpanderButtonPathStyle}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource ControlItem_Background_Normal}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlItem_OuterBorder_Normal}"/>
+        <Setter Property="Foreground" Value="{StaticResource ControlForeground_Normal}"/>
+        <Setter Property="Padding" Value="4 3"/>
+    </Style>
+    <Style x:Key="LayoutControlSplitterStyle" TargetType="layoutControl:LayoutControlSplitter">
+        <Setter Property="BorderBrush" Value="{StaticResource ControlOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource LayoutControlSplitter_Background}"/>
+        <Setter Property="MinWidth" Value="6"/>
+        <Setter Property="MinHeight" Value="6"/>
+        <Setter Property="Foreground" Value="{StaticResource LayoutControlSplitter_Foreground}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="layoutControl:LayoutControlSplitter">
+                    <Border x:Name="BorderVisual" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Path x:Name="Path"
+                                Data="M0,0L2,0L2,2L0,2zM0,4L2,4L2,6L0,6zM0,8L2,8L2,10L0,10zM0,12L2,12L2,14L0,14z"
+                                Width="2"
+                                Height="14"
+                                Fill="{TemplateBinding Foreground}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HorizontalAlignment" Value="Stretch">
+                            <Setter TargetName="Path" Property="Data" Value="M0,0L2,0L2,2L0,2L0,0z M4,0L6,0L6,2L4,2L4,0z M8,0L10,0L10,2L8,2L8,0z M12,0L14,0L14,2L12,2L12,0z"/>
+                            <Setter TargetName="Path" Property="Width" Value="14"/>
+                            <Setter TargetName="Path" Property="Height" Value="2"/>
+                            <Setter Property="Cursor" Value="SizeNS"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BorderVisual" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Border" x:Key="HeaderBorderStyle">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Margin" Value="-1"/>
+        <Setter Property="Background" Value="{StaticResource ControlHeader_Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ControlHeader_OuterBorderBrush}"/>
+    </Style>
+    <Style TargetType="telerikNavigation:RadWindow" x:Key="LayoutControlToolBoxWindowStyle">
+        <Setter Property="IsTopmost" Value="True"/>
+        <Setter Property="Header" Value="Customize"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Background" Value="{StaticResource LayoutControl_Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LayoutControl_OuterBorder}"/>
+        <Setter Property="Foreground" Value="{StaticResource ControlHeader_Foreground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="telerikNavigation:RadWindow">
+                    <Border x:Name="WindowOuterBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" MinHeight="30"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Border x:Name="Header" Style="{StaticResource HeaderBorderStyle}">
+                                    <Grid>
+                                        <Border BorderBrush="{StaticResource ControlHeader_InnerBorderBrush}" BorderThickness="1"/>
+                                        <DockPanel HorizontalAlignment="Stretch" Margin="4 7">
+                                            <ContentControl x:Name="HeaderContent"
+                                                    IsTabStop="False"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    Content="{TemplateBinding Header}"
+                                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                    SnapsToDevicePixels="True"
+                                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                    Foreground="{TemplateBinding Foreground}"
+                                                    FontSize="{TemplateBinding FontSize}"
+                                                    FontFamily="{TemplateBinding FontFamily}"/>
+                                            <telerik:RadPathButton x:Name="PART_CloseButton"
+                                                    Width="16"
+                                                    MinHeight="16"
+                                                    Height="16"
+                                                    Padding="3"
+                                                    HorizontalAlignment="Right"
+                                                    DockPanel.Dock="Right"
+                                                    Command="{x:Static telerik:WindowCommands.Close}"
+                                                    PathGeometry="M1,0 L5,4 L9,0 L10,1 L6,5 L10,9 L9,10 L5,6 L1,10 L0,9 L4,5 L0,1 z"/>
+                                        </DockPanel>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="ContentOuterBorder" Grid.Row="1" Background="{x:Null}" BorderThickness="0 1 0 0" BorderBrush="{TemplateBinding BorderBrush}">
+                                    <ContentPresenter x:Name="ContentElement" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                </Border>
+                            </Grid>
+                        </AdornerDecorator>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="layoutControl:LayoutControlToolBox" x:Key="LayoutControlToolBoxStyle">
+        <Setter Property="Canvas.Right" Value="0"/>
+        <Setter Property="Panel.ZIndex" Value="100"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="WindowStyle" Value="{StaticResource LayoutControlToolBoxWindowStyle}"/>
+        <Setter Property="ToolBoxView">
+            <Setter.Value>
+                <layoutControl:LayoutControlToolBoxView/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="layoutControl:LayoutControlToolBox">
+                    <Grid>
+                        <telerik:RadToggleButton IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}}" Padding="2" MinHeight="22">
+                            <Path Data="F1M511.6,467.2C509.6,468.2 507.1,467.5 506.1,465.5 505.1,463.4 505.9,461 507.9,460 509.9,458.9 512.4,459.7 513.4,461.7 514.4,463.7 513.6,466.2 511.6,467.2 M518.5,462.8L517.8,460 515.3,460.2C515.1,459.8,514.8,459.4,514.5,459.1L515.4,456.8 512.9,455.3 511.3,457.2C510.8,457.1,510.3,457,509.7,457L508.7,454.9 505.9,455.6 506.2,458C505.8,458.3,505.5,458.5,505.2,458.8L503,458 501.5,460.4 503.3,461.9C503.2,462.4,503.1,463,503.1,463.5L501,464.4 501.7,467.2 504,467C504.3,467.4,504.6,467.9,505,468.2L504.1,470.3 506.6,471.9 508.1,470C508.6,470.1,509.1,470.2,509.6,470.2L510.5,472.3 513.4,471.7 513.1,469.2C513.6,469,514,468.7,514.3,468.3L516.5,469.2 518,466.7 516.1,465.2C516.2,464.7,516.3,464.2,516.3,463.7z" Fill="{Binding (TextElement.Foreground), RelativeSource={RelativeSource AncestorType=ContentPresenter}}" Stretch="Fill"/>
+                        </telerik:RadToggleButton>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LayoutControlStructureTabTreeViewItem" TargetType="telerikNavigation:RadTreeViewItem" BasedOn="{StaticResource RadTreeViewItemStyle}">
+        <Setter Property="IsExpanded" Value="True"/>
+        <Setter Property="Background" Value="#01FFFFFF"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+    <HierarchicalDataTemplate x:Key="StructureItemHierarchicalDataTemplate" ItemsSource="{Binding Items}">
+        <Grid Background="#01FFFFFF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Path x:Name="structureItemPath"
+                    Data="{Binding OriginalItemType, Converter={StaticResource TypeToPathDataConverter}}"
+                    Margin="0 0 5 0"
+                    Fill="{StaticResource ControlElement_Normal}"/>
+            <TextBlock Text="{Binding Header}" Grid.Column="1"/>
+        </Grid>
+    </HierarchicalDataTemplate>
+    <Style TargetType="layoutControl:LayoutControlToolBoxView" x:Key="LayoutControlToolBoxViewStyle">
+        <Setter Property="telerik:DragDropManager.AllowDrag" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="layoutControl:LayoutControlToolBoxView">
+                    <Grid>
+                        <telerikNavigation:LayoutControlTabGroup Grid.Row="1" Padding="0">
+                            <telerikNavigation:LayoutControlTabGroupItem Header="Items">
+                                <StackPanel Orientation="Vertical">
+                                    <telerik:RadExpander Header="New Items" IsExpanded="True" HeaderButtonStyle="{StaticResource LayoutControlToolBoxExpanderHeaderButton}">
+                                        <telerik:RadListBox x:Name="newItemsList"
+                                                ItemsSource="{Binding NewItems, RelativeSource={RelativeSource TemplatedParent}}"
+                                                BorderThickness="0"
+                                                ItemTemplate="{StaticResource StructureItemHierarchicalDataTemplate}"
+                                                ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                                        <telerik:RadExpander.Style>
+                                            <Style TargetType="telerik:RadExpander" BasedOn="{StaticResource RadExpanderStyle}">
+                                                <Setter Property="Padding" Value="3"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Items.Count, ElementName=newItemsList}" Value="0">
+                                                        <Setter Property="Padding" Value="0"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </telerik:RadExpander.Style>
+                                    </telerik:RadExpander>
+                                    <telerik:RadExpander
+                                            Header="Deleted Items"
+                                            IsExpanded="True"
+                                            HeaderButtonStyle="{StaticResource LayoutControlToolBoxExpanderHeaderButton}"
+                                            Visibility="{TemplateBinding TrackDeletedItems,Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <telerik:RadListBox x:Name="deletedItemsList"
+                                                ItemsSource="{Binding DeletedItems, RelativeSource={RelativeSource TemplatedParent}}"
+                                                BorderThickness="0"
+                                                ItemTemplate="{StaticResource StructureItemHierarchicalDataTemplate}"
+                                                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                Visibility="{Binding HasItems, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <telerik:RadExpander.Style>
+                                            <Style TargetType="telerik:RadExpander" BasedOn="{StaticResource RadExpanderStyle}">
+                                                <Setter Property="Padding" Value="3"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Items.Count, ElementName=deletedItemsList}" Value="0">
+                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </telerik:RadExpander.Style>
+                                    </telerik:RadExpander>
+                                </StackPanel>
+                            </telerikNavigation:LayoutControlTabGroupItem>
+                            <telerikNavigation:LayoutControlTabGroupItem Header="Structure">
+                                <telerikNavigation:RadTreeView x:Name="PART_StructureTree" ItemTemplate="{StaticResource StructureItemHierarchicalDataTemplate}" ItemContainerStyle="{StaticResource LayoutControlStructureTabTreeViewItem}"/>
+                            </telerikNavigation:LayoutControlTabGroupItem>
+                        </telerikNavigation:LayoutControlTabGroup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="LayoutControlResizerStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="#01FFFFFF"/>
         <Setter Property="MinHeight" Value="11"/>
@@ -11170,10 +11480,23 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="layoutControl:LayoutControlSelectionIndicator">
                     <Grid x:Name="GridRoot">
                         <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Border Background="{TemplateBinding Background}" Opacity="0.4"/>
+                            <Grid>
+                                <Border Background="{TemplateBinding Background}" Opacity="0.4"/>
+                                <Grid x:Name="LockPathGrid" Opacity="0" Width="36" Height="36">
+                                    <Ellipse StrokeThickness="2" Stroke="{StaticResource ControlElement_Normal}"/>
+                                    <Path
+                                            Stretch="Fill"
+                                            Width="15"
+                                            Height="20"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Data="M398.3,281.9L398.3,281.8C398.3,279.8 396.7,278.7 394.6,278.7C392.6,278.7 391,279.8 391,281.8L391,281.9L389,281.9L389,281.8C389,278.7 391.5,276.7 394.6,276.7C397.8,276.7 400.3,278.7 400.3,281.8L400.3,281.9L398.3,281.9zM388,283.2L389,283.2L400.3,283.2L401.3,283.2C401.6,283.2 401.9,283.5 401.9,283.9L401.9,295.8C401.9,296.2 401.6,296.5 401.3,296.5L388,296.5C387.6,296.5 387.3,296.2 387.3,295.8L387.3,283.9C387.3,283.5 387.6,283.2 388,283.2zM394,292.4C394,292.5 394,292.5 394,292.6L394,293.9C394,294.3 394.3,294.6 394.6,294.6C395,294.6 395.3,294.3 395.3,293.9L395.3,292.6C395.3,292.5 395.3,292.5 395.3,292.4C396.1,292.2 396.6,291.5 396.6,290.6C396.6,289.5 395.7,288.6 394.6,288.6C393.5,288.6 392.6,289.5 392.6,290.6C392.6,291.5 393.2,292.2 394,292.4z"
+                                            Fill="{StaticResource ControlElement_Normal}"/>
+                                </Grid>
+                            </Grid>
                         </Border>
                         <Thumb x:Name="PART_TopResizer" Margin="0 -5 0 0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Style="{StaticResource LayoutControlResizerStyle}" Cursor="SizeNS"/>
                         <Thumb x:Name="PART_LeftResizer" Margin="-5 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Style="{StaticResource LayoutControlResizerStyle}" Cursor="SizeWE"/>
@@ -11190,6 +11513,11 @@
                                 Style="{StaticResource LayoutControlResizerStyle}"
                                 Cursor="SizeNS"/>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsContextItemLocked" Value="True">
+                            <Setter TargetName="LockPathGrid" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -11216,11 +11544,7 @@
         <Setter Property="Opacity" Value="0.7"/>
         <Setter Property="Width" Value="{Binding ContextItem.ActualWidth, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Height" Value="{Binding ContextItem.ActualHeight, RelativeSource={RelativeSource Self}}"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <VisualBrush Visual="{Binding ContextItem, RelativeSource={RelativeSource AncestorType=layoutControl:LayoutControlDragVisual}}" Stretch="None"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{Binding ContextItem, RelativeSource={RelativeSource Self}, Converter={StaticResource VisualToVisualBrushConverter}}"/>
         <Setter Property="BorderBrush" Value="{StaticResource LayoutControl_DropIndicator_BorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -11278,94 +11602,6 @@
             </ScrollViewer>
         </Grid>
     </ControlTemplate>
-    <Style x:Key="LayoutControlExpanderHeaderButtonStyle" TargetType="telerik:RadToggleButton">
-        <Setter Property="Padding" Value="4 7"/>
-        <Setter Property="Background" Value="{StaticResource ControlHeader_Background}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ControlHeader_OuterBorderBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ControlHeader_Foreground}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="TabIndex" Value="{Binding TabIndex, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="VerticalAlignment" Value="{Binding VerticalAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalHeaderAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalHeaderAlignment, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="FontSize" Value="{Binding FontSize, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="FontStyle" Value="{Binding FontStyle, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="FontWeight" Value="{Binding FontWeight, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="FontFamily" Value="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="FontStretch" Value="{Binding FontStretch, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}}"/>
-        <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="IsHitTestVisible" Value="{Binding IsExpandable, RelativeSource={RelativeSource AncestorType=telerikNavigation:LayoutControlExpanderGroup}}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="telerik:RadToggleButton">
-                    <Border x:Name="BorderVisual"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            Margin="-1 -1 -1 0">
-                        <Grid>
-                            <Border BorderBrush="{StaticResource ControlHeader_InnerBorderBrush}" BorderThickness="1"/>
-                            <Grid x:Name="HeaderPanel" Background="Transparent" Margin="{TemplateBinding Padding}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter x:Name="HeaderContent"
-                                        Margin="5 0"
-                                        Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
-                                <Grid
-                                        Grid.Column="1"
-                                        RenderTransformOrigin="0.5 0.5"
-                                        x:Name="arrowPanel"
-                                        Visibility="{Binding IsExpandable, RelativeSource={RelativeSource AncestorType=telerikNavigation:LayoutControlExpanderGroup}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Grid.RenderTransform>
-                                        <RotateTransform Angle="{Binding ExpandDirection, RelativeSource={RelativeSource AncestorType=telerik1:RadExpander}, Converter={StaticResource ExpandDirectionToRotationAngleConverter}}"/>
-                                    </Grid.RenderTransform>
-                                    <Path x:Name="arrow" Stretch="None" RenderTransformOrigin="0.5,0.5" Margin="6 7" Data="M0,0L6,0L3,4z" Fill="White">
-                                        <Path.RenderTransform>
-                                            <TransformGroup>
-                                                <RotateTransform Angle="0" x:Name="arrowRotateTransform"/>
-                                                <TranslateTransform x:Name="arrowTranslateTransform"/>
-                                            </TransformGroup>
-                                        </Path.RenderTransform>
-                                    </Path>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True"/>
-                        <Trigger Property="IsPressed" Value="True"/>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="arrowRotateTransform" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="arrowRotateTransform" Storyboard.TargetProperty="Angle" To="0" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="HeaderContent" Property="Opacity" Value="0.5"/>
-                            <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ControlElement_Disabled}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <ControlTemplate x:Key="LayoutControlExpanderGroupControlTemplate" TargetType="telerikNavigation:LayoutControlExpanderGroup">
         <telerik:RadExpander
                 Header="{TemplateBinding Header}"
@@ -11414,6 +11650,7 @@
         </Setter>
     </Style>
     <Style x:Key="LayoutControlTabGroupItemStyle" TargetType="telerikNavigation:LayoutControlTabGroupItem">
+        <Setter Property="Header" Value="Default Header"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="BorderThickness" Value="{StaticResource TabItem_OuterBorderThickness}"/>
@@ -11762,6 +11999,9 @@
     <Style TargetType="layoutControl:LayoutControlSelectionIndicator" BasedOn="{StaticResource LayoutControlSelectionIndicatorStyle}"/>
     <Style TargetType="layoutControl:LayoutControlMouseOverIndicator" BasedOn="{StaticResource LayoutControlMouseOverIndicatorStyle}"/>
     <Style TargetType="layoutControl:LayoutControlDragVisual" BasedOn="{StaticResource LayoutControlDragVisualStyle}"/>
+    <Style TargetType="layoutControl:LayoutControlSplitter" BasedOn="{StaticResource LayoutControlSplitterStyle}"/>
+    <Style TargetType="layoutControl:LayoutControlToolBox" BasedOn="{StaticResource LayoutControlToolBoxStyle}"/>
+    <Style TargetType="layoutControl:LayoutControlToolBoxView" BasedOn="{StaticResource LayoutControlToolBoxViewStyle}"/>
     <DataTemplate x:Key="FooterTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -11771,7 +12011,7 @@
             <telerik:RadButton x:Name="PART_Help"
                     Content="{Binding HelpButtonContent, Mode=TwoWay}"
                     MinHeight="22"
-                    Margin="10,0,0,0"
+                    Margin="10 0 0 0"
                     MinWidth="70"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -11787,7 +12027,7 @@
                         Command="{x:Static wizard:RadWizardCommands.MoveCurrentToPrevious}"/>
                 <telerik:RadButton x:Name="PART_Next"
                         Content="{Binding NextButtonContent, Mode=TwoWay}"
-                        Margin="10,0,0,0"
+                        Margin="10 0 0 0"
                         MinHeight="22"
                         VerticalAlignment="Center"
                         Visibility="{Binding NavigationButtonsVisibility.NextButtonVisibility}"
@@ -11795,7 +12035,7 @@
                         Command="{x:Static wizard:RadWizardCommands.MoveCurrentToNext}"/>
                 <telerik:RadButton x:Name="PART_Finish"
                         Content="{Binding FinishButtonContent, Mode=TwoWay}"
-                        Margin="10,0,0,0"
+                        Margin="10 0 0 0"
                         MinHeight="22"
                         MinWidth="70"
                         VerticalAlignment="Center"
@@ -11803,7 +12043,7 @@
                         Command="{x:Static wizard:RadWizardCommands.Finish}"/>
                 <telerik:RadButton x:Name="PART_Cancel"
                         Content="{Binding CancelButtonContent, Mode=TwoWay}"
-                        Margin="10,0,0,0"
+                        Margin="10 0 0 0"
                         VerticalAlignment="Center"
                         MinHeight="22"
                         MinWidth="70"
@@ -11916,7 +12156,7 @@
         <Setter Property="CancelButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Cancel}"/>
         <Setter Property="FinishButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Finish}"/>
         <Setter Property="HelpButtonContent" Value="{Binding Manager.Culture, Source={StaticResource localizationManagerProvider}, Converter={StaticResource cultureToStringConverter}, ConverterParameter=Wizard_Help}"/>
-        <Setter Property="Padding" Value="7,6"/>
+        <Setter Property="Padding" Value="7 6"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="UseLayoutRounding" Value="True"/>

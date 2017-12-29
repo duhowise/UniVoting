@@ -88,26 +88,28 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Telerik.Reporting, Version=10.1.16.615, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
-      <Private>False</Private>
+    <Reference Include="Telerik.Reporting, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.Reporting.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Reporting.XpsRendering, Version=10.1.16.615, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
-      <Private>False</Private>
+    <Reference Include="Telerik.Reporting.OpenXmlRendering, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.Reporting.OpenXmlRendering.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.ReportViewer.Wpf, Version=10.1.16.615, Culture=neutral, PublicKeyToken=a9d7983dfcc261be">
-      <Private>False</Private>
+    <Reference Include="Telerik.Reporting.Service, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.Reporting.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Reporting.XpsRendering, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.Reporting.XpsRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.ReportViewer.Wpf, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.ReportViewer.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Controls">
-      <HintPath>bin\Telerik.Windows.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Input">
-      <HintPath>bin\Telerik.Windows.Controls.Input.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Controls.Navigation">
-      <HintPath>bin\Telerik.Windows.Controls.Navigation.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Data">
-      <HintPath>bin\Telerik.Windows.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Examples\CSharp\WpfDemo\bin\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -194,24 +196,24 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Administrators\Themes\OfficeBlack\System.Windows.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Administrators\Themes\OfficeBlack\Telerik.ReportViewer.Wpf.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.Input.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.Navigation.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Administrators\Themes\OfficeBlack\Telerik.Windows.Controls.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Clients\ClientsLoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
