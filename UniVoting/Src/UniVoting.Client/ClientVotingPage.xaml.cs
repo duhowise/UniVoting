@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,13 +16,13 @@ namespace UniVoting.Client
 	/// </summary>
 	public partial class ClientVotingPage : Page
 	{
-		private List<Vote> _votes;
-		private List<SkippedVotes> _skippedVotes;
+		private ConcurrentBag<Vote> _votes;
+		private ConcurrentBag<SkippedVotes> _skippedVotes;
 		private Position _position;
 		private Voter _voter;
 		public delegate void VoteCompletedEventHandler(object source, EventArgs args);
 		public event VoteCompletedEventHandler VoteCompleted;
-		public ClientVotingPage(Voter voter, Position position, List<Vote> votes, List<SkippedVotes> skippedVotes)
+		public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes)
 		{
 			InitializeComponent();
 			this._voter = voter;
@@ -33,13 +34,15 @@ namespace UniVoting.Client
 
 		    if (_position.Candidates.Count() == 1)
 		    {
+		        BtnSkipVote.IsEnabled = false;
 		        candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, _position.Candidates.FirstOrDefault(), _voter,_skippedVotes));
             }
             else
 		    {
-		        foreach (var candidate in _position.Candidates)
+		        BtnSkipVote.IsEnabled = true;
+                foreach (var candidate in _position.Candidates)
 		        {
-		          candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
+                    candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
 		        }
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
@@ -25,7 +26,7 @@ namespace UniVoting.Services
             }
         }
 
-        public static async Task CastVote(List<Vote> votes, Voter voter, List<SkippedVotes> skippedVotes)
+        public static async Task CastVote(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
         {
             try
             {

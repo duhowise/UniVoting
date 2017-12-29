@@ -83,7 +83,7 @@ namespace UniVoting.Data.Implementations
 
 
 		}
-		public  async Task<int> InsertBulkVotes(List<Vote> votes, Voter voter, List<SkippedVotes> skippedVotes)
+		public  async Task<int> InsertBulkVotes(IEnumerable<Vote> votes, Voter voter, IEnumerable<SkippedVotes> skippedVotes)
 		{
 			var task = 0;
 			using (var transaction = new TransactionScope())
