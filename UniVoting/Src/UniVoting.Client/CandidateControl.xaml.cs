@@ -49,7 +49,7 @@ namespace UniVoting.Client
 		private void CandidateControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			CandidateId = _candidate.Id;
-			CandidateName.Content = _candidate.CandidateName.ToUpper();
+			CandidateName.Text = _candidate.CandidateName.ToUpper();
 			CandidateImage.Source =Util.ByteToImageSource(_candidate.CandidatePicture);
 			Rank.Content =$"#{_candidate.RankId}" ;
 		}
