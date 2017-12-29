@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Akavache;
-using MahApps.Metro.Controls;
 using UniVoting.Model;
 using UniVoting.Services;
 using static System.Diagnostics.Process;
@@ -43,11 +41,11 @@ namespace UniVoting.Client
 			try
 			{
 				await VotingService.CastVote(_votes, _voter,_skippedVotes);
-				Text.Content = $"Good Bye {_voter.VoterName.ToUpper()}, Thank You For Voting";
+				Text.Text = $"Good Bye {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
 			catch (Exception)
 			{
-				Text.Content = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
+				Text.Text = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
 				await VotingService.ResetVoter(_voter);
 
 			}

@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
-using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 using System.Linq;
 
@@ -31,23 +30,20 @@ namespace UniVoting.Client
 			_skippedVotes = skippedVotes;
 			BtnSkipVote.Click += BtnSkipVote_Click;
 			Loaded += ClientVotingPage_Loaded;
-		   
-			foreach (var candidate in _position.Candidates)
-			{
-                if (_position.Candidates.AsQueryable().Count() > 1)
-                {
-                    candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
 
-                }
-                else
-                {
-                    candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, candidate, _voter));
-                }
-
-
+		    if (_position.Candidates.Count() == 1)
+		    {
+		        candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, _position.Candidates.FirstOrDefault(), _voter,_skippedVotes));
+            }
+            else
+		    {
+		        foreach (var candidate in _position.Candidates)
+		        {
+		          candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
+		        }
             }
 
-		}
+        }
 	  
 		private void ClientVotingPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
 		{

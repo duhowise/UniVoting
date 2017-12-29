@@ -20,16 +20,15 @@ namespace UniVoting.Client
 
 		public int CandidateId
 		{
-			get { return (int)GetValue(CandidateIdProperty); }
-			set { SetValue(CandidateIdProperty, value); }
+			get => (int)GetValue(CandidateIdProperty);
+		    set => SetValue(CandidateIdProperty, value);
 		}
 
 		// Using a DependencyProperty as the backing store for CandidateId.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty CandidateIdProperty =
 			DependencyProperty.Register("CandidateId", typeof(int), typeof(CandidateControl), new PropertyMetadata(0));
 		public delegate void VoteCastEventHandler(object source, EventArgs args);
-
-		public static event VoteCastEventHandler VoteCast;
+        public static event VoteCastEventHandler VoteCast;
 
 		private List<Vote> _votes;
 		private Position _position;

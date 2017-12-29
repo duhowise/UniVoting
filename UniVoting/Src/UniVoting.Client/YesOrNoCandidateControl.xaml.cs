@@ -1,59 +1,60 @@
-﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
+using Position = UniVoting.Model.Position;
 
 namespace UniVoting.Client
 {
+    /// <inheritdoc>
+    ///     <cref></cref>
+    /// </inheritdoc>
     /// <summary>
     /// Interaction logic for YesOrNoCandidateControl.xaml
     /// </summary>
     public partial class YesOrNoCandidateControl : UserControl
     {
-        public int CandidateId
-        {
-            get { return (int)GetValue(CandidateIdProperty); }
-            set { SetValue(CandidateIdProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for CandidateId.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CandidateIdProperty =
-            DependencyProperty.Register("CandidateId", typeof(int), typeof(CandidateControl), new PropertyMetadata(0));
-        public delegate void VoteCastEventHandler(object source, EventArgs args);
-
-        public static event VoteCastEventHandler VoteCast;
-
         private List<Vote> _votes;
         private Model.Position _position;
         private Candidate _candidate;
         private Voter _voter;
+        private  List<SkippedVotes> _skippedVotes;
 
-        public YesOrNoCandidateControl(List<Vote> votes, Model.Position position, Candidate candidate, Voter voter)
+        public int CandidateId
         {
-            InitializeComponent();
-            this._votes = votes;
-            this._position = position;
-            this._candidate = candidate;
-            this._voter = voter;
-            Loaded += CandidateControl_Loaded;
-            BtnVoteYes.Click += BtnVote_Click;
-            BtnVoteNo.Click += BtnSkipVote_Click;
+            get => (int)GetValue(CandidateIdProperty);
+            set => SetValue(CandidateIdProperty, value);
         }
 
-        private void CandidateControl_Loaded(object sender, RoutedEventArgs e)
+
+        public  delegate void VoteNoEventHandler(object source, EventArgs args);
+
+        public static event VoteNoEventHandler VoteNo;
+        public delegate void VoteCastEventHandler(object source, EventArgs args);
+        public static readonly DependencyProperty CandidateIdProperty =DependencyProperty.Register("CandidateId", typeof(int), typeof(YesOrNoCandidateControl), new PropertyMetadata(0));
+        public static event VoteCastEventHandler VoteCast;
+
+
+
+        public YesOrNoCandidateControl(List<Vote> votes, Position position, Candidate candidate, Voter voter,
+            List<SkippedVotes> skippedVotes)
+        {
+            InitializeComponent();
+            _votes = votes;
+            _position = position;
+            this._candidate = candidate;
+            _voter = voter;
+            _skippedVotes = skippedVotes;
+            BtnVoteNo.Click += BtnVoteNo_Click;
+            BtnVoteYes.Click += BtnVoteYes_Click;
+            Loaded += YesOrNoCandidateControl_Loaded            ;
+        }
+
+        private void YesOrNoCandidateControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             CandidateId = _candidate.Id;
             CandidateName.Text = _candidate.CandidateName.ToUpper();
@@ -61,25 +62,22 @@ namespace UniVoting.Client
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-
-        private async void BtnVote_Click(object sender, RoutedEventArgs e)
+        private async void BtnVoteYes_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             BtnVoteYes.IsEnabled = false;
             var metroWindow = (Window.GetWindow(this) as MetroWindow);
             var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok", };
-            MessageDialogResult result = await metroWindow.ShowMessageAsync("Cast Vote", $"Are You Sure You Want to Vote For {_candidate.CandidateName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
+            MessageDialogResult result = await metroWindow.ShowMessageAsync("Vote Yes", $"Are You Sure You Want to Vote Yes For {_candidate.CandidateName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
             if (result == MessageDialogResult.Affirmative)
             {
                 _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
                 OnVoteCast(this);
             }
             BtnVoteYes.IsEnabled = true;
-
         }
 
-        private async void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void BtnVoteNo_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
             var metroWindow = (Window.GetWindow(this) as MetroWindow);
             var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
 
@@ -88,18 +86,22 @@ namespace UniVoting.Client
             MessageDialogResult result = await metroWindow.ShowMessageAsync("Skip Vote", $"Are You Sure You Want to Skip {_position.PositionName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
             if (result == MessageDialogResult.Affirmative)
             {
-                //_skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
-                //OnVoteCompleted(this);
+                _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
+                OnVoteNo(this);
 
             }
-
         }
 
         private static void OnVoteCast(object source)
         {
             VoteCast?.Invoke(source, EventArgs.Empty);
+           
         }
 
+        private static void OnVoteNo(object source)
+        {
+            VoteNo?.Invoke(source, EventArgs.Empty);
+        }
     }
 
 }

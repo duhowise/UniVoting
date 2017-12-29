@@ -33,31 +33,47 @@ namespace UniVoting.Client
 			Loaded += MainWindow_Loaded;
 			PageHolder.Navigated += PageHolder_Navigated;
 			CandidateControl.VoteCast += CandidateControl_VoteCast;
+            YesOrNoCandidateControl.VoteCast += YesOrNoCandidateControl_VoteCast;
+            YesOrNoCandidateControl.VoteNo += YesOrNoCandidateControl_VoteNo		    ;
 			Loaded += MainWindow_Loaded1;
 		}
 
-		private async void MainWindow_Loaded1(object sender, RoutedEventArgs e)
+        private void YesOrNoCandidateControl_VoteNo(object source, EventArgs args)
+        {
+            ProcessVote();
+        }
+
+        private void YesOrNoCandidateControl_VoteCast(object source, EventArgs args)
+        {
+           ProcessVote();
+        }
+
+        private async void MainWindow_Loaded1(object sender, RoutedEventArgs e)
 		{
 			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
-			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo));
-			MainGrid.Background.Opacity = 0.2;
+		    MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
 		}
 
 		private void CandidateControl_VoteCast(object source, EventArgs args)
 		{
-			if (_positionsStack.Count != 0)
-			{
-				PageHolder.Content = VotingPageMaker(_positionsStack);
-			}
-			else
-			{
-				_voter.Voted = true;
-				//VotingService.UpdateVoter(_voter);
-				new ClientVoteCompletedPage(_votes, _voter,_skippedVotes).Show();
-				Hide();
-			}
+		    ProcessVote();
 		}
-		private void PageHolder_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+
+	    private void ProcessVote()
+	    {
+	        if (_positionsStack.Count != 0)
+	        {
+	            PageHolder.Content = VotingPageMaker(_positionsStack);
+	        }
+	        else
+	        {
+	            _voter.Voted = true;
+	            new ClientVoteCompletedPage(_votes, _voter, _skippedVotes).Show();
+	            Hide();
+	        }
+	    }
+
+	    private void PageHolder_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
 		{
 			PageHolder.NavigationService.RemoveBackEntry();
 		}
@@ -78,20 +94,22 @@ namespace UniVoting.Client
 
 		private void VotingPage_VoteCompleted(object source, EventArgs args)
 		{
-			if (_positionsStack.Count != 0)
-			{
-			   PageHolder.Content = VotingPageMaker(_positionsStack);
+			ProcessVote();
+		    //if (_positionsStack.Count != 0)
+			//{
+			//   PageHolder.Content = VotingPageMaker(_positionsStack);
 				
-			}
-			else
-			{
-				_voter.Voted=true;
+			//}
+			//else
+			//{
+			//	_voter.Voted=true;
+   //    				//VotingService.UpdateVoter(_voter);
+			//   new ClientVoteCompletedPage(_votes,_voter,_skippedVotes).Show();
+			//	Hide();
 
-				//VotingService.UpdateVoter(_voter);
-			   new ClientVoteCompletedPage(_votes,_voter,_skippedVotes).Show();
-				Hide();
+			//}
 
-			}
+
 		}
 	}
 }
