@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Linq;
@@ -20,16 +21,16 @@ namespace UniVoting.Client
 		private readonly Stack<Position> _positionsStack;
 		private ClientVotingPage _votingPage;
 		private Voter _voter;
-		private List<Vote> _votes;
-		private List<SkippedVotes> _skippedVotes;
+		private ConcurrentBag<Vote> _votes;
+		private ConcurrentBag<SkippedVotes> _skippedVotes;
 		public MainWindow(Stack<Position> positionsStack, Voter voter)
 		{
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
 			_positionsStack = positionsStack;
 			this._voter = voter;
-			_skippedVotes = new List<SkippedVotes>();
-			_votes=new List<Vote>();
+			_skippedVotes = new ConcurrentBag<SkippedVotes>();
+			_votes=new ConcurrentBag<Vote>();
 			Loaded += MainWindow_Loaded;
 			PageHolder.Navigated += PageHolder_Navigated;
 			CandidateControl.VoteCast += CandidateControl_VoteCast;
@@ -95,21 +96,6 @@ namespace UniVoting.Client
 		private void VotingPage_VoteCompleted(object source, EventArgs args)
 		{
 			ProcessVote();
-		    //if (_positionsStack.Count != 0)
-			//{
-			//   PageHolder.Content = VotingPageMaker(_positionsStack);
-				
-			//}
-			//else
-			//{
-			//	_voter.Voted=true;
-   //    				//VotingService.UpdateVoter(_voter);
-			//   new ClientVoteCompletedPage(_votes,_voter,_skippedVotes).Show();
-			//	Hide();
-
-			//}
-
-
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Collections.Concurrent;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
@@ -18,11 +17,11 @@ namespace UniVoting.Client
     /// </summary>
     public partial class YesOrNoCandidateControl : UserControl
     {
-        private List<Vote> _votes;
+        private ConcurrentBag<Vote> _votes;
         private Model.Position _position;
         private Candidate _candidate;
         private Voter _voter;
-        private  List<SkippedVotes> _skippedVotes;
+        private  ConcurrentBag<SkippedVotes> _skippedVotes;
 
         public int CandidateId
         {
@@ -40,8 +39,8 @@ namespace UniVoting.Client
 
 
 
-        public YesOrNoCandidateControl(List<Vote> votes, Position position, Candidate candidate, Voter voter,
-            List<SkippedVotes> skippedVotes)
+        public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
+            ConcurrentBag<SkippedVotes> skippedVotes)
         {
             InitializeComponent();
             _votes = votes;

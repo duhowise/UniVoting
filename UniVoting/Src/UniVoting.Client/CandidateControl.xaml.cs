@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -30,11 +31,11 @@ namespace UniVoting.Client
 		public delegate void VoteCastEventHandler(object source, EventArgs args);
         public static event VoteCastEventHandler VoteCast;
 
-		private List<Vote> _votes;
+		private ConcurrentBag<Vote> _votes;
 		private Position _position;
 		private Candidate _candidate;
 		private Voter _voter;
-		public CandidateControl(List<Vote> votes,Position position, Candidate candidate, Voter voter)
+		public CandidateControl(ConcurrentBag<Vote> votes,Position position, Candidate candidate, Voter voter)
 		{
 			InitializeComponent();
 			this._votes = votes;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Windows;
@@ -16,12 +17,12 @@ namespace UniVoting.Client
 	/// </summary>
 	public partial class ClientVoteCompletedPage
 	{
-		private  List<Vote> _votes;
+		private ConcurrentBag<Vote> _votes;
 		private  Voter _voter;
-		private List<SkippedVotes> _skippedVotes;
+		private ConcurrentBag<SkippedVotes> _skippedVotes;
 
 		private int count;
-		public ClientVoteCompletedPage(List<Vote> votes,Voter voter, List<SkippedVotes> skippedVotes)
+		public ClientVoteCompletedPage(ConcurrentBag<Vote> votes,Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
 		{
 			_votes = votes;
 			_voter = voter;
