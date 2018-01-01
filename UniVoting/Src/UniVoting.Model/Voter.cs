@@ -11,6 +11,7 @@ namespace UniVoting.Model
         public virtual string VoterName { get; set; }
         public virtual string VoterCode { get; set; }
         public virtual string IndexNumber { get; set; }
+        public string Faculty { get; set; }
         public virtual bool Voted { get; set; }
         public virtual bool VoteInProgress { get; set; }
         public virtual IEnumerable<Vote> Votes { get; set; }

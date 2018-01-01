@@ -52,7 +52,7 @@ namespace UniVoting.Client
 
 			var rgb = data.Colour.Split(',');
 			//ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
-			//ThemeManagerHelper.CreateAppStyleBy(Colors.Brown, true);
+		
 			ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
 			MainWindow = new ClientsLoginWindow();
 			MainWindow.Show();

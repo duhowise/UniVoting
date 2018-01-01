@@ -9,6 +9,7 @@ namespace UniVoting.Model
     {
         public virtual int Id { get; set; }
         public virtual string PositionName { get; set; }
+        public string Faculty { get; set; }
         public virtual IEnumerable<Candidate> Candidates { get; set; }
         public virtual IEnumerable<SkippedVotes> SkippedVotes { get; set; }
         public virtual IEnumerable<Vote> Votes { get; set; }

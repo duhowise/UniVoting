@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
@@ -14,7 +13,7 @@ namespace UniVoting.Client
 	/// <summary>
 	/// Interaction logic for ClientVotingPage.xaml
 	/// </summary>
-	public partial class ClientVotingPage : Page
+	public  partial class ClientVotingPage : Page
 	{
 		private ConcurrentBag<Vote> _votes;
 		private ConcurrentBag<SkippedVotes> _skippedVotes;
@@ -32,27 +31,34 @@ namespace UniVoting.Client
 			BtnSkipVote.Click += BtnSkipVote_Click;
 			Loaded += ClientVotingPage_Loaded;
 
-		    if (_position.Candidates.Count() == 1)
-		    {
-		        BtnSkipVote.IsEnabled = false;
-		        candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, _position.Candidates.FirstOrDefault(), _voter,_skippedVotes));
-            }
-            else
-		    {
-		        BtnSkipVote.IsEnabled = true;
-                foreach (var candidate in _position.Candidates)
-		        {
-                    candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
-		        }
-            }
-
         }
 	  
 		private void ClientVotingPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
 		{
-			PositionName.Content = _position.PositionName.ToUpper();
 			TextBoxWelcome.Content = $"Welcome, {_voter.VoterName ?? String.Empty}";
-		}
+
+		    if (string.IsNullOrWhiteSpace(_position.Faculty) || _position.Faculty.Trim().Equals(_voter.Faculty.Trim(),StringComparison.OrdinalIgnoreCase))
+		    {
+		        PositionName.Content = _position.PositionName.ToUpper();
+                if (_position.Candidates.Count() == 1)
+		        {
+		            BtnSkipVote.IsEnabled = false;
+		            candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, _position.Candidates.FirstOrDefault(), _voter, _skippedVotes));
+		        }
+		        else
+		        {
+		            BtnSkipVote.IsEnabled = true;
+		            foreach (var candidate in _position.Candidates)
+		            {
+		                candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
+		            }
+		        }
+		    }
+		    else
+		    {
+		        OnVoteCompleted(this);
+		    }
+        }
 
 		private async void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -72,7 +78,7 @@ namespace UniVoting.Client
 		   
 		}
 
-		protected virtual void OnVoteCompleted(object source)
+	    private void OnVoteCompleted(object source)
 		{
 			VoteCompleted?.Invoke(source, EventArgs.Empty);
 		}

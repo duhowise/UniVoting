@@ -114,7 +114,7 @@ namespace UniVoting.Data.Implementations
 		{
 			using (var connection = new DbManager(connectionName).Connection)
 			{
-				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Voted ,VoteInProgress
+				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Faculty,Voted ,VoteInProgress
 						FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
 			}
 		}
