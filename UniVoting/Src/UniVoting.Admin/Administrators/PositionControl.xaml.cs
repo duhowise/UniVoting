@@ -31,6 +31,7 @@ namespace UniVoting.WPF.Administrators
         {
             InitializeComponent();
             TextBoxPosition.Text=name;
+            //TextBoxFaculty.Text = faculty;
             if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
             {
               var value= ElectionConfigurationService.AddPosition(new Position { PositionName = TextBoxPosition.Text });
@@ -61,6 +62,7 @@ namespace UniVoting.WPF.Administrators
             {
                 
                 //var value = ElectionService.GetPosition(_position);
+                //set faculty text textbox from here
               await ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
             }
 

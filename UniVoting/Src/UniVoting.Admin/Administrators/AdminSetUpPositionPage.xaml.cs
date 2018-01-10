@@ -13,8 +13,10 @@ namespace UniVoting.WPF.Administrators
 	public partial class AdminSetUpPositionPage : Page
 	{
 		public static AdminSetUpPositionPage Instance;
+        private CustomDialog _customDialog;
+        private AddPositionDialogControl addPositionDialogControl;
 
-		public AdminSetUpPositionPage()
+        public AdminSetUpPositionPage()
 		{
 			InitializeComponent();
 		
@@ -34,13 +36,20 @@ namespace UniVoting.WPF.Administrators
 					TextBoxPosition = {Text = position.PositionName},
 					Id = position.Id
 				});
-		}
+            
+            _customDialog = new CustomDialog();
+            addPositionDialogControl = new AddPositionDialogControl();
+            addPositionDialogControl.BtnCancel.Click += BtnSaveClick;
+            addPositionDialogControl.BtnSave.Click += BtnCancelClick;
+            _customDialog.Content = addPositionDialogControl;
+           
+        }
 
 
 		private async void BtnAdd_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = Window.GetWindow(this) as MetroWindow;
-			var settings = new MetroDialogSettings
+            var settings = new MetroDialogSettings
 			{
 				ColorScheme = MetroDialogColorScheme.Accented,
 				AffirmativeButtonText = "OK",
@@ -48,17 +57,24 @@ namespace UniVoting.WPF.Administrators
 				NegativeButtonText = "Go away!",
 				FirstAuxiliaryButtonText = "Cancel"
 			};
-			var result = await metroWindow.ShowInputAsync("Enter New Position ", "Position Name", settings);
-			if (result!=null)
-			{
-				PositionControlHolder.Children.Add(new PositionControl(result));
-
-			}
+			await metroWindow.ShowMetroDialogAsync(_customDialog,settings);
+	
 		}
 
 		public void RemovePosition(UserControl c)
 		{
 			PositionControlHolder.Children.Remove(c);
 		}
-	}
+
+        private void BtnSaveClick(object sender, RoutedEventArgs e)
+        {
+            var pos = addPositionDialogControl.TextBoxPosition.Text;
+            var fac = addPositionDialogControl.TextBoxFaculty.Text;
+            PositionControlHolder.Children.Add(new PositionControl(pos));
+        }
+        private void BtnCancelClick(object sender, RoutedEventArgs e)
+        {
+            _customDialog._WaitForCloseAsync();
+        }
+    }
 }
