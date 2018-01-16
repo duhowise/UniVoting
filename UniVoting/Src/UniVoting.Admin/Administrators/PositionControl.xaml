@@ -12,6 +12,10 @@
                      materialDesign:HintAssist.Hint="position" FontSize="24" Margin="10" 
                      Name="TextBoxPosition" TabIndex="0" VerticalAlignment="Center"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" IsEnabled="False"
+                     materialDesign:HintAssist.Hint="faculty" FontSize="24" Margin="10" 
+                     Name="TextBoxFaculty" TabIndex="0" VerticalAlignment="Center"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             <Rectangle Width="1.5" Height="40" Fill="{DynamicResource GrayBrush6}"></Rectangle>
             
             <!--<Button Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
