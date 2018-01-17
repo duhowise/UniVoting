@@ -6,11 +6,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using UniVoting.Data.Implementations;
 using UniVoting.Model;
 using UniVoting.Services;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
 	/// <inheritdoc />
 	/// <summary>

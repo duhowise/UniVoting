@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Color = System.Drawing.Color;
 
-namespace UniVoting.WPF
+namespace UniVoting.Admin
 {
     class OvalPictureBox : PictureBox
     {

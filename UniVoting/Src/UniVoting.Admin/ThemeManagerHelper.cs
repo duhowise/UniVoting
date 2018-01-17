@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro;
 
-namespace UniVoting.WPF
+namespace UniVoting.Admin
 {
 
     internal static class ThemeManagerHelper

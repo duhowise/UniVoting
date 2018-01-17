@@ -4,7 +4,7 @@ using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
 using UniVoting.Services;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
 	/// <summary>
 	/// Interaction logic for PresidentLoginWindow.xaml

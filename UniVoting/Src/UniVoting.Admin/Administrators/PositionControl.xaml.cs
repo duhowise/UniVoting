@@ -5,14 +5,16 @@ using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
     /// <summary>
     /// Interaction logic for PositionControl.xaml
     /// </summary>
     public partial class PositionControl : UserControl
     {
-
+        private CustomDialog _customDialog;
+        private AddPositionDialogControl _addPositionDialogControl;
+        private MetroWindow metroWindow;
 
         public int Id
         {
@@ -42,31 +44,54 @@ namespace UniVoting.WPF.Administrators
         public PositionControl()
         {
             InitializeComponent();
+            Loaded += PositionControl_Loaded            ;
             
         }
+
+        private void PositionControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            _customDialog = new CustomDialog();
+            _addPositionDialogControl = new AddPositionDialogControl();
+            _addPositionDialogControl.BtnCancel.Click += BtnCancel_Click;
+            _addPositionDialogControl.BtnSave.Click += BtnSave_Click;
+            _customDialog.Content = _addPositionDialogControl;
+        }
+
+        private async void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var pos = _addPositionDialogControl.TextBoxPosition.Text;
+            var fac = _addPositionDialogControl.TextBoxFaculty.Text;
+            await ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName =pos,Faculty = fac});
+          await  metroWindow.HideMetroDialogAsync(_customDialog);
+        }
+
+        private async void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            await metroWindow.HideMetroDialogAsync(_customDialog);
+        }
+
         private async void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            var metroWindow = (Window.GetWindow(this) as MetroWindow);
-            var settings = new MetroDialogSettings()
+             metroWindow = Window.GetWindow(this) as MetroWindow;
+            var settings = new MetroDialogSettings
             {
-                ColorScheme = MetroDialogColorScheme.Accented,
-                AffirmativeButtonText = "OK",
-                AnimateShow = true,
-                NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel",
-
+                ColorScheme = MetroDialogColorScheme.Theme,
+               AnimateShow = true,
             };
-            var data = await metroWindow.ShowInputAsync("Edit Position Position ", $"Previous Name:{TextBoxPosition.Text} ", settings);
-            if (data != string.Empty) TextBoxPosition.Text = data;
-            if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
-            {
+            await metroWindow.ShowMetroDialogAsync(_customDialog,settings);
+            //todo show new values after save end edit
+            //if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
+            //{
                 
-                //var value = ElectionService.GetPosition(_position);
-                //set faculty text textbox from here
-              await ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
-            }
+            //    //var value = ElectionService.GetPosition(_position);
+            //    //set faculty text textbox from here
+            //  await ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+            //}
 
             //set TextBoxPosition IsEnabled = "true" after updating set TextBoxPosition IsEnabled = "False"
+
+            _addPositionDialogControl.TextBoxPosition.Text = TextBoxPosition.Text;
+            _addPositionDialogControl.TextBoxFaculty.Text = TextBoxFaculty.Text;
 
         }
 
@@ -79,7 +104,7 @@ namespace UniVoting.WPF.Administrators
 
                 if (response == MessageBoxResult.Yes)
                 {
-                    AdminSetUpPositionPage.Instance.RemovePosition(this);
+                    Admin.Administrators.AdminSetUpPositionPage.Instance.RemovePosition(this);
                   ElectionConfigurationService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
                 }
             }

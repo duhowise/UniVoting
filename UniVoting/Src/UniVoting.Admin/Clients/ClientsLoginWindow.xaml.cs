@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 
-namespace UniVoting.WPF.Clients
+namespace UniVoting.Admin.Clients
 {
     /// <summary>
     /// Interaction logic for ClientsLoginWindow.xaml

@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = System.Windows.Controls.Image;
 
-namespace UniVoting.WPF
+namespace UniVoting.Admin
 {
 	public class Util
 	{

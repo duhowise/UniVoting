@@ -2,7 +2,7 @@
 using UniVoting.Data.Implementations;
 using UniVoting.Data.Interfaces;
 
-namespace UniVoting.WPF.StatUp
+namespace UniVoting.Admin.StatUp
 {
 	public class BootStrapper
 	{

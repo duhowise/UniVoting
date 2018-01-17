@@ -2,10 +2,10 @@
 using System.Windows;
 using System.Windows.Media;
 using MahApps.Metro;
-using UniVoting.WPF.Administrators;
-using UniVoting.WPF.StatUp;
+using UniVoting.Admin.Administrators;
+using UniVoting.Admin.StatUp;
 
-namespace UniVoting.WPF
+namespace UniVoting.Admin
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
@@ -18,7 +18,7 @@ namespace UniVoting.WPF
 			var bootstrapper = new BootStrapper();
 			var container = bootstrapper.BootStrap();
 			// add custom accent and theme resource dictionaries
-			ThemeManager.AddAccent("CustomAccent1", new Uri("pack://application:,,,/UniVoting.WPF;component/CustomAccents/CustomAccent.xaml"));
+			ThemeManager.AddAccent("CustomAccent1", new Uri("pack://application:,,,/UniVoting.Admin;component/CustomAccents/CustomAccent.xaml"));
 
 			// create custom accents
 			ThemeManagerHelper.CreateAppStyleBy(Colors.Red);

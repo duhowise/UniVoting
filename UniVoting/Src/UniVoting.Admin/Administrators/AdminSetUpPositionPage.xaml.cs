@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Services;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
 	/// <summary>
 	///     Interaction logic for AdminSetUpPositionPage.xaml
@@ -14,7 +13,8 @@ namespace UniVoting.WPF.Administrators
 	{
 		public static AdminSetUpPositionPage Instance;
         private CustomDialog _customDialog;
-        private AddPositionDialogControl addPositionDialogControl;
+        private AddPositionDialogControl _addPositionDialogControl;
+	    private MetroWindow _metroWindow;
 
         public AdminSetUpPositionPage()
 		{
@@ -34,30 +34,28 @@ namespace UniVoting.WPF.Administrators
 				PositionControlHolder.Children.Add(new PositionControl
 				{
 					TextBoxPosition = {Text = position.PositionName},
+                    TextBoxFaculty = {Text =position.Faculty },
 					Id = position.Id
 				});
             
             _customDialog = new CustomDialog();
-            addPositionDialogControl = new AddPositionDialogControl();
-            addPositionDialogControl.BtnCancel.Click += BtnSaveClick;
-            addPositionDialogControl.BtnSave.Click += BtnCancelClick;
-            _customDialog.Content = addPositionDialogControl;
+            _addPositionDialogControl = new AddPositionDialogControl();
+            _addPositionDialogControl.BtnCancel.Click +=BtnCancelClick;
+            _addPositionDialogControl.BtnSave.Click += BtnSaveClick;
+            _customDialog.Content = _addPositionDialogControl;
            
         }
 
 
 		private async void BtnAdd_Click(object sender, RoutedEventArgs e)
 		{
-			var metroWindow = Window.GetWindow(this) as MetroWindow;
+			 _metroWindow = Window.GetWindow(this) as MetroWindow;
             var settings = new MetroDialogSettings
 			{
-				ColorScheme = MetroDialogColorScheme.Accented,
-				AffirmativeButtonText = "OK",
-				AnimateShow = true,
-				NegativeButtonText = "Go away!",
-				FirstAuxiliaryButtonText = "Cancel"
-			};
-			await metroWindow.ShowMetroDialogAsync(_customDialog,settings);
+				ColorScheme = MetroDialogColorScheme.Theme,
+			    AnimateShow = true,
+		    };
+			await _metroWindow.ShowMetroDialogAsync(_customDialog,settings);
 	
 		}
 
@@ -66,15 +64,19 @@ namespace UniVoting.WPF.Administrators
 			PositionControlHolder.Children.Remove(c);
 		}
 
-        private void BtnSaveClick(object sender, RoutedEventArgs e)
+        private async void BtnSaveClick(object sender, RoutedEventArgs e)
         {
-            var pos = addPositionDialogControl.TextBoxPosition.Text;
-            var fac = addPositionDialogControl.TextBoxFaculty.Text;
+            var pos = _addPositionDialogControl.TextBoxPosition.Text;
+            var fac = _addPositionDialogControl.TextBoxFaculty.Text;
+          await  ElectionConfigurationService.AddPosition(new Model.Position{PositionName = pos,Faculty = fac});
             PositionControlHolder.Children.Add(new PositionControl(pos));
+            await  _metroWindow.HideMetroDialogAsync(_customDialog);
+
+
         }
-        private void BtnCancelClick(object sender, RoutedEventArgs e)
+        private async void BtnCancelClick(object sender, RoutedEventArgs e)
         {
-            _customDialog._WaitForCloseAsync();
+          await  _metroWindow.HideMetroDialogAsync(_customDialog);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using Telerik.ReportViewer.Wpf;
+﻿using System.Windows;
+using Telerik.ReportViewer.Wpf;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
-    using System.Windows;
-
     public partial class ReportViewerWindow : Window
     {
         public ReportViewerWindow()

@@ -8,7 +8,7 @@ using UniVoting.Model;
 using UniVoting.Services;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
 	/// <summary>
 	/// Interaction logic for AdminSetUpElectionPage.xaml

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using UniVoting.Model;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
 	/// <summary>
 	/// Interaction logic for AdminMenuPage.xaml
@@ -75,7 +75,7 @@ namespace UniVoting.WPF.Administrators
 		private void BtnSetUpPostions_Click(object sender, RoutedEventArgs e)
 		{
 			
-				NavigationService?.Navigate(new AdminSetUpPositionPage());
+				NavigationService?.Navigate(new Admin.Administrators.AdminSetUpPositionPage());
 			
 		}
 

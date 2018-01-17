@@ -86,6 +86,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.Sqlite3.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Autofac.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.SimpleChildWindow.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignColors.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignThemes.MahApps.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignThemes.Wpf.dll
@@ -116,6 +117,8 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Akavache.Sqlite3.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\Autofac.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.SimpleChildWindow.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MahApps.Metro.SimpleChildWindow.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignColors.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignThemes.Wpf.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\MaterialDesignThemes.Wpf.xml

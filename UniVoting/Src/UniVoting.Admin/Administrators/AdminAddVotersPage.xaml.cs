@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -14,7 +13,7 @@ using UniVoting.Model;
 using UniVoting.Services;
 using MessageBox = System.Windows.MessageBox;
 
-namespace UniVoting.WPF.Administrators
+namespace UniVoting.Admin.Administrators
 {
 	/// <inheritdoc />
 	/// <summary>
