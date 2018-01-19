@@ -7,6 +7,10 @@ namespace UniVoting.Model
     /// </summary>
     public partial class Voter
     {
+        public Voter()
+        {
+            Faculty = "";
+        }
         public virtual int Id { get; set; }
         public virtual string VoterName { get; set; }
         public virtual string VoterCode { get; set; }

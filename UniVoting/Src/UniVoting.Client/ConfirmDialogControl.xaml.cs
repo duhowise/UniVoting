@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UniVoting.Model;
 
 namespace UniVoting.Client
 {
@@ -20,9 +21,23 @@ namespace UniVoting.Client
     /// </summary>
     public partial class ConfirmDialogControl : UserControl
     {
-        public ConfirmDialogControl()
+        private readonly Candidate _candidate;
+
+        public ConfirmDialogControl(Candidate candidate)
         {
+            _candidate = candidate;
             InitializeComponent();
+            Loaded += ConfirmDialogControl_Loaded;
+
+            
         }
+
+       private void ConfirmDialogControl_Loaded(object sender, RoutedEventArgs e)
+       {
+           TextBoxConfirm.Text = $"Are you sure you want to vote for {_candidate.CandidateName}";
+           CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
+       }
+
+
     }
 }
