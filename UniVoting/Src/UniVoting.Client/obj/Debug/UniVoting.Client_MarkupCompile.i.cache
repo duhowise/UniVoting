@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\
+C:\Repository\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\
 UniVoting.Client
 none
 false
 DEBUG;TRACE
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\App.xaml
+C:\Repository\UniVoting\UniVoting\Src\UniVoting.Client\App.xaml
 9101924398
-21645666746
-18-174742590
-871135859093
+
+18-7345371
+87230822882
 CandidateControl.xaml;ClientsLoginWindow.xaml;ClientVoteCompletedPage.xaml;ClientVotingPage.xaml;CustomAccents\CustomAccent.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;YesOrNoCandidateControl.xaml;
 
-True
+False
 
