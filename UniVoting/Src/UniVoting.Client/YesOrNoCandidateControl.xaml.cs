@@ -21,7 +21,7 @@ namespace UniVoting.Client
         private Model.Position _position;
         private Candidate _candidate;
         private Voter _voter;
-        private  ConcurrentBag<SkippedVotes> _skippedVotes;
+        private ConcurrentBag<SkippedVotes> _skippedVotes;
 
         public int CandidateId
         {
@@ -30,11 +30,11 @@ namespace UniVoting.Client
         }
 
 
-        public  delegate void VoteNoEventHandler(object source, EventArgs args);
+        public delegate void VoteNoEventHandler(object source, EventArgs args);
 
         public static event VoteNoEventHandler VoteNo;
         public delegate void VoteCastEventHandler(object source, EventArgs args);
-        public static readonly DependencyProperty CandidateIdProperty =DependencyProperty.Register("CandidateId", typeof(int), typeof(YesOrNoCandidateControl), new PropertyMetadata(0));
+        public static readonly DependencyProperty CandidateIdProperty = DependencyProperty.Register("CandidateId", typeof(int), typeof(YesOrNoCandidateControl), new PropertyMetadata(0));
         public static event VoteCastEventHandler VoteCast;
 
 
@@ -50,7 +50,7 @@ namespace UniVoting.Client
             _skippedVotes = skippedVotes;
             BtnVoteNo.Click += BtnVoteNo_Click;
             BtnVoteYes.Click += BtnVoteYes_Click;
-            Loaded += YesOrNoCandidateControl_Loaded            ;
+            Loaded += YesOrNoCandidateControl_Loaded;
         }
 
         private void YesOrNoCandidateControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -65,7 +65,16 @@ namespace UniVoting.Client
         {
             BtnVoteYes.IsEnabled = false;
             var metroWindow = (Window.GetWindow(this) as MetroWindow);
-            var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok", };
+            var dialogSettings = new MetroDialogSettings
+            {
+                ColorScheme = MetroDialogColorScheme.Accented,
+                AffirmativeButtonText = "OK",
+                AnimateShow = true,
+                NegativeButtonText = "Cancel",
+                FirstAuxiliaryButtonText = "Cancel",
+                DialogMessageFontSize = 18
+            };
+            //var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok", };
             MessageDialogResult result = await metroWindow.ShowMessageAsync("Vote Yes", $"Are You Sure You Want to Vote Yes For {_candidate.CandidateName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
             if (result == MessageDialogResult.Affirmative)
             {
@@ -78,9 +87,16 @@ namespace UniVoting.Client
         private async void BtnVoteNo_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var metroWindow = (Window.GetWindow(this) as MetroWindow);
-            var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
-
-
+            var dialogSettings = new MetroDialogSettings
+            {
+                ColorScheme = MetroDialogColorScheme.Accented,
+                AffirmativeButtonText = "OK",
+                AnimateShow = true,
+                NegativeButtonText = "Cancel",
+                FirstAuxiliaryButtonText = "Cancel",
+                DialogMessageFontSize = 18
+            };
+            //var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
 
             MessageDialogResult result = await metroWindow.ShowMessageAsync("Skip Vote", $"Are You Sure You Want to Skip {_position.PositionName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
             if (result == MessageDialogResult.Affirmative)
@@ -94,7 +110,7 @@ namespace UniVoting.Client
         private static void OnVoteCast(object source)
         {
             VoteCast?.Invoke(source, EventArgs.Empty);
-           
+
         }
 
         private static void OnVoteNo(object source)

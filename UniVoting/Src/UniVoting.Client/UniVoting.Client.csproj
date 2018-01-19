@@ -151,6 +151,9 @@
     <Compile Include="ClientVotingPage.xaml.cs">
       <DependentUpon>ClientVotingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfirmDialogControl.xaml.cs">
+      <DependentUpon>ConfirmDialogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="ThemeManagerHelper.cs" />
     <Compile Include="Util.cs" />
@@ -170,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ClientVotingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfirmDialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
