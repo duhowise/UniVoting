@@ -5,10 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UniVoting.Admin.Administrators"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="600"
+      mc:Ignorable="d"
       Title="AdminMenuPage">
-    <materialDesign:Card Margin="3" UniformCornerRadius="5" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+    <materialDesign:Card Margin="3" UniformCornerRadius="2" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>

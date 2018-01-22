@@ -45,6 +45,7 @@ namespace UniVoting.Client
 		{
 			try
 			{
+                //ThemeManagerHelper.CreateAppStyleBy(System.Windows.Media.Color.FromArgb(255, 122, 200, 122),true);
 				var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
 				MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
 				VotingName.Text = election.ElectionName.ToUpper();

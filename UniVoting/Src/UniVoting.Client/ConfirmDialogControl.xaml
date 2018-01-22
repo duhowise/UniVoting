@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:UniVoting.Client"
              mc:Ignorable="d">
     <Grid>
@@ -14,14 +15,16 @@
         <TextBlock FontSize="20" x:Name="TextBoxConfirm" FontFamily="Segoe Ui semibold" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Text="Are you sure you want to vote for " TextWrapping="WrapWithOverflow"/>
         <Image Name="CandidateImage" Grid.Row="1" Width="250" HorizontalAlignment="Center" Source="/Resources/images/user.png"></Image>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button FontSize="20" FontFamily="Segoe UI Bold"
-                        Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100" Margin="10" Height="40" Name="BtnNo"
+            <Button FontSize="20" FontFamily="Segoe UI Bold" Background="{DynamicResource AccentColorBrush}"
+								Foreground="{StaticResource WhiteColorBrush}" Controls:ButtonHelper.PreserveTextCase="True"
+                        Width="100" Margin="10" Height="40" Name="BtnNo"
                         TabIndex="1"
                     ToolTip="Vote no">
                 NO
             </Button>
-            <Button FontSize="20" FontFamily="Segoe UI Bold"
-                        Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="100" Margin="10" Height="40" Name="BtnYes"
+            <Button FontSize="20" FontFamily="Segoe UI Bold" Background="{DynamicResource AccentColorBrush}"
+								Foreground="{StaticResource WhiteColorBrush}" Controls:ButtonHelper.PreserveTextCase="True"
+                         Width="100" Margin="10" Height="40" Name="BtnYes"
                         TabIndex="0"
                     ToolTip="Vote yes">
                 YES

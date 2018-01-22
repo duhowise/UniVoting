@@ -9,9 +9,7 @@
                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                 TextElement.FontWeight="Medium"
                 TextElement.FontSize="16"
-                FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-                      Height="600"
-                      Width="525">
+                FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="../Resources/images/univoting_bg_1.png" TileMode="Tile" Opacity="0.2"/>

@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:UniVoting.Admin.Administrators"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="700"
       Title="AdminSetUpElectionPage">
     <Page.Resources>
         <ResourceDictionary>
@@ -27,7 +26,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <materialDesign:Card Margin="3" UniformCornerRadius="5" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+    <materialDesign:Card Margin="3" UniformCornerRadius="2" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -86,7 +85,7 @@
                                 <Rectangle Height="100"/>
 
                             </StackPanel>
-                            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10" >
+                            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
                                 <TextBox Name="Colorbox" FontSize="16" Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light"
                                           materialDesign:HintAssist.Hint="Select Colour Theme" materialDesign:HintAssist.IsFloating="True"
                                   Margin="10,5,10,50">
