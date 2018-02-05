@@ -21,6 +21,11 @@ namespace UniVoting.Client
         private Voter _voter;
         public delegate void VoteCompletedEventHandler(object source, EventArgs args);
         public event VoteCompletedEventHandler VoteCompleted;
+
+        private CustomDialog _customDialog;
+        private SkipVoteDialogControl skipVoteDialogControl;
+        private MetroWindow _metroWindow;
+
         public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes)
         {
             InitializeComponent();
@@ -31,7 +36,14 @@ namespace UniVoting.Client
             BtnSkipVote.Click += BtnSkipVote_Click;
             Loaded += ClientVotingPage_Loaded;
 
+            _customDialog = new CustomDialog();
+            skipVoteDialogControl = new SkipVoteDialogControl();
+            skipVoteDialogControl.BtnYes.Click += BtnYesClick;
+            skipVoteDialogControl.BtnNo.Click += BtnNoClick;
+            _customDialog.Content = skipVoteDialogControl;
+
         }
+
 
         private void ClientVotingPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -74,15 +86,21 @@ namespace UniVoting.Client
                 DialogMessageFontSize = 18
             };
             //var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
+            
+            await _metroWindow.ShowMetroDialogAsync(_customDialog,dialogSettings);
 
-            MessageDialogResult result = await metroWindow.ShowMessageAsync("Skip Vote", $"Are You Sure You Want to Skip {_position.PositionName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
-            if (result == MessageDialogResult.Affirmative)
-            {
-                _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
-                OnVoteCompleted(this);
+            //MessageDialogResult result = await metroWindow.ShowMessageAsync("Skip Vote", $"Are You Sure You Want to Skip {_position.PositionName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
+        }
 
-            }
+        private void BtnYesClick(object sender, RoutedEventArgs e)
+        {
+            _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
+            OnVoteCompleted(this);
 
+        }
+        private async void BtnNoClick(object sender, RoutedEventArgs e)
+        {
+            await _metroWindow.HideMetroDialogAsync(_customDialog);
         }
 
         private void OnVoteCompleted(object source)

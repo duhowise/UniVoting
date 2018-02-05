@@ -154,6 +154,9 @@
       <DependentUpon>ConfirmDialogControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="SkipVoteDialogControl.xaml.cs">
+      <DependentUpon>SkipVoteDialogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ThemeManagerHelper.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="YesOrNoCandidateControl.xaml.cs">
@@ -202,6 +205,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SkipVoteDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="YesOrNoCandidateControl.xaml">
       <SubType>Designer</SubType>
