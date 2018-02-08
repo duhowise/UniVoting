@@ -35,7 +35,7 @@ namespace UniVoting.Client
             _skippedVotes = skippedVotes;
             BtnSkipVote.Click += BtnSkipVote_Click;
             Loaded += ClientVotingPage_Loaded;
-
+          _metroWindow=  (Window.GetWindow(this) as MetroWindow);
             _customDialog = new CustomDialog();
             skipVoteDialogControl = new SkipVoteDialogControl();
             skipVoteDialogControl.BtnYes.Click += BtnYesClick;
@@ -85,22 +85,25 @@ namespace UniVoting.Client
                 FirstAuxiliaryButtonText = "Cancel",
                 DialogMessageFontSize = 18
             };
-            //var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
             
-            await _metroWindow.ShowMetroDialogAsync(_customDialog,dialogSettings);
+            await metroWindow.ShowMetroDialogAsync(_customDialog);
 
             //MessageDialogResult result = await metroWindow.ShowMessageAsync("Skip Vote", $"Are You Sure You Want to Skip {_position.PositionName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
         }
 
-        private void BtnYesClick(object sender, RoutedEventArgs e)
+        private async void BtnYesClick(object sender, RoutedEventArgs e)
         {
+            var metroWindow = (Window.GetWindow(this) as MetroWindow);
+
             _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteCompleted(this);
-
+            await metroWindow.HideMetroDialogAsync(_customDialog);
         }
         private async void BtnNoClick(object sender, RoutedEventArgs e)
         {
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+            var metroWindow = (Window.GetWindow(this) as MetroWindow);
+
+            await metroWindow.HideMetroDialogAsync(_customDialog);
         }
 
         private void OnVoteCompleted(object source)

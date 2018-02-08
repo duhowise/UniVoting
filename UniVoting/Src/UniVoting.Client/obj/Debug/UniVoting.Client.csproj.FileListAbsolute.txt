@@ -167,3 +167,5 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\SkipVoteDialogControl.g.cs
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\SkipVoteDialogControl.baml
