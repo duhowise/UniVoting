@@ -93,7 +93,7 @@ namespace UniVoting.Client
 
         }
 
-        private void YesOrNoCandidateControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void YesOrNoCandidateControl_Loaded(object sender, RoutedEventArgs e)
         {
             _metroWindow = (Window.GetWindow(this) as MetroWindow);
             CandidateId = _candidate.Id;
@@ -102,7 +102,7 @@ namespace UniVoting.Client
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-        private async void BtnVoteYes_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void BtnVoteYes_Click(object sender, RoutedEventArgs e)
         {
             BtnVoteYes.IsEnabled = false;
             //var dialogSettings = new MetroDialogSettings
@@ -124,7 +124,7 @@ namespace UniVoting.Client
             await _metroWindow.ShowMetroDialogAsync(_customDialog);
         }
 
-        private async void BtnVoteNo_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void BtnVoteNo_Click(object sender, RoutedEventArgs e)
         {
             //_metroWindow = (Window.GetWindow(this) as MetroWindow);
             //var dialogSettings = new MetroDialogSettings

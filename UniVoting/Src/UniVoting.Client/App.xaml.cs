@@ -26,8 +26,7 @@ namespace UniVoting.Client
 
 		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			var exp = e.ExceptionObject as Exception;
-			if (exp != null) MessageBox.Show(exp.InnerException?.ToString());
+		    if (e.ExceptionObject is Exception exp) MessageBox.Show(exp.InnerException?.ToString());
 		}
 	
 		protected override void OnStartup(StartupEventArgs e)

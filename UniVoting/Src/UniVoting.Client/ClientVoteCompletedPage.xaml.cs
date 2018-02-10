@@ -21,7 +21,7 @@ namespace UniVoting.Client
 		private  Voter _voter;
 		private ConcurrentBag<SkippedVotes> _skippedVotes;
 
-		private int count;
+		private int _count;
 		public ClientVoteCompletedPage(ConcurrentBag<Vote> votes,Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
 		{
 			_votes = votes;
@@ -31,7 +31,7 @@ namespace UniVoting.Client
 			IgnoreTaskbarOnMaximize = true;
 			
 			
-			count = 0;
+			_count = 0;
 			Loaded += ClientVoteCompletedPage_Loaded;
 		}
 
@@ -58,13 +58,13 @@ namespace UniVoting.Client
 
 		private  void _timer_Tick(object sender, EventArgs e)
 		{
-			count++;
+			_count++;
 			BlobCache.Shutdown().Wait();
 			RestartApplication();
 		}
 		public void RestartApplication()
 		{
-			if (count == 1)
+			if (_count == 1)
 			{
 				this.Hide();
 				if (Application.ResourceAssembly != null) Start(Application.ResourceAssembly.Location);
