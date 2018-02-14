@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using Excel;
+using ExcelDataReader;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
@@ -35,6 +36,7 @@ namespace UniVoting.Admin.Administrators
 			BtnImportFile.Click += BtnImportFile_Click;
 			BtnSave.Click += BtnSave_Click;
 			TextBoxIndexNumber.LostFocus += TextBoxIndexNumber_LostFocus;
+		  
 		}
 
 		private async void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -100,63 +102,70 @@ namespace UniVoting.Admin.Administrators
 
 		private void BtnImportFile_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			using (var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2003 Files | *.xls", ValidateNames = true })
+			using (var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2007 Files |*.xls;*.xlsx;", ValidateNames = true })
 			{
-				if (openFileDialog.ShowDialog() == DialogResult.OK)
-				{
-				
-					try
-					{
-						FileStream fs = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+			    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+			    try
+			    {
+			        var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+			        ImportedFilename.Content =ImportedFilename.Content+" "+ openFileDialog.SafeFileName;
+					    
 
-					
-					ImportedFilename.Content =ImportedFilename.Content+" "+ openFileDialog.SafeFileName;
-					var reader = ExcelReaderFactory.CreateBinaryReader(fs);
-					reader.IsFirstRowAsColumnNames = true;
-					_dataSet = reader.AsDataSet();
-					foreach (DataTable table in _dataSet.Tables)
-					{
+			        using (var reader = ExcelReaderFactory.CreateReader(stream))
+			        {
+			            _dataSet = reader.AsDataSet(new ExcelDataSetConfiguration()
+			            {
+			                ConfigureDataTable = (data) => new ExcelDataTableConfiguration()
+			                {
+			                    UseHeaderRow = true
+			                }
+			            });
 
-						VoterGrid.ItemsSource = _dataSet.Tables[table.TableName].DefaultView;
+			            foreach (DataTable table in _dataSet.Tables)
+			            {
 
-					}
-					foreach (DataGridColumn column in VoterGrid.Columns)
-					{
-						if (column.Header.ToString().ToLower() == "fullname")
-						{
-							_indexName = column.DisplayIndex;
-							break;
-						}
+			                VoterGrid.ItemsSource = _dataSet.Tables[table.TableName].DefaultView;
+
+			            }
+			            foreach (DataGridColumn column in VoterGrid.Columns)
+			            {
+			                if (column.Header.ToString().ToLower() == "fullname")
+			                {
+			                    _indexName = column.DisplayIndex;
+			                    break;
+			                }
 						
-					}
-					foreach (var column in VoterGrid.Columns)
-					{
-						if (column.Header.ToString().ToLower() == "indexnumber")
-						{
-							_indexNUmber = column.DisplayIndex;
-							break;
-						}
-					}
-					foreach (System.Data.DataRowView row in VoterGrid.ItemsSource)
-					{
-						var voterInfo = new Voter
-						{
-							VoterName = row[_indexName].ToString(),
-							IndexNumber = row[_indexNUmber].ToString(),
-							VoterCode = Util.GenerateRandomPassword(6)
-							
-						  
-						};
-						
-						voters.Add(voterInfo);
-						Thread.Sleep(20);
-						}
-					}
-					catch (Exception exception)
-					{
-						MessageBox.Show(exception.Message, "File Read Error");
-					}
-				}
+			            }
+			            foreach (var column in VoterGrid.Columns)
+			            {
+			                if (column.Header.ToString().ToLower() == "indexnumber")
+			                {
+			                    _indexNUmber = column.DisplayIndex;
+			                    break;
+			                }
+			            }
+                        foreach (DataRowView row in VoterGrid.ItemsSource)
+                        {
+                            var voterInfo = new Voter
+                            {
+                                VoterName = row[_indexName].ToString(),
+                                IndexNumber = row[_indexNUmber].ToString(),
+                                VoterCode = Util.GenerateRandomPassword(6)
+                            };
+                            voters.Add(voterInfo);
+                    
+                        }
+
+
+                    }
+
+
+
+                }
+			    catch (Exception exception)
+			    {
+			        MessageBox.Show(exception.Message, "File Read Error");
+			    }
 			}
 		}
 

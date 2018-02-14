@@ -11,10 +11,10 @@ false
 DEBUG;TRACE
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\App.xaml
 112111933131
-21645666746
-20-1279486094
-87588657223
+2-1519549716
+19514613951
+108-1393573810
 CandidateControl.xaml;ClientsLoginWindow.xaml;ClientVoteCompletedPage.xaml;ClientVotingPage.xaml;ConfirmDialogControl.xaml;CustomAccents\CustomAccent.xaml;MainWindow.xaml;Resources\Icons.xaml;Resources\IconsNonShared.xaml;SkipVoteDialogControl.xaml;YesOrNoCandidateControl.xaml;
 
-False
+True
 

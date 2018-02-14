@@ -49,6 +49,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.LiveV
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.LiveView.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.LiveView.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\Autofac.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\ControlzEx.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\MahApps.Metro.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\MaterialDesignColors.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\MaterialDesignThemes.MahApps.dll
@@ -65,6 +66,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.Model
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.Model.dll.config
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\UniVoting.Services.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\Autofac.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\ControlzEx.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\MahApps.Metro.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\MahApps.Metro.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.LiveView\bin\Debug\MaterialDesignColors.pdb

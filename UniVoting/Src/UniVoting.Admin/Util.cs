@@ -17,16 +17,20 @@ namespace UniVoting.Admin
 		public static string GenerateRandomPassword(int length)
 		{
 		   
-			string range = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz";
-			Random r = new Random();
-
-			char[] chars = new char[length];
-			for (int i = 0; i < length; i++)
-			{
-				chars[i] = range[r.Next(0, range.Length)];
-			}
-
-			return new string(chars);
+			var range = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz".ToCharArray();
+		    var data = new byte[1];
+		    using (var crypto = new RNGCryptoServiceProvider())
+		    {
+		        crypto.GetBytes(data);
+		        data = new byte[length];
+		        crypto.GetBytes(data);
+		    }
+		    var result = new StringBuilder(length);
+		    foreach (var b in data)
+		    {
+		        result.Append(range[b % (range.Length)]);
+		    }
+			return result.ToString();
 		}
 		public static void Clear(Visual myMainWindow)
 		{
