@@ -108,14 +108,14 @@ namespace UniVoting.Admin.Administrators
 			    try
 			    {
 			        var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
-			        ImportedFilename.Content =ImportedFilename.Content+" "+ openFileDialog.SafeFileName;
+			        ImportedFilename.Content ="File Name"+" "+ openFileDialog.SafeFileName;
 					    
 
 			        using (var reader = ExcelReaderFactory.CreateReader(stream))
 			        {
-			            _dataSet = reader.AsDataSet(new ExcelDataSetConfiguration()
+			            _dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
 			            {
-			                ConfigureDataTable = (data) => new ExcelDataTableConfiguration()
+			                ConfigureDataTable = data => new ExcelDataTableConfiguration
 			                {
 			                    UseHeaderRow = true
 			                }
@@ -129,20 +129,16 @@ namespace UniVoting.Admin.Administrators
 			            }
 			            foreach (DataGridColumn column in VoterGrid.Columns)
 			            {
-			                if (column.Header.ToString().ToLower() == "fullname")
-			                {
-			                    _indexName = column.DisplayIndex;
-			                    break;
-			                }
-						
+			                if (column.Header.ToString().ToLower() != "fullname") continue;
+			                _indexName = column.DisplayIndex;
+			                break;
+
 			            }
 			            foreach (var column in VoterGrid.Columns)
 			            {
-			                if (column.Header.ToString().ToLower() == "indexnumber")
-			                {
-			                    _indexNUmber = column.DisplayIndex;
-			                    break;
-			                }
+			                if (column.Header.ToString().ToLower() != "indexnumber") continue;
+			                _indexNUmber = column.DisplayIndex;
+			                break;
 			            }
                         foreach (DataRowView row in VoterGrid.ItemsSource)
                         {
