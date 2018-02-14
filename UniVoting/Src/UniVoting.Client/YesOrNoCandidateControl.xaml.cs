@@ -120,8 +120,8 @@ namespace UniVoting.Client
             //{
                
             //}
-            BtnVoteYes.IsEnabled = true;
             await _metroWindow.ShowMetroDialogAsync(_customDialog);
+            BtnVoteYes.IsEnabled = true;
         }
 
         private async void BtnVoteNo_Click(object sender, RoutedEventArgs e)
