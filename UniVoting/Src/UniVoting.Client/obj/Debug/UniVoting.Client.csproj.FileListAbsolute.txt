@@ -130,8 +130,6 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.IO.Compres
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.IO.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.IO.FileSystem.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.IO.FileSystem.Primitives.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Linq.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Linq.Expressions.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Net.Http.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Net.Sockets.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Reactive.Core.dll
@@ -146,7 +144,6 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Security.C
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Security.Cryptography.Encoding.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Security.Cryptography.Primitives.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Security.Cryptography.X509Certificates.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Text.RegularExpressions.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Windows.Interactivity.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Xml.ReaderWriter.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\UniVoting.Model.dll
@@ -194,3 +191,8 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Reactive.Linq.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Reactive.Linq.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Linq.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Linq.Expressions.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Reactive.PlatformServices.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\bin\Debug\System.Reactive.PlatformServices.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Client\obj\Debug\UniVoting.Client.csproj.UniVoting.Client.exe.config

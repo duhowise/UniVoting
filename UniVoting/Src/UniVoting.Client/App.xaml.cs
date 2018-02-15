@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,6 +55,7 @@ namespace UniVoting.Client
 	        }
 	        catch (Exception exception)
 	        {
+                Debug.WriteLine(exception.Message);
 	            MessageBox.Show(exception.Message, " colour Settings Error");
 	        }
 
