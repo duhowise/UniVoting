@@ -9,10 +9,10 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock FontSize="20" x:Name="TextBoxConfirm" FontFamily="Segoe Ui semibold" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Text="Are you sure you want to skip this vote " TextWrapping="WrapWithOverflow"/>
+        <TextBlock FontSize="20" x:Name="TextBoxConfirm" FontFamily="Segoe Ui semibold" Margin="10" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Text="Are you sure you want to skip this vote " TextWrapping="WrapWithOverflow"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button FontSize="20" FontFamily="Segoe UI Bold" Background="{DynamicResource AccentColorBrush}"
 								Foreground="{StaticResource WhiteColorBrush}" Controls:ButtonHelper.PreserveTextCase="True"

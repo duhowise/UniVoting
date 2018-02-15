@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock FontSize="20" x:Name="TextBoxConfirm" FontFamily="Segoe Ui semibold" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Text="Are you sure you want to vote for " TextWrapping="WrapWithOverflow"/>
+        <TextBlock FontSize="20" x:Name="TextBoxConfirm" FontFamily="Segoe Ui semibold" Margin="5" Foreground="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Text="Are you sure you want to vote for " TextWrapping="WrapWithOverflow"/>
         <Image Name="CandidateImage" Grid.Row="1" Width="250" HorizontalAlignment="Center" Source="/Resources/images/user.png"></Image>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button FontSize="20" FontFamily="Segoe UI Bold" Background="{DynamicResource AccentColorBrush}"

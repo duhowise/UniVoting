@@ -157,6 +157,8 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Autofac.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ControlzEx.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Dapper.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Dapper.SimpleCRUD.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.DataSet.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ICSharpCode.SharpZipLib.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MahApps.Metro.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MaterialDesignColors.dll
@@ -187,6 +189,8 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ControlzEx.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Dapper.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Dapper.SimpleCRUD.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Dapper.SimpleCRUD.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.DataSet.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MahApps.Metro.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MahApps.Metro.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MaterialDesignColors.pdb
@@ -249,7 +253,3 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.pdb
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.DataSet.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.xml
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\ExcelDataReader.DataSet.xml
