@@ -18,33 +18,32 @@ namespace UniVoting.Client
     /// </summary>
     public partial class App : Application
 	{
+	    private Setting _electionData;
+
 		private IEnumerable<Position> _positions;
 		public App()
 		{
-			BlobCache.ApplicationName = $"VotingApplication";
-			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            BlobCache.ApplicationName = $"VotingApplications";
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 		}
 
-		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
 		    if (e.ExceptionObject is Exception exp) MessageBox.Show(exp.Message);
 		}
 	
 		protected override async void OnStartup(StartupEventArgs e)
 		{
-			//if (Settings.Default.FirstRun)
-			//{
-				await GetSettings();
-				Settings.Default.FirstRun = false;
-				Settings.Default.Save();
-			//}
-            SetTheme();
-		  MainWindow = new ClientsLoginWindow();
-			MainWindow.Show();
-			base.OnStartup(e);
+		    await	BlobCache.UserAccount.InvalidateAll();
+
+		    await GetSettings();
+		    await SetTheme();
+		    MainWindow = new ClientsLoginWindow();
+		    MainWindow.Show();
+		    base.OnStartup(e);
 		}
 
-	    public static async void SetTheme()
+	    public static async Task SetTheme()
 	    {
 	        var data = new Setting();
 
@@ -68,13 +67,16 @@ namespace UniVoting.Client
 		{
 			_positions = new List<Position>();
 
-			try
-			{
-				var electionData = ElectionConfigurationService.ConfigureElection();
-			await	BlobCache.UserAccount.InsertObject("ElectionSettings", electionData);
-				_positions = ElectionConfigurationService.GetAllPositions();
-
-			await	BlobCache.UserAccount.InsertObject("ElectionPositions", _positions);
+		    try
+		    {
+                //ElectionSettings
+		        _electionData = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings")
+		            .Catch(Observable.Return(_electionData = ElectionConfigurationService.ConfigureElection()));
+		      await	BlobCache.UserAccount.InsertObject("ElectionSettings", _electionData);
+		        //ElectionPositions
+		        _positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions")
+		            .Catch(Observable.Return( _positions = ElectionConfigurationService.GetAllPositions()));
+		        await	BlobCache.UserAccount.InsertObject("ElectionPositions", _positions);
 			}
 			catch (Exception exception)
 			{
