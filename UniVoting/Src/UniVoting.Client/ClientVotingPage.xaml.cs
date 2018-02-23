@@ -37,7 +37,7 @@ namespace UniVoting.Client
             Loaded += ClientVotingPage_Loaded;
           _metroWindow=  (Window.GetWindow(this) as MetroWindow);
             _customDialog = new CustomDialog();
-            skipVoteDialogControl = new SkipVoteDialogControl();
+            skipVoteDialogControl = new SkipVoteDialogControl(position);
             skipVoteDialogControl.BtnYes.Click += BtnYesClick;
             skipVoteDialogControl.BtnNo.Click += BtnNoClick;
             _customDialog.Content = skipVoteDialogControl;
@@ -45,9 +45,9 @@ namespace UniVoting.Client
         }
 
 
-        private void ClientVotingPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void ClientVotingPage_Loaded(object sender, RoutedEventArgs e)
         {
-            TextBoxWelcome.Content = $"Welcome, {_voter.VoterName ?? String.Empty}";
+            TextBoxWelcome.Content = $"Welcome, {_voter.VoterName ?? string.Empty}";
 
             if (string.IsNullOrWhiteSpace(_position.Faculty) || _position.Faculty.Trim().Equals(_voter.Faculty.Trim(), StringComparison.OrdinalIgnoreCase))
             {
