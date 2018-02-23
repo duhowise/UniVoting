@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Akavache;
-using UniVoting.Client.Properties;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -23,7 +22,7 @@ namespace UniVoting.Client
 		private IEnumerable<Position> _positions;
 		public App()
 		{
-            BlobCache.ApplicationName = $"VotingApplications";
+            BlobCache.ApplicationName = $"VotingApplication";
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 		}
 
@@ -66,8 +65,7 @@ namespace UniVoting.Client
 		private async Task GetSettings()
 		{
 			_positions = new List<Position>();
-
-		    try
+            try
 		    {
                 //ElectionSettings
 		        _electionData = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings")
