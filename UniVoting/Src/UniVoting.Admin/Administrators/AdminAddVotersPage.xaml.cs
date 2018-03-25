@@ -107,7 +107,8 @@ namespace UniVoting.Admin.Administrators
 			    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
 			    try
 			    {
-			        var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
+			        voters.Clear();
+                    var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
 			        ImportedFilename.Content ="File Name"+" "+ openFileDialog.SafeFileName;
 					    
 

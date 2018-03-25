@@ -37,10 +37,13 @@ namespace UniVoting.Client
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-		    if (e.ExceptionObject is Exception exp) _logger.Log(exp);
+		    if (!(e.ExceptionObject is Exception exp)) return;
+		    MessageBox.Show(exp.Message, " colour Settings Error");
+		    _logger.Log(exp);
+
 		}
-	
-		protected override async void OnStartup(StartupEventArgs e)
+
+        protected override async void OnStartup(StartupEventArgs e)
 		{
 		    try
 		    {

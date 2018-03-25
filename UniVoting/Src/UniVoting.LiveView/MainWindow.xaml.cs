@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using MahApps.Metro.Controls;
+using MySql.Data.MySqlClient;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
@@ -32,9 +33,9 @@ namespace UniVoting.LiveView
 		        _positions = await LiveViewService.Positions();
 
 		    }
-		    catch (SqlException exception)
+		    catch (MySqlException exception)
 		    {
-		        SystemEventLoggerService.Log(exception.StackTrace);
+		        SystemEventLoggerService.Log($"{exception.Message}\n{exception.StackTrace}");
 
 		    }
 		    catch (Exception exception)
@@ -44,11 +45,15 @@ namespace UniVoting.LiveView
 		    }
 		    finally
 		    {
-		        foreach (var position in _positions)
+		        if (_positions != null)
 		        {
-		            CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
-		            SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
-		        }
+		            foreach (var position in _positions)
+		            {
+		                CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
+		                SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
+		            }
+                }
+		        
             }
             
 		}

@@ -70,7 +70,7 @@ namespace UniVoting.Data.Implementations
 			{
 				using (var connection = new DbManager(ConnectionName).Connection)
 				{
-					return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM vw_LiveViewSkipped
+					return await connection.ExecuteScalarAsync<int>(@"SELECT `Count` FROM vw_LiveViewSkipped
 										WHERE PositionName = @positionName", position);
 
 				}
@@ -131,7 +131,7 @@ namespace UniVoting.Data.Implementations
 
 			using (var connection = new DbManager(ConnectionName).Connection)
 			{
-				return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM vw_LiveView
+				return await connection.ExecuteScalarAsync<int>(@"SELECT `Count` FROM vw_LiveView
 										WHERE PositionName = @positionName", position);
 
 			}
