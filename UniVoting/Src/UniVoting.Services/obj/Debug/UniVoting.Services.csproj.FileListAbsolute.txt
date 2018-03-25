@@ -31,6 +31,8 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.d
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\System.Windows.Interactivity.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Data.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Model.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MySql.Data.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Google.Protobuf.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Data.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Data.dll.config
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Model.pdb
@@ -41,11 +43,9 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.SimpleCR
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Dapper.SimpleCRUD.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MahApps.Metro.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MySql.Data.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Google.Protobuf.xml
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojResolveAssemblyReference.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MySql.Data.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Google.Protobuf.dll
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\MySql.Data.xml
-D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Google.Protobuf.xml

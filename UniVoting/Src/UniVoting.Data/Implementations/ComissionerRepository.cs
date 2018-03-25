@@ -55,7 +55,7 @@ namespace UniVoting.Data.Implementations
 			{
 				using (var connection = new DbManager(ConnectionName).Connection)
 				{
-					return connection.QueryFirstOrDefault<Setting>(@"SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=1");
+					return connection.QueryFirstOrDefault<Setting>(@"SELECT  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=1");
 
 				}
 			}
