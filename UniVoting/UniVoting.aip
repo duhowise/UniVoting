@@ -7,6 +7,7 @@
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_EXTERNALUIUNINSTALLERNAME" MultiBuildValue="DefaultBuild:aiui"/>
     <ROW Property="AI_PRODUCTNAME_ARP" Value="UniVoting"/>
+    <ROW Property="AI_ThemeStyle" Value="aero" MultiBuildValue="DefaultBuild:default" MsiKey="AI_ThemeStyle"/>
     <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
@@ -29,6 +30,8 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
@@ -39,6 +42,8 @@
     <ROW Component="ControlzEx.dll" ComponentId="{8C5142A8-3DF4-4045-A4CA-C223D40C516E}" Directory_="APPDIR" Attributes="0" KeyPath="ControlzEx.dll"/>
     <ROW Component="Dapper.SimpleCRUD.dll" ComponentId="{53E98498-5ABF-4012-9272-87A65D7B3318}" Directory_="APPDIR" Attributes="0" KeyPath="Dapper.SimpleCRUD.dll"/>
     <ROW Component="Dapper.dll" ComponentId="{9955AA8E-9737-4CAF-A839-64544E77E926}" Directory_="APPDIR" Attributes="0" KeyPath="Dapper.dll"/>
+    <ROW Component="EntityFramework.SqlServer.dll" ComponentId="{5844843E-C131-4523-846C-BBB60EA1782B}" Directory_="APPDIR" Attributes="0" KeyPath="EntityFramework.SqlServer.dll"/>
+    <ROW Component="EntityFramework.dll" ComponentId="{A9171532-D689-44EF-9FCC-EBCFBD780C5D}" Directory_="APPDIR" Attributes="0" KeyPath="EntityFramework.dll"/>
     <ROW Component="ExcelDataReader.DataSet.dll" ComponentId="{59349370-3795-4DE3-989E-50B9C165D3CF}" Directory_="APPDIR" Attributes="0" KeyPath="ExcelDataReader.DataSet.dll"/>
     <ROW Component="ExcelDataReader.dll" ComponentId="{679F953C-3389-4E83-A40D-2FD71BDA03D4}" Directory_="APPDIR" Attributes="0" KeyPath="ExcelDataReader.dll"/>
     <ROW Component="ICSharpCode.SharpZipLib.dll" ComponentId="{4149CE9B-9280-4713-A91E-DAD84C964F42}" Directory_="APPDIR" Attributes="0" KeyPath="ICSharpCode.SharpZipLib.dll"/>
@@ -53,17 +58,22 @@
     <ROW Component="PresentationCore.dll" ComponentId="{88AB7391-D834-4FC1-B3E9-738D7FABA898}" Directory_="APPDIR" Attributes="0" KeyPath="PresentationCore.dll"/>
     <ROW Component="PresentationFramework.dll" ComponentId="{C05B5CAE-3FD8-4DCD-97DC-5D6FC344DBB7}" Directory_="APPDIR" Attributes="0" KeyPath="PresentationFramework.dll"/>
     <ROW Component="ProductInformation" ComponentId="{7D08806F-CBD9-4BF7-B49E-0040E7778F6F}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{FF75D485-8F89-4954-A58F-3B9DDC2DADD9}" Directory_="SHORTCUTDIR" Attributes="0"/>
     <ROW Component="SQLitePCLRaw.batteries_e_sqlite3.dll" ComponentId="{AD17C7B9-1207-4071-A6B9-4340F398ACC1}" Directory_="APPDIR" Attributes="0" KeyPath="SQLitePCLRaw.batteries_e_sqlite3.dll"/>
     <ROW Component="SQLitePCLRaw.batteries_v2.dll" ComponentId="{0FDC8D24-1D7E-4D3A-AE61-5EA0FD06657C}" Directory_="APPDIR" Attributes="0" KeyPath="SQLitePCLRaw.batteries_v2.dll"/>
     <ROW Component="SQLitePCLRaw.core.dll" ComponentId="{FA944EE3-FE98-4F78-A9C0-248F19FA9448}" Directory_="APPDIR" Attributes="0" KeyPath="SQLitePCLRaw.core.dll"/>
     <ROW Component="SQLitePCLRaw.provider.e_sqlite3.dll" ComponentId="{C54CE50F-8260-4D99-BCB7-3C8CA2DD2A60}" Directory_="APPDIR" Attributes="0" KeyPath="SQLitePCLRaw.provider.e_sqlite3.dll"/>
+    <ROW Component="SQLitenet.dll" ComponentId="{6947B01B-88A9-4D27-B53B-C0A8E666405A}" Directory_="APPDIR" Attributes="0" KeyPath="SQLitenet.dll"/>
     <ROW Component="Splat.dll" ComponentId="{13A5056A-47D9-4158-AC1C-B60DCD16A6E8}" Directory_="APPDIR" Attributes="0" KeyPath="Splat.dll"/>
     <ROW Component="System.AppContext.dll" ComponentId="{1A6EE079-0358-4E2C-B9B8-CA6851E09DDC}" Directory_="APPDIR" Attributes="0" KeyPath="System.AppContext.dll"/>
     <ROW Component="System.ComponentModel.Composition.dll" ComponentId="{0051B08E-8E53-4808-BDF5-B3F94436D8C3}" Directory_="APPDIR" Attributes="0" KeyPath="System.ComponentModel.Composition.dll"/>
+    <ROW Component="System.ComponentModel.DataAnnotations.dll" ComponentId="{D92DD11A-5891-4241-BA6A-F7E0BF7B6331}" Directory_="APPDIR" Attributes="0" KeyPath="System.ComponentModel.DataAnnotations.dll"/>
     <ROW Component="System.Configuration.dll" ComponentId="{5F750CC4-68A3-41B9-962A-F7BFBA0BFD27}" Directory_="APPDIR" Attributes="0" KeyPath="System.Configuration.dll"/>
     <ROW Component="System.Console.dll" ComponentId="{A53E6044-D0B1-42F8-9283-19099EFF3638}" Directory_="APPDIR" Attributes="0" KeyPath="System.Console.dll"/>
     <ROW Component="System.Core.dll" ComponentId="{37D45C0A-9B7F-4A6C-9729-C3C8472090BA}" Directory_="APPDIR" Attributes="0" KeyPath="System.Core.dll"/>
     <ROW Component="System.Data.DataSetExtensions.dll" ComponentId="{48092BCB-DB33-4C53-A12D-D7B9B2FAD4F6}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.DataSetExtensions.dll"/>
+    <ROW Component="System.Data.SQLite.EF6.dll" ComponentId="{3ECD6D9C-D5F1-4008-8773-9AECCEF63C42}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.SQLite.EF6.dll"/>
+    <ROW Component="System.Data.SQLite.Linq.dll" ComponentId="{B7D45481-A9C6-462D-A614-3E9F85947FB4}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.SQLite.Linq.dll"/>
     <ROW Component="System.Data.SQLite.dll" ComponentId="{F2ECCC77-43C7-4CDC-82A0-E7A1FCE63E09}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.SQLite.dll"/>
     <ROW Component="System.Data.dll" ComponentId="{A263F59F-1CD6-484D-9197-860EB164A0B4}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.dll"/>
     <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{737ABF1F-0157-403E-86F0-0218749C0C96}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
@@ -114,8 +124,10 @@
     <ROW Component="UniVoting.Admin.exe" ComponentId="{C1067D2B-B5BA-4E03-9F39-FB605CD1332D}" Directory_="APPDIR" Attributes="256" KeyPath="UniVoting.Admin.exe"/>
     <ROW Component="UniVoting.Admin.exe.config" ComponentId="{E287499A-D286-41D6-A5C9-79018C02F33D}" Directory_="APPDIR" Attributes="0" KeyPath="UniVoting.Admin.exe.config" Type="0"/>
     <ROW Component="UniVoting.Client.exe" ComponentId="{5A2426BA-6304-4BC5-9CF8-1B09759E5758}" Directory_="APPDIR" Attributes="256" KeyPath="UniVoting.Client.exe"/>
+    <ROW Component="UniVoting.Client.exe.config" ComponentId="{2B5C71E5-7268-4813-BF5B-FAE44F4578AE}" Directory_="APPDIR" Attributes="0" KeyPath="UniVoting.Client.exe.config"/>
     <ROW Component="UniVoting.Data.dll" ComponentId="{56156F31-1CF4-45B0-A9D3-66515AAA609A}" Directory_="APPDIR" Attributes="256" KeyPath="UniVoting.Data.dll"/>
     <ROW Component="UniVoting.LiveView.exe" ComponentId="{F675449B-CD22-44A6-8DE9-BA89AFB3258D}" Directory_="APPDIR" Attributes="256" KeyPath="UniVoting.LiveView.exe"/>
+    <ROW Component="UniVoting.LiveView.exe.config" ComponentId="{84059136-2310-4F7E-9898-E2F847872259}" Directory_="APPDIR" Attributes="0" KeyPath="UniVoting.LiveView.exe.config"/>
     <ROW Component="UniVoting.Model.dll" ComponentId="{A7C0267B-49A6-4C7B-A8D4-68B6A8AC7F3D}" Directory_="APPDIR" Attributes="256" KeyPath="UniVoting.Model.dll"/>
     <ROW Component="UniVoting.Services.dll" ComponentId="{1A3BA9FD-F2FD-45B2-97C5-AD1F6F409FAB}" Directory_="APPDIR" Attributes="256" KeyPath="UniVoting.Services.dll"/>
     <ROW Component="Univoting.Reporting.dll" ComponentId="{9B84F2E7-4241-4536-9775-B28F543E6772}" Directory_="APPDIR" Attributes="256" KeyPath="Univoting.Reporting.dll"/>
@@ -124,10 +136,10 @@
     <ROW Component="mscorlib.dll" ComponentId="{11D97302-7EAF-45D6-A11A-2977C56DCC4D}" Directory_="APPDIR" Attributes="0" KeyPath="mscorlib.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="Feature" Title="LiveView Module" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName"/>
-    <ROW Feature="Feature_1" Title="Admin Module" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName Akavache.Sqlite3.dll Akavache.dll Autofac.dll ControlzEx.dll Dapper.SimpleCRUD.dll Dapper.dll ExcelDataReader.DataSet.dll ExcelDataReader.dll ICSharpCode.SharpZipLib.dll MahApps.Metro.SimpleChildWindow.dll MahApps.Metro.dll MaterialDesignColors.dll MaterialDesignThemes.MahApps.dll MaterialDesignThemes.Wpf.dll Microsoft.CSharp.dll Microsoft.Win32.Primitives.dll Newtonsoft.Json.dll PresentationCore.dll PresentationFramework.dll SQLitePCLRaw.batteries_e_sqlite3.dll SQLitePCLRaw.batteries_v2.dll SQLitePCLRaw.core.dll SQLitePCLRaw.provider.e_sqlite3.dll Splat.dll System.AppContext.dll System.ComponentModel.Composition.dll System.Configuration.dll System.Console.dll System.Core.dll System.Data.DataSetExtensions.dll System.Data.SQLite.dll System.Data.dll System.Diagnostics.DiagnosticSource.dll System.Diagnostics.Tracing.dll System.Drawing.dll System.Globalization.Calendars.dll System.IO.Compression.FileSystem.dll System.IO.Compression.ZipFile.dll System.IO.Compression.dll System.IO.FileSystem.Primitives.dll System.IO.FileSystem.dll System.IO.dll System.Linq.dll System.Net.Http.dll System.Net.Sockets.dll System.Numerics.dll System.Reactive.Core.dll System.Reactive.Interfaces.dll System.Reactive.Linq.dll System.Reactive.PlatformServices.dll System.Reactive.dll System.Reflection.dll System.Runtime.Extensions.dll System.Runtime.InteropServices.RuntimeInformation.dll System.Runtime.InteropServices.dll System.Runtime.Serialization.dll System.Runtime.dll System.Security.Cryptography.Algorithms.dll System.Security.Cryptography.Encoding.dll System.Security.Cryptography.Primitives.dll System.Security.Cryptography.X509Certificates.dll System.Transactions.dll System.Windows.Forms.dll System.Windows.Interactivity.dll System.Xaml.dll System.Xml.Linq.dll System.Xml.ReaderWriter.dll System.Xml.dll System.dll Telerik.ReportViewer.Wpf.dll Telerik.Reporting.OpenXmlRendering.dll Telerik.Reporting.XpsRendering.dll Telerik.Reporting.dll Telerik.Windows.Controls.Input.dll Telerik.Windows.Controls.Navigation.dll Telerik.Windows.Controls.dll Telerik.Windows.Data.dll UniVoting.Admin.exe UniVoting.Admin.exe.config UniVoting.Client.exe UniVoting.Data.dll UniVoting.LiveView.exe UniVoting.Model.dll UniVoting.Services.dll Univoting.Reporting.dll WindowsBase.dll e_sqlite3.dll mscorlib.dll"/>
-    <ROW Feature="MainFeature" Title="Voting Module" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName ProductInformation"/>
-    <ATTRIBUTE name="CurrentFeature" value="Feature_1"/>
+    <ROW Feature="Feature" Title="LiveView Module" Description="Description" Display="3" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName UniVoting.LiveView.exe UniVoting.LiveView.exe.config"/>
+    <ROW Feature="Feature_1" Title="Admin Module" Description="Description" Display="5" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName Akavache.Sqlite3.dll Akavache.dll Autofac.dll ControlzEx.dll Dapper.SimpleCRUD.dll Dapper.dll EntityFramework.SqlServer.dll EntityFramework.dll ExcelDataReader.DataSet.dll ExcelDataReader.dll ICSharpCode.SharpZipLib.dll MahApps.Metro.SimpleChildWindow.dll MahApps.Metro.dll MaterialDesignColors.dll MaterialDesignThemes.MahApps.dll MaterialDesignThemes.Wpf.dll Microsoft.CSharp.dll Microsoft.Win32.Primitives.dll Newtonsoft.Json.dll PresentationCore.dll PresentationFramework.dll SHORTCUTDIR SQLitePCLRaw.batteries_e_sqlite3.dll SQLitePCLRaw.batteries_v2.dll SQLitePCLRaw.core.dll SQLitePCLRaw.provider.e_sqlite3.dll SQLitenet.dll Splat.dll System.AppContext.dll System.ComponentModel.Composition.dll System.ComponentModel.DataAnnotations.dll System.Configuration.dll System.Console.dll System.Core.dll System.Data.DataSetExtensions.dll System.Data.SQLite.EF6.dll System.Data.SQLite.Linq.dll System.Data.SQLite.dll System.Data.dll System.Diagnostics.DiagnosticSource.dll System.Diagnostics.Tracing.dll System.Drawing.dll System.Globalization.Calendars.dll System.IO.Compression.FileSystem.dll System.IO.Compression.ZipFile.dll System.IO.Compression.dll System.IO.FileSystem.Primitives.dll System.IO.FileSystem.dll System.IO.dll System.Linq.dll System.Net.Http.dll System.Net.Sockets.dll System.Numerics.dll System.Reactive.Core.dll System.Reactive.Interfaces.dll System.Reactive.Linq.dll System.Reactive.PlatformServices.dll System.Reactive.dll System.Reflection.dll System.Runtime.Extensions.dll System.Runtime.InteropServices.RuntimeInformation.dll System.Runtime.InteropServices.dll System.Runtime.Serialization.dll System.Runtime.dll System.Security.Cryptography.Algorithms.dll System.Security.Cryptography.Encoding.dll System.Security.Cryptography.Primitives.dll System.Security.Cryptography.X509Certificates.dll System.Transactions.dll System.Windows.Forms.dll System.Windows.Interactivity.dll System.Xaml.dll System.Xml.Linq.dll System.Xml.ReaderWriter.dll System.Xml.dll System.dll Telerik.ReportViewer.Wpf.dll Telerik.Reporting.OpenXmlRendering.dll Telerik.Reporting.XpsRendering.dll Telerik.Reporting.dll Telerik.Windows.Controls.Input.dll Telerik.Windows.Controls.Navigation.dll Telerik.Windows.Controls.dll Telerik.Windows.Data.dll UniVoting.Admin.exe UniVoting.Admin.exe.config UniVoting.Data.dll UniVoting.Model.dll UniVoting.Services.dll Univoting.Reporting.dll WindowsBase.dll e_sqlite3.dll mscorlib.dll"/>
+    <ROW Feature="MainFeature" Title="Voting Module" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName ProductInformation UniVoting.Client.exe UniVoting.Client.exe.config"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="Akavache.Sqlite3.dll" Component_="Akavache.Sqlite3.dll" FileName="AKAVAC~1.DLL|Akavache.Sqlite3.dll" Attributes="0" SourcePath="packages\akavache.sqlite3.6.0.0-alpha0038\lib\netstandard1.1\Akavache.Sqlite3.dll" SelfReg="false" NextFile="UniVoting.LiveView.exe.config"/>
@@ -136,6 +148,8 @@
     <ROW File="ControlzEx.dll" Component_="ControlzEx.dll" FileName="CONTRO~1.DLL|ControlzEx.dll" Attributes="0" SourcePath="packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll" SelfReg="false" NextFile="WindowsBase.dll"/>
     <ROW File="Dapper.SimpleCRUD.dll" Component_="Dapper.SimpleCRUD.dll" FileName="DAPPER~1.DLL|Dapper.SimpleCRUD.dll" Attributes="0" SourcePath="packages\Dapper.SimpleCRUD.1.13.0\lib\net45\Dapper.SimpleCRUD.dll" SelfReg="false" NextFile="Microsoft.CSharp.dll"/>
     <ROW File="Dapper.dll" Component_="Dapper.dll" FileName="Dapper.dll" Attributes="0" SourcePath="packages\Dapper.1.50.4\lib\net451\Dapper.dll" SelfReg="false" NextFile="Dapper.SimpleCRUD.dll"/>
+    <ROW File="EntityFramework.SqlServer.dll" Component_="EntityFramework.SqlServer.dll" FileName="ENTITY~1.DLL|EntityFramework.SqlServer.dll" Attributes="0" SourcePath="packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll" SelfReg="false" NextFile="System.Data.SQLite.Linq.dll"/>
+    <ROW File="EntityFramework.dll" Component_="EntityFramework.dll" FileName="ENTITY~2.DLL|EntityFramework.dll" Attributes="0" SourcePath="packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll" SelfReg="false" NextFile="System.ComponentModel.DataAnnotations.dll"/>
     <ROW File="ExcelDataReader.DataSet.dll" Component_="ExcelDataReader.DataSet.dll" FileName="EXCELD~2.DLL|ExcelDataReader.DataSet.dll" Attributes="0" SourcePath="packages\ExcelDataReader.DataSet.3.4.0\lib\net45\ExcelDataReader.DataSet.dll" SelfReg="false" NextFile="ICSharpCode.SharpZipLib.dll"/>
     <ROW File="ExcelDataReader.dll" Component_="ExcelDataReader.dll" FileName="EXCELD~1.DLL|ExcelDataReader.dll" Attributes="0" SourcePath="packages\ExcelDataReader.3.4.0\lib\net45\ExcelDataReader.dll" SelfReg="false" NextFile="System.Runtime.InteropServices.RuntimeInformation.dll"/>
     <ROW File="ICSharpCode.SharpZipLib.dll" Component_="ICSharpCode.SharpZipLib.dll" FileName="ICSHAR~1.DLL|ICSharpCode.SharpZipLib.dll" Attributes="0" SourcePath="packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll" SelfReg="false" NextFile="System.Windows.Forms.dll"/>
@@ -149,18 +163,22 @@
     <ROW File="Newtonsoft.Json.dll" Component_="Newtonsoft.Json.dll" FileName="NEWTON~1.DLL|Newtonsoft.Json.dll" Attributes="0" SourcePath="packages\Newtonsoft.Json.11.0.1-beta3\lib\net45\Newtonsoft.Json.dll" SelfReg="false" NextFile="System.Transactions.dll"/>
     <ROW File="PresentationCore.dll" Component_="PresentationCore.dll" FileName="PRESEN~2.DLL|PresentationCore.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\PresentationCore.dll" SelfReg="false" NextFile="System.AppContext.dll"/>
     <ROW File="PresentationFramework.dll" Component_="PresentationFramework.dll" FileName="PRESEN~1.DLL|PresentationFramework.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\PresentationFramework.dll" SelfReg="false" NextFile="System.Xml.dll"/>
-    <ROW File="SQLitePCLRaw.batteries_e_sqlite3.dll" Component_="SQLitePCLRaw.batteries_e_sqlite3.dll" FileName="SQLITE~2.DLL|SQLitePCLRaw.batteries_e_sqlite3.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.bundle_e_sqlite3.1.1.9\lib\net45\SQLitePCLRaw.batteries_e_sqlite3.dll" SelfReg="false" NextFile="SQLitePCLRaw.batteries_v2.dll"/>
-    <ROW File="SQLitePCLRaw.batteries_v2.dll" Component_="SQLitePCLRaw.batteries_v2.dll" FileName="SQLITE~3.DLL|SQLitePCLRaw.batteries_v2.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.bundle_e_sqlite3.1.1.9\lib\net45\SQLitePCLRaw.batteries_v2.dll" SelfReg="false" NextFile="SQLitePCLRaw.core.dll"/>
-    <ROW File="SQLitePCLRaw.core.dll" Component_="SQLitePCLRaw.core.dll" FileName="SQLITE~4.DLL|SQLitePCLRaw.core.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.core.1.1.9\lib\net45\SQLitePCLRaw.core.dll" SelfReg="false" NextFile="System.Reactive.dll"/>
-    <ROW File="SQLitePCLRaw.provider.e_sqlite3.dll" Component_="SQLitePCLRaw.provider.e_sqlite3.dll" FileName="SQLITE~1.DLL|SQLitePCLRaw.provider.e_sqlite3.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.9\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll" SelfReg="false" NextFile="System.Numerics.dll"/>
+    <ROW File="SQLitePCLRaw.batteries_e_sqlite3.dll" Component_="SQLitePCLRaw.batteries_e_sqlite3.dll" FileName="SQLITE~2.DLL|SQLitePCLRaw.batteries_e_sqlite3.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.bundle_e_sqlite3.1.1.10-pre20180223200113\lib\net45\SQLitePCLRaw.batteries_e_sqlite3.dll" SelfReg="false" NextFile="SQLitePCLRaw.batteries_v2.dll"/>
+    <ROW File="SQLitePCLRaw.batteries_v2.dll" Component_="SQLitePCLRaw.batteries_v2.dll" FileName="SQLITE~3.DLL|SQLitePCLRaw.batteries_v2.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.bundle_e_sqlite3.1.1.10-pre20180223200113\lib\net45\SQLitePCLRaw.batteries_v2.dll" SelfReg="false" NextFile="SQLitePCLRaw.core.dll"/>
+    <ROW File="SQLitePCLRaw.core.dll" Component_="SQLitePCLRaw.core.dll" FileName="SQLITE~4.DLL|SQLitePCLRaw.core.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.core.1.1.10-pre20180223200113\lib\net45\SQLitePCLRaw.core.dll" SelfReg="false" NextFile="System.Reactive.dll"/>
+    <ROW File="SQLitePCLRaw.provider.e_sqlite3.dll" Component_="SQLitePCLRaw.provider.e_sqlite3.dll" FileName="SQLITE~1.DLL|SQLitePCLRaw.provider.e_sqlite3.dll" Attributes="0" SourcePath="packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.10-pre20180223200113\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll" SelfReg="false" NextFile="System.Numerics.dll"/>
+    <ROW File="SQLitenet.dll" Component_="SQLitenet.dll" FileName="SQLITE~5.DLL|SQLite-net.dll" Attributes="0" SourcePath="packages\sqlite-net-pcl.1.3.1\lib\netstandard1.1\SQLite-net.dll" SelfReg="false" NextFile="EntityFramework.dll"/>
     <ROW File="Splat.dll" Component_="Splat.dll" FileName="Splat.dll" Attributes="0" SourcePath="packages\Splat.2.0.0\lib\Net45\Splat.dll" SelfReg="false" NextFile="System.Xaml.dll"/>
     <ROW File="System.AppContext.dll" Component_="System.AppContext.dll" FileName="SYSTE~17.DLL|System.AppContext.dll" Attributes="0" SourcePath="packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll" SelfReg="false" NextFile="System.IO.Compression.FileSystem.dll"/>
     <ROW File="System.ComponentModel.Composition.dll" Component_="System.ComponentModel.Composition.dll" FileName="SYSTEM~4.DLL|System.ComponentModel.Composition.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.ComponentModel.Composition.dll" SelfReg="false" NextFile="UniVoting.Model.dll"/>
+    <ROW File="System.ComponentModel.DataAnnotations.dll" Component_="System.ComponentModel.DataAnnotations.dll" FileName="SYSTE~46.DLL|System.ComponentModel.DataAnnotations.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.ComponentModel.DataAnnotations.dll" SelfReg="false" NextFile="System.Data.SQLite.EF6.dll"/>
     <ROW File="System.Configuration.dll" Component_="System.Configuration.dll" FileName="SYSTE~12.DLL|System.Configuration.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Configuration.dll" SelfReg="false" NextFile="System.Reactive.Interfaces.dll"/>
     <ROW File="System.Console.dll" Component_="System.Console.dll" FileName="SYSTEM~1.DLL|System.Console.dll" Attributes="0" SourcePath="packages\System.Console.4.3.0\lib\net46\System.Console.dll" SelfReg="false" NextFile="UniVoting.LiveView.exe"/>
     <ROW File="System.Core.dll" Component_="System.Core.dll" FileName="SYSTEM~5.DLL|System.Core.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Core.dll" SelfReg="false" NextFile="Dapper.dll"/>
     <ROW File="System.Data.DataSetExtensions.dll" Component_="System.Data.DataSetExtensions.dll" FileName="SYSTEM~2.DLL|System.Data.DataSetExtensions.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Data.DataSetExtensions.dll" SelfReg="false" NextFile="System.IO.FileSystem.dll"/>
-    <ROW File="System.Data.SQLite.dll" Component_="System.Data.SQLite.dll" FileName="SYSTE~44.DLL|System.Data.SQLite.dll" Attributes="0" SourcePath="packages\System.Data.SQLite.Core.1.0.106.0\lib\net46\System.Data.SQLite.dll" SelfReg="false"/>
+    <ROW File="System.Data.SQLite.EF6.dll" Component_="System.Data.SQLite.EF6.dll" FileName="SYSTE~47.DLL|System.Data.SQLite.EF6.dll" Attributes="0" SourcePath="packages\System.Data.SQLite.EF6.1.0.108.0\lib\net46\System.Data.SQLite.EF6.dll" SelfReg="false"/>
+    <ROW File="System.Data.SQLite.Linq.dll" Component_="System.Data.SQLite.Linq.dll" FileName="SYSTE~45.DLL|System.Data.SQLite.Linq.dll" Attributes="0" SourcePath="packages\System.Data.SQLite.Linq.1.0.108.0\lib\net46\System.Data.SQLite.Linq.dll" SelfReg="false" NextFile="SQLitenet.dll"/>
+    <ROW File="System.Data.SQLite.dll" Component_="System.Data.SQLite.dll" FileName="SYSTE~44.DLL|System.Data.SQLite.dll" Attributes="0" SourcePath="packages\System.Data.SQLite.Core.1.0.108.0\lib\net46\System.Data.SQLite.dll" SelfReg="false" NextFile="EntityFramework.SqlServer.dll"/>
     <ROW File="System.Data.dll" Component_="System.Data.dll" FileName="SYSTEM~7.DLL|System.Data.dll" Attributes="0" SourcePath="C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Data.dll" SelfReg="false" NextFile="Akavache.dll"/>
     <ROW File="System.Diagnostics.DiagnosticSource.dll" Component_="System.Diagnostics.DiagnosticSource.dll" FileName="SYSTE~27.DLL|System.Diagnostics.DiagnosticSource.dll" Attributes="0" SourcePath="packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll" SelfReg="false" NextFile="System.Globalization.Calendars.dll"/>
     <ROW File="System.Diagnostics.Tracing.dll" Component_="System.Diagnostics.Tracing.dll" FileName="SYSTEM~6.DLL|System.Diagnostics.Tracing.dll" Attributes="0" SourcePath="packages\System.Diagnostics.Tracing.4.3.0\lib\net462\System.Diagnostics.Tracing.dll" SelfReg="false" NextFile="mscorlib.dll"/>
@@ -210,10 +228,10 @@
     <ROW File="UniVoting.Admin.exe" Component_="UniVoting.Admin.exe" FileName="UNIVOT~3.EXE|UniVoting.Admin.exe" Attributes="0" SourcePath="Src\UniVoting.Admin\bin\x64\Release\UniVoting.Admin.exe" SelfReg="false" NextFile="ExcelDataReader.DataSet.dll" DigSign="true"/>
     <ROW File="UniVoting.Admin.exe.config" Component_="UniVoting.Admin.exe.config" FileName="UNIVOT~1.CON|UniVoting.Admin.exe.config" Attributes="0" SourcePath="Src\UniVoting.Admin\bin\x64\Release\UniVoting.Admin.exe.config" SelfReg="false" NextFile="Microsoft.Win32.Primitives.dll"/>
     <ROW File="UniVoting.Client.exe" Component_="UniVoting.Client.exe" FileName="UNIVOT~2.EXE|UniVoting.Client.exe" Attributes="0" SourcePath="Src\UniVoting.Client\bin\x64\Release\UniVoting.Client.exe" SelfReg="false" NextFile="System.IO.FileSystem.Primitives.dll" DigSign="true"/>
-    <ROW File="UniVoting.Client.exe.config" Component_="UniVoting.Admin.exe.config" FileName="UNIVOT~3.CON|UniVoting.Client.exe.config" Attributes="0" SourcePath="Src\UniVoting.Client\bin\x64\Release\UniVoting.Client.exe.config" SelfReg="false" NextFile="PresentationCore.dll"/>
+    <ROW File="UniVoting.Client.exe.config" Component_="UniVoting.Client.exe.config" FileName="UNIVOT~3.CON|UniVoting.Client.exe.config" Attributes="0" SourcePath="Src\UniVoting.Client\bin\x64\Release\UniVoting.Client.exe.config" SelfReg="false" NextFile="PresentationCore.dll"/>
     <ROW File="UniVoting.Data.dll" Component_="UniVoting.Data.dll" FileName="UNIVOT~3.DLL|UniVoting.Data.dll" Attributes="0" SourcePath="Src\UniVoting.Data\bin\x64\Release\UniVoting.Data.dll" SelfReg="false" NextFile="System.Configuration.dll"/>
     <ROW File="UniVoting.LiveView.exe" Component_="UniVoting.LiveView.exe" FileName="UNIVOT~1.EXE|UniVoting.LiveView.exe" Attributes="0" SourcePath="Src\UniVoting.LiveView\bin\x64\Release\UniVoting.LiveView.exe" SelfReg="false" NextFile="System.Data.DataSetExtensions.dll" DigSign="true"/>
-    <ROW File="UniVoting.LiveView.exe.config" Component_="UniVoting.Admin.exe.config" FileName="UNIVOT~2.CON|UniVoting.LiveView.exe.config" Attributes="0" SourcePath="Src\UniVoting.LiveView\bin\x64\Release\UniVoting.LiveView.exe.config" SelfReg="false" NextFile="Autofac.dll"/>
+    <ROW File="UniVoting.LiveView.exe.config" Component_="UniVoting.LiveView.exe.config" FileName="UNIVOT~2.CON|UniVoting.LiveView.exe.config" Attributes="0" SourcePath="Src\UniVoting.LiveView\bin\x64\Release\UniVoting.LiveView.exe.config" SelfReg="false" NextFile="Autofac.dll"/>
     <ROW File="UniVoting.Model.dll" Component_="UniVoting.Model.dll" FileName="UNIVOT~1.DLL|UniVoting.Model.dll" Attributes="0" SourcePath="Src\UniVoting.Model\bin\x64\Release\UniVoting.Model.dll" SelfReg="false" NextFile="System.Core.dll"/>
     <ROW File="UniVoting.Services.dll" Component_="UniVoting.Services.dll" FileName="UNIVOT~2.DLL|UniVoting.Services.dll" Attributes="0" SourcePath="Src\UniVoting.Services\bin\x64\Release\UniVoting.Services.dll" SelfReg="false" NextFile="ControlzEx.dll"/>
     <ROW File="Univoting.Reporting.dll" Component_="Univoting.Reporting.dll" FileName="UNIVOT~4.DLL|Univoting.Reporting.dll" Attributes="0" SourcePath="Src\Univoting.Reporting\bin\x64\Release\Univoting.Reporting.dll" SelfReg="false" NextFile="e_sqlite3.dll"/>
@@ -230,98 +248,61 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
-    <ROW Fragment="InstallDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\InstallDlg.aip"/>
-    <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\LicenseAgreementDlg.aip"/>
-    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\MaintenanceTypeDlg.aip"/>
-    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;surface\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
-    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;surface\fragments\UI.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
     <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
-    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\VerifyRemoveDlg.aip"/>
-    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
+    <ROW Action="AI_SqlConfig" Description="Executing install SQL scripts" DescriptionLocId="ActionText.Description.AI_SqlConfig" Template="Connection: [1]  Script: [2]" TemplateLocId="ActionText.Template.AI_SqlConfig"/>
+    <ROW Action="AI_SqlInstall" Description="Generating actions to configure databases for install SQL script execution" DescriptionLocId="ActionText.Description.AI_SqlInstall"/>
+    <ROW Action="AI_SqlMaint" Description="Executing maintenance SQL scripts" DescriptionLocId="ActionText.Description.AI_SqlMaint" Template="Connection: [1]  Script: [2]" TemplateLocId="ActionText.Template.AI_SqlMaint"/>
+    <ROW Action="AI_SqlRemove" Description="Executing uninstall SQL scripts" DescriptionLocId="ActionText.Description.AI_SqlRemove" Template="Connection: [1]  Script: [2]" TemplateLocId="ActionText.Template.AI_SqlRemove"/>
+    <ROW Action="AI_SqlRollback" Description="Executing rollback SQL scripts" DescriptionLocId="ActionText.Description.AI_SqlRollback" Template="Connection: [1]  Script: [2]" TemplateLocId="ActionText.Template.AI_SqlRollback"/>
+    <ROW Action="AI_SqlUninstall" Description="Generating actions to configure databases for uninstall SQL script execution" DescriptionLocId="ActionText.Description.AI_SqlUninstall"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="ExternalUICleaner.dll" SourcePath="&lt;AI_CUSTACTS&gt;ExternalUICleaner.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
-  </COMPONENT>
-  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
-    <ROW Dialog_="CustomizeDlg" Control="CustomizeDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
-    <ROW Dialog_="MsiRMFilesInUse" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="MsiRMFilesInUse#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control="PatchWelcomeDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control="ProductNameTitle" Type="Text" X="83" Y="21" Width="245" Height="50" Attributes="196611" Text="[ProductName]" TextStyle="[ProductNameForSplash]" Order="600" TextLocId="Metro.Control.Text.ProductName" MsiKey="PatchWelcomeDlg#ProductNameTitle"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control="CompanyText" Type="Text" X="83" Y="16" Width="191" Height="12" Attributes="196611" Text="[Manufacturer]" TextStyle="[ManufacturerFont]" Order="700" TextLocId="Metro.Control.Text.Manufacturer" MsiKey="PatchWelcomeDlg#CompanyText"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="5" Width="59" Height="63" Attributes="1" Text="[AppLogoIcon]" Order="800" MsiKey="PatchWelcomeDlg#ProductLogo"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="VerifyReadyDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="Back" Type="PushButton" X="5" Y="381" Width="11" Height="11" Attributes="2" Text="Control.Text.VerifyReadyDlg#Back" Help="Back|" Order="200" TextLocId="Control.Text.VerifyReadyDlg#Back" HelpLocId="Air.Control.Help#Back" MsiKey="VerifyReadyDlg#Back" Options="1" ExtType="PushButton" ExtData="[ButtonText_Back]" ExtDataLocId="-"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="ReadyToInstall" Type="Text" X="17" Y="105" Width="312" Height="19" Attributes="196611" Text="Ready to Install" TextStyle="[SubTitleStyle]" Order="400" TextLocId="Control.Text.VerifyReadyDlg#Title" MsiKey="VerifyReadyDlg#ReadyToInstall"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="Text_2" Type="Text" X="17" Y="139" Width="312" Height="100" Attributes="65539" Text="The [Wizard] is ready to begin the [ProductName] installation" Order="500" TextLocId="Control.Text.VerifyReadyDlg#Description" MsiKey="VerifyReadyDlg#Text_2"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="InstallButton" Type="ImageButton" X="251" Y="359" Width="78" Height="28" Attributes="3" Text="[metrobuttonimage]" TextStyle="[MetroButtonText]" Order="600" MsiKey="VerifyReadyDlg#InstallButton" ExtType="ImageButton" ExtData="INSTALL" ExtDataLocId="Metro.Control.ExtData.VerifyReadyDlg#InstallButton"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="ProductNameTitle" Type="Text" X="83" Y="21" Width="245" Height="50" Attributes="196611" Text="[ProductName]" TextStyle="[ProductNameForSplash]" Order="700" TextLocId="Metro.Control.Text.ProductName" MsiKey="VerifyReadyDlg#ProductNameTitle"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="CompanyText" Type="Text" X="83" Y="16" Width="191" Height="12" Attributes="196611" Text="[Manufacturer]" TextStyle="[ManufacturerFont]" Order="800" TextLocId="Metro.Control.Text.Manufacturer" MsiKey="VerifyReadyDlg#CompanyText"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="5" Width="59" Height="63" Attributes="1" Text="[AppLogoIcon]" Order="900" MsiKey="VerifyReadyDlg#ProductLogo"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="AdvInst" Type="Text" X="5" Y="388" Width="74" Height="11" Attributes="196611" Text="Advanced Installer" TextStyle="[BrandingStyle]" Order="1000" MsiKey="VerifyReadyDlg#AdvInst"/>
-    <ROW Dialog_="VerifyRemoveDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="VerifyRemoveDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
-    <ROW Dialog_="VerifyRepairDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="345" Height="400" Attributes="1" Text="[Background]" Order="100" MsiKey="VerifyRepairDlg#Bitmap"/>
-    <ROW Dialog_="VerifyRepairDlg" Control="Repair" Type="ImageButton" X="251" Y="359" Width="78" Height="28" Attributes="3" Text="[metrobuttonimage]" TextStyle="[MetroButtonText]" Order="200" MsiKey="VerifyRepairDlg#Repair" Options="1" ExtType="ImageButton" ExtData="&amp;Repair" ExtDataLocId="Metro.Control.ExtData.VerifyRepairDlg#Repair"/>
+    <ROW Name="sql.dll" SourcePath="&lt;AI_CUSTACTS&gt;sql.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
-    <ROW Dialog_="InstallDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="301"/>
-    <ROW Dialog_="InstallDlg" Control_="YouMustAgreeCtrl" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="301"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="InstallDlg" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="1"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="101"/>
-    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
-    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="699"/>
-    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
-    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="199" Options="1"/>
-    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="699"/>
-    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
-    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="299" Options="1"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
     <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="201"/>
-    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="99"/>
-    <ROW Dialog_="InstallDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="302" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="303" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="304" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL" Ordering="101" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL" Ordering="102" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL" Ordering="103" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL" Ordering="104" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="YouMustAgreeCtrl" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="302" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="YouMustAgreeCtrl" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="303" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="0" Options="2"/>
-    <ROW Dialog_="InstallDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="1" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND AiLicenseAgreement AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="102" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND AiLicenseAgreement AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="103" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND AiLicenseAgreement AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="104" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="101" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="102" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="103" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="104" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="2" Options="2"/>
-    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="3" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_MAINT AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="102" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="EnableRollback" Argument="False" Condition="AI_MAINT AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="103" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_MAINT AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="104" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_MAINT" Ordering="0" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_MAINT" Ordering="1" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_MAINT" Ordering="2" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_MAINT" Ordering="3" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_MAINT" Ordering="2" Options="2"/>
-    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_MAINT" Ordering="3" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_PATCH AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="202" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_PATCH AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="203" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_PATCH AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="204" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_PATCH" Ordering="0" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_PATCH" Ordering="1" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_PATCH" Ordering="2" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_PATCH" Ordering="3" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_PATCH" Ordering="0" Options="2"/>
-    <ROW Dialog_="PatchWelcomeDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_PATCH" Ordering="1" Options="2"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
-    <ROW Action="AI_ChooseTextStyles" Type="1" Source="aicustact.dll" Target="ChooseTextStyles"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[~]"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[~]"/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DoRemoveExternalUIStub" Type="3585" Source="ExternalUICleaner.dll" Target="DoRemoveExternalUIStub" WithoutSeq="true"/>
     <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
@@ -332,9 +313,14 @@
     <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
     <ROW Action="AI_RemoveExternalUIStub" Type="1" Source="ExternalUICleaner.dll" Target="RemoveExternalUIStub"/>
     <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
-    <ROW Action="AI_RunFinishActions" Type="1" Source="aicustact.dll" Target="RunFinishActions" WithoutSeq="true"/>
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_SqlConfig" Type="11265" Source="sql.dll" Target="OnSqlConfig" WithoutSeq="true"/>
+    <ROW Action="AI_SqlInstall" Type="1" Source="sql.dll" Target="OnSqlInstall" AdditionalSeq="AI_DATA_SETTER"/>
+    <ROW Action="AI_SqlMaint" Type="11265" Source="sql.dll" Target="OnSqlMaint" WithoutSeq="true"/>
+    <ROW Action="AI_SqlRemove" Type="11265" Source="sql.dll" Target="OnSqlRemove" WithoutSeq="true"/>
+    <ROW Action="AI_SqlRollback" Type="11521" Source="sql.dll" Target="OnSqlRollback" WithoutSeq="true"/>
+    <ROW Action="AI_SqlUninstall" Type="1" Source="sql.dll" Target="OnSqlUninstall" AdditionalSeq="AI_DATA_SETTER_1"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -348,15 +334,16 @@
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
     <ROW Action="AI_GetArpIconPath" Sequence="1401"/>
     <ROW Action="AI_RemoveExternalUIStub" Condition="(REMOVE=&quot;ALL&quot;) AND ((VersionNT &gt; 500) OR((VersionNT = 500) AND (ServicePackLevel &gt;= 4)))" Sequence="1501"/>
+    <ROW Action="AI_SqlInstall" Condition="(VersionNT &gt;= 500) AND (REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5502"/>
+    <ROW Action="AI_DATA_SETTER" Condition="(VersionNT &gt;= 500) AND (REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5501"/>
+    <ROW Action="AI_SqlUninstall" Condition="(VersionNT &gt;= 500) AND (REMOVE=&quot;ALL&quot;)" Sequence="1702"/>
+    <ROW Action="AI_DATA_SETTER_1" Condition="(VersionNT &gt;= 500) AND (REMOVE=&quot;ALL&quot;)" Sequence="1701"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
-    <ROW Action="InstallDlg" Condition="AI_INSTALL" Sequence="1230" SeqType="3" MsiKey="WelcomeDlg"/>
-    <ROW Action="MaintenanceTypeDlg" Condition="AI_MAINT" Sequence="1250" SeqType="3" MsiKey="MaintenanceTypeDlg"/>
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
     <ROW Action="AI_DpiContentScale" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
-    <ROW Action="AI_ChooseTextStyles" Sequence="74"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
     <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
@@ -385,11 +372,18 @@
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#2" Component_="AI_CustomARPName"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="UniVoting.LiveView.exe" Directory_="SHORTCUTDIR" Name="UNIVOT~1.EXE|UniVoting.LiveView.exe" Component_="UniVoting.LiveView.exe" Target="[#UniVoting.LiveView.exe]" Description="UniVoting.LiveView.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="UniVoting.LiveView.exe_1" Directory_="DesktopFolder" Name="UNIVOT~1.EXE|UniVoting.LiveView.exe" Component_="UniVoting.LiveView.exe" Target="[#UniVoting.LiveView.exe]" Description="UniVoting.LiveView.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
-    <ATTRIBUTE name="UsedTheme" value="surface"/>
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SqlConnectionComponent">
+    <ROW ConnectionName="Predef" Condition="1" Dbms="0" OdbcResource="SQL Server" Server="(local)" Port="1433" Database="Database" Username="sa" Flags="6" Order="0" LoginTimeout="60"/>
   </COMPONENT>
 </DOCUMENT>

@@ -17,7 +17,9 @@ namespace UniVoting.Client
 	/// </summary>
 	public partial class MainWindow : MetroWindow
 	{
-		private readonly Stack<Position> _positionsStack;
+	    AppDomain currentDomain = AppDomain.CurrentDomain;
+
+        private readonly Stack<Position> _positionsStack;
 		private ClientVotingPage _votingPage;
 		private Voter _voter;
 		private ConcurrentBag<Vote> _votes;
@@ -36,7 +38,16 @@ namespace UniVoting.Client
             YesOrNoCandidateControl.VoteCast += YesOrNoCandidateControl_VoteCast;
             YesOrNoCandidateControl.VoteNo += YesOrNoCandidateControl_VoteNo		    ;
 			Loaded += MainWindow_Loaded1;
-		}
+            currentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var exp = e.ExceptionObject as Exception;
+            MessageBox.Show(exp?.Message);
+        }
 
         private void YesOrNoCandidateControl_VoteNo(object source, EventArgs args)
         {

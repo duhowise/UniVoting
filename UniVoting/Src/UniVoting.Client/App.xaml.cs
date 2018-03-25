@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,29 +17,48 @@ namespace UniVoting.Client
     public partial class App : Application
 	{
 	    private Setting _electionData;
+	    private static readonly ILogger _logger = new SystemEventLoggerService();
 
-		private IEnumerable<Position> _positions;
+        private IEnumerable<Position> _positions;
 		public App()
 		{
-            BlobCache.ApplicationName = $"VotingApplication";
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+		    try
+		    {
+		        BlobCache.ApplicationName = $"VotingApplication";
+		        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            }
+		    catch (Exception e)
+		    {
+		        _logger.Log(e);
+
+		    }
+            
 		}
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-		    if (e.ExceptionObject is Exception exp) MessageBox.Show(exp.Message);
+		    if (e.ExceptionObject is Exception exp) _logger.Log(exp);
 		}
 	
 		protected override async void OnStartup(StartupEventArgs e)
 		{
-		    await	BlobCache.UserAccount.InvalidateAll();
+		    try
+		    {
+		        await BlobCache.UserAccount.InvalidateAll();
 
-		    await GetSettings();
-		    await SetTheme();
-		    MainWindow = new ClientsLoginWindow();
-		    MainWindow.Show();
-		    base.OnStartup(e);
-		}
+		        await GetSettings();
+		        await SetTheme();
+		        MainWindow = new ClientsLoginWindow();
+		        MainWindow.Show();
+		        base.OnStartup(e);
+            }
+		    catch (Exception exception)
+		    {
+		        _logger.Log(exception);
+
+            }
+
+        }
 
 	    public static async Task SetTheme()
 	    {
@@ -53,7 +71,6 @@ namespace UniVoting.Client
 	        }
 	        catch (Exception exception)
 	        {
-                Debug.WriteLine(exception.Message);
 	            MessageBox.Show(exception.Message, " colour Settings Error");
 	        }
 

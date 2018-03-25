@@ -13,14 +13,16 @@ namespace UniVoting.Admin
         {
             // create a runtime accent resource dictionary
 
-            var resourceDictionary = new ResourceDictionary();
+            var resourceDictionary = new ResourceDictionary
+            {
+                {"HighlightColor", color},
+                {"AccentBaseColor", color},
+                {"AccentColor", Color.FromArgb((byte) (204), color.R, color.G, color.B)},
+                {"AccentColor2", Color.FromArgb((byte) (153), color.R, color.G, color.B)},
+                {"AccentColor3", Color.FromArgb((byte) (102), color.R, color.G, color.B)},
+                {"AccentColor4", Color.FromArgb((byte) (51), color.R, color.G, color.B)}
+            };
 
-            resourceDictionary.Add("HighlightColor", color);
-            resourceDictionary.Add("AccentBaseColor", color);
-            resourceDictionary.Add("AccentColor", Color.FromArgb((byte) (204), color.R, color.G, color.B));
-            resourceDictionary.Add("AccentColor2", Color.FromArgb((byte) (153), color.R, color.G, color.B));
-            resourceDictionary.Add("AccentColor3", Color.FromArgb((byte) (102), color.R, color.G, color.B));
-            resourceDictionary.Add("AccentColor4", Color.FromArgb((byte) (51), color.R, color.G, color.B));
 
             resourceDictionary.Add("HighlightBrush", GetSolidColorBrush((Color) resourceDictionary["HighlightColor"]));
             resourceDictionary.Add("AccentBaseColorBrush",
@@ -73,7 +75,7 @@ namespace UniVoting.Admin
 
             // applying theme to MahApps
 
-            var resDictName = string.Format("ApplicationAccent_{0}.xaml", color.ToString().Replace("#", string.Empty));
+            var resDictName = $"ApplicationAccent_{color.ToString().Replace("#", string.Empty)}.xaml";
             var fileName = Path.Combine(Path.GetTempPath(), resDictName);
             using (var writer = System.Xml.XmlWriter.Create(fileName, new System.Xml.XmlWriterSettings {Indent = true}))
             {
@@ -91,7 +93,7 @@ namespace UniVoting.Admin
                 var application = Application.Current;
                 //var applicationTheme = ThemeManager.AppThemes.First(x => string.Equals(x.Name, "BaseLight"));
                 // detect current application theme
-                Tuple<AppTheme, Accent> applicationTheme = ThemeManager.DetectAppStyle(application);
+                var applicationTheme = ThemeManager.DetectAppStyle(application);
                 ThemeManager.ChangeAppStyle(application, newAccent, applicationTheme.Item1);
             }
         }

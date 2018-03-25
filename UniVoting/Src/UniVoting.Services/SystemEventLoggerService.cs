@@ -23,7 +23,7 @@ namespace UniVoting.Services
 
         void ILogger.Log(Exception exception)
         {
-            Log(exception.StackTrace);
+            Log($"{exception.Message}\n{exception.StackTrace}");
         }
     }
 }
