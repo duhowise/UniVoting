@@ -17,7 +17,7 @@ namespace UniVoting.Data.Implementations
 		{
 			try
 			{
-				using (var connection = new DbManager(connectionName).Connection)
+				using (var connection = new DbManager(ConnectionName).Connection)
 				{
 					return await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID ASC");
 
@@ -36,13 +36,13 @@ namespace UniVoting.Data.Implementations
 			try
 			{
 				IEnumerable<Position> positions = new List<Position>();
-				using (var connection = new DbManager(connectionName).Connection)
+				using (var connection = new DbManager(ConnectionName).Connection)
 				{
 					positions = await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
 					foreach (var position in positions)
 					{
 						position.Candidates = await connection.QueryAsync<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
-						,CandidatePicture,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
+						,CandidatePicture,RankId FROM Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
 					}
 				}
 				return positions;
@@ -59,13 +59,13 @@ namespace UniVoting.Data.Implementations
 			try
 			{
 				IEnumerable<Position> positions = new List<Position>();
-				using (var connection = new DbManager(connectionName).Connection)
+				using (var connection = new DbManager(ConnectionName).Connection)
 				{
 					positions = connection.Query<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
 					foreach (var position in positions)
 					{
 						position.Candidates = connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
-						,CandidatePicture,RankId FROM dbo.Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
+						,CandidatePicture,RankId FROM Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
 					}
 				}
 				return positions;

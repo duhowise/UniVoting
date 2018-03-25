@@ -253,3 +253,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.exe
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\obj\Debug\UniVoting.Admin.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Google.Protobuf.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MySql.Data.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\Google.Protobuf.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Admin\bin\Debug\MySql.Data.xml

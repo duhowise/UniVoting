@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
@@ -11,6 +13,7 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminSetUpPositionPage : Page
 	{
+        private ILogger logger=new SystemEventLoggerService();
 		public static AdminSetUpPositionPage Instance;
         private CustomDialog _customDialog;
         private AddPositionDialogControl _addPositionDialogControl;
@@ -29,14 +32,28 @@ namespace UniVoting.Admin.Administrators
 		private async void Instance_Loaded(object sender, RoutedEventArgs e)
 		{
 			PositionControlHolder.Children.Clear();
-		   var positions =await ElectionConfigurationService.GetAllPositionsAsync();
-			foreach (var position in positions)
-				PositionControlHolder.Children.Add(new PositionControl
-				{
-					TextBoxPosition = {Text = position.PositionName},
-                    TextBoxFaculty = {Text =position.Faculty },
-					Id = position.Id
-				});
+		    try
+		    {
+		        var positions = await ElectionConfigurationService.GetAllPositionsAsync();
+		        if (positions!=null)
+		        {
+		            foreach (var position in positions)
+		                PositionControlHolder.Children.Add(new PositionControl
+		                {
+		                    TextBoxPosition = { Text = position.PositionName },
+		                    TextBoxFaculty = { Text = position.Faculty },
+		                    Id = position.Id
+		                });
+                }
+		        
+            }
+		    catch (Exception exception)
+		    {
+		        await _metroWindow.ShowLoginAsync("Error",$"{exception.Message}");
+
+                logger.Log(exception);
+		    }
+		  
             
             _customDialog = new CustomDialog();
             _addPositionDialogControl = new AddPositionDialogControl();

@@ -75,7 +75,7 @@ namespace UniVoting.Admin.Administrators
 		private void BtnSetUpPostions_Click(object sender, RoutedEventArgs e)
 		{
 			
-				NavigationService?.Navigate(new Admin.Administrators.AdminSetUpPositionPage());
+				NavigationService?.Navigate(new AdminSetUpPositionPage());
 			
 		}
 

@@ -31,3 +31,7 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.cspr
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.pdb
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Google.Protobuf.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\MySql.Data.dll
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Google.Protobuf.xml
+D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\MySql.Data.xml

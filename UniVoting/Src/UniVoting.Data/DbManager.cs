@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace UniVoting.Data
 {
@@ -35,7 +35,7 @@ namespace UniVoting.Data
 		/// <param name="connString">The name of the connection string</param>
 		public DbManager(string connString)
 		{
-		   _conn = new SqlConnection(ConfigurationManager.ConnectionStrings[connString].ConnectionString);
+		   _conn = new MySqlConnection(ConfigurationManager.ConnectionStrings[connString].ConnectionString);
 		}
 
 		/// <inheritdoc />

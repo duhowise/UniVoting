@@ -14,37 +14,37 @@ namespace UniVoting.Data.Implementations
 		}
 		public  async Task<Comissioner> LoginChairman(Comissioner comissioner )
 		{
-			using (var connection = new DbManager(connectionName).Connection)
+			using (var connection = new DbManager(ConnectionName).Connection)
 			{
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password AND c.IsChairman=1", comissioner);
 			}
 		}
 		public  async Task<Comissioner> LoginAdmin(Comissioner comissioner)
 		{
-			using (var connection = new DbManager(connectionName).Connection)
+			using (var connection = new DbManager(ConnectionName).Connection)
 			{
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.isAdmin=1", comissioner);
 			}
 		}
 		public  async Task<Comissioner> LoginPresident(Comissioner comissioner)
 		{
-			using (var connection = new DbManager(connectionName).Connection)
+			using (var connection = new DbManager(ConnectionName).Connection)
 			{
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.IsPresident =1", comissioner);
 			}
 		}
 		public  async Task AddNewConfiguration(Setting setting)
 		{
-			using (var connection = new DbManager(connectionName).Connection)
+			using (var connection = new DbManager(ConnectionName).Connection)
 			{
 
-				await connection.ExecuteAsync(@"UPDATE dbo.Settings SET  ElectionName = @ElectionName ,EletionSubTitle = @EletionSubTitle ,logo = @logo  ,Colour = @Colour WHERE  id = 1", setting);
+				await connection.ExecuteAsync(@"UPDATE Settings SET  ElectionName = @ElectionName ,EletionSubTitle = @EletionSubTitle ,logo = @logo  ,Colour = @Colour WHERE  id = 1", setting);
 			}
 
 		}
 		public  async Task<Comissioner> Login(Comissioner comissioner )
 		{
-			using (var connection = new DbManager(connectionName).Connection)
+			using (var connection = new DbManager(ConnectionName).Connection)
 			{
 				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password", comissioner);
 			}
@@ -53,7 +53,7 @@ namespace UniVoting.Data.Implementations
 		{
 			try
 			{
-				using (var connection = new DbManager(connectionName).Connection)
+				using (var connection = new DbManager(ConnectionName).Connection)
 				{
 					return connection.QueryFirstOrDefault<Setting>(@"SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=1");
 
