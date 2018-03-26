@@ -24,3 +24,14 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.pdb
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.dll.config
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.dll
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.pdb
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.dll
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.dll
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.xml
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.pdb
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.xml
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csproj.CoreCompileInputs.cache
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.dll
+C:\Users\Wise-BICT\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.pdb

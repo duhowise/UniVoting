@@ -7,7 +7,7 @@ namespace UniVoting.Services
     public class SystemEventLoggerService:ILogger
     {
         static readonly string _source = "Univoting";
-        readonly EventLog _appEventLog = new EventLog("LiveView");
+        readonly EventLog _appEventLog = new EventLog("Application");
         public SystemEventLoggerService()
         {
            

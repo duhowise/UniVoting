@@ -26,7 +26,8 @@ namespace Univoting.Reporting.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DUHO-PC;Initial Catalog=Univoting2017;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=VotingSystemV2;Uid=VotingApplication;Pwd=\'VotingApplica" +
+            "tionContext\';SslMode=none;")]
         public string VotingSystemV2 {
             get {
                 return ((string)(this["VotingSystemV2"]));
