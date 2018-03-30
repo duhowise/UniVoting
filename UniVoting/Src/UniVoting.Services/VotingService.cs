@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniVoting.Data.Implementations;
 using UniVoting.Data.Interfaces;
@@ -10,18 +9,18 @@ namespace UniVoting.Services
 {
     public class VotingService
     {
-        private static readonly ILogger _logger=new SystemEventLoggerService();
-        private static readonly IService _electionservice = new ElectionService();
+        private static readonly ILogger Logger=new SystemEventLoggerService();
+        private static readonly IService Electionservice = new ElectionService();
 
         public static async Task SkipVote(SkippedVotes skipped)
         {
             try
             {
-                await _electionservice.Voters.InsertSkippedVotes(skipped);
+                await Electionservice.Voters.InsertSkippedVotes(skipped);
             }
             catch (Exception exception)
             {
-                _logger.Log(exception);
+                Logger.Log(exception);
                 throw;
             }
         }
@@ -30,11 +29,12 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.InsertBulkVotes(votes, voter, skippedVotes);
+                await Electionservice.Voters.InsertBulkVotes(votes, voter, skippedVotes);
             }
             catch (Exception exception)
             {
-                _logger.Log(exception);
+                await ResetVoter(voter);
+                Logger.Log(exception);
                 throw;
             }
         }
@@ -43,11 +43,11 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.UpdateAsync(voter);
+                await Electionservice.Voters.UpdateAsync(voter);
             }
             catch (Exception e)
             {
-                _logger.Log(e);
+                Logger.Log(e);
                 throw;
             }
         }
@@ -56,11 +56,11 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.ResetVoter(voter);
+                await Electionservice.Voters.ResetVoter(voter);
             }
             catch (Exception exception)
             {
-                _logger.Log(exception);
+                Logger.Log(exception);
             }
         }
 
@@ -68,11 +68,11 @@ namespace UniVoting.Services
         {
             try
             {
-                return await _electionservice.Voters.GetVoterPass(voter);
+                return await Electionservice.Voters.GetVoterPass(voter);
             }
             catch (Exception exception)
             {
-                _logger.Log(exception);
+                Logger.Log(exception);
                 throw;
             }
            }

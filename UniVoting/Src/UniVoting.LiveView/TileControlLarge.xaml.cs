@@ -7,22 +7,22 @@ using UniVoting.Services;
 
 namespace UniVoting.LiveView
 {
+    /// <inheritdoc />
     /// <summary>
     /// Interaction logic for TileControlLarge.xaml
     /// </summary>
     public partial class TileControlLarge : UserControl
     {
         private readonly ILogger _logger;
-        private DispatcherTimer _timer;
-        private string _position;
-        public TileControlLarge(String position)
+        private readonly string _position;
+        public TileControlLarge(string position)
         {
             InitializeComponent();
             _logger=new SystemEventLoggerService();
-            _timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 1)};
-            _timer.Tick += _timer_Tick;
-            _timer.Start();
-            _position = position;
+            var timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 1)};
+            timer.Tick += _timer_Tick;
+            timer.Start();
+            _position = position.Trim();
             Position.Text = _position.ToUpper();
 
         }

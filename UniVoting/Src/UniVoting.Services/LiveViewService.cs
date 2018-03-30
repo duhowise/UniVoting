@@ -9,13 +9,13 @@ namespace UniVoting.Services
 {
 	public class LiveViewService
 	{
-		private static readonly IService _electionservice=new ElectionService();
+		private static readonly IService Electionservice=new ElectionService();
 		
 		public static Task<int> VoteCountAsync(string position)
 		{
 			try
 			{
-				return _electionservice.Voters.VoteCount(new Position { PositionName = position });
+				return Electionservice.Voters.VoteCount(new Position { PositionName = position?.Trim() });
 
 			}
 			catch (Exception e)
@@ -28,7 +28,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return _electionservice.Voters.VoteSkipCount(new Position { PositionName = position });
+				return Electionservice.Voters.VoteSkipCount(new Position { PositionName = position });
 
 			}
 			catch (Exception e)
@@ -42,7 +42,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return _electionservice.Positions.GetAllAsync();
+				return Electionservice.Positions.GetAllAsync();
 
 			}
 			catch (Exception e)

@@ -7,25 +7,25 @@ using UniVoting.Services;
 
 namespace UniVoting.LiveView
 {
+    /// <inheritdoc cref="UserControl" />
     /// <summary>
     /// Interaction logic for TileControlSmall.xaml
     /// </summary>
     public partial class TileControlSmall : UserControl
     {
-        private ILogger _logger;
-        private DispatcherTimer _timer;
-        private string _position;
+        private readonly ILogger _logger;
+        private readonly string _position;
         public TileControlSmall(String position)
         {
             InitializeComponent();
            _logger=new SystemEventLoggerService();
-            _timer = new DispatcherTimer
+            var timer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 1)
             };
-            _timer.Tick += _timer_Tick;
-            _timer.Start();
-            _position = position;
+            timer.Tick += _timer_Tick;
+            timer.Start();
+            _position = position.Trim();
             Position.Text = _position.ToUpper();
         }
 
@@ -33,7 +33,7 @@ namespace UniVoting.LiveView
         {
             try
             {
-                VoteCount.Text = $"{await LiveViewService.VotesSkipppedCountAsync(_position)}";
+                VoteCount.Text = $"{await LiveViewService.VotesSkipppedCountAsync(_position.Trim())}";
             }
             catch (SqlException exception)
             {

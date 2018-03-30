@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -25,13 +23,17 @@ namespace UniVoting.Admin.Administrators
 		private DataSet _dataSet = null;
 		private int _indexName;
 		private int _indexNUmber;
+		private int _faculty;
 		private int _added;
 		private List<Voter> voters;
-		public AdminAddVotersPage()
+	    readonly MetroWindow metroWindow;
+
+        public AdminAddVotersPage()
 		{
 			InitializeComponent();
 			_dataSet=new DataSet();
-			voters=new List<Voter>();
+            metroWindow = (Window.GetWindow(this) as MetroWindow);
+            voters =new List<Voter>();
 			BtnSearch.Click += BtnSearch_Click;
 			BtnImportFile.Click += BtnImportFile_Click;
 			BtnSave.Click += BtnSave_Click;
@@ -41,7 +43,6 @@ namespace UniVoting.Admin.Administrators
 
 		private async void BtnSearch_Click(object sender, RoutedEventArgs e)
 		{
-			var metroWindow = (Window.GetWindow(this) as MetroWindow);
 			if (!string.IsNullOrWhiteSpace(Searchterm.Text))
 			{
 				var voter=	await VotingService.GetVoterPass(new Voter { IndexNumber = Searchterm.Text });
@@ -89,11 +90,14 @@ namespace UniVoting.Admin.Administrators
 						_added = await ElectionConfigurationService.AddVotersAsync(voters);
 						AddedCount.Visibility=Visibility.Visible;
 						AddedCount.Content = $"Added {_added} Voters";
+                        voters.Clear();
+                        _dataSet.Reset();
 						BtnSave.IsEnabled = true;
-					}
-					catch (Exception exception)
+
+                    }
+                    catch (Exception exception)
 					{
-						MessageBox.Show(exception.Message, "Voter Addition Error");
+					await	metroWindow.ShowMessageAsync("Voter Addition Error", exception.Message);
 					}
 
 				}
@@ -113,6 +117,7 @@ namespace UniVoting.Admin.Administrators
 
 			        using (var reader = ExcelReaderFactory.CreateReader(stream))
 			        {
+                        _dataSet=new DataSet();
 			            _dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
 			            {
 			                ConfigureDataTable = data => new ExcelDataTableConfiguration
@@ -140,15 +145,28 @@ namespace UniVoting.Admin.Administrators
 			                _indexNUmber = column.DisplayIndex;
 			                break;
 			            }
+			            foreach (var column in VoterGrid.Columns)
+			            {
+			                if (column.Header.ToString().ToLower() != "faculty") continue;
+			                _faculty = column.DisplayIndex;
+			                break;
+			            }
                         foreach (DataRowView row in VoterGrid.ItemsSource)
                         {
-                            var voterInfo = new Voter
+                            try
                             {
-                                VoterName = row[_indexName].ToString(),
-                                IndexNumber = row[_indexNUmber].ToString(),
-                                VoterCode = Util.GenerateRandomPassword(6)
-                            };
-                            voters.Add(voterInfo);
+                                var voterInfo = new Voter();
+                                voterInfo.VoterName = row[_indexName].ToString();
+                                voterInfo.IndexNumber = row[_indexNUmber].ToString();
+                                voterInfo.Faculty = row[_faculty].ToString();
+                                voterInfo.VoterCode = Util.GenerateRandomPassword(6);
+                                voters.Add(voterInfo);
+                            }
+                            catch (Exception exception)
+                            {
+                                Console.WriteLine(exception);
+                            }
+                           
                     
                         }
 
@@ -170,7 +188,9 @@ namespace UniVoting.Admin.Administrators
 			if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
 			{
 				await VotingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
-			}
-		}
+			    await metroWindow.ShowMessageAsync("Sucecss", $"Successfully reset Voter");
+
+            }
+        }
 	}
 }

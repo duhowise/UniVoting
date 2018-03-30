@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UniVoting.Model;
 
 namespace UniVoting.Data.Interfaces
 {

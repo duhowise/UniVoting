@@ -46,8 +46,8 @@ namespace UniVoting.LiveView
 		    {
 		        foreach (var position in _positions)
 		        {
-		            CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName));
-		            SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName));
+		            CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim()));
+		            SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim()));
 		        }
             }
             

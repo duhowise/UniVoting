@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UniVoting.Model
+﻿namespace UniVoting.Model
 {
 	public class Comissioner
 	{
