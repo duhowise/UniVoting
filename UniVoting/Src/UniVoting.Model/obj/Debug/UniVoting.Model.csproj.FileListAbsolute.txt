@@ -25,3 +25,16 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.cs
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.pdb
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csprojResolveAssemblyReference.cache
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.dll.config
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.dll
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\UniVoting.Model.pdb
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.dll
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.dll
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.xml
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.pdb
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\bin\Debug\Dapper.SimpleCRUD.xml
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csprojAssemblyReference.cache
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csproj.CoreCompileInputs.cache
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.csproj.CopyComplete
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.dll
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Model\obj\Debug\UniVoting.Model.pdb

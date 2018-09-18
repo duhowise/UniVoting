@@ -40,6 +40,8 @@ namespace UniVoting.Client
 			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
 			try
 			{
+				//make rabbitmq event here for submission of votes
+				//submission of skipped votes
 				await VotingService.CastVote(_votes, _voter,_skippedVotes);
 				Text.Text = $"Good Bye {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
@@ -66,7 +68,7 @@ namespace UniVoting.Client
 			if (_count == 1)
 			{
 				this.Hide();
-				if (Application.ResourceAssembly != null) Start(Application.ResourceAssembly.Location);
+				Start(Application.ResourceAssembly.Location);
 				if (Application.Current != null)Application.Current.Shutdown();
 				// OnRestartDue(this);
 

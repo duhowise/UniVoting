@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Univoting.Reporting", "Src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Admin", "Src\UniVoting.Admin\UniVoting.Admin.csproj", "{D94D308F-F26B-4D6E-829F-954ED6D170BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniVoting.Core", "UniVoting.Core\UniVoting.Core.csproj", "{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppVeyor|Any CPU = AppVeyor|Any CPU
@@ -156,6 +158,24 @@ Global
 		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|x64.Build.0 = Release|x64
 		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|x86.ActiveCfg = Release|Any CPU
 		{D94D308F-F26B-4D6E-829F-954ED6D170BD}.Release|x86.Build.0 = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.AppVeyor|x64.ActiveCfg = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.AppVeyor|x64.Build.0 = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.AppVeyor|x86.ActiveCfg = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.AppVeyor|x86.Build.0 = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Debug|x64.Build.0 = Debug|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Debug|x86.Build.0 = Debug|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Release|x64.ActiveCfg = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Release|x64.Build.0 = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Release|x86.ActiveCfg = Release|Any CPU
+		{436BD1BF-54EF-49F6-81D6-B42C4DEABD10}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

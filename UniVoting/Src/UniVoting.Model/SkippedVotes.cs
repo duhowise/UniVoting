@@ -5,6 +5,7 @@ namespace UniVoting.Model
     /// </summary>
     public partial class SkippedVotes
     {
+
         public virtual int Id { get; set; }
         public virtual int Positionid { get; set; }
         public virtual int VoterId { get; set; }
