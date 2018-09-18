@@ -3,7 +3,7 @@ namespace UniVoting.Model
     /// <summary>
     /// A class which represents the SkippedVotes table.
     /// </summary>
-    public partial class SkippedVotes
+    public partial class SkippedVote
     {
 
         public virtual int Id { get; set; }

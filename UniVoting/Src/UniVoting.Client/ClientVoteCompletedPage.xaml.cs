@@ -18,10 +18,10 @@ namespace UniVoting.Client
 	{
 		private ConcurrentBag<Vote> _votes;
 		private  Voter _voter;
-		private ConcurrentBag<SkippedVotes> _skippedVotes;
+		private ConcurrentBag<SkippedVote> _skippedVotes;
 
 		private int _count;
-		public ClientVoteCompletedPage(ConcurrentBag<Vote> votes,Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
+		public ClientVoteCompletedPage(ConcurrentBag<Vote> votes,Voter voter, ConcurrentBag<SkippedVote> skippedVotes)
 		{
 			_votes = votes;
 			_voter = voter;

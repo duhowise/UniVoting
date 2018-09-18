@@ -16,7 +16,7 @@ namespace UniVoting.Client
     public partial class ClientVotingPage : Page
     {
         private ConcurrentBag<Vote> _votes;
-        private ConcurrentBag<SkippedVotes> _skippedVotes;
+        private ConcurrentBag<SkippedVote> _skippedVotes;
         private Position _position;
         private Voter _voter;
         public delegate void VoteCompletedEventHandler(object source, EventArgs args);
@@ -26,7 +26,7 @@ namespace UniVoting.Client
         private SkipVoteDialogControl skipVoteDialogControl;
         private MetroWindow _metroWindow;
 
-        public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes)
+        public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVote> skippedVotes)
         {
             InitializeComponent();
             this._voter = voter;
@@ -95,7 +95,7 @@ namespace UniVoting.Client
         {
             var metroWindow = (Window.GetWindow(this) as MetroWindow);
 
-            _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
+            _skippedVotes.Add(new SkippedVote { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteCompleted(this);
             await metroWindow.HideMetroDialogAsync(_customDialog);
         }

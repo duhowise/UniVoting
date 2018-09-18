@@ -12,7 +12,7 @@ namespace UniVoting.Services
         private static readonly ILogger Logger=new SystemEventLoggerService();
         private static readonly IService Electionservice = new ElectionService();
 
-        public static async Task SkipVote(SkippedVotes skipped)
+        public static async Task SkipVote(SkippedVote skipped)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace UniVoting.Services
             }
         }
 
-        public static async Task CastVote(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
+        public static async Task CastVote(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVote> skippedVotes)
         {
             try
             {

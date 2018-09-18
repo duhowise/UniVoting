@@ -19,7 +19,9 @@ namespace UniVoting.Core
 		public virtual DbSet<Candidate> Candidates { get; set; }		
 		public virtual DbSet<Position> Positions { get; set; }	
 		public virtual DbSet<Rank> Ranks { get; set; }	
-		public virtual DbSet<SkippedVotes> SkippedVoteses { get; set; }	
+		public virtual DbSet<SkippedVote> SkippedVoteses { get; set; }	
+		public virtual DbSet<Setting> Settings { get; set; }	
+		public virtual DbSet<Comissioner> Comissioners { get; set; }	
 		
 	}
 }

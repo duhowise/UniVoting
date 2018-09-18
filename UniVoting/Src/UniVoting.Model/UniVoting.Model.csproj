@@ -71,9 +71,7 @@
     <Compile Include="Position.cs" />
     <Compile Include="Rank.cs" />
     <Compile Include="Setting.cs" />
-    <Compile Include="SkippedVotes.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserType.cs" />
+    <Compile Include="SkippedVote.cs" />
     <Compile Include="Vote.cs" />
     <Compile Include="Voter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,14 +23,14 @@ namespace UniVoting.Client
 		private ClientVotingPage _votingPage;
 		private Voter _voter;
 		private ConcurrentBag<Vote> _votes;
-		private ConcurrentBag<SkippedVotes> _skippedVotes;
+		private ConcurrentBag<SkippedVote> _skippedVotes;
 		public MainWindow(Stack<Position> positionsStack, Voter voter)
 		{
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
 			_positionsStack = positionsStack;
 			this._voter = voter;
-			_skippedVotes = new ConcurrentBag<SkippedVotes>();
+			_skippedVotes = new ConcurrentBag<SkippedVote>();
 			_votes=new ConcurrentBag<Vote>();
 			Loaded += MainWindow_Loaded;
 			PageHolder.Navigated += PageHolder_Navigated;

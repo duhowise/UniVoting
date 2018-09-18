@@ -21,7 +21,7 @@ namespace UniVoting.Client
         private readonly Position _position;
         private readonly Candidate _candidate;
         private readonly Voter _voter;
-        private readonly ConcurrentBag<SkippedVotes> _skippedVotes;
+        private readonly ConcurrentBag<SkippedVote> _skippedVotes;
 
         public int CandidateId
         {
@@ -41,7 +41,7 @@ namespace UniVoting.Client
 
 
         public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
-            ConcurrentBag<SkippedVotes> skippedVotes)
+            ConcurrentBag<SkippedVote> skippedVotes)
         {
             InitializeComponent();
             _customDialog = new CustomDialog();
@@ -64,7 +64,7 @@ namespace UniVoting.Client
 
         private async void SkipBtnYes_Click(object sender, RoutedEventArgs e)
         {
-            _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
+            _skippedVotes.Add(new SkippedVote { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteNo(this);
             await _metroWindow.HideMetroDialogAsync(_customDialog);
         }

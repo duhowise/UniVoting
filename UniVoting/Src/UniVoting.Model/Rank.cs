@@ -7,8 +7,7 @@ namespace UniVoting.Model
     /// </summary>
     public partial class Rank
     {
-        public virtual int id { get; set; }
-        public virtual byte _Rank { get; set; }
+        public virtual int Id { get; set; }
         public virtual IEnumerable<Candidate> Candidates { get; set; }
     }
 }
