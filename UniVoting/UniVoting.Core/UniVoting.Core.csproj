@@ -126,6 +126,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElectionDbContext.cs" />
+    <Compile Include="Migrations\20180922223458_Initial.cs" />
+    <Compile Include="Migrations\20180922223458_Initial.designer.cs">
+      <DependentUpon>20180922223458_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20180922224506_AddedStringLimit.cs" />
+    <Compile Include="Migrations\20180922224506_AddedStringLimit.designer.cs">
+      <DependentUpon>20180922224506_AddedStringLimit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ElectionDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
