@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace UniVoting.Model
@@ -15,5 +16,7 @@ namespace UniVoting.Model
         public virtual Position Position { get; set; }
         public virtual Rank Rank { get; set; }
         public virtual IEnumerable<Vote> Votes { get; set; }
-    }
+
+		
+	}
 }

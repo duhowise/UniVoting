@@ -14,8 +14,11 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminCreateAccountPage : Page
 	{
-		public AdminCreateAccountPage()
+		private readonly IElectionConfigurationService __electionConfigurationService;
+
+		public AdminCreateAccountPage(IElectionConfigurationService electionConfigurationService)
 		{
+			__electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			BtnSave.Click += BtnSave_Click;
 			IsChairman.Checked += IsChairman_Checked;
@@ -56,7 +59,7 @@ namespace UniVoting.Admin.Administrators
 				var metroWindow = (Window.GetWindow(this) as MetroWindow);
 				try
 				{
-					await new ElectionConfigurationService().SaveComissioner(new Comissioner
+					await __electionConfigurationService.SaveComissioner(new Comissioner
 					{
 						FullName = TextBoxName.Text,
 						UserName = Username.Text,

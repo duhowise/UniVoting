@@ -1,57 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using UniVoting.Data.Implementations;
-using UniVoting.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using UniVoting.Core;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
-	public class ElectionConfigurationService
+	public class ElectionConfigurationService : IElectionConfigurationService
 	{
-	private static IService _electionservice=new ElectionService();
+		private readonly ElectionDbContext _context;
+
+		public ElectionConfigurationService(ElectionDbContext context)
+		{
+			_context = context;
+		}
 
 		
 		#region Voters
-		public static Task<int> AddVotersAsync(List<Voter> voters)
+		public async Task<List<Voter>> AddVotersAsync(List<Voter> voters)
 		{
 			try
 			{
-				return _electionservice.Voters.InsertBulkVoters(voters);
-
+				await _context.Voters.AddRangeAsync(voters);
+				await _context.SaveChangesAsync();
+				return voters;
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not add Users",e);
 			}
 		}
-		public static Task<IEnumerable<Voter>> GetAllVotersAsync()
+		public async Task<IEnumerable<Voter>> GetAllVotersAsync()
 		{
 			try
 			{
-				return _electionservice.Voters.GetAllAsync();
+				return await _context.Voters.ToListAsync();
 
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not retrieve Users", e);
+
 			}
 		}
-		public static Task<Voter> LoginVoter(Voter voter)
+		public  async Task<Voter> LoginVoter(Voter voter)
 		{
+			if (voter == null) throw new ArgumentNullException(nameof(voter));
 			try
 			{
-				return _electionservice.Voters.Login(voter);
+				return await _context.Voters.FirstOrDefaultAsync(v => v.VoterCode.Equals(voter.VoterCode, StringComparison.InvariantCultureIgnoreCase));
 
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not login User", e);
+
 			}
+
+
 		}
 		#endregion
 
@@ -69,291 +76,289 @@ namespace UniVoting.Services
 		//		throw;
 		//	}
 		//}
-		public static Setting ConfigureElection()
+		public  async Task<Setting> ConfigureElection()
 		{
 			try
 			{
-				return _electionservice.Comissioners.ConfigureElection();
-
+				return await _context.Settings.FirstOrDefaultAsync();
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not retrieve settings", e);
+
 			}
 		}
-		public static async Task NewElection(Setting setting)
+		public  async Task<Setting> AddSettings(Setting setting)
 		{
+			if (setting == null) throw new ArgumentNullException(nameof(setting));
 			try
 			{
-				await _electionservice.Comissioners.AddNewConfiguration(setting);
+				//await _electionservice.Comissioners.AddNewConfiguration(setting);
+				var data= await _context.Settings.FirstOrDefaultAsync();
+				if (data == null) throw new ArgumentNullException(nameof(data));
+				_context.Remove(data);
+				 await  _context.Settings.AddAsync(setting);
+				await _context.SaveChangesAsync();
+				return setting;
+
 
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not add settings", e);
+
 			}
 		}
 		#endregion
 		#region Candidate
-		public async Task AddCandidate(Candidate candidate)
+		public async Task<Candidate> AddCandidate(Candidate candidate)
 		{
+			if (candidate == null) throw new ArgumentNullException(nameof(candidate));
 			try
 			{
-				await _electionservice.Candidates.InsertAsync(candidate);
-
+				await _context.Candidates.AddAsync(candidate);
+				await _context.SaveChangesAsync();
+				return candidate;
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not add candidate", e);
+
 			}
 		}
-		public async Task SaveComissioner(Comissioner comissioner)
+		public async Task<Comissioner> SaveComissioner(Comissioner comissioner)
 		{
+			if (comissioner == null) throw new ArgumentNullException(nameof(comissioner));
 			if (comissioner.Id==0)
 			{
 				try
 				{
-					await _electionservice.Comissioners.InsertAsync(comissioner);
-
+					await _context.Comissioners.AddAsync(comissioner);
+					await _context.SaveChangesAsync();
+						return comissioner;
 				}
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. we could not add commisioner", e);
+
 				}
 			}
 			else
 			{
 				try
 				{
-					await _electionservice.Comissioners.UpdateAsync(comissioner);
+					 _context.Comissioners.Update(comissioner);
+					await _context.SaveChangesAsync();
+					return comissioner;
 
 				}
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. we could not update commisioner", e);
+
 				}
 			}
-			
 		}
 	   
-		public  Task<IEnumerable<Candidate>> GetAllCandidates()
+		public async Task<IEnumerable<Candidate>> GetAllCandidates()
 		{
 			try
 			{
-				return _electionservice.Candidates.GetAllAsync();
+				return await _context.Candidates.ToListAsync();
 				
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not update commisioner", e);
+
 			}
 		}
 		
-		public static Task<Candidate> SaveCandidate(Candidate candidate)
+		public  async Task<Candidate> SaveCandidate(Candidate candidate)
 		{
 			try
 			{
 				if (candidate.Id == 0)
 				{
-					return _electionservice.Candidates.InsertAsync(candidate);
+					 await _context.Candidates.AddAsync(candidate);
+					
 				}
 				else
 				{
-					return _electionservice.Candidates.UpdateAsync(candidate);
+					 _context.Candidates.Update(candidate);
 
 				}
+
+				await	_context.SaveChangesAsync();
+				return candidate;
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not add or update candidate", e);
+
 			}
-			
+
 		}
-	   
+		public async Task<IEnumerable<Candidate>> GetCandidateWithDetails()
+		{
+			try
+			{
+				return await _context.Candidates.Include(c => c.Position).ToListAsync();
+
+			}
+			catch (Exception e)
+			{
+				throw new Exception("Something went wrong. could not retrieve candidates with details ", e);
+
+			}
+
+		}
 		public void RemoveCandidate(Candidate candidate)
 		{
 			try
 			{
-				_electionservice.Candidates.Delete(candidate);
+				_context.Candidates.Remove(candidate);
 
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not delete candidate", e);
+
 			}
 		}
 		#endregion
 		#region Position
-		public static Task<Position> AddPosition(Position position)
+		public async Task<Position> AddPosition(Position position)
 		{
 			try
 			{
-				var data = _electionservice.Positions.InsertAsync(position);
-				return data;
+				 await _context.Positions.AddAsync(position);
+				await _context.SaveChangesAsync();
+				return position;
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not add position", e);
+
 			}
-		 
+
 		}
-		public static async Task<Position> GetPosition(int positionid)
+		public  async Task<Position> GetPosition(int positionid)
 		{
 			try
 			{
-				return await _electionservice.Positions.GetByIdAsync(positionid);
+				return await _context.Positions.FirstOrDefaultAsync(x=>x.Id==positionid);
 
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not retreive position", e);
+
 			}
-		   
+
 		}
-		public static IEnumerable<Position> GetAllPositions()
+		public async Task<IEnumerable<Position>> GetAllPositionsAsync()
 		{
 			try
 			{
-				return _electionservice.Positions.GetPositionsWithDetails();
+				return await _context.Positions.Include(p=>p.Candidates).ToListAsync();
 
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not retreive position with candidates", e);
+
 			}
 		}
-		public static IEnumerable<Position> GetPositionsSlim()
+		
+		public  async Task<Position> UpdatePosition(Position position)
 		{
 			try
 			{
-				return _electionservice.Positions.GetAll();
-
+				 _context.Positions.Update(position);
+			await	_context.SaveChangesAsync();
+				return position;
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		public static Task<IEnumerable<Position>> GetAllPositionsAsync()
-		{
-			try
-			{
-				return _electionservice.Positions.GetPositionsWithDetailsAsync();
+				throw new Exception("Something went wrong. we could not update position", e);
 
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		public static async Task UpdatePosition(Position position)
-		{
-			try
-			{
-				await _electionservice.Positions.UpdateAsync(position);
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
 			}
 		}
 	   
-		public static void RemovePosition(Position position)
+		public  async Task RemovePosition(Position position)
 		{
 			try
 			{
-				_electionservice.Positions.Delete(position);
-
+				_context.Positions.Remove(position);
+				await _context.SaveChangesAsync();
+				
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine(e);
-				throw;
+				throw new Exception("Something went wrong. we could not delete position", e);
+
 			}
 		}
 		#endregion   
 		#region User
-		public static async Task<Comissioner> Login(Comissioner comissioner)
+		public  async Task<Comissioner> Login(Comissioner comissioner)
 		{
-			Comissioner user=new Comissioner();
 			if (comissioner.IsChairman)
 			{
 				try
-				{ user= await _electionservice.Comissioners.LoginChairman(comissioner);}
+				{ return await _context.Comissioners.FirstOrDefaultAsync(x=>x.IsChairman && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password));}
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. could not log in as chairman", e);
+
 				}
 			}
 			else if (comissioner.IsPresident)
 			{
 				try
-				{ user= await _electionservice.Comissioners.LoginPresident(comissioner);}
+				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. could not log in as president", e);
+
 				}
-			}else if (comissioner.IsAdmin)
+			}
+			else if (comissioner.IsAdmin)
 			{
 				try
-				{ user= await _electionservice.Comissioners.LoginAdmin(comissioner);}
+				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsAdmin && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. could not log in as admin", e);
+
 				}
 			}
 			else if (comissioner.IsPresident)
 			{
 				try
-				{  user= await _electionservice.Comissioners.LoginPresident(comissioner);}
+				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. could not log in as president", e);
+
 				}
-			}else
+			}
+			else
 			{
 				try
-				{  user= await _electionservice.Comissioners.Login(comissioner);}
+				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
 				catch (Exception e)
 				{
-					Console.WriteLine(e);
-					throw;
+					throw new Exception("Something went wrong. could not log in ", e);
+
 				}
 			}
 			
-			return user;
+			
 		}
 		#endregion
 
-		public async Task<IEnumerable<Candidate>> GetCandidateWithDetails()
-		{
-			var data = await _electionservice.Candidates.GetAllAsync();
-
-			var candidateWithDetails = data as IList<Candidate> ?? data.ToList();
-			foreach (var candidate in candidateWithDetails)
-			{
-				candidate.Position = _electionservice.Positions.GetById(Convert.ToInt32(candidate.PositionId));
-			}
-			return candidateWithDetails;
-		}
+	
 	}
 }

@@ -11,13 +11,15 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminSetUpPositionPage : Page
 	{
+		private readonly IElectionConfigurationService _electionConfigurationService;
 		public static AdminSetUpPositionPage Instance;
         private CustomDialog _customDialog;
         private AddPositionDialogControl _addPositionDialogControl;
 	    private MetroWindow _metroWindow;
 
-        public AdminSetUpPositionPage()
+        public AdminSetUpPositionPage(IElectionConfigurationService electionConfigurationService)
 		{
+			_electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 		
 		   Instance = this;
@@ -29,7 +31,7 @@ namespace UniVoting.Admin.Administrators
 		private async void Instance_Loaded(object sender, RoutedEventArgs e)
 		{
 			PositionControlHolder.Children.Clear();
-		   var positions =await ElectionConfigurationService.GetAllPositionsAsync();
+		   var positions =await _electionConfigurationService.GetAllPositionsAsync();
 			foreach (var position in positions)
 				PositionControlHolder.Children.Add(new PositionControl
 				{
@@ -68,7 +70,7 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-          await  ElectionConfigurationService.AddPosition(new Model.Position{PositionName = pos,Faculty = fac});
+          await  _electionConfigurationService.AddPosition(new Model.Position{PositionName = pos,Faculty = fac});
             PositionControlHolder.Children.Add(new PositionControl(pos));
             await  _metroWindow.HideMetroDialogAsync(_customDialog);
 

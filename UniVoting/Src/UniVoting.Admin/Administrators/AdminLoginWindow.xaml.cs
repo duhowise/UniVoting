@@ -11,8 +11,11 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminLoginWindow : MetroWindow
 	{
-		public AdminLoginWindow()
+		private readonly IElectionConfigurationService _electionConfigurationService;
+
+		public AdminLoginWindow(IElectionConfigurationService electionConfigurationService)
 		{
+			_electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			BtnLogin.IsDefault = true;
 			Username.Focus();
@@ -24,7 +27,7 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
 			{
-				var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password});
+				var admin = await _electionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password});
 				if (admin != null)
 				{
 					new MainWindow(admin).Show();

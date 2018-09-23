@@ -15,9 +15,11 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminDispensePasswordWindow : MetroWindow
 	{
+		private readonly IElectionConfigurationService _electionConfigurationService;
 		private List<Voter> voters;
-		public AdminDispensePasswordWindow()
+		public AdminDispensePasswordWindow(IElectionConfigurationService electionConfigurationService)
 		{
+			_electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			Loaded += AdminDispensePasswordWindow_Loaded;
 			StudentName.TextChanged += StudentName_TextChanged;
@@ -61,7 +63,7 @@ namespace UniVoting.Admin.Administrators
 		private async void RefreshStudentList()
 		{
 			voters = new List<Voter>();
-		voters=(List<Voter>) await	ElectionConfigurationService.GetAllVotersAsync();
+		voters=(List<Voter>) await	_electionConfigurationService.GetAllVotersAsync();
 			StudentsSearchList.ItemsSource = voters;
 		}
 	}

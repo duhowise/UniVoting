@@ -24,7 +24,7 @@ namespace UniVoting.Admin
 
         protected override void OnClosing(CancelEventArgs e)
 		{
-			new AdminLoginWindow().Show();
+			new AdminLoginWindow(TODO).Show();
 			base.OnClosing(e);
 		}
 

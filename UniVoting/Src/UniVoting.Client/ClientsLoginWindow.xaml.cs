@@ -17,11 +17,13 @@ namespace UniVoting.Client
 	/// </summary>
 	public partial class ClientsLoginWindow : MetroWindow
 	{
+		private readonly IElectionConfigurationService _electionConfigurationService;
 		private IEnumerable<Model.Position> _positions;
 		 private Stack<Model.Position> _positionsStack;
 		private Voter _voter;
-		public ClientsLoginWindow()
+		public ClientsLoginWindow( IElectionConfigurationService electionConfigurationService)
 		{
+			_electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			_positionsStack=new Stack<Model.Position>();
 			Loaded += ClientsLoginWindow_Loaded;
@@ -65,7 +67,7 @@ namespace UniVoting.Client
 			{
 				try
 				{
-					_voter = await ElectionConfigurationService.LoginVoter(new Voter { VoterCode = Pin.Text });
+					_voter = await _electionConfigurationService.LoginVoter(new Voter { VoterCode = Pin.Text });
 					ConfirmVoterAsync();
 				}
 				catch (Exception exception)

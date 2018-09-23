@@ -20,6 +20,7 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminAddVotersPage : Page
 	{
+		private readonly IElectionConfigurationService __electionConfigurationService;
 		private DataSet _dataSet = null;
 		private int _indexName;
 		private int _indexNUmber;
@@ -28,8 +29,9 @@ namespace UniVoting.Admin.Administrators
 		private List<Voter> voters;
 	    readonly MetroWindow metroWindow;
 
-        public AdminAddVotersPage()
+        public AdminAddVotersPage(IElectionConfigurationService electionConfigurationService)
 		{
+			__electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			_dataSet=new DataSet();
             metroWindow = (Window.GetWindow(this) as MetroWindow);
@@ -87,7 +89,7 @@ namespace UniVoting.Admin.Administrators
 					try
 					{
 						BtnSave.IsEnabled = false;
-						_added = await ElectionConfigurationService.AddVotersAsync(voters);
+						_added =  __electionConfigurationService.AddVotersAsync(voters).Result.Count;
 						AddedCount.Visibility=Visibility.Visible;
 						AddedCount.Content = $"Added {_added} Voters";
                         voters.Clear();

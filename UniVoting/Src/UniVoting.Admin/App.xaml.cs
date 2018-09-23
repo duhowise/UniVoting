@@ -27,7 +27,7 @@ namespace UniVoting.Admin
 
 
 
-			MainWindow=new AdminLoginWindow();
+			MainWindow=new AdminLoginWindow(TODO);
 			MainWindow.Show();
 			base.OnStartup(e);
 		}

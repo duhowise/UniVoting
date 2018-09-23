@@ -16,13 +16,16 @@ namespace UniVoting.Client
     /// </summary>
     public partial class App : Application
 	{
-	    private Setting _electionData;
+		private readonly IElectionConfigurationService _electionConfigurationService;
+		private Setting _electionData;
 	    private static readonly ILogger _logger = new SystemEventLoggerService();
 
         private IEnumerable<Position> _positions;
-		public App()
+		public App(IElectionConfigurationService electionConfigurationService
+		)
 		{
-		    try
+			_electionConfigurationService = electionConfigurationService;
+			try
 		    {
 		        BlobCache.ApplicationName = $"VotingApplication";
 		        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -32,7 +35,6 @@ namespace UniVoting.Client
 		        _logger.Log(e);
 
 		    }
-            
 		}
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -48,7 +50,7 @@ namespace UniVoting.Client
 
 		        await GetSettings();
 		        await SetTheme();
-		        MainWindow = new ClientsLoginWindow();
+		        MainWindow = new ClientsLoginWindow(TODO);
 		        MainWindow.Show();
 		        base.OnStartup(e);
             }
@@ -86,11 +88,11 @@ namespace UniVoting.Client
 		    {
                 //ElectionSettings
 		        _electionData = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings")
-		            .Catch(Observable.Return(_electionData = ElectionConfigurationService.ConfigureElection()));
+		            .Catch(Observable.Return(_electionData =await _electionConfigurationService.ConfigureElection()));
 		      await	BlobCache.UserAccount.InsertObject("ElectionSettings", _electionData);
 		        //ElectionPositions
 		        _positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions")
-		            .Catch(Observable.Return( _positions = ElectionConfigurationService.GetAllPositions()));
+		            .Catch(Observable.Return( _positions =await _electionConfigurationService.GetAllPositionsAsync()));
 		        await	BlobCache.UserAccount.InsertObject("ElectionPositions", _positions);
 			}
 			catch (Exception exception)

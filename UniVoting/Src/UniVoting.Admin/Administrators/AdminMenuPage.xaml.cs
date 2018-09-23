@@ -22,7 +22,7 @@ namespace UniVoting.Admin.Administrators
 
 		private void BtnDispensePassword_Click(object sender, RoutedEventArgs e)
 		{
-			new AdminDispensePasswordWindow().ShowDialog();
+			new AdminDispensePasswordWindow(TODO).ShowDialog();
 		}
 
 		private void AdminMenuPage_Loaded(object sender, RoutedEventArgs e)
@@ -56,26 +56,26 @@ namespace UniVoting.Admin.Administrators
 
 		private void BtnDeclareVotes_Click(object sender, RoutedEventArgs e)
 		{
-			new PresidentLoginWindow().ShowDialog();
+			new PresidentLoginWindow(TODO).ShowDialog();
 		}
 
 		private void BtnCreateAccount_Click(object sender, RoutedEventArgs e)
 		{
-			  NavigationService?.Navigate(new AdminCreateAccountPage());
+			  NavigationService?.Navigate(new AdminCreateAccountPage(TODO));
 			
 		}
 
 		private void BtnSetUpElection_Click(object sender, RoutedEventArgs e)
 		{
 			
-				NavigationService?.Navigate(new AdminSetUpElectionPage());
+				NavigationService?.Navigate(new AdminSetUpElectionPage(TODO));
 			
 		}
 
 		private void BtnSetUpPostions_Click(object sender, RoutedEventArgs e)
 		{
 			
-				NavigationService?.Navigate(new Admin.Administrators.AdminSetUpPositionPage());
+				NavigationService?.Navigate(new Admin.Administrators.AdminSetUpPositionPage(TODO));
 			
 		}
 
@@ -88,7 +88,7 @@ namespace UniVoting.Admin.Administrators
 
 		private void BtnSetUpVoters_Click(object sender, RoutedEventArgs e)
 		{
-			NavigationService?.Navigate(new AdminAddVotersPage());
+			NavigationService?.Navigate(new AdminAddVotersPage(TODO));
 		}
 	}
 }

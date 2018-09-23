@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElectionDbContext.cs" />
+    <Compile Include="ElectionDbContextPool.cs" />
     <Compile Include="Migrations\20180922223458_Initial.cs" />
     <Compile Include="Migrations\20180922223458_Initial.designer.cs">
       <DependentUpon>20180922223458_Initial.cs</DependentUpon>

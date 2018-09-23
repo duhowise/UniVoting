@@ -20,6 +20,12 @@ namespace UniVoting.Admin.Administrators
 	
 	public partial class AdminSetUpCandidatesPage : Page
 	{
+		private readonly IElectionConfigurationService _electionConfigurationService;
+
+		public AdminSetUpCandidatesPage(IElectionConfigurationService electionConfigurationService)
+		{
+			_electionConfigurationService = electionConfigurationService;
+		}
 		internal class CandidateDto
 		{
 			public CandidateDto()
@@ -81,10 +87,10 @@ namespace UniVoting.Admin.Administrators
 					PositionId = (int) PositionCombo.SelectedValue,
 					RankId = (int) RankCombo.SelectedValue
 				};
-				 await ElectionConfigurationService.SaveCandidate(candidate);
+				 await _electionConfigurationService.SaveCandidate(candidate);
 				Util.Clear(this);
 				CandidateImage.Source=new BitmapImage(new Uri("../Resources/images/people_on_the_beach_300x300.jpg", UriKind.Relative));
-				PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
+				PositionCombo.ItemsSource = await _electionConfigurationService.GetAllPositionsAsync();
 				RefreshCandidateList();
 
 
@@ -94,13 +100,13 @@ namespace UniVoting.Admin.Administrators
 
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
+			PositionCombo.ItemsSource = await _electionConfigurationService.GetAllPositionsAsync();
 			RefreshCandidateList();
 		}
 
 		private async void RefreshCandidateList()
 		{
-			var candidates = await new ElectionConfigurationService().GetCandidateWithDetails();
+			var candidates = await  _electionConfigurationService.GetCandidateWithDetails();
 			foreach (var candidate in candidates)
 			{
 				var newcandidate = new CandidateDto(candidate.Id,Convert.ToInt32(candidate.PositionId)

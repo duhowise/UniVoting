@@ -15,9 +15,11 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminSetUpElectionPage : Page
 	{
+		private readonly IElectionConfigurationService _electionConfigurationService;
 		private System.Windows.Media.Color _chosencolor;
-		public AdminSetUpElectionPage()
+		public AdminSetUpElectionPage(IElectionConfigurationService electionConfigurationService)
 		{
+			this._electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			BtnUploadImage.Click += BtnUploadImage_Click;
 			Loaded += AdminSetUpElectionPage_Loaded;
@@ -41,7 +43,7 @@ namespace UniVoting.Admin.Administrators
 			if (
 				!string.IsNullOrWhiteSpace(TextBoxElectionName.Text)||!string.IsNullOrWhiteSpace(TextBoxElectionName.Text))
 			{
-				await ElectionConfigurationService.NewElection(new Setting
+				await _electionConfigurationService.AddSettings(new Setting
 				{
 					ElectionName = TextBoxElectionName.Text,
 					EletionSubTitle = TextBoxSubtitle.Text,
