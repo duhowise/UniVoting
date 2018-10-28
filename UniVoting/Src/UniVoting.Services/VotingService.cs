@@ -101,7 +101,7 @@ namespace UniVoting.Services
         {
             try
             {
-                return await _context.Voters.FirstOrDefaultAsync(x=>x.IndexNumber==indexNumber);
+                return await _context.Voters.FirstOrDefaultAsync(x=>x.IndexNumber.Contains(indexNumber));
             }
             catch (Exception exception)
             {

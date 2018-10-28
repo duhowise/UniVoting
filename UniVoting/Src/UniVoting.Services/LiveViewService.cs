@@ -22,7 +22,7 @@ namespace UniVoting.Services
 			try
 			{
 				//return _context.Voters.Where(new Position { PositionName = positionId?.Trim() });
-				return await _context.Votes.Where(x=>x.PositionId==positionId).CountAsync();
+				return await _context.Votes.AsNoTracking().Where(x=>x.PositionId==positionId).CountAsync();
 
 			}
 			catch (Exception e)
@@ -35,7 +35,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return await _context.SkippedVoteses.Where(x=>x.Positionid==positionId).CountAsync();
+				return await _context.SkippedVoteses.AsNoTracking().Where(x=>x.Positionid==positionId).CountAsync();
 
 			}
 			catch (Exception e)
@@ -49,7 +49,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return await _context.Positions.ToListAsync();
+				return await _context.Positions.AsNoTracking().ToListAsync();
 
 			}
 			catch (Exception e)
