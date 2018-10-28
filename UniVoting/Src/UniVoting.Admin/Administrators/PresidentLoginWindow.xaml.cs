@@ -12,11 +12,13 @@ namespace UniVoting.Admin.Administrators
 	public partial class PresidentLoginWindow : MetroWindow
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
+	    private readonly IVotingService _votingService;
 
-		public PresidentLoginWindow(IElectionConfigurationService electionConfigurationService)
+	    public PresidentLoginWindow(IElectionConfigurationService electionConfigurationService,IVotingService votingService)
 		{
 			_electionConfigurationService = electionConfigurationService;
-			InitializeComponent();
+		    _votingService = votingService;
+		    InitializeComponent();
 			WindowState=WindowState.Maximized;
 			BtnLogin.IsDefault = true;
 			BtnLogin.Click += BtnLogin_Click;
@@ -32,8 +34,9 @@ namespace UniVoting.Admin.Administrators
 				
 				if (president != null)
 				{
-					//interface
-					new EcChairmanLoginWindow(TODO).Show();
+				    
+                    //interface
+                    new EcChairmanLoginWindow(_electionConfigurationService).Show();
 					BtnLogin.IsEnabled = true;
 
 					Close();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dapper;
 using UniVoting.Data.Interfaces;
 
 namespace UniVoting.Data.Implementations

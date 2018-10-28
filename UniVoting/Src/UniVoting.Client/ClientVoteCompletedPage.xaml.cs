@@ -5,9 +5,10 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Akavache;
+using Autofac;
 using UniVoting.Model;
 using UniVoting.Services;
-using static System.Diagnostics.Process;
+using BootStrapper = UniVoting.Client.Startup.BootStrapper;
 
 namespace UniVoting.Client
 {
@@ -42,13 +43,19 @@ namespace UniVoting.Client
 			{
 				//make rabbitmq event here for submission of votes
 				//submission of skipped votes
-				await VotingService.CastVote(_votes, _voter,_skippedVotes);
+			    var container = new BootStrapper().BootStrap();
+			    var service = container.Resolve<IVotingService>();
+
+				await service.CastVote(_votes, _voter,_skippedVotes);
 				Text.Text = $"Good Bye {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
 			catch (Exception)
 			{
 				Text.Text = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
-				await VotingService.ResetVoter(_voter);
+
+			    var container = new BootStrapper().BootStrap();
+			    var service = container.Resolve<IVotingService>();
+                await service.ResetVoter(_voter);
 
 			}
 			var _timer = new DispatcherTimer();
@@ -65,14 +72,14 @@ namespace UniVoting.Client
 		}
 		public void RestartApplication()
 		{
-			if (_count == 1)
-			{
-				this.Hide();
-				Start(Application.ResourceAssembly.Location);
-				if (Application.Current != null)Application.Current.Shutdown();
-				// OnRestartDue(this);
+			//if (_count == 1)
+			//{
+			//	this.Hide();
+			//	Start(Application.ResourceAssembly.Location);
+			//	if (Application.Current != null)Application.Current.Shutdown();
+			//	// OnRestartDue(this);
 
-			}
+			//}
 
 
 		}

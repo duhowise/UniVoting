@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Autofac;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 
 namespace UniVoting.Admin.Administrators
@@ -11,9 +13,13 @@ namespace UniVoting.Admin.Administrators
 	{
 		public Comissioner Comissioner { get; }
 
-		public AdminMenuPage(Comissioner comissioner)
+	    private IContainer container;
+	   
+        public AdminMenuPage(Comissioner comissioner)
 		{
 			Comissioner = comissioner;
+
+            container=new BootStrapper().BootStrap();
 			InitializeComponent();
 			BtnDeclareVotes.Click += BtnDeclareVotes_Click;
 			BtnDispensePassword.Click += BtnDispensePassword_Click;
@@ -22,7 +28,9 @@ namespace UniVoting.Admin.Administrators
 
 		private void BtnDispensePassword_Click(object sender, RoutedEventArgs e)
 		{
-			new AdminDispensePasswordWindow(TODO).ShowDialog();
+		    container.Resolve<AdminDispensePasswordWindow>().ShowDialog()
+		        ;
+			//new AdminDispensePasswordWindow(TODO).ShowDialog();
 		}
 
 		private void AdminMenuPage_Loaded(object sender, RoutedEventArgs e)
@@ -56,39 +64,53 @@ namespace UniVoting.Admin.Administrators
 
 		private void BtnDeclareVotes_Click(object sender, RoutedEventArgs e)
 		{
-			new PresidentLoginWindow(TODO).ShowDialog();
+		    container.Resolve<PresidentLoginWindow>().ShowDialog();
+
+			//new PresidentLoginWindow(TODO).ShowDialog();
 		}
 
 		private void BtnCreateAccount_Click(object sender, RoutedEventArgs e)
 		{
-			  NavigationService?.Navigate(new AdminCreateAccountPage(TODO));
+		    var page = container.Resolve<AdminCreateAccountPage>();
+		   
+              NavigationService?.Navigate(page);
 			
 		}
 
 		private void BtnSetUpElection_Click(object sender, RoutedEventArgs e)
 		{
-			
-				NavigationService?.Navigate(new AdminSetUpElectionPage(TODO));
+		    var page = container.Resolve<AdminSetUpElectionPage>();
+
+		    NavigationService?.Navigate(page);
 			
 		}
 
 		private void BtnSetUpPostions_Click(object sender, RoutedEventArgs e)
 		{
-			
-				NavigationService?.Navigate(new Admin.Administrators.AdminSetUpPositionPage(TODO));
+		    var page = container.Resolve<AdminSetUpPositionPage>();
+
+		    NavigationService?.Navigate(page);
+
 			
 		}
 
 		private void BtnSetUpCandidates_Click(object sender, RoutedEventArgs e)
 		{
-			
-				NavigationService?.Navigate(new AdminSetUpCandidatesPage());
+		    var page = container.Resolve<AdminSetUpCandidatesPage>();
+
+		    NavigationService?.Navigate(page);
+
+
+            //NavigationService?.Navigate(new AdminSetUpCandidatesPage());
 			
 		}
 
 		private void BtnSetUpVoters_Click(object sender, RoutedEventArgs e)
 		{
-			NavigationService?.Navigate(new AdminAddVotersPage(TODO));
+		    var page = container.Resolve<AdminAddVotersPage>();
+
+		    NavigationService?.Navigate(page);
+            //NavigationService?.Navigate(new AdminAddVotersPage(TODO, TODO));
 		}
 	}
 }

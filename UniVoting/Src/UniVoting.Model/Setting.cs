@@ -1,5 +1,3 @@
-using Dapper;
-
 namespace UniVoting.Model
 {
 	/// <summary>

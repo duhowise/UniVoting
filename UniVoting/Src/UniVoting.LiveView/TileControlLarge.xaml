@@ -15,7 +15,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow" Name="Position" FontSize="45" HorizontalAlignment="Left"
+                <TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow" Name="PositionName" FontSize="45" HorizontalAlignment="Left"
                            FontFamily="Segoe Ui Light" Margin="0" VerticalAlignment="Top"
                    Foreground="White">
                     445454545

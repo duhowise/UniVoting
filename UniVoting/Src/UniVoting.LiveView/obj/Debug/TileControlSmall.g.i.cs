@@ -9,7 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using MahApps.Metro;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MaterialDesignThemes.MahApps;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Transitions;

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using Autofac;
 using MahApps.Metro.Controls;
 using UniVoting.Admin.Administrators;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 
 namespace UniVoting.Admin
@@ -23,8 +25,12 @@ namespace UniVoting.Admin
       
 
         protected override void OnClosing(CancelEventArgs e)
-		{
-			new AdminLoginWindow(TODO).Show();
+        {
+            var container = new BootStrapper().BootStrap();
+
+            var window = container.Resolve<AdminLoginWindow>();
+
+			window.Show();
 			base.OnClosing(e);
 		}
 

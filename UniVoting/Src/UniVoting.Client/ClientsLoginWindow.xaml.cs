@@ -5,10 +5,12 @@ using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Akavache;
+using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
 using UniVoting.Services;
+using BootStrapper = UniVoting.Client.Startup.BootStrapper;
 
 namespace UniVoting.Client
 {
@@ -63,6 +65,8 @@ namespace UniVoting.Client
 
 		private async void BtnGo_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
+		   
+
 			if (!string.IsNullOrWhiteSpace(Pin.Text))
 			{
 				try
@@ -82,11 +86,13 @@ namespace UniVoting.Client
 
 		public async void ConfirmVoterAsync()
 		{
-			if (_voter!=null)
+		    var container = new BootStrapper().BootStrap();
+		    var votingservice = container.Resolve<IVotingService>();
+            if (_voter!=null)
 			{
 				if (!_voter.VoteInProgress && !_voter.Voted)
 				{
-					new MainWindow(_positionsStack, _voter).Show();
+					new MainWindow(_positionsStack, _voter, votingservice).Show();
 					Hide();
 				}
 				else

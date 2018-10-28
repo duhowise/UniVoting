@@ -12,8 +12,8 @@ namespace UniVoting.Model
         public virtual int? CandidateId { get; set; }
         public virtual int? PositionId { get; set; }
         public virtual DateTime? Time { get; set; }
-        public virtual Voter Voter { get; set; }
-        public virtual Candidate Candidate { get; set; }
-        public virtual Position Position { get; set; }
+        public  Voter Voter { get; set; }
+        public  Candidate Candidate { get; set; }
+        public  Position Position { get; set; }
     }
 }

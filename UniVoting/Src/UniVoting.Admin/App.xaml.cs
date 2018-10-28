@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
+using Autofac;
 using MahApps.Metro;
 using UniVoting.Admin.Administrators;
-using UniVoting.Admin.StatUp;
+using UniVoting.Admin.Startup;
 
 namespace UniVoting.Admin
 {
@@ -15,8 +16,7 @@ namespace UniVoting.Admin
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			var bootstrapper = new BootStrapper();
-			var container = bootstrapper.BootStrap();
+			
 			// add custom accent and theme resource dictionaries
 			ThemeManager.AddAccent("CustomAccent1", new Uri("pack://application:,,,/UniVoting.Admin;component/CustomAccents/CustomAccent.xaml"));
 
@@ -25,10 +25,12 @@ namespace UniVoting.Admin
 			ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
 			ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
 
+		    var container = new BootStrapper().BootStrap();
 
+		    var window = container.Resolve<AdminLoginWindow>();
 
-			MainWindow=new AdminLoginWindow(TODO);
-			MainWindow.Show();
+		    MainWindow =window;
+			MainWindow?.Show();
 			base.OnStartup(e);
 		}
 

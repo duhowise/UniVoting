@@ -50,12 +50,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.50.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Dapper.1.50.4\lib\net451\Dapper.dll</HintPath>
-    </Reference>
-    <Reference Include="Dapper.SimpleCRUD, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Dapper.SimpleCRUD.1.13.0\lib\net45\Dapper.SimpleCRUD.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -70,19 +64,12 @@
   <ItemGroup>
     <Compile Include="ConnectionHelper.cs" />
     <Compile Include="DbManager.cs" />
-    <Compile Include="Implementations\CandidateRepository.cs" />
-    <Compile Include="Implementations\ComissionerRepository.cs" />
-    <Compile Include="Implementations\ElectionService.cs" />
-    <Compile Include="Implementations\Repository.cs" />
-    <Compile Include="Implementations\PositionRepository.cs" />
-    <Compile Include="Implementations\VoterRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj">

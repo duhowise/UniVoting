@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using UniVoting.Model;
+using Position = UniVoting.Model.Position;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using UniVoting.Model;
-using Position = UniVoting.Model.Position;
-using System.Linq;
 
 namespace UniVoting.Client
 {

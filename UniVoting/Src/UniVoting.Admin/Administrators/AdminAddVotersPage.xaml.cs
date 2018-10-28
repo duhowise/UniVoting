@@ -20,8 +20,9 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminAddVotersPage : Page
 	{
-		private readonly IElectionConfigurationService __electionConfigurationService;
-		private DataSet _dataSet = null;
+		private readonly IElectionConfigurationService _electionConfigurationService;
+	    private readonly IVotingService _votingService;
+	    private DataSet _dataSet = null;
 		private int _indexName;
 		private int _indexNUmber;
 		private int _faculty;
@@ -29,10 +30,11 @@ namespace UniVoting.Admin.Administrators
 		private List<Voter> voters;
 	    readonly MetroWindow metroWindow;
 
-        public AdminAddVotersPage(IElectionConfigurationService electionConfigurationService)
+        public AdminAddVotersPage(IElectionConfigurationService electionConfigurationService,IVotingService votingService)
 		{
-			__electionConfigurationService = electionConfigurationService;
-			InitializeComponent();
+			_electionConfigurationService = electionConfigurationService;
+		    _votingService = votingService;
+		    InitializeComponent();
 			_dataSet=new DataSet();
             metroWindow = (Window.GetWindow(this) as MetroWindow);
             voters =new List<Voter>();
@@ -47,7 +49,7 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (!string.IsNullOrWhiteSpace(Searchterm.Text))
 			{
-				var voter=	await VotingService.GetVoterPass(new Voter { IndexNumber = Searchterm.Text });
+				var voter=	await _votingService .GetVoterPass(Searchterm.Text);
 				if (voter!=null)
 				{
 
@@ -89,7 +91,7 @@ namespace UniVoting.Admin.Administrators
 					try
 					{
 						BtnSave.IsEnabled = false;
-						_added =  __electionConfigurationService.AddVotersAsync(voters).Result.Count;
+						_added =  _electionConfigurationService.AddVotersAsync(voters).Result.Count;
 						AddedCount.Visibility=Visibility.Visible;
 						AddedCount.Content = $"Added {_added} Voters";
                         voters.Clear();
@@ -189,7 +191,7 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
 			{
-				await VotingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
+				await _votingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
 			    await metroWindow.ShowMessageAsync("Sucecss", $"Successfully reset Voter");
 
             }

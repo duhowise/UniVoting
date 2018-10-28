@@ -13,17 +13,20 @@ namespace UniVoting.LiveView
     /// </summary>
     public partial class TileControlLarge : UserControl
     {
+        private readonly Position _position;
+        private readonly ILiveViewService _liveViewService;
         private readonly ILogger _logger;
-        private readonly string _position;
-        public TileControlLarge(string position)
+        public TileControlLarge(Position position,ILiveViewService liveViewService)
         {
+            _position = position;
+            _liveViewService = liveViewService;
+
             InitializeComponent();
             _logger=new SystemEventLoggerService();
             var timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 1)};
             timer.Tick += _timer_Tick;
             timer.Start();
-            _position = position.Trim();
-            Position.Text = _position.ToUpper();
+            PositionName.Text = _position.PositionName;
 
         }
 
@@ -31,7 +34,7 @@ namespace UniVoting.LiveView
         {
             try
             {
-                VoteCount.Text = $"{await LiveViewService.VoteCountAsync(_position)}";
+                VoteCount.Text = $"{await _liveViewService.VoteCountAsync(_position.Id)}";
             }
             catch (SqlException exception)
             {

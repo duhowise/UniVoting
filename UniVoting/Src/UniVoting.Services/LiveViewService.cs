@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using UniVoting.Data.Implementations;
-using UniVoting.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using UniVoting.Core;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
-	public class LiveViewService
-	{
-		private static readonly IService Electionservice=new ElectionService();
-		
-		public static Task<int> VoteCountAsync(string position)
+	public class LiveViewService : ILiveViewService
+    {
+	    private readonly ElectionDbContext _context;
+	    //private static readonly IService _context=new _context();
+
+	    public LiveViewService(ElectionDbContext context)
+	    {
+	        _context = context;
+	    }
+		public  async Task<int> VoteCountAsync(int positionId)
 		{
 			try
 			{
-				return Electionservice.Voters.VoteCount(new Position { PositionName = position?.Trim() });
+				//return _context.Voters.Where(new Position { PositionName = positionId?.Trim() });
+				return await _context.Votes.Where(x=>x.PositionId==positionId).CountAsync();
 
 			}
 			catch (Exception e)
@@ -24,11 +31,11 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static Task<int> VotesSkipppedCountAsync(string position)
+		public  async Task<int> VotesSkipppedCountAsync(int positionId)
 		{
 			try
 			{
-				return Electionservice.Voters.VoteSkipCount(new Position { PositionName = position });
+				return await _context.SkippedVoteses.Where(x=>x.Positionid==positionId).CountAsync();
 
 			}
 			catch (Exception e)
@@ -38,11 +45,11 @@ namespace UniVoting.Services
 			}
 		}
 
-		public static Task<IEnumerable<Position>> Positions()
+		public  async Task<IEnumerable<Position>> Positions()
 		{
 			try
 			{
-				return Electionservice.Positions.GetAllAsync();
+				return await _context.Positions.ToListAsync();
 
 			}
 			catch (Exception e)

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using Akavache;
+using Autofac;
+using UniVoting.Client.Startup;
 using UniVoting.Model;
 using UniVoting.Services;
+
 
 
 namespace UniVoting.Client
@@ -21,10 +23,10 @@ namespace UniVoting.Client
 	    private static readonly ILogger _logger = new SystemEventLoggerService();
 
         private IEnumerable<Position> _positions;
-		public App(IElectionConfigurationService electionConfigurationService
-		)
+		public App()
 		{
-			_electionConfigurationService = electionConfigurationService;
+
+			//_electionConfigurationService = electionConfigurationService;
 			try
 		    {
 		        BlobCache.ApplicationName = $"VotingApplication";
@@ -50,8 +52,13 @@ namespace UniVoting.Client
 
 		        await GetSettings();
 		        await SetTheme();
-		        MainWindow = new ClientsLoginWindow(TODO);
-		        MainWindow.Show();
+
+		        var container = new BootStrapper().BootStrap();
+
+		        var window = container.Resolve<ClientsLoginWindow>();
+                
+                MainWindow = window;
+		        MainWindow?.Show();
 		        base.OnStartup(e);
             }
 		    catch (Exception exception)
@@ -79,7 +86,7 @@ namespace UniVoting.Client
 	        var rgb = data.Colour.Split(',');
 	        //ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
 		
-	        ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
+	        //ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
 	    }
 		private async Task GetSettings()
 		{

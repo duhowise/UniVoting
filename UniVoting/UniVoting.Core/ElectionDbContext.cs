@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using UniVoting.Model;
 
 namespace UniVoting.Core

@@ -22,15 +22,17 @@ namespace UniVoting.Client
         private readonly Stack<Position> _positionsStack;
 		private ClientVotingPage _votingPage;
 		private Voter _voter;
-		private ConcurrentBag<Vote> _votes;
+	    private readonly IVotingService _votingService;
+	    private ConcurrentBag<Vote> _votes;
 		private ConcurrentBag<SkippedVote> _skippedVotes;
-		public MainWindow(Stack<Position> positionsStack, Voter voter)
+		public MainWindow(Stack<Position> positionsStack, Voter voter,IVotingService votingService)
 		{
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
 			_positionsStack = positionsStack;
 			this._voter = voter;
-			_skippedVotes = new ConcurrentBag<SkippedVote>();
+		    _votingService = votingService;
+		    _skippedVotes = new ConcurrentBag<SkippedVote>();
 			_votes=new ConcurrentBag<Vote>();
 			Loaded += MainWindow_Loaded;
 			PageHolder.Navigated += PageHolder_Navigated;
@@ -100,7 +102,7 @@ namespace UniVoting.Client
 		{
 		 PageHolder.Content = VotingPageMaker(_positionsStack);
 			_voter.VoteInProgress = true;
-			await VotingService.UpdateVoter(_voter);
+			await _votingService.UpdateVoter(_voter);
 		}
 
 		private void VotingPage_VoteCompleted(object source, EventArgs args)
