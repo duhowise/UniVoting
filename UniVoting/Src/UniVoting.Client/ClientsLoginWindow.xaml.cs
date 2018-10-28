@@ -40,7 +40,7 @@ namespace UniVoting.Client
 			e.Cancel = true;
 		}
 		
-		private async void ClientsLoginWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+		private async void ClientsLoginWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			try
 			{
@@ -63,7 +63,7 @@ namespace UniVoting.Client
 			}
 		}
 
-		private async void BtnGo_Click(object sender, System.Windows.RoutedEventArgs e)
+		private async void BtnGo_Click(object sender, RoutedEventArgs e)
 		{
 		   
 

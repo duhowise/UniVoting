@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using Autofac;
 using MahApps.Metro;
-using UniVoting.LiveView.Startup;
 
 namespace UniVoting.LiveView
 {

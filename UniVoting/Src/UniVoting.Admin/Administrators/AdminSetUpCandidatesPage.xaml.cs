@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -24,7 +25,7 @@ namespace UniVoting.Admin.Administrators
 
 		public AdminSetUpCandidatesPage(IElectionConfigurationService electionConfigurationService)
 		{
-			_electionConfigurationService = electionConfigurationService;
+			var container = new BootStrapper().BootStrap();
 		}
 		internal class CandidateDto
 		{
@@ -58,7 +59,7 @@ namespace UniVoting.Admin.Administrators
 		private int _candidateId;
 		public AdminSetUpCandidatesPage()
 		{
-			this._candidateId = 0;
+			_candidateId = 0;
 			InitializeComponent();
 			SaveCandidate.Click += SaveCandidate_Click;
 			#region RankGeneration

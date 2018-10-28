@@ -1,5 +1,7 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -13,10 +15,11 @@ namespace UniVoting.Admin.Administrators
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
 
-		public AdminLoginWindow(IElectionConfigurationService electionConfigurationService)
+		public AdminLoginWindow()
 		{
-			_electionConfigurationService = electionConfigurationService;
-			InitializeComponent();
+		    var container = new BootStrapper().BootStrap();
+		    _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
+            InitializeComponent();
 			BtnLogin.IsDefault = true;
 			Username.Focus();
 			BtnLogin.Click += BtnLogin_Click;

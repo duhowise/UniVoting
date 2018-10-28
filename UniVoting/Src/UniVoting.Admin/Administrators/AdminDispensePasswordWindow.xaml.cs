@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -17,10 +19,11 @@ namespace UniVoting.Admin.Administrators
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
 		private List<Voter> voters;
-		public AdminDispensePasswordWindow(IElectionConfigurationService electionConfigurationService)
+		public AdminDispensePasswordWindow()
 		{
-			_electionConfigurationService = electionConfigurationService;
-			InitializeComponent();
+		    var container = new BootStrapper().BootStrap();
+		    _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
+            InitializeComponent();
 			Loaded += AdminDispensePasswordWindow_Loaded;
 			StudentName.TextChanged += StudentName_TextChanged;
 			StudentsSearchList.MouseDoubleClick += StudentsSearchList_MouseDoubleClick;
@@ -34,7 +37,7 @@ namespace UniVoting.Admin.Administrators
 
 		private async void StudentsSearchList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			var metroWindow = (Window.GetWindow(this) as MetroWindow);
+			var metroWindow = (GetWindow(this) as MetroWindow);
 			var student = StudentsSearchList.SelectedItem as Voter;
 			if (student!=null)
 			{

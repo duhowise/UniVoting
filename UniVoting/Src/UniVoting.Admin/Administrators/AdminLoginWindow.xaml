@@ -54,7 +54,7 @@
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnLogin"
                         TabIndex="2"
                     ToolTip="Login">
-                    Login 
+                    Login
                 </Button>
             </Grid>
         </StackPanel>

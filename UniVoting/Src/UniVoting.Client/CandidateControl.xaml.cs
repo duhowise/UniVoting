@@ -37,10 +37,10 @@ namespace UniVoting.Client
         public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter)
         {
             InitializeComponent();
-            this._votes = votes;
-            this._position = position;
-            this._candidate = candidate;
-            this._voter = voter;
+            _votes = votes;
+            _position = position;
+            _candidate = candidate;
+            _voter = voter;
             Loaded += CandidateControl_Loaded;
             BtnVote.Click += BtnVote_Click;
 

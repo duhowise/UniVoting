@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -15,7 +16,7 @@ namespace UniVoting.Admin.Administrators
 
 		public EcChairmanLoginWindow(IElectionConfigurationService electionConfigurationService)
 		{
-			_electionConfigurationService = electionConfigurationService;
+			var container = new BootStrapper().BootStrap();
 			InitializeComponent();
 			WindowState = WindowState.Maximized;
 			BtnLogin.IsDefault = true;

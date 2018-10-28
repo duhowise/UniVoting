@@ -37,8 +37,8 @@ namespace UniVoting.Client
             resourceDictionary.Add("ProgressBrush", new LinearGradientBrush(
                 new GradientStopCollection(new[]
                 {
-                    new GradientStop((System.Windows.Media.Color) resourceDictionary["HighlightColor"], 0),
-                    new GradientStop((System.Windows.Media.Color) resourceDictionary["AccentColor3"], 1)
+                    new GradientStop((Color) resourceDictionary["HighlightColor"], 0),
+                    new GradientStop((Color) resourceDictionary["AccentColor3"], 1)
                 }),
                 new Point(0.001, 0.5), new Point(1.002, (int)0.5)));
 
@@ -107,7 +107,7 @@ namespace UniVoting.Client
         private static Color IdealTextColor(Color color)
         {
             const int nThreshold = 105;
-            var bgDelta = System.Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) + (color.B * 0.114));
+            var bgDelta = Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) + (color.B * 0.114));
             var foreColor = (255 - bgDelta < nThreshold) ? Colors.Black : Colors.White;
             return foreColor;
         }

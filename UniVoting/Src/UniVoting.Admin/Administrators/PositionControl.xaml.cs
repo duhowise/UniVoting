@@ -1,7 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Admin.Startup;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
@@ -14,9 +16,13 @@ namespace UniVoting.Admin.Administrators
     {
 	    private readonly IElectionConfigurationService _electionConfigurationService;
 
-	    public PositionControl(IElectionConfigurationService electionConfigurationService)
+        /// <inheritdoc />
+        public PositionControl()
 	    {
-		    _electionConfigurationService = electionConfigurationService;
+	        InitializeComponent();
+	        Loaded += PositionControl_Loaded;
+            var container = new BootStrapper().BootStrap();
+		    _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
 	    }
         private CustomDialog _customDialog;
         private AddPositionDialogControl _addPositionDialogControl;
@@ -47,12 +53,7 @@ namespace UniVoting.Admin.Administrators
             }
         }
 
-        public PositionControl()
-        {
-            InitializeComponent();
-            Loaded += PositionControl_Loaded            ;
-            
-        }
+      
 
         private void PositionControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -105,12 +106,12 @@ namespace UniVoting.Admin.Administrators
         {
             if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
             {
-                var response = System.Windows.MessageBox.Show("Are You Sure You Want to DELETE Position", "Delete",
+                var response = MessageBox.Show("Are You Sure You Want to DELETE Position", "Delete",
                  MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (response == MessageBoxResult.Yes)
                 {
-                    Admin.Administrators.AdminSetUpPositionPage.Instance.RemovePosition(this);
+                    AdminSetUpPositionPage.Instance.RemovePosition(this);
                   _electionConfigurationService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
                 }
             }

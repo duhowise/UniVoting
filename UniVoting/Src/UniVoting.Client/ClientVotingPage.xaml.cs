@@ -29,8 +29,8 @@ namespace UniVoting.Client
         public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVote> skippedVotes)
         {
             InitializeComponent();
-            this._voter = voter;
-            this._position = position;
+            _voter = voter;
+            _position = position;
             _votes = votes;
             _skippedVotes = skippedVotes;
             BtnSkipVote.Click += BtnSkipVote_Click;
@@ -72,7 +72,7 @@ namespace UniVoting.Client
             }
         }
 
-        private async void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void BtnSkipVote_Click(object sender, RoutedEventArgs e)
         {
 
             var metroWindow = (Window.GetWindow(this) as MetroWindow);

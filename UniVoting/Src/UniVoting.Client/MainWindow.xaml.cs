@@ -30,7 +30,7 @@ namespace UniVoting.Client
 			InitializeComponent();
 			IgnoreTaskbarOnMaximize = true;
 			_positionsStack = positionsStack;
-			this._voter = voter;
+			_voter = voter;
 		    _votingService = votingService;
 		    _skippedVotes = new ConcurrentBag<SkippedVote>();
 			_votes=new ConcurrentBag<Vote>();

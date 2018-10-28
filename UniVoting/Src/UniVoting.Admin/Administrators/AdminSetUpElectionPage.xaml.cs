@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using UniVoting.Admin.Startup;
 using UniVoting.Model;
 using UniVoting.Services;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
@@ -16,10 +17,10 @@ namespace UniVoting.Admin.Administrators
 	public partial class AdminSetUpElectionPage : Page
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
-		private System.Windows.Media.Color _chosencolor;
+		private Color _chosencolor;
 		public AdminSetUpElectionPage(IElectionConfigurationService electionConfigurationService)
 		{
-			this._electionConfigurationService = electionConfigurationService;
+			var container = new BootStrapper().BootStrap();
 			InitializeComponent();
 			BtnUploadImage.Click += BtnUploadImage_Click;
 			Loaded += AdminSetUpElectionPage_Loaded;
@@ -33,7 +34,7 @@ namespace UniVoting.Admin.Administrators
 				if (color.ShowDialog() != DialogResult.None)
 				{
 					Colorbox.Text = color.Color.Name;
-					_chosencolor = System.Windows.Media.Color.FromRgb(color.Color.R, color.Color.G, color.Color.B);
+					_chosencolor = Color.FromRgb(color.Color.R, color.Color.G, color.Color.B);
 					ColoView.Fill = new SolidColorBrush(_chosencolor);
 				}
 			}

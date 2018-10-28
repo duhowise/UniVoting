@@ -212,3 +212,5 @@ C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CopyComplete
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Autofac.dll
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Autofac.xml

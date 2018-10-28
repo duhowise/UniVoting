@@ -426,7 +426,7 @@
       <Name>Univoting.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj">
-      <Project>{5e9b869f-3471-4a30-a28e-6f422dcef34e}</Project>
+      <Project>{5E9B869F-3471-4A30-A28E-6F422DCEF34E}</Project>
       <Name>UniVoting.Services</Name>
     </ProjectReference>
   </ItemGroup>

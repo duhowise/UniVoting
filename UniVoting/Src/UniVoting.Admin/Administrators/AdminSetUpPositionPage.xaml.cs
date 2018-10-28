@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Admin.Startup;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
@@ -19,7 +20,7 @@ namespace UniVoting.Admin.Administrators
 
         public AdminSetUpPositionPage(IElectionConfigurationService electionConfigurationService)
 		{
-			_electionConfigurationService = electionConfigurationService;
+			var container = new BootStrapper().BootStrap();
 			InitializeComponent();
 		
 		   Instance = this;

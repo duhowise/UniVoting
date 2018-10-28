@@ -1,13 +1,12 @@
 ﻿using Autofac;
-using UniVoting.Core;
-using UniVoting.Services;
+using UniVoting.Services.Startup;
 
 
 namespace UniVoting.LiveView.Startup
 {
 	public class BootStrapper
 	{
-		public Autofac.IContainer BootStrap()
+		public IContainer BootStrap()
 		{
 			var builder =new ContainerBuilder();
 
@@ -19,8 +18,7 @@ namespace UniVoting.LiveView.Startup
 		    builder.RegisterType<TileControlSmall>().AsSelf().InstancePerLifetimeScope();
 
             //register services
-		    builder.RegisterType<LiveViewService>().As<ILiveViewService>().InstancePerLifetimeScope();
-		    builder.RegisterType<ElectionDbContext>().AsSelf().InstancePerLifetimeScope();
+		    builder.RegisterModule<AplicationServiceModule>();
 
 
             return builder.Build();

@@ -50,7 +50,7 @@ namespace UniVoting.Client
             _customDialog.Content = confirmDialogControl;
             _votes = votes;
             _position = position;
-            this._candidate = candidate;
+            _candidate = candidate;
             _voter = voter;
             _skippedVotes = skippedVotes;
             BtnVoteNo.Click += BtnVoteNo_Click;
