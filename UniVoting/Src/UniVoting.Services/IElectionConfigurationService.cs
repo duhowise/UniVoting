@@ -12,7 +12,7 @@ namespace UniVoting.Services
 		Task<List<Voter>> AddVotersAsync(List<Voter> voters);
 		Task<Setting> ConfigureElection();
 		Task<IEnumerable<Candidate>> GetAllCandidates();
-		Task<IEnumerable<Position>> GetAllPositionsAsync();
+		Task<List<Position>> GetAllPositionsAsync();
 		Task<IEnumerable<Voter>> GetAllVotersAsync();
 		Task<IEnumerable<Candidate>> GetCandidateWithDetails();
 		Task<Position> GetPosition(int positionid);

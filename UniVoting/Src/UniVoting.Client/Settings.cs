@@ -1,4 +1,4 @@
-﻿namespace UniVoting.Client.Properties {
+﻿namespace UniVoting.Client {
     
     
     // This class allows you to handle specific events on the settings class:

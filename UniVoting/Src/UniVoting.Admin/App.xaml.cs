@@ -25,11 +25,11 @@ namespace UniVoting.Admin
 			ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
 			ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
 
-		    var container = new BootStrapper().BootStrap();
+            var bootStrapper = new BootStrapper();
+            var container = bootStrapper.BootStrap();
+            var window = container.Resolve<AdminLoginWindow>();
 
-		    var window = container.Resolve<AdminLoginWindow>();
-
-		    MainWindow =window;
+            MainWindow = window;
 			MainWindow?.Show();
 			base.OnStartup(e);
 		}

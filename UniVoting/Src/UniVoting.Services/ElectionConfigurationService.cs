@@ -252,12 +252,12 @@ namespace UniVoting.Services
 			}
 			catch (Exception e)
 			{
-				throw new Exception("Something went wrong. we could not retreive position", e);
+				throw new Exception("Something went wrong. we could not retrieve position", e);
 
 			}
 
 		}
-		public async Task<IEnumerable<Position>> GetAllPositionsAsync()
+		public async Task<List<Position>> GetAllPositionsAsync()
 		{
 			try
 			{
@@ -266,7 +266,7 @@ namespace UniVoting.Services
 			}
 			catch (Exception e)
 			{
-				throw new Exception("Something went wrong. we could not retreive position with candidates", e);
+				throw new Exception("Something went wrong. we could not retrieve position with candidates", e);
 
 			}
 		}

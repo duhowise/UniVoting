@@ -14,15 +14,14 @@ namespace UniVoting.Admin.Administrators
     /// </summary>
     public partial class PositionControl : UserControl
     {
-	    private readonly IElectionConfigurationService _electionConfigurationService;
+	    private IElectionConfigurationService _electionConfigurationService;
 
         /// <inheritdoc />
         public PositionControl()
 	    {
-	        InitializeComponent();
+            InitializeComponent();
 	        Loaded += PositionControl_Loaded;
-            var container = new BootStrapper().BootStrap();
-		    _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
+		    
 	    }
         private CustomDialog _customDialog;
         private AddPositionDialogControl _addPositionDialogControl;
@@ -44,6 +43,8 @@ namespace UniVoting.Admin.Administrators
         public PositionControl(string name)
         {
             InitializeComponent();
+            
+
             TextBoxPosition.Text=name;
             //TextBoxFaculty.Text = faculty;
             if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
@@ -57,6 +58,9 @@ namespace UniVoting.Admin.Administrators
 
         private void PositionControl_Loaded(object sender, RoutedEventArgs e)
         {
+            var bootStrapper = new BootStrapper();
+            var container = bootStrapper.BootStrap();
+            _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
             _customDialog = new CustomDialog();
             _addPositionDialogControl = new AddPositionDialogControl();
             _addPositionDialogControl.BtnCancel.Click += BtnCancel_Click;
@@ -68,7 +72,10 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-            await _electionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName =pos,Faculty = fac});
+            var position =await _electionConfigurationService.GetPosition(Id);
+            position.PositionName = pos;
+            position.Faculty = fac;
+            await _electionConfigurationService.UpdatePosition(position);
           await  metroWindow.HideMetroDialogAsync(_customDialog);
         }
 
@@ -87,13 +94,13 @@ namespace UniVoting.Admin.Administrators
             };
             await metroWindow.ShowMetroDialogAsync(_customDialog,settings);
             //todo show new values after save end edit
-            //if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
-            //{
-                
-            //    //var value = ElectionService.GetPosition(_position);
-            //    //set faculty text textbox from here
-            //  await _electionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
-            //}
+            if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
+            {
+
+                //var value = ElectionService.GetPosition(_position);
+                //set faculty text textbox from here
+                await _electionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+            }
 
             //set TextBoxPosition IsEnabled = "true" after updating set TextBoxPosition IsEnabled = "False"
 

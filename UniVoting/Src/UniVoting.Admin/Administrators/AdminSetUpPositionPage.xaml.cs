@@ -20,7 +20,8 @@ namespace UniVoting.Admin.Administrators
 
         public AdminSetUpPositionPage(IElectionConfigurationService electionConfigurationService)
 		{
-			var container = new BootStrapper().BootStrap();
+            _electionConfigurationService = electionConfigurationService;
+            var container = new BootStrapper().BootStrap();
 			InitializeComponent();
 		
 		   Instance = this;
@@ -33,13 +34,16 @@ namespace UniVoting.Admin.Administrators
 		{
 			PositionControlHolder.Children.Clear();
 		   var positions =await _electionConfigurationService.GetAllPositionsAsync();
-			foreach (var position in positions)
-				PositionControlHolder.Children.Add(new PositionControl
-				{
-					TextBoxPosition = {Text = position.PositionName},
-                    TextBoxFaculty = {Text =position.Faculty },
-					Id = position.Id
-				});
+           if (positions.Count>0)
+           {
+               foreach (var position in positions)
+                   PositionControlHolder.Children.Add(new PositionControl
+                   {
+                       TextBoxPosition = {Text = position.PositionName},
+                       TextBoxFaculty = {Text =position.Faculty },
+                       Id = position.Id
+                   });
+           }
             
             _customDialog = new CustomDialog();
             _addPositionDialogControl = new AddPositionDialogControl();

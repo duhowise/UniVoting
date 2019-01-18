@@ -13,9 +13,4 @@ namespace UniVoting.Client
             throw new Exception(typeof(SQLitePersistentBlobCache).FullName);
         }
     }
-
-
-    public class PreserveAttribute : Attribute
-    {
-    }
 }

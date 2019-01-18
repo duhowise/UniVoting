@@ -16,8 +16,10 @@ namespace UniVoting.Admin.Administrators
 
 		public EcChairmanLoginWindow(IElectionConfigurationService electionConfigurationService)
 		{
-			var container = new BootStrapper().BootStrap();
-			InitializeComponent();
+            var container = new BootStrapper().BootStrap();
+            _electionConfigurationService = electionConfigurationService;
+
+            InitializeComponent();
 			WindowState = WindowState.Maximized;
 			BtnLogin.IsDefault = true;
 			BtnLogin.Click += BtnLogin_Click;

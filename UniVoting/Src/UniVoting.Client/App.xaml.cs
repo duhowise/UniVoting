@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -91,17 +92,29 @@ namespace UniVoting.Client
 		private async Task GetSettings()
 		{
 			_positions = new List<Position>();
+		    _electionData=new Setting();
             try
 		    {
                 //ElectionSettings
 		        _electionData = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings")
 		            .Catch(Observable.Return(_electionData =await _electionConfigurationService.ConfigureElection()));
+
+		        if (_electionData!=null) 
+		        {
 		      await	BlobCache.UserAccount.InsertObject("ElectionSettings", _electionData);
-		        //ElectionPositions
-		        _positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions")
+
+                }
+                //ElectionPositions
+                _positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions")
 		            .Catch(Observable.Return( _positions =await _electionConfigurationService.GetAllPositionsAsync()));
-		        await	BlobCache.UserAccount.InsertObject("ElectionPositions", _positions);
-			}
+		        var enumerable = _positions.ToList();
+		        if (enumerable.Any())
+		        {
+		        await	BlobCache.UserAccount.InsertObject("ElectionPositions", enumerable);
+
+                }
+
+            }
 			catch (Exception exception)
 			{
 				MessageBox.Show(exception.Message, " Election Settings Error");

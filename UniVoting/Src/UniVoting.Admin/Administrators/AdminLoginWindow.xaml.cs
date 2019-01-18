@@ -21,8 +21,8 @@ namespace UniVoting.Admin.Administrators
 		    _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
             InitializeComponent();
 			BtnLogin.IsDefault = true;
-			Username.Focus();
-			BtnLogin.Click += BtnLogin_Click;
+            //Username.Focus();
+            BtnLogin.Click += BtnLogin_Click;
 			
 		}
 
