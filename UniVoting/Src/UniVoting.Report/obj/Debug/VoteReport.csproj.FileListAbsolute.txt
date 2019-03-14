@@ -1,0 +1,12 @@
+E:\Projects\ResultModule\VoteReport\bin\Debug\VoteReport.dll.config
+E:\Projects\ResultModule\VoteReport\bin\Debug\VoteReport.dll
+E:\Projects\ResultModule\VoteReport\bin\Debug\VoteReport.pdb
+E:\Projects\ResultModule\VoteReport\bin\Debug\Telerik.Reporting.dll
+E:\Projects\ResultModule\VoteReport\bin\Debug\Telerik.Reporting.pdb
+E:\Projects\ResultModule\VoteReport\bin\Debug\Telerik.Reporting.xml
+E:\Projects\ResultModule\VoteReport\obj\Debug\VoteReport.VoteCountReport.resources
+E:\Projects\ResultModule\VoteReport\obj\Debug\VoteReport.csproj.GenerateResource.Cache
+E:\Projects\ResultModule\VoteReport\obj\Debug\VoteReport.dll.licenses
+E:\Projects\ResultModule\VoteReport\obj\Debug\VoteReport.dll
+E:\Projects\ResultModule\VoteReport\obj\Debug\VoteReport.pdb
+E:\Projects\ResultModule\VoteReport\obj\Debug\VoteReport.csprojResolveAssemblyReference.cache

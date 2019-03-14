@@ -1,0 +1,21 @@
+﻿<controls:MetroWindow x:Class="UniVoting.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UniVoting.Client"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+           WindowState="Maximized" ShowCloseButton="False"
+                Background="{DynamicResource WhiteColorBrush}"
+                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                TextElement.FontWeight="Medium"
+                TextElement.FontSize="16"
+                FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+                      Title="UNIVOTING" Height="350" Width="525" WindowStartupLocation="CenterScreen" 
+                     
+                      ResizeMode="NoResize">
+    <Grid Name="MainGrid">
+       
+        <Frame Name="PageHolder" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</controls:MetroWindow>
