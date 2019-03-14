@@ -1,0 +1,27 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Univoting.Core;
+
+namespace Univoting.Services
+{
+	public interface IElectionConfigurationService
+	{
+		Task<Candidate> AddCandidate(Candidate candidate);
+		Task<Position> AddPosition(Position position);
+		Task<ElectionConfiguration> AddElectionConfigurations(ElectionConfiguration electionConfiguration);
+		Task<List<Voter>> AddVotersAsync(List<Voter> voters);
+		Task<ElectionConfiguration> ConfigureElection();
+		Task<IEnumerable<Candidate>> GetAllCandidates();
+		Task<List<Position>> GetAllPositionsAsync();
+		Task<IEnumerable<Voter>> GetAllVotersAsync();
+		Task<IEnumerable<Candidate>> GetCandidateWithDetails();
+		Task<Position> GetPosition(int positionid);
+		Task<Commissioner> LoginAsync(Commissioner commissioner);
+		Task<Voter> LoginVoter(Voter voter);
+		void RemoveCandidate(Candidate candidate);
+		Task RemovePosition(Position position);
+		Task<Candidate> SaveCandidate(Candidate candidate);
+		Task<Commissioner> SaveCommissioner(Commissioner commissioner);
+		Task<Position> UpdatePosition(Position position);
+	}
+}
