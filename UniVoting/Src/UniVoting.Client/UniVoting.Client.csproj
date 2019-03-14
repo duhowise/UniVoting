@@ -504,6 +504,10 @@
       <Project>{D94D308F-F26B-4D6E-829F-954ED6D170BD}</Project>
       <Name>UniVoting.Admin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UniVoting.Core\UniVoting.Core.csproj">
+      <Project>{53F5844A-55AC-47AC-B503-2EBC9B710A3E}</Project>
+      <Name>UniVoting.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj">
       <Project>{5E9B869F-3471-4A30-A28E-6F422DCEF34E}</Project>
       <Name>UniVoting.Services</Name>

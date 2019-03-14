@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Akavache;
 using Autofac;
+using UniVoting.Core;
 using UniVoting.Services;
 using BootStrapper = UniVoting.Client.Startup.BootStrapper;
 
@@ -36,7 +37,7 @@ namespace UniVoting.Client
 
 		private async void ClientVoteCompletedPage_Loaded(object sender, RoutedEventArgs e)
 		{
-			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
+			var election = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings");
 			MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
 			try
 			{

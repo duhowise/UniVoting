@@ -7,6 +7,7 @@ using System.Windows;
 using Akavache;
 using Autofac;
 using UniVoting.Client.Startup;
+using UniVoting.Core;
 using UniVoting.Services;
 
 
@@ -19,7 +20,7 @@ namespace UniVoting.Client
     public partial class App : Application
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
-		private Setting _electionData;
+		private ElectionConfiguration _electionData;
 	    private static readonly ILogger _logger = new SystemEventLoggerService();
 
         private IEnumerable<Position> _positions;
@@ -71,12 +72,12 @@ namespace UniVoting.Client
 
 	    public static async Task SetTheme()
 	    {
-	        var data = new Setting();
+	        var data = new ElectionConfiguration();
 
 	        try
 	        {
 	            //get color from  local cache
-	            data = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
+	            data = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings");
 	        }
 	        catch (Exception exception)
 	        {
@@ -91,11 +92,11 @@ namespace UniVoting.Client
 		private async Task GetSettings()
 		{
 			_positions = new List<Position>();
-		    _electionData=new Setting();
+		    _electionData=new ElectionConfiguration();
             try
 		    {
                 //ElectionSettings
-		        _electionData = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings")
+		        _electionData = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings")
 		            .Catch(Observable.Return(_electionData =await _electionConfigurationService.ConfigureElection()));
 
 		        if (_electionData!=null) 

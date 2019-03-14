@@ -2,8 +2,8 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/electionConfigurations" CurrentProfile="(Default)" GeneratedClassNamespace="UniVoting.WPF.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ElectionId" Type="System.Int32" Scope="Application">
+    <ElectionConfiguration Name="ElectionId" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
-    </Setting>
+    </ElectionConfiguration>
   </Settings>
 </SettingsFile>

@@ -45,8 +45,6 @@ D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Servi
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CoreCompileInputs.cache
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 D:\VS\Repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb
-C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CoreCompileInputs.cache
-C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojAssemblyReference.cache
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.dll.config
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\UniVoting.Services.pdb
@@ -208,6 +206,8 @@ C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.xml
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csprojAssemblyReference.cache
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CoreCompileInputs.cache
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.csproj.CopyComplete
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Services\obj\Debug\UniVoting.Services.pdb

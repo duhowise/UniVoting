@@ -14,7 +14,7 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Setting ComVisible to false makes the types in this assembly not visible 
+// ElectionConfiguration ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
@@ -24,7 +24,7 @@ using System.Windows;
 //inside a <PropertyGroup>.  For example, if you are using US english
 //in your source files, set the <UICulture> to en-US.  Then uncomment
 //the NeutralResourceLanguage attribute below.  Update the "en-US" in
-//the line below to match the UICulture setting in the project file.
+//the line below to match the UICulture ElectionConfiguration in the project file.
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 

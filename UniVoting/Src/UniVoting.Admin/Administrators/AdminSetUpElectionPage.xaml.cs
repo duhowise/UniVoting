@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using UniVoting.Admin.Startup;
+using UniVoting.Core;
 using UniVoting.Services;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
@@ -43,7 +44,7 @@ namespace UniVoting.Admin.Administrators
 			if (
 				!string.IsNullOrWhiteSpace(TextBoxElectionName.Text)||!string.IsNullOrWhiteSpace(TextBoxElectionName.Text))
 			{
-				await _electionConfigurationService.AddSettings(new Setting
+				await _electionConfigurationService.AddSettings(new ElectionConfiguration
 				{
 					ElectionName = TextBoxElectionName.Text,
 					EletionSubTitle = TextBoxSubtitle.Text,

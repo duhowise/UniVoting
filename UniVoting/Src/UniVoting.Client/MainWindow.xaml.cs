@@ -6,8 +6,10 @@ using System.Windows;
 using System.Windows.Media;
 using Akavache;
 using MahApps.Metro.Controls;
+using UniVoting.Core;
 using UniVoting.Services;
-using Position = UniVoting.Model.Position;
+using Position = UniVoting.Core.Position;
+
 
 namespace UniVoting.Client
 {
@@ -62,7 +64,7 @@ namespace UniVoting.Client
 
         private async void MainWindow_Loaded1(object sender, RoutedEventArgs e)
 		{
-			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
+			var election = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings");
 		    MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
 		}
 

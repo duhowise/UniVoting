@@ -8,8 +8,10 @@ using Akavache;
 using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UniVoting.Core;
 using UniVoting.Services;
 using BootStrapper = UniVoting.Client.Startup.BootStrapper;
+using Position = UniVoting.Core.Position;
 
 namespace UniVoting.Client
 {
@@ -19,14 +21,14 @@ namespace UniVoting.Client
 	public partial class ClientsLoginWindow : MetroWindow
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
-		private IEnumerable<Model.Position> _positions;
-		 private Stack<Model.Position> _positionsStack;
+		private IEnumerable<Position> _positions;
+		 private Stack<Position> _positionsStack;
 		private Voter _voter;
 		public ClientsLoginWindow( IElectionConfigurationService electionConfigurationService)
 		{
 			_electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
-			_positionsStack=new Stack<Model.Position>();
+			_positionsStack=new Stack<Position>();
 			Loaded += ClientsLoginWindow_Loaded;
 			_voter=new Voter();
 			IgnoreTaskbarOnMaximize = true;
@@ -44,13 +46,13 @@ namespace UniVoting.Client
 			try
 			{
                 //ThemeManagerHelper.CreateAppStyleBy(System.Windows.Media.Color.FromArgb(255, 122, 200, 122),true);
-				var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
+				var election = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings");
 				MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
 				VotingName.Text = election.ElectionName.ToUpper();
 				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
 
-				_positions = new List<Model.Position>();
-				_positions = await BlobCache.UserAccount.GetObject<IEnumerable<Model.Position>>("ElectionPositions");
+				_positions = new List<Position>();
+				_positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions");
 				foreach (var position in _positions)
 				{
 					_positionsStack.Push(position);

@@ -4,7 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Position = UniVoting.Model.Position;
+using UniVoting.Core;
+using Position = UniVoting.Core.Position;
+
 
 namespace UniVoting.Client
 {

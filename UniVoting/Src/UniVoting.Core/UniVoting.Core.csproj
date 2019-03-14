@@ -52,5 +52,8 @@
     <Compile Include="Vote.cs" />
     <Compile Include="Voter.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
