@@ -4,6 +4,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Admin.Startup;
 using UniVoting.Services;
+using Position = UniVoting.Core.Position;
 
 namespace UniVoting.Admin.Administrators
 {
@@ -75,7 +76,7 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-          await  _electionConfigurationService.AddPosition(new Model.Position{PositionName = pos,Faculty = fac});
+          await  _electionConfigurationService.AddPosition(new Position{PositionName = pos,Faculty = fac});
             PositionControlHolder.Children.Add(new PositionControl(pos));
             await  _metroWindow.HideMetroDialogAsync(_customDialog);
 

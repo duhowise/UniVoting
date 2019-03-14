@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using UniVoting.Admin.Startup;
-using UniVoting.Model;
 using UniVoting.Services;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 

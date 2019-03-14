@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using UniVoting.Admin.Startup;
-using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators

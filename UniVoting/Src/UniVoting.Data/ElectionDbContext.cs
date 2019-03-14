@@ -1,11 +1,11 @@
 ﻿using System.Configuration;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using UniVoting.Model;
+using UniVoting.Core;
 
-namespace UniVoting.Core
+namespace UniVoting.Data
 {
-	public class ElectionDbContext:DbContext
+    public class ElectionDbContext:DbContext
 	{
 		
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,8 +33,8 @@ namespace UniVoting.Core
 		public virtual DbSet<Position> Positions { get; set; }	
 		public virtual DbSet<Rank> Ranks { get; set; }	
 		public virtual DbSet<SkippedVote> SkippedVoteses { get; set; }	
-		public virtual DbSet<Setting> Settings { get; set; }	
-		public virtual DbSet<Comissioner> Comissioners { get; set; }	
+		public virtual DbSet<ElectionConfiguration> Settings { get; set; }	
+		public virtual DbSet<Commissioner> Comissioners { get; set; }	
 		
 	}
 }

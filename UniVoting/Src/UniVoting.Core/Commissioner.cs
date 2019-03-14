@@ -1,8 +1,8 @@
-﻿namespace UniVoting.Model
+﻿namespace UniVoting.Core
 {
-	public class Comissioner
+	public class Commissioner
 	{
-		public Comissioner()
+		public Commissioner()
 		{
 			Id = 0;
 		}

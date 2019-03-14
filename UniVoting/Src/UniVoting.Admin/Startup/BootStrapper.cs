@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
 using UniVoting.Admin.Administrators;
-using UniVoting.Core;
 using UniVoting.Services;
-using UniVoting.Services.Startup;
 
 namespace UniVoting.Admin.Startup
 {

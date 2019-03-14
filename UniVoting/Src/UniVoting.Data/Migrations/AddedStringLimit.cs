@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UniVoting.Core.Migrations
+namespace UniVoting.Data.Migrations
 {
     public partial class AddedStringLimit : Migration
     {

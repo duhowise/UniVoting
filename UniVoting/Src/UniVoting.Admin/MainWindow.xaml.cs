@@ -3,7 +3,7 @@ using Autofac;
 using MahApps.Metro.Controls;
 using UniVoting.Admin.Administrators;
 using UniVoting.Admin.Startup;
-using UniVoting.Model;
+using UniVoting.Core;
 
 namespace UniVoting.Admin
 {
@@ -13,12 +13,12 @@ namespace UniVoting.Admin
 	public partial class MainWindow : MetroWindow
 	{
 
-        public MainWindow(Comissioner comissioner)
+        public MainWindow(Commissioner commissioner)
 		{
 			InitializeComponent();
            
 			
-		   PageHolder.Content = new AdminMenuPage(comissioner);
+		   PageHolder.Content = new AdminMenuPage(commissioner);
 
 		}
 

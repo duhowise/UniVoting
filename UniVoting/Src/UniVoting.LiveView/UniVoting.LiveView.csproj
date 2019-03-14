@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UniVoting.LiveView</RootNamespace>
     <AssemblyName>UniVoting.LiveView</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -59,14 +59,14 @@
     <ApplicationIcon>viewer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.9.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.9.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
+      <HintPath>..\..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -175,17 +175,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\UniVoting.Core\UniVoting.Core.csproj">
-      <Project>{436bd1bf-54ef-49f6-81d6-b42c4deabd10}</Project>
+    <ProjectReference Include="..\UniVoting.Core\UniVoting.Core.csproj">
+      <Project>{53F5844A-55AC-47AC-B503-2EBC9B710A3E}</Project>
       <Name>UniVoting.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\UniVoting.Data\UniVoting.Data.csproj">
       <Project>{84425ee4-65f7-43ff-80a3-02a0e1a067f6}</Project>
       <Name>UniVoting.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj">
-      <Project>{5a3bca0c-5f45-4ccb-80e5-b87ccbb77ba9}</Project>
-      <Name>UniVoting.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj">
       <Project>{5e9b869f-3471-4a30-a28e-6f422dcef34e}</Project>

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using Autofac;
 using UniVoting.Admin.Startup;
-using UniVoting.Model;
+using UniVoting.Core;
 
 namespace UniVoting.Admin.Administrators
 {
@@ -11,13 +11,13 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminMenuPage : Page
 	{
-		public Comissioner Comissioner { get; }
+		public Commissioner Commissioner { get; }
 
 	    private IContainer container;
 	   
-        public AdminMenuPage(Comissioner comissioner)
+        public AdminMenuPage(Commissioner commissioner)
 		{
-			Comissioner = comissioner;
+			Commissioner = commissioner;
 
             container=new BootStrapper().BootStrap();
 			InitializeComponent();
@@ -36,7 +36,7 @@ namespace UniVoting.Admin.Administrators
 		private void AdminMenuPage_Loaded(object sender, RoutedEventArgs e)
 		{
 
-			if (Comissioner.IsChairman)
+			if (Commissioner.IsChairman)
 			{
 				BtnSetUpElection.IsEnabled = false;
 				BtnCreateAccount.IsEnabled = false;
@@ -44,7 +44,7 @@ namespace UniVoting.Admin.Administrators
 				BtnSetUpPostions.IsEnabled = false;
 			
 			}
-			else if(Comissioner.IsPresident)
+			else if(Commissioner.IsPresident)
 			{
 				BtnSetUpElection.IsEnabled = false;
 				BtnCreateAccount.IsEnabled = false;
@@ -52,7 +52,7 @@ namespace UniVoting.Admin.Administrators
 				BtnSetUpPostions.IsEnabled = false;
 				BtnSetUpVoters.IsEnabled = false;
 			}
-			else if (!Comissioner.IsChairman && !Comissioner.IsAdmin && !Comissioner.IsPresident)
+			else if (!Commissioner.IsChairman && !Commissioner.IsAdmin && !Commissioner.IsPresident)
 			{
 				BtnSetUpElection.IsEnabled = false;
 				BtnCreateAccount.IsEnabled = false;

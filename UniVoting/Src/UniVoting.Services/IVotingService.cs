@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using UniVoting.Model;
+using UniVoting.Core;
 
 namespace UniVoting.Services
 {

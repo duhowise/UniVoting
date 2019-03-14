@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UniVoting.Model
+namespace UniVoting.Core
 {
     public interface ILogger
     {

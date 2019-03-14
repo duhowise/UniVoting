@@ -1,5 +1,5 @@
 ﻿using System;
-using UniVoting.Model;
+using UniVoting.Core;
 
 namespace UniVoting.Services
 {

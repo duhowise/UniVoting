@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using UniVoting.Model;
+using UniVoting.Core;
 using UniVoting.Services;
 
 namespace UniVoting.LiveView

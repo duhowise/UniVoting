@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using UniVoting.Core;
-using UniVoting.Model;
+using UniVoting.Data;
 
 namespace UniVoting.Services
 {

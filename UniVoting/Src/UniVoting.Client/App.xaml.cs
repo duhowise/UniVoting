@@ -7,7 +7,6 @@ using System.Windows;
 using Akavache;
 using Autofac;
 using UniVoting.Client.Startup;
-using UniVoting.Model;
 using UniVoting.Services;
 
 

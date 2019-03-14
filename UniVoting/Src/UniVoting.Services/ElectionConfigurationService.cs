@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UniVoting.Core;
-using UniVoting.Model;
+using UniVoting.Data;
 
 namespace UniVoting.Services
 {
-	public class ElectionConfigurationService : IElectionConfigurationService
+    public class ElectionConfigurationService : IElectionConfigurationService
 	{
 		private readonly ElectionDbContext _context;
 
@@ -63,11 +63,11 @@ namespace UniVoting.Services
 		#endregion
 
 		#region Election
-		//public static  Task<Setting> ConfigureElection(int id)
+		//public static  Task<ElectionConfiguration> ConfigureElection(int id)
 		//{
 		//	try
 		//	{
-		//		return   new ElectionBaseRepository().GetByIdAsync<Setting>(id);
+		//		return   new ElectionBaseRepository().GetByIdAsync<ElectionConfiguration>(id);
 
 		//	}
 		//	catch (Exception e)
@@ -76,7 +76,7 @@ namespace UniVoting.Services
 		//		throw;
 		//	}
 		//}
-		public  async Task<Setting> ConfigureElection()
+		public  async Task<ElectionConfiguration> ConfigureElection()
 		{
 			try
 			{
@@ -88,18 +88,18 @@ namespace UniVoting.Services
 
 			}
 		}
-		public  async Task<Setting> AddSettings(Setting setting)
+		public  async Task<ElectionConfiguration> AddSettings(ElectionConfiguration electionConfiguration)
 		{
-			if (setting == null) throw new ArgumentNullException(nameof(setting));
+			if (electionConfiguration == null) throw new ArgumentNullException(nameof(electionConfiguration));
 			try
 			{
-				//await _electionservice.Comissioners.AddNewConfiguration(setting);
+				//await _electionservice.Comissioners.AddNewConfiguration(electionConfiguration);
 				var data= await _context.Settings.FirstOrDefaultAsync();
 				if (data == null) throw new ArgumentNullException(nameof(data));
 				_context.Remove(data);
-				 await  _context.Settings.AddAsync(setting);
+				 await  _context.Settings.AddAsync(electionConfiguration);
 				await _context.SaveChangesAsync();
-				return setting;
+				return electionConfiguration;
 
 
 			}
@@ -126,16 +126,16 @@ namespace UniVoting.Services
 
 			}
 		}
-		public async Task<Comissioner> SaveComissioner(Comissioner comissioner)
+		public async Task<Commissioner> SaveComissioner(Commissioner commissioner)
 		{
-			if (comissioner == null) throw new ArgumentNullException(nameof(comissioner));
-			if (comissioner.Id==0)
+			if (commissioner == null) throw new ArgumentNullException(nameof(commissioner));
+			if (commissioner.Id==0)
 			{
 				try
 				{
-					await _context.Comissioners.AddAsync(comissioner);
+					await _context.Comissioners.AddAsync(commissioner);
 					await _context.SaveChangesAsync();
-						return comissioner;
+						return commissioner;
 				}
 				catch (Exception e)
 				{
@@ -147,9 +147,9 @@ namespace UniVoting.Services
 			{
 				try
 				{
-					 _context.Comissioners.Update(comissioner);
+					 _context.Comissioners.Update(commissioner);
 					await _context.SaveChangesAsync();
-					return comissioner;
+					return commissioner;
 
 				}
 				catch (Exception e)
@@ -302,42 +302,42 @@ namespace UniVoting.Services
 		}
 		#endregion   
 		#region User
-		public  async Task<Comissioner> Login(Comissioner comissioner)
+		public  async Task<Commissioner> Login(Commissioner commissioner)
 		{
-			if (comissioner.IsChairman)
+			if (commissioner.IsChairman)
 			{
 				try
-				{ return await _context.Comissioners.FirstOrDefaultAsync(x=>x.IsChairman && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password));}
+				{ return await _context.Comissioners.FirstOrDefaultAsync(x=>x.IsChairman && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password));}
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as chairman", e);
 
 				}
 			}
-			else if (comissioner.IsPresident)
+			else if (commissioner.IsPresident)
 			{
 				try
-				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
+				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as president", e);
 
 				}
 			}
-			else if (comissioner.IsAdmin)
+			else if (commissioner.IsAdmin)
 			{
 				try
-				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsAdmin && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
+				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsAdmin && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as admin", e);
 
 				}
 			}
-			else if (comissioner.IsPresident)
+			else if (commissioner.IsPresident)
 			{
 				try
-				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
+				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as president", e);
@@ -347,7 +347,7 @@ namespace UniVoting.Services
 			else
 			{
 				try
-				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.UserName.Equals(comissioner.UserName) && x.Password.Equals(comissioner.Password)); }
+				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in ", e);

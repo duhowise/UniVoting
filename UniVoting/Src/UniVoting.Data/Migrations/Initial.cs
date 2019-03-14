@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace UniVoting.Core.Migrations
+namespace UniVoting.Data.Migrations
 {
     public partial class Initial : Migration
     {

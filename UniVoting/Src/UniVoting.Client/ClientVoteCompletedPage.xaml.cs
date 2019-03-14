@@ -6,7 +6,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using Akavache;
 using Autofac;
-using UniVoting.Model;
 using UniVoting.Services;
 using BootStrapper = UniVoting.Client.Startup.BootStrapper;
 

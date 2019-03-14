@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
@@ -30,7 +29,7 @@ namespace UniVoting.Admin.Administrators
 			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
 			{
 				BtnLogin.IsEnabled = false;
-				var president = await _electionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password, IsPresident = true });
+				var president = await _electionConfigurationService.Login(new Commissioner { UserName = Username.Text, Password = Password.Password, IsPresident = true });
 				
 				if (president != null)
 				{

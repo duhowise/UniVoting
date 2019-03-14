@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
-namespace UniVoting.Core
+namespace UniVoting.Data
 {
 	public class ElectionDbContextPool:DbContextPool<ElectionDbContext>
 	{

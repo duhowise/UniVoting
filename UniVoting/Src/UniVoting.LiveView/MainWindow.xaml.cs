@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Autofac;
 using MahApps.Metro.Controls;
+using UniVoting.Core;
 using UniVoting.LiveView.Startup;
-using UniVoting.Model;
 using UniVoting.Services;
-using Position = UniVoting.Model.Position;
+using Position = UniVoting.Core.Position;
 
 namespace UniVoting.LiveView
 {

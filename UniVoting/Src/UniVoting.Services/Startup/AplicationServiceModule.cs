@@ -1,6 +1,6 @@
 using System.Reflection;
 using Autofac;
-using UniVoting.Core;
+using UniVoting.Data;
 using Module = Autofac.Module;
 
 

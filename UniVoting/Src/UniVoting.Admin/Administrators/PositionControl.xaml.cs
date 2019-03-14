@@ -5,7 +5,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Admin.Startup;
 using UniVoting.Services;
-using Position = UniVoting.Model.Position;
+using Position = UniVoting.Core.Position;
 
 namespace UniVoting.Admin.Administrators
 {

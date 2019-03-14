@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UniVoting.Model
+namespace UniVoting.Core
 {
     /// <summary>
     /// A class which represents the Rank table.

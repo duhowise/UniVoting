@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Media;
 using Akavache;
 using MahApps.Metro.Controls;
-using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 

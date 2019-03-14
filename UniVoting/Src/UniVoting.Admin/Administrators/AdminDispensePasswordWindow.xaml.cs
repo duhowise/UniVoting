@@ -7,7 +7,7 @@ using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Admin.Startup;
-using UniVoting.Model;
+using UniVoting.Core;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
