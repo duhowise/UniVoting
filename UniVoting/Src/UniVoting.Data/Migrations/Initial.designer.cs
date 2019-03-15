@@ -63,7 +63,7 @@ namespace UniVoting.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Comissioners");
+                    b.ToTable("Commissioners");
                 });
 
             modelBuilder.Entity("UniVoting.Model.Position", b =>

@@ -21,9 +21,7 @@ namespace UniVoting.Admin
 		   PageHolder.Content = new AdminMenuPage(commissioner);
 
 		}
-
-      
-
+        
         protected override void OnClosing(CancelEventArgs e)
         {
             var container = new BootStrapper().BootStrap();

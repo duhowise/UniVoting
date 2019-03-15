@@ -24,7 +24,7 @@ namespace UniVoting.Services
         {
             try
             {
-                 await _context.SkippedVoteses.AddAsync(skipped);
+                 await _context.SkippedVotes.AddAsync(skipped);
             }
             catch (Exception exception)
             {
@@ -47,7 +47,7 @@ namespace UniVoting.Services
 
                  await _context.Votes.AddRangeAsync(votes);
                   _context.Voters.Update(voter);
-                 await _context.SkippedVoteses.AddRangeAsync(skippedVotes);
+                 await _context.SkippedVotes.AddRangeAsync(skippedVotes);
                     transaction.Complete();
                 }
             }
@@ -81,10 +81,10 @@ namespace UniVoting.Services
                     dbvoter.Voted = false;
 
                     var votes = _context.Votes.Where(x => x.VoterId == voter.Id).ToList();
-                    var skippedVotes = _context.SkippedVoteses.Where(x => x.VoterId == voter.Id);
+                    var skippedVotes = _context.SkippedVotes.Where(x => x.VoterId == voter.Id);
                     _context.Votes.RemoveRange(votes);
-                    _context.SkippedVoteses.RemoveRange(skippedVotes);
-                    _context.SkippedVoteses.RemoveRange(skippedVotes);
+                    _context.SkippedVotes.RemoveRange(skippedVotes);
+                    _context.SkippedVotes.RemoveRange(skippedVotes);
 
                     _context.Voters.Update(dbvoter);
                     transaction.Complete();

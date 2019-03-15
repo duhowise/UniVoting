@@ -23,7 +23,7 @@ namespace UniVoting.Admin.Administrators
 			WindowState = WindowState.Maximized;
 			BtnLogin.IsDefault = true;
 			BtnLogin.Click += BtnLogin_Click;
-			Username.Focus();
+			//Username.Focus();
 		}
 
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
@@ -31,7 +31,7 @@ namespace UniVoting.Admin.Administrators
 
 			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
 			{
-				var chairman = await _electionConfigurationService.Login(new Commissioner { UserName = Username.Text, Password = Password.Password, IsChairman = true });
+				var chairman = await _electionConfigurationService.LoginAsync(new Commissioner { UserName = Username.Text, Password = Password.Password, IsChairman = true });
 				if (chairman != null)
 				{
 					new ReportViewerWindow().Show();
@@ -39,7 +39,7 @@ namespace UniVoting.Admin.Administrators
 				}
 				else
 				{
-					await this.ShowMessageAsync("Login Error", "Wrong username or password.");
+					await this.ShowMessageAsync("LoginAsync Error", "Wrong username or password.");
 					Util.Clear(this);
 					BtnLogin.IsEnabled = true;
 					Username.Focus();
@@ -48,7 +48,7 @@ namespace UniVoting.Admin.Administrators
 			}
 			else
 			{
-				await this.ShowMessageAsync("Login Error", "Wrong username or password.");
+				await this.ShowMessageAsync("LoginAsync Error", "Wrong username or password.");
 				Util.Clear(this);
 				Username.Focus();
 

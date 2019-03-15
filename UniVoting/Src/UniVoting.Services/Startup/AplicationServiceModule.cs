@@ -13,6 +13,7 @@ namespace UniVoting.Services.Startup
             string reassembly = typeof(ElectionConfigurationService).GetTypeInfo().Assembly.GetName().Name;
 
 
+            builder.RegisterType<DialogService>().As<IDialogService>().InstancePerLifetimeScope();
             builder.RegisterType<VotingService>().As<IVotingService>().InstancePerLifetimeScope();
             builder.RegisterType<ElectionConfigurationService>().As<IElectionConfigurationService>().InstancePerLifetimeScope();
             builder.RegisterType<LiveViewService>().As<ILiveViewService>().InstancePerLifetimeScope();

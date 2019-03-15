@@ -32,9 +32,10 @@ namespace UniVoting.Data
 		public virtual DbSet<Candidate> Candidates { get; set; }		
 		public virtual DbSet<Position> Positions { get; set; }	
 		public virtual DbSet<Rank> Ranks { get; set; }	
-		public virtual DbSet<SkippedVote> SkippedVoteses { get; set; }	
+		public virtual DbSet<SkippedVote> SkippedVotes { get; set; }	
 		public virtual DbSet<ElectionConfiguration> Settings { get; set; }	
-		public virtual DbSet<Commissioner> Comissioners { get; set; }	
+		public virtual DbSet<Commissioner> Commissioners { get; set; }	
+		public virtual DbSet<Faculty> Faculties { get; set; }	
 		
 	}
 }

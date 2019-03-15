@@ -9,7 +9,7 @@ namespace UniVoting.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Comissioners",
+                name: "Commissioners",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -213,7 +213,7 @@ namespace UniVoting.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comissioners");
+                name: "Commissioners");
 
             migrationBuilder.DropTable(
                 name: "Settings");

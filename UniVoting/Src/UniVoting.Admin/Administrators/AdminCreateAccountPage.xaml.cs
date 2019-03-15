@@ -62,7 +62,7 @@ namespace UniVoting.Admin.Administrators
 				var metroWindow = (Window.GetWindow(this) as MetroWindow);
 				try
 				{
-					await _electionConfigurationService.SaveComissioner(new Commissioner
+					await _electionConfigurationService.SaveCommissionerAsync(new Commissioner
 					{
 						FullName = TextBoxName.Text,
 						UserName = Username.Text,

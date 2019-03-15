@@ -89,7 +89,7 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
-                table: "Comissioners",
+                table: "Commissioners",
                 unicode: false,
                 maxLength: 256,
                 nullable: true,
@@ -98,7 +98,7 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Password",
-                table: "Comissioners",
+                table: "Commissioners",
                 unicode: false,
                 maxLength: 256,
                 nullable: true,
@@ -107,7 +107,7 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "FullName",
-                table: "Comissioners",
+                table: "Commissioners",
                 unicode: false,
                 maxLength: 256,
                 nullable: true,
@@ -209,7 +209,7 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "UserName",
-                table: "Comissioners",
+                table: "Commissioners",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldUnicode: false,
@@ -218,7 +218,7 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Password",
-                table: "Comissioners",
+                table: "Commissioners",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldUnicode: false,
@@ -227,7 +227,7 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "FullName",
-                table: "Comissioners",
+                table: "Commissioners",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldUnicode: false,

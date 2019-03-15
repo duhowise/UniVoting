@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Admin.Startup;
+using UniVoting.Core;
 using UniVoting.Services;
 using Position = UniVoting.Core.Position;
 
@@ -41,7 +42,7 @@ namespace UniVoting.Admin.Administrators
                    PositionControlHolder.Children.Add(new PositionControl
                    {
                        TextBoxPosition = {Text = position.PositionName},
-                       TextBoxFaculty = {Text =position.Faculty },
+                       TextBoxFaculty = {Text =position.Faculty.FacultyName },
                        Id = position.Id
                    });
            }
@@ -76,7 +77,7 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-          await  _electionConfigurationService.AddPosition(new Position{PositionName = pos,Faculty = fac});
+          await  _electionConfigurationService.AddPositionAsync(new Position{PositionName = pos,Faculty = new Faculty{FacultyName = fac } });
             PositionControlHolder.Children.Add(new PositionControl(pos));
             await  _metroWindow.HideMetroDialogAsync(_customDialog);
 

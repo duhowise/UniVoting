@@ -18,17 +18,18 @@ namespace UniVoting.Admin.Startup
             builder.RegisterType<LiveViewService>().As<ILiveViewService>().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assembly.Load(reassembly)).AsImplementedInterfaces().InstancePerLifetimeScope();
             //register windows
-            builder.RegisterType<MainWindow>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<AdminLoginWindow>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<AdminDispensePasswordWindow>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<PresidentLoginWindow>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<MainWindow>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<AdminLoginWindow>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<AdminDispensePasswordWindow>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<PresidentLoginWindow>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<EcChairmanLoginWindow>().AsSelf().InstancePerDependency();
             //builder.RegisterType<MainWindow>()
             //register pages
-		    builder.RegisterType<AdminAddVotersPage>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<AdminCreateAccountPage>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<AdminSetUpElectionPage>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<AdminSetUpCandidatesPage>().AsSelf().InstancePerLifetimeScope();
-		    builder.RegisterType<AdminSetUpPositionPage>().AsSelf().InstancePerLifetimeScope();
+		    builder.RegisterType<AdminAddVotersPage>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<AdminCreateAccountPage>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<AdminSetUpElectionPage>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<AdminSetUpCandidatesPage>().AsSelf().InstancePerDependency();
+		    builder.RegisterType<AdminSetUpPositionPage>().AsSelf().InstancePerDependency();
 
             //register userControls
             builder.RegisterType<PositionControl>().AsSelf().InstancePerLifetimeScope();

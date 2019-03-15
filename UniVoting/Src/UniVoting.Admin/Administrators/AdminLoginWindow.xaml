@@ -53,8 +53,8 @@
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" FontFamily="Segoe UI Bold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnLogin"
                         TabIndex="2"
-                    ToolTip="Login">
-                    Login
+                    ToolTip="LoginAsync">
+                    LoginAsync
                 </Button>
             </Grid>
         </StackPanel>

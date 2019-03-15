@@ -49,7 +49,7 @@ namespace UniVoting.Client
         {
             TextBoxWelcome.Content = $"Welcome, {_voter.VoterName ?? string.Empty}";
 
-            if (string.IsNullOrWhiteSpace(_position.Faculty) || _position.Faculty.Trim().Equals(_voter.Faculty.Trim(), StringComparison.OrdinalIgnoreCase))
+            if ( _position.FacultyId==_voter.FacultyId)
             {
                 PositionName.Content = _position.PositionName.ToUpper();
                 if (_position.Candidates.Count() == 1)

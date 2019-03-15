@@ -72,12 +72,12 @@ namespace UniVoting.Client
 			{
 				try
 				{
-					_voter = await _electionConfigurationService.LoginVoter(new Voter { VoterCode = Pin.Text });
+					_voter = await _electionConfigurationService.LoginVoterAsync(new Voter { VoterCode = Pin.Text });
 					ConfirmVoterAsync();
 				}
 				catch (Exception exception)
 				{
-					MessageBox.Show(exception.Message, "Election Login Error");
+					MessageBox.Show(exception.Message, "Election LoginAsync Error");
 					throw;
 				}
 			}

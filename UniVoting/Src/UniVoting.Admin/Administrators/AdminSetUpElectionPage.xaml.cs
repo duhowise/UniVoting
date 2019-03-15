@@ -44,7 +44,7 @@ namespace UniVoting.Admin.Administrators
 			if (
 				!string.IsNullOrWhiteSpace(TextBoxElectionName.Text)||!string.IsNullOrWhiteSpace(TextBoxElectionName.Text))
 			{
-				await _electionConfigurationService.AddSettings(new ElectionConfiguration
+				await _electionConfigurationService.AddConfigurationAsync(new ElectionConfiguration
 				{
 					ElectionName = TextBoxElectionName.Text,
 					EletionSubTitle = TextBoxSubtitle.Text,

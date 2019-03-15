@@ -6,22 +6,22 @@ namespace UniVoting.Services
 {
     public interface IElectionConfigurationService
 	{
-		Task<Candidate> AddCandidate(Candidate candidate);
-		Task<Position> AddPosition(Position position);
-		Task<ElectionConfiguration> AddSettings(ElectionConfiguration electionConfiguration);
+		Task<Candidate> AddCandidateAsync(Candidate candidate);
+		Task<Position> AddPositionAsync(Position position);
+		Task<ElectionConfiguration> AddConfigurationAsync(ElectionConfiguration electionConfiguration);
 		Task<List<Voter>> AddVotersAsync(List<Voter> voters);
-		Task<ElectionConfiguration> ConfigureElection();
-		Task<IEnumerable<Candidate>> GetAllCandidates();
+		Task<ElectionConfiguration> ConfigureElectionAsync();
+		Task<IEnumerable<Candidate>> GetAllCandidatesAsync();
 		Task<List<Position>> GetAllPositionsAsync();
 		Task<IEnumerable<Voter>> GetAllVotersAsync();
-		Task<IEnumerable<Candidate>> GetCandidateWithDetails();
-		Task<Position> GetPosition(int positionid);
-		Task<Commissioner> Login(Commissioner commissioner);
-		Task<Voter> LoginVoter(Voter voter);
-		void RemoveCandidate(Candidate candidate);
-		Task RemovePosition(Position position);
-		Task<Candidate> SaveCandidate(Candidate candidate);
-		Task<Commissioner> SaveComissioner(Commissioner commissioner);
-		Task<Position> UpdatePosition(Position position);
+		Task<IEnumerable<Candidate>> GetCandidateWithDetailsAsync();
+		Task<Position> GetPositionAsync(int positionid);
+		Task<Commissioner> LoginAsync(Commissioner commissioner);
+		Task<Voter> LoginVoterAsync(Voter voter);
+		void RemoveCandidateAsync(Candidate candidate);
+		Task RemovePositionAsync(Position position);
+		Task<Candidate> SaveCandidateAsync(Candidate candidate);
+		Task<Commissioner> SaveCommissionerAsync(Commissioner commissioner);
+		Task<Position> UpdatePositionAsync(Position position);
 	}
 }

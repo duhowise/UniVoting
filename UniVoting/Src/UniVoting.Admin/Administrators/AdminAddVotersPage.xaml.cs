@@ -162,7 +162,10 @@ namespace UniVoting.Admin.Administrators
                                 var voterInfo = new Voter();
                                 voterInfo.VoterName = row[_indexName].ToString();
                                 voterInfo.IndexNumber = row[_indexNUmber].ToString();
-                                voterInfo.Faculty = row[_faculty].ToString();
+                                voterInfo.Faculty = new Faculty
+                                {
+                                    FacultyName = row[_faculty].ToString()
+                                };
                                 voterInfo.VoterCode = Util.GenerateRandomPassword(6);
                                 voters.Add(voterInfo);
                             }

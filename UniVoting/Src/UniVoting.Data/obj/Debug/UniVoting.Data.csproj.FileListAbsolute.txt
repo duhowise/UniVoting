@@ -131,6 +131,7 @@ C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Syst
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\System.Xml.XPath.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\System.Xml.XPath.XDocument.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.dll
@@ -159,6 +160,7 @@ C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\UniV
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\UniVoting.Core.pdb
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.xml
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.Design.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.EntityFrameworkCore.SqlServer.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Microsoft.Extensions.Caching.Abstractions.xml
@@ -181,6 +183,7 @@ C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\Syst
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.csprojAssemblyReference.cache
+C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.dll.config
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.csproj.CoreCompileInputs.cache
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.csproj.CopyComplete
 C:\Users\Duho\source\repos\UniVoting\UniVoting\Src\UniVoting.Data\obj\Debug\UniVoting.Data.dll

@@ -10,13 +10,18 @@ namespace UniVoting.Client.Startup
 			var builder =new ContainerBuilder();
 
             //register windows
-            //builder.RegisterType<MainWindow>()
-            //register pages
+            builder.RegisterType<MainWindow>().SingleInstance();
+            builder.RegisterType<ClientsLoginWindow>().InstancePerDependency();
+            builder.RegisterType<CandidateControl>().InstancePerDependency();
+            builder.RegisterType<ClientVoteCompletedPage>().InstancePerDependency();
+            builder.RegisterType<ConfirmDialogControl>().InstancePerDependency();
+            builder.RegisterType<ClientVotingPage>().InstancePerDependency();
+          //register pages
 
 
             //register services
 
-		    builder.RegisterModule<AplicationServiceModule>();
+            builder.RegisterModule<AplicationServiceModule>();
 
             return builder.Build();
 		} 

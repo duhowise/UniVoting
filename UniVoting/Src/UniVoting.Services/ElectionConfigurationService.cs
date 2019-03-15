@@ -44,12 +44,12 @@ namespace UniVoting.Services
 
 			}
 		}
-		public  async Task<Voter> LoginVoter(Voter voter)
+		public  async Task<Voter> LoginVoterAsync(Voter voter)
 		{
 			if (voter == null) throw new ArgumentNullException(nameof(voter));
 			try
 			{
-				return await _context.Voters.FirstOrDefaultAsync(v => v.VoterCode.Equals(voter.VoterCode, StringComparison.InvariantCultureIgnoreCase));
+				return await _context.Voters.Include(x=>x.Faculty).FirstOrDefaultAsync(v => v.VoterCode.Equals(voter.VoterCode, StringComparison.InvariantCultureIgnoreCase));
 
 			}
 			catch (Exception e)
@@ -63,7 +63,7 @@ namespace UniVoting.Services
 		#endregion
 
 		#region Election
-		//public static  Task<ElectionConfiguration> ConfigureElection(int id)
+		//public static  Task<ElectionConfiguration> ConfigureElectionAsync(int id)
 		//{
 		//	try
 		//	{
@@ -76,7 +76,7 @@ namespace UniVoting.Services
 		//		throw;
 		//	}
 		//}
-		public  async Task<ElectionConfiguration> ConfigureElection()
+		public  async Task<ElectionConfiguration> ConfigureElectionAsync()
 		{
 			try
 			{
@@ -88,12 +88,12 @@ namespace UniVoting.Services
 
 			}
 		}
-		public  async Task<ElectionConfiguration> AddSettings(ElectionConfiguration electionConfiguration)
+		public  async Task<ElectionConfiguration> AddConfigurationAsync(ElectionConfiguration electionConfiguration)
 		{
 			if (electionConfiguration == null) throw new ArgumentNullException(nameof(electionConfiguration));
 			try
 			{
-				//await _electionservice.Comissioners.AddNewConfiguration(electionConfiguration);
+				//await _electionservice.Commissioners.AddNewConfiguration(electionConfiguration);
 				var data= await _context.Settings.FirstOrDefaultAsync();
 				if (data == null) throw new ArgumentNullException(nameof(data));
 				_context.Remove(data);
@@ -111,7 +111,7 @@ namespace UniVoting.Services
 		}
 		#endregion
 		#region Candidate
-		public async Task<Candidate> AddCandidate(Candidate candidate)
+		public async Task<Candidate> AddCandidateAsync(Candidate candidate)
 		{
 			if (candidate == null) throw new ArgumentNullException(nameof(candidate));
 			try
@@ -126,14 +126,14 @@ namespace UniVoting.Services
 
 			}
 		}
-		public async Task<Commissioner> SaveComissioner(Commissioner commissioner)
+		public async Task<Commissioner> SaveCommissionerAsync(Commissioner commissioner)
 		{
 			if (commissioner == null) throw new ArgumentNullException(nameof(commissioner));
 			if (commissioner.Id==0)
 			{
 				try
 				{
-					await _context.Comissioners.AddAsync(commissioner);
+					await _context.Commissioners.AddAsync(commissioner);
 					await _context.SaveChangesAsync();
 						return commissioner;
 				}
@@ -147,7 +147,7 @@ namespace UniVoting.Services
 			{
 				try
 				{
-					 _context.Comissioners.Update(commissioner);
+					 _context.Commissioners.Update(commissioner);
 					await _context.SaveChangesAsync();
 					return commissioner;
 
@@ -160,7 +160,7 @@ namespace UniVoting.Services
 			}
 		}
 	   
-		public async Task<IEnumerable<Candidate>> GetAllCandidates()
+		public async Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
 		{
 			try
 			{
@@ -174,7 +174,7 @@ namespace UniVoting.Services
 			}
 		}
 		
-		public  async Task<Candidate> SaveCandidate(Candidate candidate)
+		public  async Task<Candidate> SaveCandidateAsync(Candidate candidate)
 		{
 			try
 			{
@@ -199,7 +199,7 @@ namespace UniVoting.Services
 			}
 
 		}
-		public async Task<IEnumerable<Candidate>> GetCandidateWithDetails()
+		public async Task<IEnumerable<Candidate>> GetCandidateWithDetailsAsync()
 		{
 			try
 			{
@@ -213,7 +213,7 @@ namespace UniVoting.Services
 			}
 
 		}
-		public void RemoveCandidate(Candidate candidate)
+		public void RemoveCandidateAsync(Candidate candidate)
 		{
 			try
 			{
@@ -228,7 +228,7 @@ namespace UniVoting.Services
 		}
 		#endregion
 		#region Position
-		public async Task<Position> AddPosition(Position position)
+		public async Task<Position> AddPositionAsync(Position position)
 		{
 			try
 			{
@@ -243,7 +243,7 @@ namespace UniVoting.Services
 			}
 
 		}
-		public  async Task<Position> GetPosition(int positionid)
+		public  async Task<Position> GetPositionAsync(int positionid)
 		{
 			try
 			{
@@ -261,7 +261,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return await _context.Positions.Include(p=>p.Candidates).ToListAsync();
+				return await _context.Positions.Include(p=>p.Candidates).Include(x=>x.Faculty).ToListAsync();
 
 			}
 			catch (Exception e)
@@ -271,7 +271,7 @@ namespace UniVoting.Services
 			}
 		}
 		
-		public  async Task<Position> UpdatePosition(Position position)
+		public  async Task<Position> UpdatePositionAsync(Position position)
 		{
 			try
 			{
@@ -286,7 +286,7 @@ namespace UniVoting.Services
 			}
 		}
 	   
-		public  async Task RemovePosition(Position position)
+		public  async Task RemovePositionAsync(Position position)
 		{
 			try
 			{
@@ -302,12 +302,12 @@ namespace UniVoting.Services
 		}
 		#endregion   
 		#region User
-		public  async Task<Commissioner> Login(Commissioner commissioner)
+		public  async Task<Commissioner> LoginAsync(Commissioner commissioner)
 		{
 			if (commissioner.IsChairman)
 			{
 				try
-				{ return await _context.Comissioners.FirstOrDefaultAsync(x=>x.IsChairman && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password));}
+				{ return await _context.Commissioners.FirstOrDefaultAsync(x=>x.IsChairman && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password));}
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as chairman", e);
@@ -317,7 +317,7 @@ namespace UniVoting.Services
 			else if (commissioner.IsPresident)
 			{
 				try
-				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
+				{return await _context.Commissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as president", e);
@@ -327,7 +327,7 @@ namespace UniVoting.Services
 			else if (commissioner.IsAdmin)
 			{
 				try
-				{return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsAdmin && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
+				{return await _context.Commissioners.FirstOrDefaultAsync(x => x.IsAdmin && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as admin", e);
@@ -337,7 +337,7 @@ namespace UniVoting.Services
 			else if (commissioner.IsPresident)
 			{
 				try
-				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
+				{ return await _context.Commissioners.FirstOrDefaultAsync(x => x.IsPresident && x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in as president", e);
@@ -347,7 +347,7 @@ namespace UniVoting.Services
 			else
 			{
 				try
-				{ return await _context.Comissioners.FirstOrDefaultAsync(x => x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
+				{ return await _context.Commissioners.FirstOrDefaultAsync(x => x.UserName.Equals(commissioner.UserName) && x.Password.Equals(commissioner.Password)); }
 				catch (Exception e)
 				{
 					throw new Exception("Something went wrong. could not log in ", e);

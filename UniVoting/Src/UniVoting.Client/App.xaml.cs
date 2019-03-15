@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using Akavache;
 using Autofac;
+using MahApps.Metro.Controls;
 using UniVoting.Client.Startup;
 using UniVoting.Core;
 using UniVoting.Services;
-
+using Position = UniVoting.Core.Position;
 
 
 namespace UniVoting.Client
@@ -19,30 +20,36 @@ namespace UniVoting.Client
     /// </summary>
     public partial class App : Application
 	{
-		private readonly IElectionConfigurationService _electionConfigurationService;
+        private static IElectionConfigurationService _electionConfigurationService;
 		private ElectionConfiguration _electionData;
-	    private static readonly ILogger _logger = new SystemEventLoggerService();
+        static IContainer _container;
 
         private IEnumerable<Position> _positions;
-		public App()
-		{
+        private static MetroWindow _window;
 
-			//_electionConfigurationService = electionConfigurationService;
-			try
-		    {
-		        BlobCache.ApplicationName = $"VotingApplication";
+        public App()
+        {
+
+            try
+            {
+                _container = new BootStrapper().BootStrap();
+                 _window   = _container.Resolve<ClientsLoginWindow>();
+                _electionConfigurationService = _container.Resolve<IElectionConfigurationService>();
+                BlobCache.ApplicationName = $"VotingApplication";
 		        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+                throw new InvalidCastException();
             }
 		    catch (Exception e)
-		    {
-		        _logger.Log(e);
+            {
+                _container.Resolve<IDialogService>().ShowMessageAsync(_window, "Error", e.Message);
 
-		    }
-		}
+
+            }
+        }
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-		    if (e.ExceptionObject is Exception exp) _logger.Log(exp);
+            if (e.ExceptionObject is Exception exp) _container.Resolve<IDialogService>().ShowMessageAsync(_window,"Error",exp.Message);
 		}
 	
 		protected override async void OnStartup(StartupEventArgs e)
@@ -56,15 +63,14 @@ namespace UniVoting.Client
 
 		        var container = new BootStrapper().BootStrap();
 
-		        var window = container.Resolve<ClientsLoginWindow>();
                 
-                MainWindow = window;
+                MainWindow = _window;
 		        MainWindow?.Show();
 		        base.OnStartup(e);
             }
 		    catch (Exception exception)
 		    {
-		        _logger.Log(exception);
+		        //_logger.Log(exception);
 
             }
 
@@ -81,8 +87,8 @@ namespace UniVoting.Client
 	        }
 	        catch (Exception exception)
 	        {
-	            MessageBox.Show(exception.Message, " colour Settings Error");
-	        }
+                MessageBox.Show(exception.Message, " colour Settings Error");
+            }
 
 	        var rgb = data.Colour.Split(',');
 	        //ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
@@ -97,7 +103,7 @@ namespace UniVoting.Client
 		    {
                 //ElectionSettings
 		        _electionData = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings")
-		            .Catch(Observable.Return(_electionData =await _electionConfigurationService.ConfigureElection()));
+		            .Catch(Observable.Return(_electionData =await _electionConfigurationService.ConfigureElectionAsync()));
 
 		        if (_electionData!=null) 
 		        {

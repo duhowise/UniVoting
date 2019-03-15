@@ -30,7 +30,7 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
 			{
-				var admin = await _electionConfigurationService.Login(new Commissioner { UserName = Username.Text, Password = Password.Password});
+				var admin = await _electionConfigurationService.LoginAsync(new Commissioner { UserName = Username.Text, Password = Password.Password});
 				if (admin != null)
 				{
 					new MainWindow(admin).Show();
@@ -38,7 +38,7 @@ namespace UniVoting.Admin.Administrators
 				}
 				else
 				{
-					await this.ShowMessageAsync("Login Error", "Wrong username or password.");
+					await this.ShowMessageAsync("LoginAsync Error", "Wrong username or password.");
 					Util.Clear(this);
 					BtnLogin.IsEnabled = true;
 					Username.Focus();
@@ -47,7 +47,7 @@ namespace UniVoting.Admin.Administrators
 			}
 			else
 			{
-				await this.ShowMessageAsync("Login Error", "Please Enter Username or password to Login.");
+				await this.ShowMessageAsync("LoginAsync Error", "Please Enter Username or password to LoginAsync.");
 				Util.Clear(this);
 				Username.Focus();
 

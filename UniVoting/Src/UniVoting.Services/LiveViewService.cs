@@ -35,7 +35,7 @@ namespace UniVoting.Services
 		{
 			try
 			{
-				return await _context.SkippedVoteses.AsNoTracking().Where(x=>x.Positionid==positionId).CountAsync();
+				return await _context.SkippedVotes.AsNoTracking().Where(x=>x.Positionid==positionId).CountAsync();
 
 			}
 			catch (Exception e)

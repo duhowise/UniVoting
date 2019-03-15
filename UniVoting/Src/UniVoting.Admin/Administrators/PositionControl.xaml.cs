@@ -4,6 +4,7 @@ using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Admin.Startup;
+using UniVoting.Core;
 using UniVoting.Services;
 using Position = UniVoting.Core.Position;
 
@@ -49,7 +50,7 @@ namespace UniVoting.Admin.Administrators
             //TextBoxFaculty.Text = faculty;
             if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
             {
-              var value= _electionConfigurationService.AddPosition(new Position { PositionName = TextBoxPosition.Text });
+              var value= _electionConfigurationService.AddPositionAsync(new Position { PositionName = TextBoxPosition.Text });
                 Id = value.Id;
             }
         }
@@ -72,10 +73,10 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-            var position =await _electionConfigurationService.GetPosition(Id);
+            var position =await _electionConfigurationService.GetPositionAsync(Id);
             position.PositionName = pos;
-            position.Faculty = fac;
-            await _electionConfigurationService.UpdatePosition(position);
+            position.Faculty = new Faculty{FacultyName = fac};
+            await _electionConfigurationService.UpdatePositionAsync(position);
           await  metroWindow.HideMetroDialogAsync(_customDialog);
         }
 
@@ -97,9 +98,9 @@ namespace UniVoting.Admin.Administrators
             if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
             {
 
-                //var value = ElectionService.GetPosition(_position);
+                //var value = ElectionService.GetPositionAsync(_position);
                 //set faculty text textbox from here
-                await _electionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+                await _electionConfigurationService.UpdatePositionAsync(new Position { Id = Id, PositionName = TextBoxPosition.Text });
             }
 
             //set TextBoxPosition IsEnabled = "true" after updating set TextBoxPosition IsEnabled = "False"
@@ -119,7 +120,7 @@ namespace UniVoting.Admin.Administrators
                 if (response == MessageBoxResult.Yes)
                 {
                     AdminSetUpPositionPage.Instance.RemovePosition(this);
-                  _electionConfigurationService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+                  _electionConfigurationService.RemovePositionAsync(new Position { Id = Id, PositionName = TextBoxPosition.Text });
                 }
             }
             
