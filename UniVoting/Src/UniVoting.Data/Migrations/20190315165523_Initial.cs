@@ -14,30 +14,58 @@ namespace UniVoting.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FullName = table.Column<string>(nullable: true),
-                    UserName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    Password = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
                     IsChairman = table.Column<bool>(nullable: false),
                     IsPresident = table.Column<bool>(nullable: false),
                     IsAdmin = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comissioners", x => x.Id);
+                    table.PrimaryKey("PK_Commissioners", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Positions",
+                name: "ElectionConfigurations",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PositionName = table.Column<string>(nullable: true),
-                    Faculty = table.Column<string>(nullable: true)
+                    ElectionName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    EletionSubTitle = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    Logo = table.Column<byte[]>(nullable: true),
+                    Colour = table.Column<string>(unicode: false, maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Positions", x => x.Id);
+                    table.PrimaryKey("PK_ElectionConfigurations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Faculties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FacultyName = table.Column<string>(unicode: false, maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faculties", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PollingStations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(unicode: false, maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PollingStations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,19 +81,23 @@ namespace UniVoting.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Settings",
+                name: "Positions",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ElectionName = table.Column<string>(nullable: true),
-                    EletionSubTitle = table.Column<string>(nullable: true),
-                    Logo = table.Column<byte[]>(nullable: true),
-                    Colour = table.Column<string>(nullable: true)
+                    PositionName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    FacultyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.PrimaryKey("PK_Positions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Positions_Faculties_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,16 +106,22 @@ namespace UniVoting.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    VoterName = table.Column<string>(nullable: true),
-                    VoterCode = table.Column<string>(nullable: true),
-                    IndexNumber = table.Column<string>(nullable: true),
-                    Faculty = table.Column<string>(nullable: true),
+                    VoterName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    VoterCode = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    IndexNumber = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    FacultyId = table.Column<int>(nullable: false),
                     Voted = table.Column<bool>(nullable: false),
                     VoteInProgress = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Voters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Voters_Faculties_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +131,7 @@ namespace UniVoting.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PositionId = table.Column<int>(nullable: true),
-                    CandidateName = table.Column<string>(nullable: true),
+                    CandidateName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
                     CandidatePicture = table.Column<byte[]>(nullable: true),
                     RankId = table.Column<int>(nullable: true)
                 },
@@ -115,7 +153,7 @@ namespace UniVoting.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SkippedVoteses",
+                name: "SkippedVotes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -125,19 +163,19 @@ namespace UniVoting.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SkippedVoteses", x => x.Id);
+                    table.PrimaryKey("PK_SkippedVotes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SkippedVoteses_Positions_Positionid",
+                        name: "FK_SkippedVotes_Positions_Positionid",
                         column: x => x.Positionid,
                         principalTable: "Positions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SkippedVoteses_Voters_VoterId",
+                        name: "FK_SkippedVotes_Voters_VoterId",
                         column: x => x.VoterId,
                         principalTable: "Voters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,14 +223,24 @@ namespace UniVoting.Data.Migrations
                 column: "RankId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SkippedVoteses_Positionid",
-                table: "SkippedVoteses",
+                name: "IX_Positions_FacultyId",
+                table: "Positions",
+                column: "FacultyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SkippedVotes_Positionid",
+                table: "SkippedVotes",
                 column: "Positionid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SkippedVoteses_VoterId",
-                table: "SkippedVoteses",
+                name: "IX_SkippedVotes_VoterId",
+                table: "SkippedVotes",
                 column: "VoterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Voters_FacultyId",
+                table: "Voters",
+                column: "FacultyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_CandidateId",
@@ -216,10 +264,13 @@ namespace UniVoting.Data.Migrations
                 name: "Commissioners");
 
             migrationBuilder.DropTable(
-                name: "Settings");
+                name: "ElectionConfigurations");
 
             migrationBuilder.DropTable(
-                name: "SkippedVoteses");
+                name: "PollingStations");
+
+            migrationBuilder.DropTable(
+                name: "SkippedVotes");
 
             migrationBuilder.DropTable(
                 name: "Votes");
@@ -235,6 +286,9 @@ namespace UniVoting.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ranks");
+
+            migrationBuilder.DropTable(
+                name: "Faculties");
         }
     }
 }

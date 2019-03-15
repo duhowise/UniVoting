@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
+using Univoting.Data;
 using UniVoting.Core;
-using UniVoting.Data;
+using UniVoting.Services;
 
-namespace UniVoting.Services
+namespace Univoting.Services
 {
     public class VotingService : IVotingService
     {
@@ -20,11 +21,11 @@ namespace UniVoting.Services
         //private static readonly ILogger Logger=new SystemEventLoggerService();
         //private static readonly IService _context = new _context();
 
-        public  async Task SkipVote(SkippedVote skipped)
+        public async Task SkipVote(SkippedVote skipped)
         {
             try
             {
-                 await _context.SkippedVotes.AddAsync(skipped);
+                await _context.SkippedVotes.AddAsync(skipped);
             }
             catch (Exception exception)
             {
@@ -33,21 +34,21 @@ namespace UniVoting.Services
             }
         }
 
-        public  async Task CastVote(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVote> skippedVotes)
+        public async Task CastVote(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVote> skippedVotes)
         {
             try
             {
 
 
-                using (var transaction=new TransactionScope())
+                using (var transaction = new TransactionScope())
                 {
 
                     voter.Voted = true;
                     voter.VoteInProgress = false;
 
-                 await _context.Votes.AddRangeAsync(votes);
-                  _context.Voters.Update(voter);
-                 await _context.SkippedVotes.AddRangeAsync(skippedVotes);
+                    await _context.Votes.AddRangeAsync(votes);
+                    _context.Voters.Update(voter);
+                    await _context.SkippedVotes.AddRangeAsync(skippedVotes);
                     transaction.Complete();
                 }
             }
@@ -58,7 +59,7 @@ namespace UniVoting.Services
             }
         }
 
-        public  async Task UpdateVoter(Voter voter)
+        public async Task UpdateVoter(Voter voter)
         {
             try
             {
@@ -70,11 +71,11 @@ namespace UniVoting.Services
             }
         }
 
-        public  async Task ResetVoter(Voter voter)
+        public async Task ResetVoter(Voter voter)
         {
             try
             {
-                using (var transaction=new TransactionScope())
+                using (var transaction = new TransactionScope())
                 {
                     var dbvoter = _context.Voters.First(x => x.Id == voter.Id);
                     dbvoter.VoteInProgress = false;
@@ -97,17 +98,17 @@ namespace UniVoting.Services
             }
         }
 
-        public  async Task<Voter> GetVoterPass(string indexNumber)
+        public async Task<Voter> GetVoterPass(string indexNumber)
         {
             try
             {
-                return await _context.Voters.FirstOrDefaultAsync(x=>x.IndexNumber.Contains(indexNumber));
+                return await _context.Voters.FirstOrDefaultAsync(x => x.IndexNumber.Contains(indexNumber));
             }
             catch (Exception exception)
             {
-               
+
                 throw;
             }
-           }
+        }
     }
 }

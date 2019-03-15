@@ -150,15 +150,11 @@
   <ItemGroup>
     <Compile Include="ElectionDbContext.cs" />
     <Compile Include="ElectionDbContextPool.cs" />
-    <Compile Include="Migrations\AddedStringLimit.cs" />
-    <Compile Include="Migrations\AddedStringLimit.designer.cs">
-      <DependentUpon>AddedStringLimit.cs</DependentUpon>
+    <Compile Include="Migrations\20190315165523_Initial.cs" />
+    <Compile Include="Migrations\20190315165523_Initial.designer.cs">
+      <DependentUpon>20190315165523_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ElectionDbContextModelSnapshot.cs" />
-    <Compile Include="Migrations\Initial.cs" />
-    <Compile Include="Migrations\Initial.designer.cs">
-      <DependentUpon>Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

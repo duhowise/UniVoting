@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using Univoting.Services;
 using UniVoting.Admin.Startup;
 using UniVoting.Core;
 using UniVoting.Services;

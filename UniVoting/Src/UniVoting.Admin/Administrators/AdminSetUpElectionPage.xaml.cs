@@ -4,9 +4,10 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Autofac;
+using Univoting.Services;
 using UniVoting.Admin.Startup;
 using UniVoting.Core;
-using UniVoting.Services;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace UniVoting.Admin.Administrators
@@ -16,13 +17,16 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminSetUpElectionPage : Page
 	{
-		private readonly IElectionConfigurationService _electionConfigurationService;
+		private IElectionConfigurationService _electionConfigurationService;
 		private Color _chosencolor;
-		public AdminSetUpElectionPage(IElectionConfigurationService electionConfigurationService)
+      private  IContainer _container;
+
+        public AdminSetUpElectionPage()
 		{
-			var container = new BootStrapper().BootStrap();
-			InitializeComponent();
-			BtnUploadImage.Click += BtnUploadImage_Click;
+            InitializeComponent();
+           _container = new BootStrapper().BootStrap();
+
+            BtnUploadImage.Click += BtnUploadImage_Click;
 			Loaded += AdminSetUpElectionPage_Loaded;
 			Colorbox.GotFocus += Colorbox_GotFocus;
 			SaveElection.Click += SaveElection_Click;                                             
@@ -43,8 +47,9 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (
 				!string.IsNullOrWhiteSpace(TextBoxElectionName.Text)||!string.IsNullOrWhiteSpace(TextBoxElectionName.Text))
-			{
-				await _electionConfigurationService.AddConfigurationAsync(new ElectionConfiguration
+            {
+                _electionConfigurationService = _container.Resolve<IElectionConfigurationService>();
+				await _electionConfigurationService.AddElectionConfigurationsAsync(new ElectionConfiguration
 				{
 					ElectionName = TextBoxElectionName.Text,
 					EletionSubTitle = TextBoxSubtitle.Text,

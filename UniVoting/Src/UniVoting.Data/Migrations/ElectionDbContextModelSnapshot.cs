@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UniVoting.Data;
+using Univoting.Data;
 
 namespace UniVoting.Data.Migrations
 {
@@ -15,11 +15,11 @@ namespace UniVoting.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("UniVoting.Model.Candidate", b =>
+            modelBuilder.Entity("UniVoting.Core.Candidate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace UniVoting.Data.Migrations
                     b.ToTable("Candidates");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Comissioner", b =>
+            modelBuilder.Entity("UniVoting.Core.Commissioner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace UniVoting.Data.Migrations
                     b.ToTable("Commissioners");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.ElectionConfiguration", b =>
+            modelBuilder.Entity("UniVoting.Core.ElectionConfiguration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,18 +95,46 @@ namespace UniVoting.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("ElectionConfigurations");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Position", b =>
+            modelBuilder.Entity("UniVoting.Core.Faculty", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Faculty")
+                    b.Property<string>("FacultyName")
                         .HasMaxLength(256)
                         .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Faculties");
+                });
+
+            modelBuilder.Entity("UniVoting.Core.PollingStation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PollingStations");
+                });
+
+            modelBuilder.Entity("UniVoting.Core.Position", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FacultyId");
 
                     b.Property<string>("PositionName")
                         .HasMaxLength(256)
@@ -114,10 +142,12 @@ namespace UniVoting.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FacultyId");
+
                     b.ToTable("Positions");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Rank", b =>
+            modelBuilder.Entity("UniVoting.Core.Rank", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +158,7 @@ namespace UniVoting.Data.Migrations
                     b.ToTable("Ranks");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.SkippedVote", b =>
+            modelBuilder.Entity("UniVoting.Core.SkippedVote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,10 +174,10 @@ namespace UniVoting.Data.Migrations
 
                     b.HasIndex("VoterId");
 
-                    b.ToTable("SkippedVoteses");
+                    b.ToTable("SkippedVotes");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Vote", b =>
+            modelBuilder.Entity("UniVoting.Core.Vote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,15 +202,13 @@ namespace UniVoting.Data.Migrations
                     b.ToTable("Votes");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Voter", b =>
+            modelBuilder.Entity("UniVoting.Core.Voter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Faculty")
-                        .HasMaxLength(256)
-                        .IsUnicode(false);
+                    b.Property<int>("FacultyId");
 
                     b.Property<string>("IndexNumber")
                         .HasMaxLength(256)
@@ -200,46 +228,65 @@ namespace UniVoting.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FacultyId");
+
                     b.ToTable("Voters");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Candidate", b =>
+            modelBuilder.Entity("UniVoting.Core.Candidate", b =>
                 {
-                    b.HasOne("UniVoting.Model.Position", "Position")
+                    b.HasOne("UniVoting.Core.Position", "Position")
                         .WithMany("Candidates")
                         .HasForeignKey("PositionId");
 
-                    b.HasOne("UniVoting.Model.Rank", "Rank")
+                    b.HasOne("UniVoting.Core.Rank", "Rank")
                         .WithMany("Candidates")
                         .HasForeignKey("RankId");
                 });
 
-            modelBuilder.Entity("UniVoting.Model.SkippedVote", b =>
+            modelBuilder.Entity("UniVoting.Core.Position", b =>
                 {
-                    b.HasOne("UniVoting.Model.Position", "Position")
+                    b.HasOne("UniVoting.Core.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("UniVoting.Core.SkippedVote", b =>
+                {
+                    b.HasOne("UniVoting.Core.Position", "Position")
                         .WithMany("SkippedVotes")
                         .HasForeignKey("Positionid")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("UniVoting.Model.Voter", "Voter")
-                        .WithMany()
+                    b.HasOne("UniVoting.Core.Voter", "Voter")
+                        .WithMany("SkippedVotes")
                         .HasForeignKey("VoterId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("UniVoting.Model.Vote", b =>
+            modelBuilder.Entity("UniVoting.Core.Vote", b =>
                 {
-                    b.HasOne("UniVoting.Model.Candidate", "Candidate")
+                    b.HasOne("UniVoting.Core.Candidate", "Candidate")
                         .WithMany("Votes")
                         .HasForeignKey("CandidateId");
 
-                    b.HasOne("UniVoting.Model.Position", "Position")
+                    b.HasOne("UniVoting.Core.Position", "Position")
                         .WithMany("Votes")
                         .HasForeignKey("PositionId");
 
-                    b.HasOne("UniVoting.Model.Voter", "Voter")
+                    b.HasOne("UniVoting.Core.Voter", "Voter")
                         .WithMany("Votes")
-                        .HasForeignKey("VoterId");
+                        .HasForeignKey("VoterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("UniVoting.Core.Voter", b =>
+                {
+                    b.HasOne("UniVoting.Core.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

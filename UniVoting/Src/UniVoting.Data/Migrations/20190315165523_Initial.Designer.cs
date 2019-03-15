@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UniVoting.Data;
+using Univoting.Data;
 
 namespace UniVoting.Data.Migrations
 {
     [DbContext(typeof(ElectionDbContext))]
-    [Migration("20190315120136_fac")]
-    partial class fac
+    [Migration("20190315165523_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,7 +97,7 @@ namespace UniVoting.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("ElectionConfigurations");
                 });
 
             modelBuilder.Entity("UniVoting.Core.Faculty", b =>
@@ -113,6 +113,21 @@ namespace UniVoting.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Faculties");
+                });
+
+            modelBuilder.Entity("UniVoting.Core.PollingStation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PollingStations");
                 });
 
             modelBuilder.Entity("UniVoting.Core.Position", b =>
@@ -247,9 +262,9 @@ namespace UniVoting.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("UniVoting.Core.Voter", "Voter")
-                        .WithMany()
+                        .WithMany("SkippedVotes")
                         .HasForeignKey("VoterId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("UniVoting.Core.Vote", b =>
@@ -264,7 +279,8 @@ namespace UniVoting.Data.Migrations
 
                     b.HasOne("UniVoting.Core.Voter", "Voter")
                         .WithMany("Votes")
-                        .HasForeignKey("VoterId");
+                        .HasForeignKey("VoterId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("UniVoting.Core.Voter", b =>

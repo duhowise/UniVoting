@@ -7,6 +7,7 @@ using System.Windows;
 using Akavache;
 using Autofac;
 using MahApps.Metro.Controls;
+using Univoting.Services;
 using UniVoting.Client.Startup;
 using UniVoting.Core;
 using UniVoting.Services;
@@ -37,11 +38,10 @@ namespace UniVoting.Client
                 _electionConfigurationService = _container.Resolve<IElectionConfigurationService>();
                 BlobCache.ApplicationName = $"VotingApplication";
 		        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-                throw new InvalidCastException();
             }
 		    catch (Exception e)
             {
-                _container.Resolve<IDialogService>().ShowMessageAsync(_window, "Error", e.Message);
+                _container.Resolve<IDialogService>().ShowMessageAsync(_window, "Error", e.Message).Wait();
 
 
             }
@@ -56,21 +56,18 @@ namespace UniVoting.Client
 		{
 		    try
 		    {
-		        await BlobCache.UserAccount.InvalidateAll();
+		        //await BlobCache.UserAccount.InvalidateAll();
 
 		        await GetSettings();
 		        await SetTheme();
-
-		        var container = new BootStrapper().BootStrap();
-
-                
                 MainWindow = _window;
 		        MainWindow?.Show();
 		        base.OnStartup(e);
             }
 		    catch (Exception exception)
 		    {
-		        //_logger.Log(exception);
+                //_logger.Log(exception);
+                MessageBox.Show(exception.Message, " Startup");
 
             }
 
@@ -87,7 +84,8 @@ namespace UniVoting.Client
 	        }
 	        catch (Exception exception)
 	        {
-                MessageBox.Show(exception.Message, " colour Settings Error");
+                MessageBox.Show(exception.Message, " colour ElectionConfigurations Error");
+
             }
 
 	        var rgb = data.Colour.Split(',');
@@ -123,7 +121,7 @@ namespace UniVoting.Client
             }
 			catch (Exception exception)
 			{
-				MessageBox.Show(exception.Message, " Election Settings Error");
+				MessageBox.Show(exception.Message, " Election ElectionConfigurations Error");
 			}
 		}
 	}

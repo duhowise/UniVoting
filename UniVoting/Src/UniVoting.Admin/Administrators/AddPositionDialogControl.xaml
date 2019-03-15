@@ -18,7 +18,7 @@
                      materialDesign:HintAssist.Hint="position" FontSize="24" Margin="10" 
                      Name="TextBoxPosition" TabIndex="0" VerticalAlignment="Center"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
+            <ComboBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
                      materialDesign:HintAssist.Hint="faculty" FontSize="24" Margin="10" 
                      Name="TextBoxFaculty" TabIndex="0" VerticalAlignment="Center"
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />

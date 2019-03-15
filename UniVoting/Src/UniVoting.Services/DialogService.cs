@@ -11,7 +11,7 @@ namespace UniVoting.Services
         Task ShowMessageAsync(MetroWindow metroWindow,string title, string message);
     }
 
-    internal class DialogService : IDialogService
+    public class DialogService : IDialogService
     {
         private MetroWindow _metroWindow;
 

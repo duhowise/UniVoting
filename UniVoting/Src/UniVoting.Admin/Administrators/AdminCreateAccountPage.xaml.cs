@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Univoting.Services;
 using UniVoting.Admin.Startup;
 using UniVoting.Core;
 using UniVoting.Services;
@@ -18,10 +19,10 @@ namespace UniVoting.Admin.Administrators
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
 
-		public AdminCreateAccountPage()
+		public AdminCreateAccountPage(IElectionConfigurationService electionConfigurationService)
 		{
 			var container = new BootStrapper().BootStrap();
-		    _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
+		    _electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
 			BtnSave.Click += BtnSave_Click;
 			IsChairman.Checked += IsChairman_Checked;

@@ -1,17 +1,16 @@
-﻿<controls:MetroWindow x:Class="UniVoting.Client.ClientsLoginWindow"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                       WindowState="Maximized" IgnoreTaskbarOnMaximize="True"
-                Background="{DynamicResource WhiteColorBrush}"
-                TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-                TextElement.FontWeight="Medium"
-                TextElement.FontSize="16"
-                FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-                      Title="UNIVOTING" Height="350" Width="525" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-
-    
+﻿<Page x:Class="UniVoting.ClientUpdate.Login"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Background="{DynamicResource WhiteColorBrush}"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="16"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+      Title="UNIVOTING" Height="350" Width="525" 
+      >
     <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryColorBrush}">
         <Grid Name="MainGrid">
             <Grid.RowDefinitions>
@@ -21,16 +20,16 @@
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
                 <StackPanel  Background="{DynamicResource WhiteColorBrush}" 
                         Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-                    <materialDesign:PackIcon Kind="Key" 
+                    <materialDesign:PackIcon Kind="Lock" 
                                  Margin="10" Width="50" Height="50"
                                  Foreground="{DynamicResource PrimaryColorBrush}" />
                     <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
                      materialDesign:HintAssist.Hint=" Enter Code Here.." FontSize="24" Margin="10" 
                      Name="Pin" TabIndex="0" VerticalAlignment="Center"
-                     />
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </StackPanel>
                 <Button Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource WhiteColorBrush}"
-                         HorizontalAlignment="Left" VerticalAlignment="Top" IsDefault="True"
+                         HorizontalAlignment="Left" VerticalAlignment="Top"
                         Margin="10,10,10,0" x:Name="BtnGo" TabIndex="1"
                         ToolTip="Go" Content="Go" FontSize="24" RenderTransformOrigin="0.4,1.275" Height="43" Width="47">
                     <!--<Label Foreground="{DynamicResource WhiteColorBrush}" FontSize="24">GO</Label>-->
@@ -42,7 +41,6 @@
                 <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold" Name="VotingSubtitle"
                 	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Content="Voting Subtitle"/>
             </StackPanel>
-
         </Grid>
     </materialDesign:Card>
-</controls:MetroWindow>
+</Page>

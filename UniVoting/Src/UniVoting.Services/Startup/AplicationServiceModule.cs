@@ -1,5 +1,7 @@
 using System.Reflection;
 using Autofac;
+using Univoting.Data;
+using Univoting.Services;
 using UniVoting.Data;
 using Module = Autofac.Module;
 

@@ -19,11 +19,17 @@ namespace UniVoting.Core
         public virtual bool Voted { get; set; }
         public virtual bool VoteInProgress { get; set; }
         public virtual IEnumerable<Vote> Votes { get; set; }
+        public virtual IEnumerable<SkippedVote> SkippedVotes { get; set; }
     }
 
     public class Faculty
     {
         public int Id { get; set; }
         public string FacultyName { get; set; }
+    }
+    public class PollingStation
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

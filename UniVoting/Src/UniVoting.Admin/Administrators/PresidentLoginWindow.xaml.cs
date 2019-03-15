@@ -2,6 +2,7 @@
 using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Univoting.Services;
 using UniVoting.Admin.Startup;
 using UniVoting.Core;
 using UniVoting.Services;

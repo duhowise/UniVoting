@@ -8,6 +8,7 @@ using Akavache;
 using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Univoting.Services;
 using UniVoting.Core;
 using UniVoting.Services;
 using BootStrapper = UniVoting.Client.Startup.BootStrapper;
@@ -26,13 +27,14 @@ namespace UniVoting.Client
 		private Voter _voter;
 		public ClientsLoginWindow( IElectionConfigurationService electionConfigurationService)
 		{
-			_electionConfigurationService = electionConfigurationService;
 			InitializeComponent();
-			_positionsStack=new Stack<Position>();
+
+
+            _electionConfigurationService = electionConfigurationService;
+
+            _positionsStack = new Stack<Position>();
 			Loaded += ClientsLoginWindow_Loaded;
 			_voter=new Voter();
-			IgnoreTaskbarOnMaximize = true;
-			BtnGo.IsDefault = true;
 			BtnGo.Click += BtnGo_Click;
 		}
 		
@@ -77,7 +79,7 @@ namespace UniVoting.Client
 				}
 				catch (Exception exception)
 				{
-					MessageBox.Show(exception.Message, "Election LoginAsync Error");
+					MessageBox.Show(exception.Message, "Election Login Error");
 					throw;
 				}
 			}
