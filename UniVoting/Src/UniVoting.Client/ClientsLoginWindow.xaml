@@ -3,14 +3,24 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                       WindowState="Maximized" IgnoreTaskbarOnMaximize="True"
+                      xmlns:client="clr-namespace:UniVoting.Client"
+                      WindowState="Maximized"
                 Background="{DynamicResource WhiteColorBrush}"
                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                 TextElement.FontWeight="Medium"
                 TextElement.FontSize="16"
                 FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
                       Title="UNIVOTING" Height="350" Width="525" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-
+   <Window.Resources>
+       <ResourceDictionary>
+           <ResourceDictionary.MergedDictionaries>
+               <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+               <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+               <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+               <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+              </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     
     <materialDesign:Card Margin="3" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryColorBrush}">
         <Grid Name="MainGrid">
@@ -27,10 +37,10 @@
                     <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
                      materialDesign:HintAssist.Hint=" Enter Code Here.." FontSize="24" Margin="10" 
                      Name="Pin" TabIndex="0" VerticalAlignment="Center"
-                     />
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </StackPanel>
                 <Button Style="{DynamicResource MetroCircleButtonStyle}" Background="{DynamicResource AccentColorBrush}" Foreground="{DynamicResource WhiteColorBrush}"
-                         HorizontalAlignment="Left" VerticalAlignment="Top" IsDefault="True"
+                         HorizontalAlignment="Left" VerticalAlignment="Top"
                         Margin="10,10,10,0" x:Name="BtnGo" TabIndex="1"
                         ToolTip="Go" Content="Go" FontSize="24" RenderTransformOrigin="0.4,1.275" Height="43" Width="47">
                     <!--<Label Foreground="{DynamicResource WhiteColorBrush}" FontSize="24">GO</Label>-->
