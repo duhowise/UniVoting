@@ -12,6 +12,7 @@ namespace Univoting.Services
         Task<List<Voter>> AddVotersAsync(List<Voter> voters);
         Task<ElectionConfiguration> ConfigureElectionAsync();
         Task<IEnumerable<Candidate>> GetAllCandidatesAsync();
+        Task<List<Position>> GetAllPositionsAsync(bool includeFaculty);
         Task<List<Position>> GetAllPositionsAsync();
         Task<IEnumerable<Voter>> GetAllVotersAsync();
         Task<IEnumerable<Candidate>> GetCandidateWithDetailsAsync();
@@ -22,6 +23,6 @@ namespace Univoting.Services
         Task RemovePositionAsync(Position position);
         Task<Candidate> SaveCandidateAsync(Candidate candidate);
         Task<Commissioner> SaveCommissionerAsync(Commissioner commissioner);
-        Task<Position> UpdatePositionAsync(Position position);
+         Task<List<Faculty>> GetFacultiesAsync();
     }
 }

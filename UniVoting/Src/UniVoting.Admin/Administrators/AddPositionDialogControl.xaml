@@ -17,11 +17,12 @@
             <TextBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
                      materialDesign:HintAssist.Hint="position" FontSize="24" Margin="10" 
                      Name="TextBoxPosition" TabIndex="0" VerticalAlignment="Center"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-            <ComboBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
+
+            <ComboBox Foreground="{DynamicResource PrimaryColorBrush}" Width="260" DisplayMemberPath="PositionName"
                      materialDesign:HintAssist.Hint="faculty" FontSize="24" Margin="10" 
-                     Name="TextBoxFaculty" TabIndex="0" VerticalAlignment="Center"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                     Name="Faculty" TabIndex="0" VerticalAlignment="Center"
+                 Style="{StaticResource MaterialDesignFloatingHintComboBox}" SelectedValuePath="Id"  />
 
         </StackPanel>
         <Button x:Name="BtnSave" Content="Save" Style="{DynamicResource MaterialDesignRaisedDarkButton}" Foreground="{DynamicResource WhiteColorBrush}" HorizontalAlignment="Right" Margin="20" Width="80" Height="40" Grid.Row="2"

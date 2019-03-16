@@ -1,42 +1,95 @@
 ﻿<Page x:Class="UniVoting.Admin.Administrators.AdminSetUpPositionPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:UniVoting.Admin.Administrators"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="600" d:DesignWidth="600"
       Title="AdminSetUpPositionPage">
+   <Page.Resources>
+       <DataTemplate x:Key="DataTemplateItem">
+           <materialDesign:Card Width="400" Height="120" Margin="5">
+               <Grid>
+                   <Grid.RowDefinitions>
+                       <RowDefinition Height="Auto"></RowDefinition>
+                       <RowDefinition Height="*"></RowDefinition>
+                   </Grid.RowDefinitions>
+                   <Grid.ColumnDefinitions>
+                       <ColumnDefinition Width="Auto"></ColumnDefinition>
+                       <ColumnDefinition Width="Auto"></ColumnDefinition>
+                   </Grid.ColumnDefinitions>
+                   <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
+                        <Label Content="{Binding PositionName}" FontSize="18" FontFamily="Segoe Ui Bold" HorizontalAlignment="Center"/>
+                        <Label Content="{Binding FacultyName}" FontSize="16" FontFamily="Segoe Ui SemiBold" HorizontalAlignment="Center"/>
+                   </StackPanel>
+               </Grid>
+           </materialDesign:Card>
 
-    <materialDesign:Card Margin="3" UniformCornerRadius="2" Padding="5" VerticalAlignment="Stretch" Background="{DynamicResource MaterialDesignBackground}">
+       </DataTemplate>
+
+</Page.Resources>
+    
+    
+    <materialDesign:Card Margin="3" UniformCornerRadius="2" Padding="5" VerticalAlignment="Stretch"
+                         Background="{DynamicResource MaterialDesignBackground}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Create Position</Label>
+            <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Set Up Positions</Label>
             <ScrollViewer Padding="5" Grid.Row="1">
-                <Grid HorizontalAlignment="Center">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
-                        
+                        <RowDefinition Height="2*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
-                       
                     </Grid.ColumnDefinitions>
-                    <StackPanel Name="PositionControlHolder" Grid.Row="0" Grid.Column="0"></StackPanel>
-                   
-                    <Button Grid.Row="0" Grid.Column="1" FontSize="20" FontFamily="Segoe UI SemiBold"
-                        Style="{StaticResource MaterialDesignFlatButton}" Margin="10" Height="40" Name="BtnAdd"
-                        TabIndex="0"
-                        ToolTip="add new position" Click="BtnAdd_Click">
-                        Add New Position
-                    </Button>
+                    <GroupBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Header="Position Details"
+                              FontFamily="Segoe Ui Light">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource PrimaryColorBrush}"
+                                     Width="250"
+                                     materialDesign:HintAssist.Hint="Position Name" FontSize="18" Margin="10"
+                                     Name="TextBoxPositionName" TabIndex="1"
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                            <ComboBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}"
+                                      Width="250"
+                                      materialDesign:HintAssist.Hint="Faculty Name" FontSize="18" Margin="10"
+                                      Name="FacultyList" TabIndex="1"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+
+                            <StackPanel Grid.Column="1" Grid.Row="1" Margin="4">
+                                <Button Name="AddPosition" Content="Save / Update" FontSize="16"
+                                        Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light"
+                                        materialDesign:HintAssist.Hint="Save Position"
+                                        Margin="10,5,5,10" />
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                    <Grid Grid.Row="1" ColumnSpan="2" Grid.Column="0">
+                        <ListBox  Margin="5" Name="PositionList"  ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
+
+                    </Grid>
+
                 </Grid>
             </ScrollViewer>
         </Grid>
     </materialDesign:Card>
+
 </Page>

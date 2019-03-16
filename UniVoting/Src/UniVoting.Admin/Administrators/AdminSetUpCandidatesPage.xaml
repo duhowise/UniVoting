@@ -46,11 +46,14 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Set Up Candidates</Label>
-        <Grid Grid.Row="1" HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" FontSize="36" HorizontalAlignment="Center" Margin="5,10,5,10" FontFamily="Segoe Ui Light">Set Up Candidates</Label>
+        <Grid Margin="5,50,5,10" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
@@ -70,7 +73,7 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Candidate image" Grid.Row="0" Margin="10,-65,0,75">
+                    <GroupBox Grid.Column="0" Header="Candidate image" Grid.Row="0">
                         <StackPanel>
                             <Label FontSize="16" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light">
                                 image size should be 256x256
@@ -118,7 +121,10 @@
                     </GroupBox>
                 </Grid>
             </materialDesign:Card>
-            <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList" MouseDoubleClick="CandidatesList_OnMouseDoubleClick" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
             </Grid>
+        <Grid Grid.Row="0" Column="1">
+            <ListBox Grid.Column="1" Margin="10" Height="600" Width="400" Name="CandidatesList" MouseDoubleClick="CandidatesList_OnMouseDoubleClick" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
+
+        </Grid>
     </Grid>
 </Page>

@@ -168,6 +168,19 @@ namespace Univoting.Services
             }
         }
 
+        public async Task<List<Faculty>> GetFacultiesAsync()
+        {
+            try
+            {
+                return await _context.Faculties.ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Something went wrong. we could not get Faculties", e);
+
+            }
+        }
+
         public async Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
         {
             try
@@ -269,6 +282,26 @@ namespace Univoting.Services
         {
             try
             {
+                return await _context.Positions.Include(p => p.Candidates).ToListAsync();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Something went wrong. we could not retrieve position with candidates", e);
+
+            }
+        }
+        public async Task<List<Position>> GetAllPositionsAsync(bool includeFaculty=false)
+        {
+
+
+            try
+            {
+                if (includeFaculty)
+                {
+                return await _context.Positions.Include(x=>x.Faculty).ToListAsync();
+
+                }
                 return await _context.Positions.Include(p => p.Candidates).ToListAsync();
 
             }

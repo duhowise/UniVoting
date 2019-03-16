@@ -297,10 +297,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Administrators\PositionControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Administrators\PresidentLoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -358,9 +354,6 @@
     </Compile>
     <Compile Include="Administrators\AdminSetUpPositionPage.xaml.cs">
       <DependentUpon>AdminSetUpPositionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Administrators\PositionControl.xaml.cs">
-      <DependentUpon>PositionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

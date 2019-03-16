@@ -32,10 +32,6 @@ namespace UniVoting.Admin.Startup
 		    builder.RegisterType<AdminSetUpCandidatesPage>().AsSelf().InstancePerDependency();
 		    builder.RegisterType<AdminSetUpPositionPage>().AsSelf().InstancePerDependency();
 
-            //register userControls
-            builder.RegisterType<PositionControl>().AsSelf().InstancePerLifetimeScope();
-
-
             //register services
             //builder.RegisterModule<AplicationServiceModule>();
             return builder.Build();
