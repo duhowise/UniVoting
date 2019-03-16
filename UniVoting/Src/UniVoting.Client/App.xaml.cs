@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Akavache;
 using Autofac;
 using MahApps.Metro.Controls;
@@ -56,9 +57,9 @@ namespace UniVoting.Client
 		{
 		    try
 		    {
-		        //await BlobCache.UserAccount.InvalidateAll();
+                await BlobCache.UserAccount.InvalidateAll();
 
-		        await GetSettings();
+                await GetSettings();
 		        await SetTheme();
                 MainWindow = _window;
 		        MainWindow?.Show();
@@ -89,10 +90,10 @@ namespace UniVoting.Client
             }
 
 	        var rgb = data.Colour.Split(',');
-	        //ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
-		
-	        //ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
-	    }
+            //ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
+
+            ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
+        }
 		private async Task GetSettings()
 		{
 			_positions = new List<Position>();
