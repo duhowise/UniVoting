@@ -185,7 +185,7 @@ namespace Univoting.Services
         {
             try
             {
-                return await _context.Candidates.ToListAsync();
+                return await _context.Candidates.AsNoTracking().ToListAsync();
 
             }
             catch (Exception e)

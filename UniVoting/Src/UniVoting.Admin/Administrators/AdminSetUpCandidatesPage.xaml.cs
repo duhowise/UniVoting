@@ -9,7 +9,6 @@ using Microsoft.Win32;
 using Univoting.Services;
 using UniVoting.Admin.Startup;
 using UniVoting.Core;
-using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {

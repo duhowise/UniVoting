@@ -2,13 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Univoting.Services;
 using UniVoting.Admin.Startup;
 using UniVoting.Core;
-using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {

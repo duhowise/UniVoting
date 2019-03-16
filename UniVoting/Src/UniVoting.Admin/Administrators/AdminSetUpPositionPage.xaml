@@ -10,22 +10,12 @@
       Title="AdminSetUpPositionPage">
    <Page.Resources>
        <DataTemplate x:Key="DataTemplateItem">
-           <materialDesign:Card Width="400" Height="120" Margin="5">
-               <Grid>
-                   <Grid.RowDefinitions>
-                       <RowDefinition Height="Auto"></RowDefinition>
-                       <RowDefinition Height="*"></RowDefinition>
-                   </Grid.RowDefinitions>
-                   <Grid.ColumnDefinitions>
-                       <ColumnDefinition Width="Auto"></ColumnDefinition>
-                       <ColumnDefinition Width="Auto"></ColumnDefinition>
-                   </Grid.ColumnDefinitions>
-                   <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
-                        <Label Content="{Binding PositionName}" FontSize="18" FontFamily="Segoe Ui Bold" HorizontalAlignment="Center"/>
-                        <Label Content="{Binding FacultyName}" FontSize="16" FontFamily="Segoe Ui SemiBold" HorizontalAlignment="Center"/>
+           <materialDesign:Card >
+              <StackPanel Orientation="Horizontal">
+                       <Label Content="{Binding PositionName}" FontSize="18" FontFamily="Segoe Ui Bold" HorizontalAlignment="Center"/>
+                    <Label Content="{Binding Faculty.FacultyName}" FontSize="16" FontFamily="Segoe Ui SemiBold" HorizontalAlignment="Center"/>
                    </StackPanel>
-               </Grid>
-           </materialDesign:Card>
+              </materialDesign:Card>
 
        </DataTemplate>
 
@@ -68,22 +58,29 @@
                                      materialDesign:HintAssist.Hint="Position Name" FontSize="18" Margin="10"
                                      Name="TextBoxPositionName" TabIndex="1"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                            <ComboBox Grid.Row="0" Grid.Column="1" Foreground="{DynamicResource PrimaryColorBrush}"
+                            <ComboBox Grid.Row="0" Grid.Column="1" DisplayMemberPath="FacultyName" SelectedValuePath="Id" 
                                       Width="250"
                                       materialDesign:HintAssist.Hint="Faculty Name" FontSize="18" Margin="10"
                                       Name="FacultyList" TabIndex="1"
-                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                                      Style="{StaticResource MaterialDesignComboBox }" />
 
                             <StackPanel Grid.Column="1" Grid.Row="1" Margin="4">
                                 <Button Name="AddPosition" Content="Save / Update" FontSize="16"
-                                        Foreground="{DynamicResource PrimaryColorBrush}" FontFamily="Segoe Ui Light"
+                                        Style="{StaticResource MahApps.Metro.Styles.MetroButton}" FontFamily="Segoe Ui Light"
                                         materialDesign:HintAssist.Hint="Save Position"
                                         Margin="10,5,5,10" />
                             </StackPanel>
                         </Grid>
                     </GroupBox>
                     <Grid Grid.Row="1" ColumnSpan="2" Grid.Column="0">
-                        <ListBox  Margin="5" Name="PositionList"  ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
+                        <ListView  Margin="5" Name="PositionList"   IsSynchronizedWithCurrentItem="True" FontFamily="Segoe Ui Light"  FontSize="18" >
+                            <ListView.View >
+                                <GridView >
+                                    <GridViewColumn Header="Position" DisplayMemberBinding="{Binding PositionName}" Width="300" />
+                                    <GridViewColumn Header="Faculty" DisplayMemberBinding="{Binding Faculty.FacultyName}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
 
                     </Grid>
 
