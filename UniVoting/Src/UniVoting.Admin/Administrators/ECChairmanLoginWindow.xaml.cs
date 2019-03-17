@@ -39,7 +39,7 @@ namespace UniVoting.Admin.Administrators
 				}
 				else
 				{
-					await this.ShowMessageAsync("LoginAsync Error", "Wrong username or password.");
+					await this.ShowMessageAsync("Login Error", "Wrong username or password.");
 					Util.Clear(this);
 					BtnLogin.IsEnabled = true;
 					Username.Focus();
@@ -48,7 +48,7 @@ namespace UniVoting.Admin.Administrators
 			}
 			else
 			{
-				await this.ShowMessageAsync("LoginAsync Error", "Wrong username or password.");
+				await this.ShowMessageAsync("Login Error", "Wrong username or password.");
 				Util.Clear(this);
 				Username.Focus();
 

@@ -24,7 +24,7 @@
             <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">UNIVOTING</Label>
             <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Light"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36">EC Chairman LoginAsync</Label>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36">EC Chairman Login</Label>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center">
             <Grid>

@@ -20,7 +20,7 @@
             <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Bold"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">UNIVOTING</Label>
             <Label  Foreground="{DynamicResource AccentColorBrush}" FontFamily="Segoe UI Light"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36">President LoginAsync</Label>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36">President Login</Label>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center">
             <Grid>
@@ -50,8 +50,8 @@
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" FontFamily="Segoe UI Bold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" IsDefault="True" Margin="10" Height="40" Name="BtnLogin"
                         TabIndex="2"
-                    ToolTip="LoginAsync">
-                    LoginAsync
+                    ToolTip="Login">
+                    Login
                 </Button>
             </Grid>
         </StackPanel>

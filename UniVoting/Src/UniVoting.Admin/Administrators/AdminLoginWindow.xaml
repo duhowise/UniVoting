@@ -4,6 +4,7 @@
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                       Title="UNIVOTING" GlowBrush="{DynamicResource AccentBaseColorBrush}"
+                      FocusManager.FocusedElement="{Binding ElementName=Username}"
                 WindowState="Maximized"
                 Background="{DynamicResource WhiteColorBrush}"
                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -53,8 +54,8 @@
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" FontFamily="Segoe UI Bold"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}" Margin="10" Height="40" Name="BtnLogin"
                         TabIndex="2"
-                    ToolTip="LoginAsync">
-                    LoginAsync
+                    ToolTip="Login">
+                    Login
                 </Button>
             </Grid>
         </StackPanel>
