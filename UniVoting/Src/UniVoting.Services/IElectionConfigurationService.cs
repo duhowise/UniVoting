@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniVoting.Core;
 
@@ -16,7 +17,7 @@ namespace Univoting.Services
         Task<List<Position>> GetAllPositionsAsync();
         Task<IEnumerable<Voter>> GetAllVotersAsync();
         Task<IEnumerable<Candidate>> GetCandidateWithDetailsAsync();
-        Task<Position> GetPositionAsync(int positionid);
+        Task<Position> GetPositionAsync(int positionId);
         Task<Commissioner> LoginAsync(Commissioner commissioner);
         Task<Voter> LoginVoterAsync(Voter voter);
         void RemoveCandidateAsync(Candidate candidate);
@@ -24,5 +25,6 @@ namespace Univoting.Services
         Task<Candidate> SaveCandidateAsync(Candidate candidate);
         Task<Commissioner> SaveCommissionerAsync(Commissioner commissioner);
          Task<List<Faculty>> GetFacultiesAsync();
+         Task<IList<Rank>> GetAllRanks();
     }
 }

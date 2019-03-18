@@ -154,6 +154,10 @@
     <Compile Include="Migrations\20190315165523_Initial.designer.cs">
       <DependentUpon>20190315165523_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190317231433_AddedAdditionalRankField.cs" />
+    <Compile Include="Migrations\20190317231433_AddedAdditionalRankField.designer.cs">
+      <DependentUpon>20190317231433_AddedAdditionalRankField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ElectionDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

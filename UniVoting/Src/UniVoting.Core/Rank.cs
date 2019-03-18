@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace UniVoting.Core
 {
     /// <summary>
@@ -7,7 +5,7 @@ namespace UniVoting.Core
     /// </summary>
     public partial class Rank
     {
-        public virtual int Id { get; set; }
-        public virtual IEnumerable<Candidate> Candidates { get; set; }
+        public virtual int VoterRank { get; set; }
+        public  int Id { get; set; }
     }
 }

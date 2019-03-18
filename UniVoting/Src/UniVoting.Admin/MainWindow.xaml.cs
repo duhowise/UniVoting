@@ -7,9 +7,10 @@ using UniVoting.Core;
 
 namespace UniVoting.Admin
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
+	/// <inheritdoc />
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
 	public partial class MainWindow : MetroWindow
 	{
 

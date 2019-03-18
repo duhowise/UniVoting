@@ -50,7 +50,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" FontSize="36" HorizontalAlignment="Center" Margin="5,10,5,10" FontFamily="Segoe Ui Light">Set Up Candidates</Label>
         <Grid Margin="5,50,5,10" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
@@ -101,7 +101,7 @@
                       Width="260" >
                                 
       </ComboBox>
-      <ComboBox
+                            <ComboBox DisplayMemberPath="VoterRank" SelectedValuePath="Id"
                 materialDesign:HintAssist.Hint="Candidate's Rank" TabIndex="2"
                  Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                   Name="RankCombo"  FontSize="24" Margin="10" 
@@ -123,7 +123,7 @@
             </materialDesign:Card>
             </Grid>
         <Grid Grid.Row="0" Column="1">
-            <ListBox Grid.Column="1" Margin="10" Height="600" Width="400" Name="CandidatesList" MouseDoubleClick="CandidatesList_OnMouseDoubleClick" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
+            <ListBox Grid.Column="1" Margin="10"  Name="CandidatesList" MouseDoubleClick="CandidatesList_OnMouseDoubleClick" ItemTemplate="{DynamicResource DataTemplateItem}" IsSynchronizedWithCurrentItem="True" />
 
         </Grid>
     </Grid>

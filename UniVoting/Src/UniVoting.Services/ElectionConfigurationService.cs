@@ -181,6 +181,19 @@ namespace Univoting.Services
             }
         }
 
+        public async Task<IList<Rank>> GetAllRanks()
+        {
+            try
+            {
+                return await _context.Ranks.AsNoTracking().ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Something went wrong. we could not get ranks", e);
+
+            }
+        }
+
         public async Task<IEnumerable<Candidate>> GetAllCandidatesAsync()
         {
             try
@@ -190,7 +203,7 @@ namespace Univoting.Services
             }
             catch (Exception e)
             {
-                throw new Exception("Something went wrong. we could not update commisioner", e);
+                throw new Exception("Something went wrong. we could not update commissioner", e);
 
             }
         }
@@ -206,7 +219,18 @@ namespace Univoting.Services
                 }
                 else
                 {
-                    _context.Candidates.Update(candidate);
+
+                    var dbCandidate = await _context.Candidates.FirstOrDefaultAsync(x => x.Id == candidate.Id);
+
+                    if (dbCandidate!=null)
+                    {
+                        dbCandidate.PositionId = candidate.PositionId;
+                        dbCandidate.CandidateName = candidate.CandidateName;
+                        dbCandidate.CandidatePicture = candidate.CandidatePicture;
+                        dbCandidate.RankId = candidate.RankId;
+                       
+                        _context.Candidates.Update(dbCandidate);
+                    }
 
                 }
 
@@ -264,11 +288,11 @@ namespace Univoting.Services
             }
 
         }
-        public async Task<Position> GetPositionAsync(int positionid)
+        public async Task<Position> GetPositionAsync(int positionId)
         {
             try
             {
-                return await _context.Positions.FirstOrDefaultAsync(x => x.Id == positionid);
+                return await _context.Positions.FirstOrDefaultAsync(x => x.Id == positionId);
 
             }
             catch (Exception e)
