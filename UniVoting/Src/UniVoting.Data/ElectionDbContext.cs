@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using UniVoting.Core;
@@ -28,7 +29,19 @@ namespace Univoting.Data
             modelBuilder.Entity<Voter>().HasMany(c => c.SkippedVotes).WithOne(x => x.Voter).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Voter>().HasMany(c => c.Votes).WithOne(x => x.Voter).OnDelete(DeleteBehavior.Restrict);
 
-
+            modelBuilder.Entity<Rank>().HasData(new List<Rank>
+            {
+                new Rank{Id=1,VoterRank = 1},
+                new Rank{Id=2,VoterRank = 2},
+                new Rank{Id=3,VoterRank = 3},
+                new Rank{Id=4,VoterRank = 4},
+                new Rank{Id=5,VoterRank = 5},
+                new Rank{Id=6,VoterRank = 6},
+                new Rank{Id=7,VoterRank = 7},
+                new Rank{Id=8,VoterRank = 8},
+                new Rank{Id=9,VoterRank = 9},
+                new Rank{Id=10,VoterRank = 10},
+            });
             base.OnModelCreating(modelBuilder);
         }
 

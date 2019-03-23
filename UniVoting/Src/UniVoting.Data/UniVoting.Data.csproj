@@ -150,13 +150,9 @@
   <ItemGroup>
     <Compile Include="ElectionDbContext.cs" />
     <Compile Include="ElectionDbContextPool.cs" />
-    <Compile Include="Migrations\20190315165523_Initial.cs" />
-    <Compile Include="Migrations\20190315165523_Initial.designer.cs">
-      <DependentUpon>20190315165523_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190317231433_AddedAdditionalRankField.cs" />
-    <Compile Include="Migrations\20190317231433_AddedAdditionalRankField.designer.cs">
-      <DependentUpon>20190317231433_AddedAdditionalRankField.cs</DependentUpon>
+    <Compile Include="Migrations\20190323102758_Initial.cs" />
+    <Compile Include="Migrations\20190323102758_Initial.designer.cs">
+      <DependentUpon>20190323102758_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ElectionDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,6 +167,7 @@
       <Name>UniVoting.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

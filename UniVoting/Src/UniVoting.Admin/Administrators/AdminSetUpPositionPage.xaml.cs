@@ -6,7 +6,6 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Univoting.Services;
 using UniVoting.Admin.Startup;
-using UniVoting.Core;
 using Position = UniVoting.Core.Position;
 
 namespace UniVoting.Admin.Administrators
@@ -19,17 +18,32 @@ namespace UniVoting.Admin.Administrators
 		private IElectionConfigurationService _electionConfigurationService;
 	    private MetroWindow _metroWindow;
         private IContainer container;
+        private int _positionId;
+        public Position CurrentPosition { get; set; }
+       
         public AdminSetUpPositionPage()
 		{
             
 			InitializeComponent();
+            _positionId = 0;
              container = new BootStrapper().BootStrap();
             Loaded += AdminSetUpPositionPage_Loaded;
             AddPosition.Click += AddPosition_Click;
-			
-			
-		}
+            PositionList.MouseDoubleClick += PositionList_MouseDoubleClick;
+        }
 
+        private void PositionList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (PositionList.SelectedItem is Position pos)
+            {
+                CurrentPosition = pos;
+                _positionId = CurrentPosition.Id;
+                TextBoxPositionName.Text = CurrentPosition.PositionName;
+                FacultyList.SelectedValue=CurrentPosition.FacultyId;
+            }
+        }
+
+       
         private async void AddPosition_Click(object sender, RoutedEventArgs e)
         {
             _metroWindow = Window.GetWindow(this) as MetroWindow;
@@ -44,11 +58,11 @@ namespace UniVoting.Admin.Administrators
             await _metroWindow.ShowMessageAsync("Add new Position", "Please Specify Position Name ");
 
             }
-
             var result = await _metroWindow.ShowMessageAsync("Add new Position", "are you sure you want to add ", MessageDialogStyle.AffirmativeAndNegative, settings);
             if (result != MessageDialogResult.Affirmative) return;
+            CurrentPosition = new Position { Id = _positionId, PositionName = TextBoxPositionName.Text, FacultyId = Convert.ToInt32(FacultyList.SelectedValue) };
             _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
-            await _electionConfigurationService.AddPositionAsync(new Position { PositionName = TextBoxPositionName.Text, FacultyId = Convert.ToInt32(FacultyList.SelectedValue) });
+            await _electionConfigurationService.AddPositionAsync(CurrentPosition);
             await _metroWindow.ShowMessageAsync("Add new Position", "success");
             AdminSetUpPositionPage_Loaded(this, e);
 
@@ -60,6 +74,7 @@ namespace UniVoting.Admin.Administrators
             FacultyList.ItemsSource =await  _electionConfigurationService.GetFacultiesAsync();
             PositionList.ItemsSource
                 = await  _electionConfigurationService.GetAllPositionsAsync(true);
+
         }
         
     }

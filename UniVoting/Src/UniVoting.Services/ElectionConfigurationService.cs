@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Univoting.Data;
@@ -208,6 +210,19 @@ namespace Univoting.Services
             }
         }
 
+        public async Task<IEnumerable<Rank>> GetAllRanksAsync()
+        {
+            try
+            {
+                return await _context.Ranks.AsNoTracking().ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Something went wrong. we could retrieve ranks", e);
+
+            }
+        }
+
         public async Task<Candidate> SaveCandidateAsync(Candidate candidate)
         {
             try
@@ -277,7 +292,20 @@ namespace Univoting.Services
         {
             try
             {
+                if (position.Id==default(int))
+                {
                 await _context.Positions.AddAsync(position);
+
+                }
+                else
+                {
+                    var pos = _context.Positions.Find(position.Id);
+                    pos.PositionName = position.PositionName;
+                    pos.FacultyId = position.FacultyId;
+                     _context.Positions.Update(pos);
+
+                }
+
                 await _context.SaveChangesAsync();
                 return position;
             }
@@ -306,7 +334,7 @@ namespace Univoting.Services
         {
             try
             {
-                return await _context.Positions.Include(p => p.Candidates).ToListAsync();
+                return await _context.Positions.Include(p => p.Candidates).OrderBy(x=>x.RankId).ToListAsync();
 
             }
             catch (Exception e)
@@ -323,7 +351,7 @@ namespace Univoting.Services
             {
                 if (includeFaculty)
                 {
-                return await _context.Positions.Include(x=>x.Faculty).ToListAsync();
+                return await _context.Positions.Include(x=>x.Faculty).OrderBy(x => x.RankId).ToListAsync();
 
                 }
                 return await _context.Positions.Include(p => p.Candidates).ToListAsync();

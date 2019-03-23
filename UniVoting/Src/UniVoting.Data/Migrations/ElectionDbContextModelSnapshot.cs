@@ -140,9 +140,13 @@ namespace UniVoting.Data.Migrations
                         .HasMaxLength(256)
                         .IsUnicode(false);
 
+                    b.Property<int>("RankId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FacultyId");
+
+                    b.HasIndex("RankId");
 
                     b.ToTable("Positions");
                 });
@@ -158,6 +162,58 @@ namespace UniVoting.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ranks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            VoterRank = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            VoterRank = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            VoterRank = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            VoterRank = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            VoterRank = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            VoterRank = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            VoterRank = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            VoterRank = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            VoterRank = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            VoterRank = 10
+                        });
                 });
 
             modelBuilder.Entity("UniVoting.Core.SkippedVote", b =>
@@ -251,6 +307,11 @@ namespace UniVoting.Data.Migrations
                     b.HasOne("UniVoting.Core.Faculty", "Faculty")
                         .WithMany()
                         .HasForeignKey("FacultyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("UniVoting.Core.Rank", "Rank")
+                        .WithMany()
+                        .HasForeignKey("RankId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

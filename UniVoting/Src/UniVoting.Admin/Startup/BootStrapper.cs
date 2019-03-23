@@ -13,13 +13,13 @@ namespace UniVoting.Admin.Startup
 		{
 			var builder =new ContainerBuilder();
             builder.RegisterType<ElectionDbContext>().AsSelf().InstancePerLifetimeScope();
-		    string reassembly = typeof(ElectionConfigurationService).GetTypeInfo().Assembly.GetName().Name;
+		    var reassembly = typeof(ElectionConfigurationService).GetTypeInfo().Assembly.GetName().Name;
             builder.RegisterType<VotingService>().As<IVotingService>().InstancePerLifetimeScope();
             builder.RegisterType<ElectionConfigurationService>().As<IElectionConfigurationService>().InstancePerLifetimeScope();
             builder.RegisterType<LiveViewService>().As<ILiveViewService>().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(Assembly.Load(reassembly)).AsImplementedInterfaces().InstancePerLifetimeScope();
             //register windows
-            builder.RegisterType<MainWindow>().AsSelf().InstancePerDependency();
+            //builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
 		    builder.RegisterType<AdminLoginWindow>().AsSelf().InstancePerDependency();
 		    builder.RegisterType<AdminDispensePasswordWindow>().AsSelf().InstancePerDependency();
 		    builder.RegisterType<PresidentLoginWindow>().AsSelf().InstancePerDependency();

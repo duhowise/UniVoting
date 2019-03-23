@@ -56,16 +56,21 @@
                             <TextBox Grid.Row="0" Grid.Column="0" Foreground="{DynamicResource PrimaryColorBrush}"
                                      Width="250"
                                      materialDesign:HintAssist.Hint="Position Name" FontSize="18" Margin="10"
-                                     Name="TextBoxPositionName" TabIndex="1"
+                                     Name="TextBoxPositionName" TabIndex="0"
                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                             <ComboBox Grid.Row="0" Grid.Column="1" DisplayMemberPath="FacultyName" SelectedValuePath="Id" 
                                       Width="250"
                                       materialDesign:HintAssist.Hint="Faculty Name" FontSize="18" Margin="10"
                                       Name="FacultyList" TabIndex="1"
                                       Style="{StaticResource MaterialDesignComboBox }" />
+                            <ComboBox Grid.Row="1" Grid.Column="0" DisplayMemberPath="VoterRank" SelectedValuePath="Id" 
+                                      Width="250"
+                                      materialDesign:HintAssist.Hint="Rank" FontSize="18" Margin="10"
+                                      Name="RankList" TabIndex="2"
+                                      Style="{StaticResource MaterialDesignComboBox }" />
 
                             <StackPanel Grid.Column="1" Grid.Row="1" Margin="4">
-                                <Button Name="AddPosition" Content="Save / Update" FontSize="16"
+                                <Button Name="AddPosition" Content="Save / Update" FontSize="16" TabIndex="3"
                                         Style="{StaticResource MahApps.Metro.Styles.MetroButton}" FontFamily="Segoe Ui Light"
                                         materialDesign:HintAssist.Hint="Save Position"
                                         Margin="10,5,5,10" />

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Navigation;
 using Autofac;
 using MahApps.Metro.Controls;
 using UniVoting.Admin.Administrators;
@@ -7,32 +8,23 @@ using UniVoting.Core;
 
 namespace UniVoting.Admin
 {
-	/// <inheritdoc />
+    /// <inheritdoc />
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-	public partial class MainWindow : MetroWindow
-	{
+    public partial class MainWindow : MetroWindow
+    {
+        private readonly Commissioner _commissioner;
 
         public MainWindow(Commissioner commissioner)
-		{
-			InitializeComponent();
-           
-			
-		   PageHolder.Content = new AdminMenuPage(commissioner);
-
-		}
-        
-        protected override void OnClosing(CancelEventArgs e)
         {
-            var container = new BootStrapper().BootStrap();
-
-            var window = container.Resolve<AdminLoginWindow>();
-
-			window.Show();
-			base.OnClosing(e);
-		}
+            _commissioner = commissioner;
+            InitializeComponent();
 
 
+            PageHolder.Content = new AdminMenuPage(_commissioner);
+        }
+
+      
     }
 }

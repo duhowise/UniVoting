@@ -73,31 +73,12 @@ namespace UniVoting.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    VoterRank = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ranks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Positions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PositionName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
-                    FacultyId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Positions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Positions_Faculties_FacultyId",
-                        column: x => x.FacultyId,
-                        principalTable: "Faculties",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +101,33 @@ namespace UniVoting.Data.Migrations
                         name: "FK_Voters_Faculties_FacultyId",
                         column: x => x.FacultyId,
                         principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Positions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PositionName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    FacultyId = table.Column<int>(nullable: false),
+                    RankId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Positions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Positions_Faculties_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Positions_Ranks_RankId",
+                        column: x => x.RankId,
+                        principalTable: "Ranks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -212,6 +220,23 @@ namespace UniVoting.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Ranks",
+                columns: new[] { "Id", "VoterRank" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 },
+                    { 4, 4 },
+                    { 5, 5 },
+                    { 6, 6 },
+                    { 7, 7 },
+                    { 8, 8 },
+                    { 9, 9 },
+                    { 10, 10 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Candidates_PositionId",
                 table: "Candidates",
@@ -226,6 +251,11 @@ namespace UniVoting.Data.Migrations
                 name: "IX_Positions_FacultyId",
                 table: "Positions",
                 column: "FacultyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Positions_RankId",
+                table: "Positions",
+                column: "RankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SkippedVotes_Positionid",
@@ -285,10 +315,10 @@ namespace UniVoting.Data.Migrations
                 name: "Positions");
 
             migrationBuilder.DropTable(
-                name: "Ranks");
+                name: "Faculties");
 
             migrationBuilder.DropTable(
-                name: "Faculties");
+                name: "Ranks");
         }
     }
 }

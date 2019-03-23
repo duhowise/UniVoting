@@ -11,6 +11,8 @@ namespace UniVoting.Core
         public virtual string PositionName { get; set; }
         public Faculty Faculty { get; set; }
         public int FacultyId { get; set; }
+        public Rank Rank { get; set; }
+        public int RankId { get; set; }
         public virtual IEnumerable<Candidate> Candidates { get; set; }
         public virtual IEnumerable<SkippedVote> SkippedVotes { get; set; }
         public virtual IEnumerable<Vote> Votes { get; set; }

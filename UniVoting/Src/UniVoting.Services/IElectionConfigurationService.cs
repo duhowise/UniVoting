@@ -13,6 +13,7 @@ namespace Univoting.Services
         Task<List<Voter>> AddVotersAsync(List<Voter> voters);
         Task<ElectionConfiguration> ConfigureElectionAsync();
         Task<IEnumerable<Candidate>> GetAllCandidatesAsync();
+        Task<IEnumerable<Rank>> GetAllRanksAsync();
         Task<List<Position>> GetAllPositionsAsync(bool includeFaculty);
         Task<List<Position>> GetAllPositionsAsync();
         Task<IEnumerable<Voter>> GetAllVotersAsync();
