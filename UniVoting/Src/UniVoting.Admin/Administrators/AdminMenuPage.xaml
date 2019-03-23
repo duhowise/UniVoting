@@ -78,6 +78,14 @@
                         <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Dispense Password</Label>
                         <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">give out passwords to voters</Label>
                     </StackPanel>
+                </Button> <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Height="200" Margin="5"
+                        Name="BtnAddFaculty"
+                        ToolTip="Add Faculty">
+                    <StackPanel>
+                        <materialDesign:PackIcon Kind="BarcodeScan" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add Faculties</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light" Foreground="{DynamicResource WhiteColorBrush}">Add Faculties for Election</Label>
+                    </StackPanel>
                 </Button>
             </WrapPanel>
 

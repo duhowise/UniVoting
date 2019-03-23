@@ -150,9 +150,9 @@
   <ItemGroup>
     <Compile Include="ElectionDbContext.cs" />
     <Compile Include="ElectionDbContextPool.cs" />
-    <Compile Include="Migrations\20190323102758_Initial.cs" />
-    <Compile Include="Migrations\20190323102758_Initial.designer.cs">
-      <DependentUpon>20190323102758_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\20190323111654_Initial.cs" />
+    <Compile Include="Migrations\20190323111654_Initial.designer.cs">
+      <DependentUpon>20190323111654_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ElectionDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,9 +1,5 @@
-﻿using System.ComponentModel;
-using System.Windows.Navigation;
-using Autofac;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using UniVoting.Admin.Administrators;
-using UniVoting.Admin.Startup;
 using UniVoting.Core;
 
 namespace UniVoting.Admin

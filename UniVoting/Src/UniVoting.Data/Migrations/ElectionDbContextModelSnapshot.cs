@@ -111,6 +111,13 @@ namespace UniVoting.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Faculties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FacultyName = "General"
+                        });
                 });
 
             modelBuilder.Entity("UniVoting.Core.PollingStation", b =>

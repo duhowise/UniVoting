@@ -10,7 +10,7 @@ using Univoting.Data;
 namespace UniVoting.Data.Migrations
 {
     [DbContext(typeof(ElectionDbContext))]
-    [Migration("20190323102758_Initial")]
+    [Migration("20190323111654_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,6 +113,13 @@ namespace UniVoting.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Faculties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FacultyName = "General"
+                        });
                 });
 
             modelBuilder.Entity("UniVoting.Core.PollingStation", b =>

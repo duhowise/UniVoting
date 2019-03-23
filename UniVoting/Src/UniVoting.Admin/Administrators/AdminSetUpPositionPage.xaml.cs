@@ -60,7 +60,7 @@ namespace UniVoting.Admin.Administrators
             }
             var result = await _metroWindow.ShowMessageAsync("Add new Position", "are you sure you want to add ", MessageDialogStyle.AffirmativeAndNegative, settings);
             if (result != MessageDialogResult.Affirmative) return;
-            CurrentPosition = new Position { Id = _positionId, PositionName = TextBoxPositionName.Text, FacultyId = Convert.ToInt32(FacultyList.SelectedValue) };
+            CurrentPosition = new Position { Id = _positionId, PositionName = TextBoxPositionName.Text,RankId = Convert.ToInt32(RankList.SelectedValue), FacultyId = Convert.ToInt32(FacultyList.SelectedValue) };
             _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
             await _electionConfigurationService.AddPositionAsync(CurrentPosition);
             await _metroWindow.ShowMessageAsync("Add new Position", "success");
@@ -74,6 +74,9 @@ namespace UniVoting.Admin.Administrators
             FacultyList.ItemsSource =await  _electionConfigurationService.GetFacultiesAsync();
             PositionList.ItemsSource
                 = await  _electionConfigurationService.GetAllPositionsAsync(true);
+
+            RankList.ItemsSource
+                = await  _electionConfigurationService.GetAllRanksAsync();
 
         }
         

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -101,7 +100,7 @@ namespace UniVoting.Admin.Administrators
 		private async void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			PositionCombo.ItemsSource = await _electionConfigurationService.GetAllPositionsAsync();
-            RankCombo.ItemsSource = await _electionConfigurationService.GetAllRanks();
+            RankCombo.ItemsSource = await _electionConfigurationService.GetAllRanksAsync();
 
             RefreshCandidateList();
 		}

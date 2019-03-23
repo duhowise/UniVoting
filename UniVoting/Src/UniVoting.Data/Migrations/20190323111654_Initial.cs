@@ -221,6 +221,11 @@ namespace UniVoting.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Faculties",
+                columns: new[] { "Id", "FacultyName" },
+                values: new object[] { 1, "General" });
+
+            migrationBuilder.InsertData(
                 table: "Ranks",
                 columns: new[] { "Id", "VoterRank" },
                 values: new object[,]

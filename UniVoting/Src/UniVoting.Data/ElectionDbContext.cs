@@ -42,6 +42,12 @@ namespace Univoting.Data
                 new Rank{Id=9,VoterRank = 9},
                 new Rank{Id=10,VoterRank = 10},
             });
+
+
+            modelBuilder.Entity<Faculty>().HasData(new List<Faculty>
+            {
+                new Faculty{FacultyName = "General",Id = 1}
+            });
             base.OnModelCreating(modelBuilder);
         }
 

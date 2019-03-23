@@ -237,6 +237,9 @@
     <Compile Include="Administrators\AdminDispensePasswordWindow.xaml.cs">
       <DependentUpon>AdminDispensePasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Administrators\AdminSetupFacultyPage.xaml.cs">
+      <DependentUpon>AdminSetupFacultyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Administrators\ECChairmanLoginWindow.xaml.cs">
       <DependentUpon>ECChairmanLoginWindow.xaml</DependentUpon>
     </Compile>
@@ -287,6 +290,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Administrators\AdminSetUpElectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Administrators\AdminSetupFacultyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

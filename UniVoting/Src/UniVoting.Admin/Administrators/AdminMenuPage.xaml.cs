@@ -23,10 +23,16 @@ namespace UniVoting.Admin.Administrators
 			InitializeComponent();
 			BtnDeclareVotes.Click += BtnDeclareVotes_Click;
 			BtnDispensePassword.Click += BtnDispensePassword_Click;
-			Loaded += AdminMenuPage_Loaded;
+            Loaded += AdminMenuPage_Loaded;
+            BtnAddFaculty.Click += BtnAddFaculty_Click;
 		}
 
-		private void BtnDispensePassword_Click(object sender, RoutedEventArgs e)
+        private void BtnAddFaculty_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void BtnDispensePassword_Click(object sender, RoutedEventArgs e)
 		{
 		    container.Resolve<AdminDispensePasswordWindow>().ShowDialog()
 		        ;
@@ -42,6 +48,7 @@ namespace UniVoting.Admin.Administrators
 				BtnCreateAccount.IsEnabled = false;
 				BtnSetUpCandidates.IsEnabled = false;
 				BtnSetUpPostions.IsEnabled = false;
+                BtnAddFaculty.IsEnabled = false;
 			
 			}
 			else if(Commissioner.IsPresident)
@@ -51,6 +58,7 @@ namespace UniVoting.Admin.Administrators
 				BtnSetUpCandidates.IsEnabled = false;
 				BtnSetUpPostions.IsEnabled = false;
 				BtnSetUpVoters.IsEnabled = false;
+                BtnAddFaculty.IsEnabled = false;
 			}
 			else if (!Commissioner.IsChairman && !Commissioner.IsAdmin && !Commissioner.IsPresident)
 			{
@@ -58,6 +66,7 @@ namespace UniVoting.Admin.Administrators
 				BtnCreateAccount.IsEnabled = false;
 				BtnSetUpCandidates.IsEnabled = false;
 				BtnSetUpPostions.IsEnabled = false;
+                BtnAddFaculty.IsEnabled = false;
 				BtnDeclareVotes.IsEnabled = false;
 			}
 		}

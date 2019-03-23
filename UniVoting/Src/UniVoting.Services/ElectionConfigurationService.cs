@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Univoting.Data;
 using UniVoting.Core;
-using UniVoting.Services;
 
 namespace Univoting.Services
 {
@@ -183,7 +181,7 @@ namespace Univoting.Services
             }
         }
 
-        public async Task<IList<Rank>> GetAllRanks()
+        public async Task<IList<Rank>> GetAllRanksAsync()
         {
             try
             {
@@ -210,18 +208,7 @@ namespace Univoting.Services
             }
         }
 
-        public async Task<IEnumerable<Rank>> GetAllRanksAsync()
-        {
-            try
-            {
-                return await _context.Ranks.AsNoTracking().ToListAsync();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Something went wrong. we could retrieve ranks", e);
-
-            }
-        }
+        
 
         public async Task<Candidate> SaveCandidateAsync(Candidate candidate)
         {
@@ -453,6 +440,8 @@ namespace Univoting.Services
                 }
             }
         }
+
+       
         #endregion
 
 
