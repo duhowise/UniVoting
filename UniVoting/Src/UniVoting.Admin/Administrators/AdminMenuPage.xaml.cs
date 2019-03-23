@@ -118,8 +118,8 @@ namespace UniVoting.Admin.Administrators
 		{
 		    var page = container.Resolve<AdminAddVotersPage>();
 
-		    NavigationService?.Navigate(page);
+            page.ShowDialog();
             //NavigationService?.Navigate(new AdminAddVotersPage(TODO, TODO));
-		}
+        }
 	}
 }

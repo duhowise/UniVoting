@@ -5,10 +5,12 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Autofac;
 using ExcelDataReader;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Univoting.Services;
+using UniVoting.Admin.Startup;
 using UniVoting.Core;
 using UniVoting.Services;
 using MessageBox = System.Windows.MessageBox;
@@ -19,7 +21,7 @@ namespace UniVoting.Admin.Administrators
 	/// <summary>
 	/// Interaction logic for AdminAddVotersPage.xaml
 	/// </summary>
-	public partial class AdminAddVotersPage : Page
+	public partial class AdminAddVotersPage : MetroWindow
 	{
 		private readonly IElectionConfigurationService _electionConfigurationService;
 	    private readonly IVotingService _votingService;
@@ -27,26 +29,31 @@ namespace UniVoting.Admin.Administrators
 		private int _indexName;
 		private int _indexNUmber;
 		private int _faculty;
-		private int _added;
 		private List<Voter> voters;
-	    readonly MetroWindow metroWindow;
+        private IContainer _container;
 
-        public AdminAddVotersPage(IElectionConfigurationService electionConfigurationService,IVotingService votingService)
-		{
-			_electionConfigurationService = electionConfigurationService;
-		    _votingService = votingService;
+        public AdminAddVotersPage()
+        {
+            _container = new BootStrapper().BootStrap();
+			_electionConfigurationService = _container.Resolve<IElectionConfigurationService>();
+		    _votingService = _container.Resolve<IVotingService>();
 		    InitializeComponent();
 			_dataSet=new DataSet();
-            metroWindow = (Window.GetWindow(this) as MetroWindow);
             voters =new List<Voter>();
 			BtnSearch.Click += BtnSearch_Click;
 			BtnImportFile.Click += BtnImportFile_Click;
 			BtnSave.Click += BtnSave_Click;
 			TextBoxIndexNumber.LostFocus += TextBoxIndexNumber_LostFocus;
+            Loaded += AdminAddVotersPage_Loaded;
 		  
 		}
 
-		private async void BtnSearch_Click(object sender, RoutedEventArgs e)
+        private async void AdminAddVotersPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            FacultyList.ItemsSource =await _electionConfigurationService.GetFacultiesAsync();
+        }
+
+        private async void BtnSearch_Click(object sender, RoutedEventArgs e)
 		{
 			if (!string.IsNullOrWhiteSpace(Searchterm.Text))
 			{
@@ -56,12 +63,12 @@ namespace UniVoting.Admin.Administrators
 
 					
 					var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 20, AffirmativeButtonText = "Ok" };
-					await metroWindow.ShowMessageAsync($"Name:{voter.VoterName}", $"Password: {voter.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
+					await this.ShowMessageAsync($"Name:{voter.VoterName}", $"Password: {voter.VoterCode}", MessageDialogStyle.Affirmative, dialogSettings);
 					Searchterm.Text = string.Empty;
 				}
 				else
 				{
-					await metroWindow.ShowMessageAsync("Password",$"Voter with Index Number: {Searchterm.Text} not found!");
+					await this.ShowMessageAsync("Password",$"Voter with Index Number: {Searchterm.Text} not found!");
 					Searchterm.Text=string.Empty;
 					
 				}
@@ -75,7 +82,8 @@ namespace UniVoting.Admin.Administrators
 				{
 					VoterName = TextBoxName.Text,
 					IndexNumber = TextBoxIndexNumber.Text,
-					VoterCode = Util.GenerateRandomPassword(6)
+					VoterCode = Util.GenerateRandomPassword(6),
+                    FacultyId = Convert.ToInt32(FacultyList.SelectedValue)
 				});
 			}
 		}
@@ -84,17 +92,16 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (voters.Count!=0)
 			{
-				var window = Window.GetWindow(this) as MetroWindow;
-				var dialogResult = await window.ShowMessageAsync("Save Voter List", "Are You Sure You Want To Add this List Of Voters", MessageDialogStyle.AffirmativeAndNegative);
+				var dialogResult = await this.ShowMessageAsync("Save Voter List", "Are You Sure You Want To Add this List Of Voters", MessageDialogStyle.AffirmativeAndNegative);
 				if (dialogResult == MessageDialogResult.Affirmative)
 				{
 					
 					try
 					{
 						BtnSave.IsEnabled = false;
-						_added =  _electionConfigurationService.AddVotersAsync(voters).Result.Count;
+                        var data =await _electionConfigurationService.AddVotersAsync(voters);
 						AddedCount.Visibility=Visibility.Visible;
-						AddedCount.Content = $"Added {_added} Voters";
+						AddedCount.Content = $"Added {data.Count} Voters";
                         voters.Clear();
                         _dataSet.Reset();
 						BtnSave.IsEnabled = true;
@@ -102,18 +109,18 @@ namespace UniVoting.Admin.Administrators
                     }
                     catch (Exception exception)
 					{
-					await	metroWindow.ShowMessageAsync("Voter Addition Error", exception.Message);
+					await	this.ShowMessageAsync("Voter Addition Error", exception.Message);
 					}
 
 				}
 			}
 		}
 
-		private void BtnImportFile_Click(object sender, System.Windows.RoutedEventArgs e)
+		private async void BtnImportFile_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			using (var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2007 Files |*.xls;*.xlsx;", ValidateNames = true })
 			{
-			    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+			    if (openFileDialog.ShowDialog()!=System.Windows.Forms.DialogResult.OK) return;
 			    try
 			    {
 			        var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
@@ -152,7 +159,7 @@ namespace UniVoting.Admin.Administrators
 			            }
 			            foreach (var column in VoterGrid.Columns)
 			            {
-			                if (column.Header.ToString().ToLower() != "faculty") continue;
+			                if (column.Header.ToString().ToLower() != "facultyId") continue;
 			                _faculty = column.DisplayIndex;
 			                break;
 			            }
@@ -186,9 +193,10 @@ namespace UniVoting.Admin.Administrators
                 }
 			    catch (Exception exception)
 			    {
-			        MessageBox.Show(exception.Message, "File Read Error");
-			    }
-			}
+                    await this.ShowMessageAsync("Error", $"File read Error\n {exception}");
+
+                }
+            }
 		}
 
 		private async void BtnReset_Click(object sender, RoutedEventArgs e)
@@ -196,7 +204,7 @@ namespace UniVoting.Admin.Administrators
 			if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
 			{
 				await _votingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
-			    await metroWindow.ShowMessageAsync("Sucecss", $"Successfully reset Voter");
+			    await this.ShowMessageAsync("Sucecss", $"Successfully reset Voter");
 
             }
         }
