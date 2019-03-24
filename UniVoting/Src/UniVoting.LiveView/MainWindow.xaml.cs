@@ -26,7 +26,7 @@ namespace UniVoting.LiveView
 		    var container = new BootStrapper().BootStrap();
 		    _liveViewService = container.Resolve<ILiveViewService>();
 			_positions = new List<Position>();
-            _logger = new SystemEventLoggerService();
+            //_logger = new SystemEventLoggerService();
             Loaded += MainWindow_Loaded;
 		   
 		}
@@ -40,12 +40,12 @@ namespace UniVoting.LiveView
 		    }
 		    catch (SqlException exception)
 		    {
-		        SystemEventLoggerService.Log(exception.StackTrace);
+		        //SystemEventLoggerService.Log(exception.StackTrace);
 
 		    }
 		    catch (Exception exception)
 		    {
-		        _logger.Log(exception);
+		        //_logger.Log(exception);
 
 		    }
 		    finally

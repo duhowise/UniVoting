@@ -22,11 +22,10 @@ namespace UniVoting.LiveView
             _liveViewService = liveViewService;
 
             InitializeComponent();
-            _logger=new SystemEventLoggerService();
             var timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 1)};
             timer.Tick += _timer_Tick;
             timer.Start();
-            PositionName.Text = _position.PositionName;
+            PositionName.Text = _position.PositionName.ToUpperInvariant();
 
         }
 
