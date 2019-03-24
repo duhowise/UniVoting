@@ -34,7 +34,7 @@ namespace UniVoting.Admin.Administrators
 				if (admin != null)
 				{
 					new MainWindow(admin).Show();
-					Close();
+					Hide();
 				}
 				else
 				{

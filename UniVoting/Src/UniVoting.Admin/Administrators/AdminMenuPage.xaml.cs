@@ -25,6 +25,7 @@ namespace UniVoting.Admin.Administrators
 			BtnDispensePassword.Click += BtnDispensePassword_Click;
             Loaded += AdminMenuPage_Loaded;
             BtnAddFaculty.Click += BtnAddFaculty_Click;
+            
 		}
 
         private void BtnAddFaculty_Click(object sender, RoutedEventArgs e)
@@ -98,10 +99,10 @@ namespace UniVoting.Admin.Administrators
 		{
 		    var page = container.Resolve<AdminSetUpPositionPage>();
 
-		    NavigationService?.Navigate(page);
+            page.ShowDialog();
 
-			
-		}
+
+        }
 
 		private void BtnSetUpCandidates_Click(object sender, RoutedEventArgs e)
 		{

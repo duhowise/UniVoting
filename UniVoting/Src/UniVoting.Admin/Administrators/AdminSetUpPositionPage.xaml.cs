@@ -13,10 +13,9 @@ namespace UniVoting.Admin.Administrators
 	/// <summary>
 	///     Interaction logic for AdminSetUpPositionPage.xaml
 	/// </summary>
-	public partial class AdminSetUpPositionPage : Page
+	public partial class AdminSetUpPositionPage
 	{
 		private IElectionConfigurationService _electionConfigurationService;
-	    private MetroWindow _metroWindow;
         private IContainer container;
         private int _positionId;
         public Position CurrentPosition { get; set; }
@@ -30,6 +29,7 @@ namespace UniVoting.Admin.Administrators
             Loaded += AdminSetUpPositionPage_Loaded;
             AddPosition.Click += AddPosition_Click;
             PositionList.MouseDoubleClick += PositionList_MouseDoubleClick;
+            
         }
 
         private void PositionList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -46,7 +46,7 @@ namespace UniVoting.Admin.Administrators
        
         private async void AddPosition_Click(object sender, RoutedEventArgs e)
         {
-            _metroWindow = Window.GetWindow(this) as MetroWindow;
+            
             var settings = new MetroDialogSettings
             {
                 ColorScheme = MetroDialogColorScheme.Theme,
@@ -55,15 +55,15 @@ namespace UniVoting.Admin.Administrators
 
             if (string.IsNullOrWhiteSpace(TextBoxPositionName.Text)||string.IsNullOrWhiteSpace(FacultyList.Text))
             {
-            await _metroWindow.ShowMessageAsync("Add new Position", "Please Specify Position Name ");
+            await this.ShowMessageAsync("Add new Position", "Please Specify Position Name ");
 
             }
-            var result = await _metroWindow.ShowMessageAsync("Add new Position", "are you sure you want to add ", MessageDialogStyle.AffirmativeAndNegative, settings);
+            var result = await this.ShowMessageAsync("Add new Position", "are you sure you want to add ", MessageDialogStyle.AffirmativeAndNegative, settings);
             if (result != MessageDialogResult.Affirmative) return;
             CurrentPosition = new Position { Id = _positionId, PositionName = TextBoxPositionName.Text,RankId = Convert.ToInt32(RankList.SelectedValue), FacultyId = Convert.ToInt32(FacultyList.SelectedValue) };
             _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
             await _electionConfigurationService.AddPositionAsync(CurrentPosition);
-            await _metroWindow.ShowMessageAsync("Add new Position", "success");
+            await this.ShowMessageAsync("Add new Position", "success");
             AdminSetUpPositionPage_Loaded(this, e);
 
         }
