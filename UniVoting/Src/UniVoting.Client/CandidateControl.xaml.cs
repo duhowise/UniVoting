@@ -94,7 +94,7 @@ namespace UniVoting.Client
 
         private async void BtnYesClick(object sender, RoutedEventArgs e)
         {
-            _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
+            _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id ,Time = DateTime.UtcNow});
             OnVoteCast(this);
             await _metroWindow.HideMetroDialogAsync(_customDialog);
 
