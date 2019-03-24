@@ -34,6 +34,7 @@ namespace UniVoting.Client
 
             try
             {
+               
                 _container = new BootStrapper().BootStrap();
                  _window   = _container.Resolve<ClientsLoginWindow>();
                 _electionConfigurationService = _container.Resolve<IElectionConfigurationService>();

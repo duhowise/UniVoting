@@ -20,7 +20,7 @@ namespace UniVoting.Client
 		private ConcurrentBag<Vote> _votes;
 		private  Voter _voter;
 		private ConcurrentBag<SkippedVote> _skippedVotes;
-
+        private IContainer container;
 		private int _count;
 		public ClientVoteCompletedPage(ConcurrentBag<Vote> votes,Voter voter, ConcurrentBag<SkippedVote> skippedVotes)
 		{
@@ -28,7 +28,8 @@ namespace UniVoting.Client
 			_voter = voter;
 			_skippedVotes = skippedVotes;
 			InitializeComponent();
-			IgnoreTaskbarOnMaximize = true;
+            container = new BootStrapper().BootStrap();
+            IgnoreTaskbarOnMaximize = true;
 			
 			
 			_count = 0;
@@ -43,25 +44,22 @@ namespace UniVoting.Client
 			{
 				//make rabbitmq event here for submission of votes
 				//submission of skipped votes
-			    var container = new BootStrapper().BootStrap();
 			    var service = container.Resolve<IVotingService>();
-
-				await service.CastVote(_votes, _voter,_skippedVotes);
+                await service.CastVote(_votes, _voter,_skippedVotes);
 				Text.Text = $"Good Bye {_voter.VoterName.ToUpper()}, Thank You For Voting";
 			}
 			catch (Exception)
 			{
 				Text.Text = $"Sorry An Error Occured.\nYour Votes Were not Submitted.\n Contact the Administrators";
 
-			    var container = new BootStrapper().BootStrap();
 			    var service = container.Resolve<IVotingService>();
                 await service.ResetVoter(_voter);
 
 			}
-			var _timer = new DispatcherTimer();
-			_timer.Interval = new TimeSpan(0, 0, 0, 3);
-			_timer.Tick += _timer_Tick;
-			_timer.Start();
+
+            var timer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 0, 3)};
+            timer.Tick += _timer_Tick;
+			timer.Start();
 		}
 
 		private  void _timer_Tick(object sender, EventArgs e)
@@ -72,17 +70,19 @@ namespace UniVoting.Client
 		}
 		public void RestartApplication()
 		{
-			//if (_count == 1)
-			//{
-			//	this.Hide();
-			//	Start(Application.ResourceAssembly.Location);
-			//	if (Application.Current != null)Application.Current.Shutdown();
-			//	// OnRestartDue(this);
+            if (_count == 1)
+            {
+                //this.Hide();
+                //Start(Application.ResourceAssembly.Location);
+                //if (Application.Current != null) Application.Current.Shutdown();
+                //// OnRestartDue(this);
+                
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+            }
 
-			//}
 
-
-		}
+        }
 
 		
 	}

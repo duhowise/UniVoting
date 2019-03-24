@@ -81,7 +81,6 @@ namespace UniVoting.Client
 	        }
 	        else
 	        {
-	            _voter.Voted = true;
 	            new ClientVoteCompletedPage(_votes, _voter, _skippedVotes).Show();
 	            Hide();
 	        }

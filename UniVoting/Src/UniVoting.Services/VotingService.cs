@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Univoting.Data;
 using UniVoting.Core;
@@ -29,8 +28,8 @@ namespace Univoting.Services
             }
             catch (Exception exception)
             {
-                //Logger<>.Log(exception);
-                Console.WriteLine(exception);
+                throw new Exception("Something went wrong. we could not Skip Votes", exception);
+
             }
         }
 
@@ -40,22 +39,27 @@ namespace Univoting.Services
             {
 
 
-                using (var transaction = new TransactionScope())
+                using (var transaction = _context.Database.BeginTransaction())
                 {
 
-                    voter.Voted = true;
-                    voter.VoteInProgress = false;
+                    var result = await _context.Voters.FindAsync(voter.Id);
+                    result.Voted = true; 
+                    result.VoteInProgress = false;
+                    _context.Voters.Update(result);
+
+                    //actual submission of votes and skipped
 
                     await _context.Votes.AddRangeAsync(votes);
-                    _context.Voters.Update(voter);
                     await _context.SkippedVotes.AddRangeAsync(skippedVotes);
-                    transaction.Complete();
+                   await _context.SaveChangesAsync();
+                    transaction.Commit();
                 }
             }
             catch (Exception exception)
             {
                 await ResetVoter(voter);
-                throw;
+                throw new Exception("Something went wrong. we could not submit user votes", exception);
+
             }
         }
 
@@ -63,11 +67,15 @@ namespace Univoting.Services
         {
             try
             {
-                await Task.FromResult(_context.Voters.Update(voter));
+                var result = await _context.Voters.FindAsync(voter.Id);
+                result.VoteInProgress = voter.VoteInProgress;
+                _context.Voters.Update(result);
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
-                throw;
+                throw new Exception("Something went wrong. we could not update Voter status", e);
+
             }
         }
 
@@ -75,26 +83,29 @@ namespace Univoting.Services
         {
             try
             {
-                using (var transaction = new TransactionScope())
+                using (var transaction = _context.Database.BeginTransaction())
                 {
-                    var dbvoter = _context.Voters.First(x => x.Id == voter.Id);
-                    dbvoter.VoteInProgress = false;
-                    dbvoter.Voted = false;
+                    var dbvoter =await _context.Voters.FirstOrDefaultAsync(x => x.IndexNumber == voter.IndexNumber);
+                    if (dbvoter == null) throw new ArgumentNullException(nameof(dbvoter));
+                   
 
-                    var votes = _context.Votes.Where(x => x.VoterId == voter.Id).ToList();
-                    var skippedVotes = _context.SkippedVotes.Where(x => x.VoterId == voter.Id);
+                    var votes = _context.Votes.Where(x => x.VoterId == dbvoter.Id).ToList();
+                    var skippedVotes = _context.SkippedVotes.Where(x => x.VoterId == dbvoter.Id);
                     _context.Votes.RemoveRange(votes);
                     _context.SkippedVotes.RemoveRange(skippedVotes);
                     _context.SkippedVotes.RemoveRange(skippedVotes);
-
+                    dbvoter.VoteInProgress = false;
+                    dbvoter.Voted = false;
                     _context.Voters.Update(dbvoter);
-                    transaction.Complete();
-                    await Task.CompletedTask;
+
+                    await _context.SaveChangesAsync();
+                    transaction.Commit();
                 }
             }
             catch (Exception exception)
             {
-                throw;
+                throw new Exception("Something went wrong. we could not Reset Voter status", exception);
+
             }
         }
 
@@ -107,7 +118,8 @@ namespace Univoting.Services
             catch (Exception exception)
             {
 
-                throw;
+                throw new Exception("Something went wrong. we could not retrieve password", exception);
+
             }
         }
     }

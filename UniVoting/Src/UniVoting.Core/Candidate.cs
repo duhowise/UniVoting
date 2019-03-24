@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace UniVoting.Core
 {
@@ -12,6 +14,8 @@ namespace UniVoting.Core
         public virtual string CandidateName { get; set; }
         public virtual byte[] CandidatePicture { get; set; }
         public virtual int? RankId { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Position Position { get; set; }
         public virtual Rank Rank { get; set; }
         public virtual IEnumerable<Vote> Votes { get; set; }

@@ -48,6 +48,7 @@ namespace UniVoting.Admin.Administrators
 		  
 		}
 
+        
         private async void AdminAddVotersPage_Loaded(object sender, RoutedEventArgs e)
         {
             FacultyList.ItemsSource =await _electionConfigurationService.GetFacultiesAsync();
@@ -203,8 +204,17 @@ namespace UniVoting.Admin.Administrators
 		{
 			if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
 			{
-				await _votingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
-			    await this.ShowMessageAsync("Sucecss", $"Successfully reset Voter");
+                try
+                {
+                    await _votingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
+                    await this.ShowMessageAsync("Sucecss", $"Successfully reset Voter");
+                }
+                catch (Exception)
+                {
+                    await this.ShowMessageAsync("Failed", $"student with index number {ResetIndexNumber.Text} not found");
+
+                }
+
 
             }
         }

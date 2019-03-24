@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Akavache;
@@ -12,6 +13,7 @@ using Univoting.Services;
 using UniVoting.Core;
 using UniVoting.Services;
 using BootStrapper = UniVoting.Client.Startup.BootStrapper;
+using IContainer = Autofac.IContainer;
 using Position = UniVoting.Core.Position;
 
 namespace UniVoting.Client
@@ -25,12 +27,13 @@ namespace UniVoting.Client
 		private IEnumerable<Position> _positions;
 		 private Stack<Position> _positionsStack;
 		private Voter _voter;
-		public ClientsLoginWindow( IElectionConfigurationService electionConfigurationService)
+        private IContainer container;
+		public ClientsLoginWindow()
 		{
 			InitializeComponent();
+            container = new BootStrapper().BootStrap();
 
-
-            _electionConfigurationService = electionConfigurationService;
+            _electionConfigurationService = container.Resolve<IElectionConfigurationService>();
 
             _positionsStack = new Stack<Position>();
 			Loaded += ClientsLoginWindow_Loaded;
@@ -62,7 +65,7 @@ namespace UniVoting.Client
 			}
 			catch (Exception exception)
 			{
-				MessageBox.Show(exception.Message, "Election Positions Error");
+			await this.ShowMessageAsync("Election Positions Error", exception.Message);
 			}
 		}
 
@@ -75,11 +78,11 @@ namespace UniVoting.Client
 				try
 				{
 					_voter = await _electionConfigurationService.LoginVoterAsync(new Voter { VoterCode = Pin.Text });
-					ConfirmVoterAsync();
+				await	ConfirmVoterAsync(_voter);
 				}
 				catch (Exception exception)
 				{
-					MessageBox.Show(exception.Message, "Election Login Error");
+				await	this.ShowMessageAsync("Election Login Error", exception.Message);
 					throw;
 				}
 			}
@@ -87,15 +90,15 @@ namespace UniVoting.Client
 		   
 		}
 
-		public async void ConfirmVoterAsync()
+		public async Task ConfirmVoterAsync(Voter voter)
 		{
-		    var container = new BootStrapper().BootStrap();
+		   
 		    var votingservice = container.Resolve<IVotingService>();
             if (_voter!=null)
 			{
-				if (!_voter.VoteInProgress && !_voter.Voted)
+				if (!_voter.VoteInProgress && !voter.Voted)
 				{
-					new MainWindow(_positionsStack, _voter, votingservice).Show();
+					new MainWindow(_positionsStack, voter, votingservice).Show();
 					Hide();
 				}
 				else
