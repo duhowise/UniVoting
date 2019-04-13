@@ -10,8 +10,8 @@ using Univoting.Data;
 namespace UniVoting.Data.Migrations
 {
     [DbContext(typeof(ElectionDbContext))]
-    [Migration("20190413152212_VoteCountFunction")]
-    partial class VoteCountFunction
+    [Migration("20190413173533_VotePercentFunction")]
+    partial class VotePercentFunction
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

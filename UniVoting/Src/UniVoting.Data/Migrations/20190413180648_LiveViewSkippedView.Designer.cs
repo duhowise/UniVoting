@@ -10,8 +10,8 @@ using Univoting.Data;
 namespace UniVoting.Data.Migrations
 {
     [DbContext(typeof(ElectionDbContext))]
-    [Migration("20190413134523_SkippedVotesView")]
-    partial class SkippedVotesView
+    [Migration("20190413180648_LiveViewSkippedView")]
+    partial class LiveViewSkippedView
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

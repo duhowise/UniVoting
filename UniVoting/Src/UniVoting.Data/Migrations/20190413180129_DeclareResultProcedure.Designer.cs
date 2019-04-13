@@ -10,7 +10,7 @@ using Univoting.Data;
 namespace UniVoting.Data.Migrations
 {
     [DbContext(typeof(ElectionDbContext))]
-    [Migration("20190413153221_DeclareResultProcedure")]
+    [Migration("20190413180129_DeclareResultProcedure")]
     partial class DeclareResultProcedure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
