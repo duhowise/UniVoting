@@ -154,6 +154,34 @@
     <Compile Include="Migrations\20190323111654_Initial.designer.cs">
       <DependentUpon>20190323111654_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190413133200_VotePercentFunction.cs" />
+    <Compile Include="Migrations\20190413133200_VotePercentFunction.designer.cs">
+      <DependentUpon>20190413133200_VotePercentFunction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190413134523_SkippedVotesView.cs" />
+    <Compile Include="Migrations\20190413134523_SkippedVotesView.designer.cs">
+      <DependentUpon>20190413134523_SkippedVotesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190413142341_SkippedVotesFunction.cs" />
+    <Compile Include="Migrations\20190413142341_SkippedVotesFunction.designer.cs">
+      <DependentUpon>20190413142341_SkippedVotesFunction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190413144112_LiveViewView.cs" />
+    <Compile Include="Migrations\20190413144112_LiveViewView.designer.cs">
+      <DependentUpon>20190413144112_LiveViewView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190413150713_CandidatesVotesView.cs" />
+    <Compile Include="Migrations\20190413150713_CandidatesVotesView.designer.cs">
+      <DependentUpon>20190413150713_CandidatesVotesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190413152212_VoteCountFunction.cs" />
+    <Compile Include="Migrations\20190413152212_VoteCountFunction.designer.cs">
+      <DependentUpon>20190413152212_VoteCountFunction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190413153221_DeclareResultProcedure.cs" />
+    <Compile Include="Migrations\20190413153221_DeclareResultProcedure.designer.cs">
+      <DependentUpon>20190413153221_DeclareResultProcedure.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ElectionDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
