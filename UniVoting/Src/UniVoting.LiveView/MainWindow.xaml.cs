@@ -17,7 +17,7 @@ namespace UniVoting.LiveView
 	{
 	    private readonly ILiveViewService _liveViewService;
 	    IEnumerable<Position> _positions;
-	    readonly ILogger _logger;
+	   //readonly ILogger _logger;
 
         public MainWindow()
 		{
@@ -38,12 +38,12 @@ namespace UniVoting.LiveView
 		        _positions = await _liveViewService.Positions();
 
 		    }
-		    catch (SqlException exception)
+		    catch (SqlException )
 		    {
 		        //SystemEventLoggerService.Log(exception.StackTrace);
 
 		    }
-		    catch (Exception exception)
+		    catch (Exception )
 		    {
 		        //_logger.Log(exception);
 

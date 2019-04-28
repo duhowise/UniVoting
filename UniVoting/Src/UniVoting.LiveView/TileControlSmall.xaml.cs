@@ -15,13 +15,13 @@ namespace UniVoting.LiveView
     {
         private readonly Position _position;
         private readonly ILiveViewService _liveViewService;
-        private readonly ILogger _logger;
+        //  private readonly ILogger _logger;
         public TileControlSmall(Position position,ILiveViewService liveViewService)
         {
             _position = position;
             _liveViewService = liveViewService;
             InitializeComponent();
-           _logger=new SystemEventLoggerService();
+            //  _logger=new SystemEventLoggerService();
             var timer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 0, 1)
@@ -37,14 +37,14 @@ namespace UniVoting.LiveView
             {
                 VoteCount.Text = $"{await _liveViewService.VotesSkipppedCountAsync(_position.Id)}";
             }
-            catch (SqlException exception)
+            catch (SqlException)
             {
-                _logger.Log(exception);
+                //  _logger.Log(exception);
 
             }
-            catch (Exception exception)
+            catch (Exception )
             {
-                _logger.Log(exception);
+                //  _logger.Log(exception);
             }
             //finally
             //{

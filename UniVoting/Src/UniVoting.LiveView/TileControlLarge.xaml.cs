@@ -15,7 +15,7 @@ namespace UniVoting.LiveView
     {
         private readonly Position _position;
         private readonly ILiveViewService _liveViewService;
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
         public TileControlLarge(Position position,ILiveViewService liveViewService)
         {
             _position = position;
@@ -35,13 +35,13 @@ namespace UniVoting.LiveView
             {
                 VoteCount.Text = $"{await _liveViewService.VoteCountAsync(_position.Id)}";
             }
-            catch (SqlException exception)
+            catch (SqlException )
             {
-                _logger.Log(exception);
+                //_logger.Log(exception);
             }
-            catch (Exception exception)
+            catch (Exception )
             {
-                _logger.Log(exception);
+                //  _logger.Log(exception);
             }
             //finally
             //{

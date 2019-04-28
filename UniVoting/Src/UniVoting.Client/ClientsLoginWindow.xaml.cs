@@ -54,7 +54,7 @@ namespace UniVoting.Client
 				var election = await BlobCache.UserAccount.GetObject<ElectionConfiguration>("ElectionSettings");
 				MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
 				VotingName.Text = election.ElectionName.ToUpper();
-				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
+				VotingSubtitle.Content = election.ElectionSubTitle.ToUpper();
 
 				_positions = new List<Position>();
 				_positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions");

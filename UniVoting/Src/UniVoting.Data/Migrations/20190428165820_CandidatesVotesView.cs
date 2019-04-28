@@ -21,8 +21,6 @@ namespace UniVoting.Data.Migrations
                   ON c.ID = v.CandidateID LEFT OUTER JOIN dbo.Positions p
                   ON c.PositionID = p.ID  GROUP BY c.CandidateName
                         ,p.PositionName,c.ID,dbo.VoteSkipped(p.PositionName)");
-
-
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

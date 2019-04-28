@@ -10,8 +10,8 @@ using Univoting.Data;
 namespace UniVoting.Data.Migrations
 {
     [DbContext(typeof(ElectionDbContext))]
-    [Migration("20190413174201_LiveViewView")]
-    partial class LiveViewView
+    [Migration("20190428165820_CandidatesVotesView")]
+    partial class CandidatesVotesView
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,7 +89,7 @@ namespace UniVoting.Data.Migrations
                         .HasMaxLength(256)
                         .IsUnicode(false);
 
-                    b.Property<string>("EletionSubTitle")
+                    b.Property<string>("ElectionSubTitle")
                         .HasMaxLength(256)
                         .IsUnicode(false);
 

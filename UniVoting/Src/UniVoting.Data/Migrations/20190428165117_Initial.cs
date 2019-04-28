@@ -33,7 +33,7 @@ namespace UniVoting.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ElectionName = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
-                    EletionSubTitle = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
+                    ElectionSubTitle = table.Column<string>(unicode: false, maxLength: 256, nullable: true),
                     Logo = table.Column<byte[]>(nullable: true),
                     Colour = table.Column<string>(unicode: false, maxLength: 256, nullable: true)
                 },

@@ -52,7 +52,7 @@ namespace UniVoting.Admin.Administrators
 				await _electionConfigurationService.AddElectionConfigurationsAsync(new ElectionConfiguration
 				{
 					ElectionName = TextBoxElectionName.Text,
-					EletionSubTitle = TextBoxSubtitle.Text,
+					ElectionSubTitle = TextBoxSubtitle.Text,
 					Colour = string.Join(",", _chosencolor.R.ToString(), _chosencolor.G.ToString(), _chosencolor.B.ToString()),
 					Logo = Util.ConvertToBytes(Logo)
 

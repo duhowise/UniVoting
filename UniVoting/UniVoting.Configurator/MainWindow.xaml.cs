@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Microsoft.Win32;
+using Poker;
 
 namespace UniVoting.Configurator
 {
@@ -39,10 +40,12 @@ namespace UniVoting.Configurator
             try
             {
                 LoadedFile.Content += openFileDialog.SafeFileName;
-                //var connections = new Poker.ConfigurationPoker(openFileDialog.FileName);
-                Import(openFileDialog.FileName);
+                var xml = AppConfig.LoadXml(openFileDialog.FileName);
+
+                var connections = new Poker.ConfigurationPoker(xml);
+                var strings = connections.GetConnectionStringNames();
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 // ignored
             }

@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Background="CadetBlue" Orientation="Vertical" Grid.Row="0">
@@ -17,10 +17,8 @@
             <Button Margin="100,10,0,0"  HorizontalAlignment="Left" x:Name="ConfigLoader"  Content="Load..." MaxWidth="50" />
             <Label Name="LoadedFile" Content="Filename: "></Label>
         </StackPanel>
-        <DockPanel MinHeight="450" Name="ConfigPanel" Grid.Row="1">
-            <Border BorderBrush="CadetBlue" BorderThickness="1">
-                <RichTextBox MinHeight="450" Name="ConfigContent"></RichTextBox>
-                </Border>
-        </DockPanel>
+        <StackPanel Grid.Row="1">
+
+        </StackPanel>
     </Grid>
 </Window>
