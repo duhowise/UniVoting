@@ -117,11 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="VotingDataSource.SelectCommand" xml:space="preserve">
-    <value>SELECT  vw_CandidateVotes.Name, c.CandidatePicture, vw_CandidateVotes.Position,
-  vw_CandidateVotes.Vote, vw_CandidateVotes.Percentage AS 'Percentage Votes'
-FROM vw_CandidateVotes INNER JOIN
-   Candidate AS c ON vw_CandidateVotes.ID = c.ID
-ORDER BY c.PositionID</value>
-  </data>
 </root>
