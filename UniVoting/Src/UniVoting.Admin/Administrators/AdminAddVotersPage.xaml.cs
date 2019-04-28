@@ -147,20 +147,25 @@ namespace UniVoting.Admin.Administrators
 			            }
 			            foreach (DataGridColumn column in VoterGrid.Columns)
 			            {
-			                if (column.Header.ToString().ToLower() != "fullname") continue;
+			                //if (column.Header.ToString().ToLower() != "fullname") continue;
+			                if (!"fullname".Equals(column.Header.ToString(), StringComparison.OrdinalIgnoreCase)) continue;
 			                _indexName = column.DisplayIndex;
 			                break;
 
 			            }
 			            foreach (var column in VoterGrid.Columns)
 			            {
-			                if (column.Header.ToString().ToLower() != "indexnumber") continue;
+			                //if (column.Header.ToString().ToLower() != "indexnumber") continue;
+			                if (!"indexnumber".Equals(column.Header.ToString(), StringComparison.OrdinalIgnoreCase)) continue;
 			                _indexNUmber = column.DisplayIndex;
 			                break;
 			            }
 			            foreach (var column in VoterGrid.Columns)
 			            {
-			                if (column.Header.ToString().ToLower() != "facultyId") continue;
+			                //if (column.Header.ToString().ToLower() != "facultyId") continue;
+
+
+			                if (!"facultyId".Equals(column.Header.ToString(),StringComparison.OrdinalIgnoreCase)) continue;
 			                _faculty = column.DisplayIndex;
 			                break;
 			            }
@@ -171,10 +176,7 @@ namespace UniVoting.Admin.Administrators
                                 var voterInfo = new Voter();
                                 voterInfo.VoterName = row[_indexName].ToString();
                                 voterInfo.IndexNumber = row[_indexNUmber].ToString();
-                                voterInfo.Faculty = new Faculty
-                                {
-                                    FacultyName = row[_faculty].ToString()
-                                };
+                                voterInfo.FacultyId = Convert.ToInt32(row[_faculty]);
                                 voterInfo.VoterCode = Util.GenerateRandomPassword(6);
                                 voters.Add(voterInfo);
                             }
