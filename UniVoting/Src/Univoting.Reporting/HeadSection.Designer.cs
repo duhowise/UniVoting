@@ -36,7 +36,7 @@ namespace Univoting.Reporting
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(1.4000000953674316D), Telerik.Reporting.Drawing.Unit.Inch(1.3000000715255737D));
             this.pictureBox1.Sizing = Telerik.Reporting.Drawing.ImageSizeMode.ScaleProportional;
-            this.pictureBox1.Value = "= Fields.logo";
+            this.pictureBox1.Value = "= Fields.Logo";
             // 
             // textBox1
             // 
@@ -58,7 +58,7 @@ namespace Univoting.Reporting
             this.textBox2.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(18D);
             this.textBox2.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
             this.textBox2.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            this.textBox2.Value = "= ToUpper(Fields.EletionSubTitle)";
+            this.textBox2.Value = "= ToUpper(Fields.ElectionSubTitle)";
             // 
             // HeadSectionDataSource
             // 
