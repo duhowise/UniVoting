@@ -20,10 +20,10 @@ namespace UniVoting.Admin
 			// add custom accent and theme resource dictionaries
 			ThemeManager.AddAccent("CustomAccent1", new Uri("pack://application:,,,/UniVoting.Admin;component/CustomAccents/CustomAccent.xaml"));
 
-			// create custom accents
-			ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
-			ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
-			ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
+            // create custom accents
+            ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
+            ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
+            ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
 
             var bootStrapper = new BootStrapper();
             var container = bootStrapper.BootStrap();
