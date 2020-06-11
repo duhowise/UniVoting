@@ -102,7 +102,7 @@ namespace UniVoting.Admin
 		}
 	   public static BitmapImage BitmapToImageSource(Bitmap bitmap)
 		{
-			using (MemoryStream memory = new MemoryStream())
+			using (var memory = new MemoryStream())
 			{
 				bitmap.Save(memory, ImageFormat.Bmp);
 				memory.Position = 0;
@@ -133,12 +133,9 @@ namespace UniVoting.Admin
 			byte[] pwdBytes = Encoding.UTF8.GetBytes(password);
 			byte[] salt = Encoding.UTF8.GetBytes(username);
 			byte[] saltedPassword = new byte[pwdBytes.Length + salt.Length];
-
 			Buffer.BlockCopy(pwdBytes, 0, saltedPassword, 0, pwdBytes.Length);
 			Buffer.BlockCopy(salt, 0, saltedPassword, pwdBytes.Length, salt.Length);
-
 			SHA1 sha = SHA1.Create();
-
 			return sha.ComputeHash(saltedPassword);
 		}
 	}
