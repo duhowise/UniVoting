@@ -12,7 +12,7 @@ namespace Univoting.Reporting
 	/// <summary>
 	/// Summary description for HeadSection.
 	/// </summary>
-	public partial class HeadSection : Telerik.Reporting.Report
+	public partial class HeadSection
 	{
 		public HeadSection()
 		{
