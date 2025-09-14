@@ -13,10 +13,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="Dapper" Version="1.50.4" />
-    <PackageReference Include="Dapper.SimpleCRUD" Version="1.13.0" />
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
