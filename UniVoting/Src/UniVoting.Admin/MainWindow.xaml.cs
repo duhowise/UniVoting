@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using MahApps.Metro.Controls;
 using UniVoting.Admin.Administrators;
 using UniVoting.Model;
 

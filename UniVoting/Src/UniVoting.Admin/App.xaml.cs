@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
-using MahApps.Metro;
 using UniVoting.Admin.Administrators;
 using UniVoting.Admin.StatUp;
 
