@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
 using System.Windows.Input;
 using UniVoting.Model;
