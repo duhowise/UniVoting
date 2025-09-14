@@ -7,7 +7,9 @@
     <RootNamespace>UniVoting.LiveView</RootNamespace>
     <AssemblyName>UniVoting.LiveView</AssemblyName>
     <Configurations>AppVeyor;Debug;Release</Configurations>
-    <ApplicationIcon>viewer.ico</ApplicationIcon>
+	  <Version>1.4</Version>
+	  <ApplicationIcon>viewer.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutputPath>bin\x64\Debug\</OutputPath>

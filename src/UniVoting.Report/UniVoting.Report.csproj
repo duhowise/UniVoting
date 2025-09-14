@@ -4,10 +4,10 @@
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <RootNamespace>VoteReport</RootNamespace>
-    <AssemblyName>VoteReport</AssemblyName>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-", "_"))</RootNamespace>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
     <Configurations>Debug;Release</Configurations>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <Version>1.4</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutputPath>bin\x64\Debug\</OutputPath>

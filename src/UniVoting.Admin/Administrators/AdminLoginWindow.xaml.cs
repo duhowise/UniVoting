@@ -20,8 +20,10 @@ namespace UniVoting.Admin.Administrators
 
 		public AdminLoginWindow(ILogger<AdminLoginWindow> logger, ElectionConfigurationService electionConfigurationService)
 		{
+
 			InitializeComponent();
-			_logger = logger;
+            ExtendsContentIntoTitleBar = true;
+            _logger = logger;
 			_electionConfigurationService = electionConfigurationService;
 			
 			BtnLogin.IsDefault = true;

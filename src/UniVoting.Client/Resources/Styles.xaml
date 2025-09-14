@@ -20,7 +20,7 @@
     </Style>
 
     <!-- Subtitle Style for Labels -->
-    <Style x:Key="SubtitleTextBlockStyle" TargetType="Label">
+    <Style x:Key="SubtitleLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>

@@ -4,7 +4,9 @@
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <Configurations>AppVeyor;Debug;Release</Configurations>
+	  <Version>1.4</Version>
+	  <Configurations>AppVeyor;Debug;Release</Configurations>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -29,6 +31,9 @@
   <ItemGroup>
     <Compile Update="HeadSection.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="VoteCountReport.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="VoteReport.cs">
       <SubType>Component</SubType>

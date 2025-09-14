@@ -21,8 +21,9 @@ namespace UniVoting.LiveView
         public MainWindow(LiveViewService liveViewService, ILogger<MainWindow> logger)
 		{
 			InitializeComponent();
-			// Apply WPF UI theme
-			Wpf.Ui.Appearance.ApplicationThemeManager.Apply(this);
+			ExtendsContentIntoTitleBar = true;
+            // Apply WPF UI theme
+            Wpf.Ui.Appearance.ApplicationThemeManager.Apply(this);
 			
 			_liveViewService = liveViewService;
 			_positions=new List<Position>();

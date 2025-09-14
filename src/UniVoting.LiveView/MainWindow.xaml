@@ -19,13 +19,13 @@
         </Grid.RowDefinitions>
         <Label FontSize="16" Grid.Column="0" Grid.Row="0"
                FontFamily="Segoe Ui Bold" Margin="0,0,0,0"
-               Style="{StaticResource SubtitleTextBlockStyle}">Casted Votes</Label>
+               Style="{StaticResource SubtitleLabelStyle}">Casted Votes</Label>
 
         <UniformGrid Grid.Column="0"  Grid.Row="1" Name="CastedVotesHolder"></UniformGrid>
        
         <Label FontSize="16" Grid.Column="1" Grid.Row="0"
                FontFamily="Segoe Ui Bold" Margin="0,0,0,0"
-               Style="{StaticResource SubtitleTextBlockStyle}">Skipped Votes</Label>
+               Style="{StaticResource SubtitleLabelStyle}">Skipped Votes</Label>
 
         <UniformGrid Grid.Row="1" Grid.Column="1" Name="SkippedVotesHolder"></UniformGrid>
 
