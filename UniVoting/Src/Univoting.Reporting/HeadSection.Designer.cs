@@ -1,5 +1,7 @@
 using System.Configuration;
 using System.Net.Security;
+using Telerik.Reporting;
+using Telerik.Reporting.Drawing;
 
 namespace Univoting.Reporting
 {

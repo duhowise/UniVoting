@@ -1,3 +1,6 @@
+using Telerik.Reporting;
+using Telerik.Reporting.Drawing;
+
 namespace Univoting.Reporting
 {
     partial class VoteReport
