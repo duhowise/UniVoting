@@ -1,4 +1,5 @@
-﻿using System.Windows;
+using System.Windows;
+using Microsoft.Reporting.WinForms;
 
 namespace UniVoting.Admin.Administrators
 {
@@ -7,8 +8,8 @@ namespace UniVoting.Admin.Administrators
         public ReportViewerWindow()
         {
             InitializeComponent();
-            WindowState=WindowState.Maximized;
-            this.ReportViewer1.ZoomMode=ZoomMode.PageWidth;
+            WindowState = WindowState.Maximized;
+            this.ReportViewer1.ZoomMode = ZoomMode.PageWidth;
         }
     }
 }

@@ -18,7 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="ControlzEx" Version="5.0.0" />
+    <PackageReference Include="ControlzEx" Version="4.4.0" />
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
@@ -33,7 +33,9 @@
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.9" />
     <PackageReference Include="Microsoft.SqlServer.Types" Version="14.0.314.76" />
-    <!-- Alternative to Telerik Reporting -->
+    <!-- Microsoft ReportViewer packages -->
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Wpf" Version="150.1404.0" />
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1404.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="OvalPictureBox.cs">

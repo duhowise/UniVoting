@@ -1,8 +1,7 @@
 ﻿<Window x:Class="UniVoting.Admin.Administrators.ReportViewerWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:tr="http://schemas.telerik.com/wpf"
-    xmlns:telerikReporting="clr-namespace:Telerik.Reporting;assembly=Telerik.Reporting"
+    xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
     Title="Report Viewer Window">
 
     <Grid x:Name="LayoutRoot">
@@ -11,11 +10,9 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <tr:ReportViewer Grid.Row="0" x:Name="ReportViewer1" HorizontalAlignment="Stretch">
-              <tr:ReportViewer.ReportSource>
-                <telerikReporting:TypeReportSource TypeName="Univoting.Reporting.VoteReport, Univoting.Reporting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
-              </tr:ReportViewer.ReportSource>
-            </tr:ReportViewer>
+            <WindowsFormsHost Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <rv:ReportViewer x:Name="ReportViewer1" />
+            </WindowsFormsHost>
 
         </Grid>
     </Grid>
