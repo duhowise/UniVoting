@@ -18,13 +18,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Telerik.Reporting, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.Reporting.dll</HintPath>
-    </Reference>
     <PackageReference Include="Google.Protobuf" Version="3.32.1" />
     <PackageReference Include="MySql.Data" Version="8.0.10-rc" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.9" />
+    <!-- Alternative reporting solution for .NET 8 -->
+    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1404.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="HeadSection.cs">
@@ -33,9 +32,6 @@
     <Compile Update="VoteReport.cs">
       <SubType>Component</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="docs\MySqlCommand.xml" />

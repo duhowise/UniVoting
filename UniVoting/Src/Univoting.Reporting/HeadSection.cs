@@ -7,21 +7,19 @@ namespace Univoting.Reporting
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using Telerik.Reporting;
-
 
 	/// <summary>
 	/// Summary description for HeadSection.
 	/// </summary>
-	public partial class HeadSection : Report
+	public partial class HeadSection : UserControl
 	{
 		public HeadSection()
 		{
 			//
-			// Required for telerik Reporting designer support
+			// Required for designer support
 			//
 			InitializeComponent();
-			HeadSectionDataSource.Parameters.Add("@Id",DbType.Int32,ConfigurationManager.AppSettings["ElectionId"]);
+			// Note: DataSource configuration may need to be updated for new reporting solution
 			//
 			// TODO: Add any constructor code after InitializeComponent call
 			//
