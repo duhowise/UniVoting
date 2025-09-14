@@ -1,0 +1,86 @@
+﻿<Page x:Class="UniVoting.Admin.Administrators.AdminMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UniVoting.Admin.Administrators"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d"
+      Title="AdminMenuPage">
+    <ui:Card Margin="3" Padding="12" VerticalAlignment="Stretch">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label FontSize="36" FontFamily="Segoe Ui Light" HorizontalAlignment="Center">Election Manager</Label>
+
+            <WrapPanel ItemWidth="250" Grid.Row="1">
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnCreateAccount"
+                           ToolTip="Create Account" Click="BtnCreateAccount_Click">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="PersonAdd24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Create Account</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Create a new user Account</Label>
+                    </StackPanel>
+                </ui:Button>
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnSetUpElection"
+                           ToolTip="Set up an election" Click="BtnSetUpElection_Click">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="ThumbLike24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Election</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Set up an election</Label>
+                    </StackPanel>
+                </ui:Button>
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnSetUpPostions"
+                           ToolTip="Set up an election" Click="BtnSetUpPostions_Click">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="Location24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Positions</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Add election postions</Label>
+                    </StackPanel>
+                </ui:Button>
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnSetUpCandidates"
+                           ToolTip="Set up an election" Click="BtnSetUpCandidates_Click">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="ContactCard24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Candidates</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Add election candidates</Label>
+                    </StackPanel>
+                </ui:Button>
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnSetUpVoters"
+                           ToolTip="Set up an voters" Click="BtnSetUpVoters_Click">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="People24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Voters</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Add election Voters</Label>
+                    </StackPanel>
+                </ui:Button>
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnDeclareVotes"
+                           ToolTip="declare results">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="Clipboard24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Declare Result</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">display vote results</Label>
+                    </StackPanel>
+                </ui:Button>
+                <ui:Button Appearance="Primary" Height="200" Margin="5"
+                           Name="BtnDispensePassword"
+                           ToolTip="give out passwords to voters">
+                    <StackPanel>
+                        <ui:SymbolIcon Symbol="ScanCamera24" HorizontalAlignment="Center" Width="80" Height="80" />
+                        <Label FontSize="14" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">Dispense Password</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center" FontFamily="Segoe Ui Light">give out passwords to voters</Label>
+                    </StackPanel>
+                </ui:Button>
+            </WrapPanel>
+
+        </Grid>
+    </ui:Card>
+</Page>

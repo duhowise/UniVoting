@@ -1,0 +1,75 @@
+﻿<UserControl
+    x:Class="UniVoting.Client.CandidateControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:UniVoting.Client"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Width="250"
+    mc:Ignorable="d">
+    <ui:Card Margin="3" Padding="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Name="CandidateName"
+                Grid.Row="1"
+                Width="230"
+                Margin="-2,0,0,0"
+                HorizontalAlignment="Center"
+                FontFamily="Segoe Ui semibold"
+                FontSize="20"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                TextAlignment="Center"
+                TextWrapping="WrapWithOverflow">
+                Candidate Name
+            </TextBlock>
+            <Image
+                Name="CandidateImage"
+                Grid.Row="2"
+                Source="/Resources/images/user.png" />
+            <StackPanel
+                Grid.Row="3"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Label
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Segoe Ui Light"
+                    FontSize="18"
+                    Style="{StaticResource SubtitleTextBlockStyle}">
+                    Vote
+                </Label>
+                <ui:Button
+                    Name="BtnVote"
+                    Margin="0,10,10,10"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Appearance="Primary"
+                    TabIndex="0"
+                    ToolTip="Vote for this candidate">
+                    <ui:SymbolIcon
+                        Width="30"
+                        Height="30"
+                        Symbol="ThumbLike24" />
+                </ui:Button>
+
+            </StackPanel>
+            <Label
+                x:Name="Rank"
+                Grid.Row="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="2"
+                FontFamily="Segoe Ui bold"
+                FontSize="30"
+                Style="{StaticResource SubtitleTextBlockStyle}" />
+        </Grid>
+    </ui:Card>
+</UserControl>

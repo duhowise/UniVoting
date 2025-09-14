@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="UniVoting.Admin.Administrators.PositionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UniVoting.Admin.Administrators"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" >
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <ui:TextBox Foreground="{DynamicResource SystemAccentColorBrush}" Width="260" IsEnabled="False"
+                        PlaceholderText="position" FontSize="24" Margin="10" 
+                        Name="TextBoxPosition" TabIndex="0" VerticalAlignment="Center" />
+            <ui:TextBox Foreground="{DynamicResource SystemAccentColorBrush}" Width="260" IsEnabled="False"
+                        PlaceholderText="faculty" FontSize="24" Margin="10" 
+                        Name="TextBoxFaculty" TabIndex="0" VerticalAlignment="Center" />
+            <Rectangle Width="1.5" Height="40" Fill="{DynamicResource GrayBrush6}"></Rectangle>
+            
+            <ui:Button Appearance="Primary"
+                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Margin="10" TabIndex="2" Name="BtnEdit" Height="48" Width="48"
+                       ToolTip="edit" Click="BtnEdit_Click">
+                <ui:SymbolIcon Symbol="Edit24"
+                               Margin="10" Width="24" Height="24" VerticalAlignment="Center" />
+            </ui:Button>
+            <ui:Button Appearance="Primary"
+                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Margin="10" TabIndex="3" Name="BtnDelete" Height="48" Width="48"
+                       ToolTip="delete" Click="BtnDelete_Click">
+                <ui:SymbolIcon Symbol="Delete24" Grid.Row="0" Grid.Column="0"
+                               Margin="10" Width="24" Height="24" VerticalAlignment="Center" />
+            </ui:Button>
+        </StackPanel>    
+    </Grid>
+</UserControl>

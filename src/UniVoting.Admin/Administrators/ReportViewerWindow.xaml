@@ -1,0 +1,52 @@
+﻿<Window x:Class="UniVoting.Admin.Administrators.ReportViewerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Report Viewer Window" 
+    WindowStartupLocation="CenterScreen"
+    MinWidth="800" MinHeight="600">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <!-- Report Controls -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <Button x:Name="btnPrint" Content="Print" Click="btnPrint_Click" 
+                        Margin="0,0,10,0" Padding="10,5" />
+                <Button x:Name="btnExportPdf" Content="Export PDF" Click="btnExportPdf_Click" 
+                        Margin="0,0,10,0" Padding="10,5" />
+                <Button x:Name="btnExportExcel" Content="Export Excel" Click="btnExportExcel_Click" 
+                        Margin="0,0,10,0" Padding="10,5" />
+                <Button x:Name="btnDesigner" Content="Design Report" Click="btnDesigner_Click" 
+                        Margin="0,0,10,0" Padding="10,5" />
+                <ComboBox x:Name="cmbZoom" SelectionChanged="cmbZoom_SelectionChanged" 
+                          Width="100" Margin="0,0,10,0">
+                    <ComboBoxItem Content="Fit Width" />
+                    <ComboBoxItem Content="Fit Page" />
+                    <ComboBoxItem Content="25%" />
+                    <ComboBoxItem Content="50%" />
+                    <ComboBoxItem Content="75%" />
+                    <ComboBoxItem Content="100%" IsSelected="True" />
+                    <ComboBoxItem Content="125%" />
+                    <ComboBoxItem Content="150%" />
+                    <ComboBoxItem Content="200%" />
+                </ComboBox>
+            </StackPanel>
+
+            <!-- FastReport Preview Host -->
+            <WindowsFormsHost Grid.Row="1" x:Name="previewHost" 
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            
+            <!-- Status Bar -->
+            <StatusBar Grid.Row="2" Margin="0,10,0,0">
+                <StatusBarItem x:Name="statusText" Content="Ready" />
+                <StatusBarItem HorizontalAlignment="Right" x:Name="statusPages" />
+            </StatusBar>
+
+        </Grid>
+    </Grid>
+</Window>

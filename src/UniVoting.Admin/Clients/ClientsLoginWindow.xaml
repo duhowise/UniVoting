@@ -1,0 +1,45 @@
+﻿<ui:FluentWindow x:Class="UniVoting.Admin.Clients.ClientsLoginWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                       WindowState="Maximized"
+                WindowBackdropType="Mica"
+                TextElement.FontWeight="Medium"
+                TextElement.FontSize="16"
+                      Title="UNIVOTING" Height="350" Width="525">
+
+    <ui:Card Margin="3" Padding="12">
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="../Resources/images/univoting_bg_1.png" TileMode="Tile" Opacity="0.5"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel  Background="{DynamicResource WhiteColorBrush}" 
+                        Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="Key24" 
+                                   Margin="10" Width="50" Height="50"
+                                   Foreground="{DynamicResource SystemAccentColorBrush}" />
+                    <ui:PasswordBox Name="Pin" TabIndex="0"
+                                    Width="250" Foreground="{DynamicResource SystemAccentColorBrush}" Margin="10"
+                                    PlaceholderText="SECRET PIN" FontSize="24" FontWeight="Bold" />
+                </StackPanel>
+                <ui:Button Appearance="Primary"
+                           HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Margin="10" Name="BtnGo" TabIndex="1"
+                           Content="GO" FontSize="24"
+                           ToolTip="Go" />
+            </StackPanel>
+            <StackPanel Grid.Row="0">
+                <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Bold" Name="VotingName"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">VOTING NAME</Label>
+                <Label  Foreground="{DynamicResource WhiteColorBrush}" FontFamily="Segoe UI Light" Name="VotingSubtitle"
+                	HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Content="Voting Subtitle"/>
+            </StackPanel>
+
+        </Grid>
+    </ui:Card>
+    </ui:FluentWindow>
