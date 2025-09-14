@@ -15,12 +15,16 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.0" />
     <!-- WPF UI Framework -->
     <PackageReference Include="WPF-UI" Version="4.0.3" />
     <PackageReference Include="Google.Protobuf" Version="3.32.1" />
     <PackageReference Include="MySql.Data" Version="8.0.10-rc" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.9" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118.0" />
     <PackageReference Include="System.Reactive" Version="6.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
@@ -28,6 +32,11 @@
   <ItemGroup>
     <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj" />
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo.ttf" />

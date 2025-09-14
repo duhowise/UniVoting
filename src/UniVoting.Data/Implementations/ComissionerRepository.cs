@@ -1,72 +1,86 @@
-﻿using Dapper;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class ComissionerRepository : Repository<Comissioner>
+	public class ComissionerRepository
 	{
-		// Default constructor for DI (uses VotingSystem connection)
-		public ComissionerRepository() : base("VotingSystem")
+		private readonly VotingDbContext _context;
+
+		public ComissionerRepository(VotingDbContext context)
 		{
-			
+			_context = context;
 		}
 
-		public  async Task<Comissioner> LoginChairman(Comissioner comissioner )
+		public async Task<Comissioner> LoginChairman(Comissioner comissioner)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
+			return await _context.Comissioners
+				.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName 
+										&& c.Password == comissioner.Password 
+										&& c.IsChairman);
+		}
+
+		public async Task<Comissioner> LoginAdmin(Comissioner comissioner)
+		{
+			return await _context.Comissioners
+				.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName 
+										&& c.Password == comissioner.Password 
+										&& c.IsAdmin);
+		}
+
+		public async Task<Comissioner> LoginPresident(Comissioner comissioner)
+		{
+			return await _context.Comissioners
+				.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName 
+										&& c.Password == comissioner.Password 
+										&& c.IsPresident);
+		}
+
+		public async Task<Comissioner> Login(Comissioner comissioner)
+		{
+			return await _context.Comissioners
+				.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName 
+										&& c.Password == comissioner.Password);
+		}
+
+		public async Task AddNewConfiguration(Setting setting)
+		{
+			var existingSetting = await _context.Settings.FirstOrDefaultAsync(s => s.Id == 1);
+			if (existingSetting != null)
 			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password AND c.IsChairman=1", comissioner);
+				existingSetting.ElectionName = setting.ElectionName;
+				existingSetting.EletionSubTitle = setting.EletionSubTitle;
+				existingSetting.Logo = setting.Logo;
+				existingSetting.Colour = setting.Colour;
+				await _context.SaveChangesAsync();
 			}
 		}
-		public  async Task<Comissioner> LoginAdmin(Comissioner comissioner)
+
+		public Setting ConfigureElection()
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.isAdmin=1", comissioner);
-			}
+			return _context.Settings.FirstOrDefault(s => s.Id == 1);
 		}
-		public  async Task<Comissioner> LoginPresident(Comissioner comissioner)
+
+		public async Task<Comissioner> AddAsync(Comissioner comissioner)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.IsPresident =1", comissioner);
-			}
+			_context.Comissioners.Add(comissioner);
+			await _context.SaveChangesAsync();
+			return comissioner;
 		}
-		public  async Task AddNewConfiguration(Setting setting)
+
+		public async Task<Comissioner> UpdateAsync(Comissioner comissioner)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-
-				await connection.ExecuteAsync(@"UPDATE Settings SET  ElectionName = @ElectionName ,EletionSubTitle = @EletionSubTitle ,logo = @logo  ,Colour = @Colour WHERE  id = 1", setting);
-			}
-
+			_context.Comissioners.Update(comissioner);
+			await _context.SaveChangesAsync();
+			return comissioner;
 		}
-		public  async Task<Comissioner> Login(Comissioner comissioner )
+
+		public async Task DeleteAsync(Comissioner comissioner)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password", comissioner);
-			}
-		}
-		public virtual Setting ConfigureElection()
-		{
-			try
-			{
-				using (var connection = new DbManager(ConnectionName).Connection)
-				{
-					return connection.QueryFirstOrDefault<Setting>(@"SELECT  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=1");
-
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-
-
+			_context.Comissioners.Remove(comissioner);
+			await _context.SaveChangesAsync();
 		}
 	}
 }

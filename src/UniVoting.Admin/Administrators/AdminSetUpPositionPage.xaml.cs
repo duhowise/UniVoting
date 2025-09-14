@@ -2,7 +2,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using UniVoting.Model;
 using UniVoting.Services;
 using Wpf.Ui.Controls;
 

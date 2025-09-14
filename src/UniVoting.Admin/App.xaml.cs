@@ -1,12 +1,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using UniVoting.Admin.Administrators;
 using UniVoting.Data.Implementations;
 using UniVoting.Data.Interfaces;
-using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin
@@ -27,17 +29,27 @@ namespace UniVoting.Admin
 
 		private void ConfigureServices(ServiceCollection services)
 		{
+			// Build configuration from appsettings.json
+			var configuration = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+				.Build();
+			
+			services.AddSingleton<IConfiguration>(configuration);
+
 			// Register caching services
 			services.AddMemoryCache();
 			services.AddScoped<ICacheService, MemoryCacheService>();
 
 			// Register Microsoft Extensions Logging
 			services.AddLogging(builder => builder.AddConsole().AddDebug());
-			
-			// Register ILoggerFactory as singleton (it's automatically registered by AddLogging, but making it explicit)
-			services.AddSingleton<ILoggerFactory, LoggerFactory>();
 
-			// Register repositories first (they have no dependencies)
+			// Register VotingDbContext with MySQL connection string
+			var connectionString = configuration.GetConnectionString("VotingSystem");
+			services.AddDbContext<UniVoting.Data.VotingDbContext>(options =>
+				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+			// Register repositories
 			services.AddScoped<CandidateRepository>();
 			services.AddScoped<ComissionerRepository>();
 			services.AddScoped<VoterRepository>();
@@ -64,9 +76,7 @@ namespace UniVoting.Admin
 			services.AddTransient<PresidentLoginWindow>();
 			services.AddTransient<ReportViewerWindow>();
 			services.AddTransient<MainWindow>();
-            //configure Microsoft.Extensions.Logging
-			services.AddLogging(builder => builder.AddConsole().AddDebug());
-        }
+		}
 
         protected override void OnStartup(StartupEventArgs e)
 		{

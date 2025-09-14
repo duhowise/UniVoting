@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Media;
 using UniVoting.Data.Implementations;
 using UniVoting.Data.Interfaces;
-using UniVoting.Model;
 using UniVoting.Services;
 using Wpf.Ui.Appearance;
 

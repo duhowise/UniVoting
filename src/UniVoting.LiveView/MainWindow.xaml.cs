@@ -2,7 +2,6 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using UniVoting.Model;
 using UniVoting.Services;
 using Wpf.Ui.Controls;
 using Position = UniVoting.Model.Position;

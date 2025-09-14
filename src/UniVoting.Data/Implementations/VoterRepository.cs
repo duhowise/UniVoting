@@ -1,153 +1,130 @@
-﻿using Dapper;
+﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
+using Microsoft.EntityFrameworkCore;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class VoterRepository:Repository<Voter>
+	public class VoterRepository
 	{
+		private readonly VotingDbContext _context;
 
-		// Default constructor for DI (uses VotingSystem connection)
-		public VoterRepository() : base("VotingSystem")
+		public VoterRepository(VotingDbContext context)
 		{
-			
+			_context = context;
 		}
-		public  async Task ResetVoter(Voter member)
+		public async Task ResetVoter(Voter member)
 		{
-			using (var transaction = new TransactionScope())
-			{
-				using (var connection = new DbManager(ConnectionName).Connection)
-				{
-					try
-					{
-						var voter= await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName ,VoterCode ,IndexNumber ,Voted ,VoteInProgress FROM Voter WHERE IndexNumber=@IndexNumber",member);
-						await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", voter);
-						await connection.ExecuteAsync(@"DELETE FROM Vote WHERE VoterId=@Id", voter);
-						await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE IndexNumber=@IndexNumber", voter);
-						transaction.Complete();
-					}
-					catch (Exception)
-					{
-						// ignored
-					}
-
-				}
-
-
-
-			}
-		}
-		public  async Task<int> InsertBulkVoters(List<Voter> member)
-		{
-			int count = 0;
-			using (var transaction = new TransactionScope())
-			{
-				using (var connection = new DbManager(ConnectionName).Connection)
-				{
-					try
-					{
-						count = await connection.ExecuteAsync(@"INSERT INTO Voter(VoterName ,VoterCode ,IndexNumber) VALUES(@VoterName,@VoterCode,@IndexNumber)", member);
-						transaction.Complete();
-					}
-					catch (Exception)
-					{
-						// ignored
-					}
-
-				}
-
-
-
-			}
-
-			return count;
-		}
-		public  async Task<int> VoteSkipCount(Position position)
-		{
+			using var transaction = await _context.Database.BeginTransactionAsync();
 			try
 			{
-				using (var connection = new DbManager(ConnectionName).Connection)
+				var voter = await _context.Voters.FirstOrDefaultAsync(v => v.IndexNumber == member.IndexNumber);
+				if (voter != null)
 				{
-					return await connection.ExecuteScalarAsync<int>(@"SELECT `Count` FROM vw_LiveViewSkipped
-										WHERE PositionName = @positionName", position);
-
+					var skipped = _context.SkippedVotes.Where(sv => sv.VoterId == voter.Id);
+					var votes = _context.Votes.Where(v => v.VoterId == voter.Id);
+					_context.SkippedVotes.RemoveRange(skipped);
+					_context.Votes.RemoveRange(votes);
+					voter.VoteInProgress = false;
+					voter.Voted = false;
+					await _context.SaveChangesAsync();
+					await transaction.CommitAsync();
 				}
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				Console.WriteLine(e);
-				throw;
+				// ignored
 			}
-
-
 		}
-		public  async Task<int> InsertBulkVotes(IEnumerable<Vote> votes, Voter voter, IEnumerable<SkippedVotes> skippedVotes)
+		public async Task<int> InsertBulkVoters(List<Voter> members)
 		{
-			var task = 0;
-			using (var transaction = new TransactionScope())
+			await _context.Voters.AddRangeAsync(members);
+			var count = await _context.SaveChangesAsync();
+			return count;
+		}
+		public async Task<int> VoteSkipCount(Position position)
+		{
+			// Assuming vw_LiveViewSkipped is mapped as a DbQuery or view
+			// If not, this will need a FromSqlRaw call
+			var count = await _context.Database.ExecuteSqlInterpolatedAsync($@"SELECT `Count` FROM vw_LiveViewSkipped WHERE PositionName = {position.PositionName}");
+			return count;
+		}
+		public async Task<int> InsertBulkVotes(IEnumerable<Vote> votes, Voter voter, IEnumerable<SkippedVotes> skippedVotes)
+		{
+			using var transaction = await _context.Database.BeginTransactionAsync();
+			try
 			{
-				try
+				await _context.Votes.AddRangeAsync(votes);
+				await _context.SkippedVotes.AddRangeAsync(skippedVotes);
+				var dbVoter = await _context.Voters.FindAsync(voter.Id);
+				if (dbVoter != null)
 				{
-					using (var connection = new DbManager(ConnectionName).Connection)
-					{
-						//save votes
-						task = (int)await connection.ExecuteAsync(@"INSERT INTO Vote(VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", votes);
-						//save skipped
-						await connection.ExecuteAsync(@"INSERT INTO SkippedVotes(Positionid,VoterId)VALUES(@Positionid,@VoterId)", skippedVotes);
-						//update voter					
-						await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=1 WHERE ID=@Id", voter);
-
-						transaction.Complete();
-					}
+					dbVoter.VoteInProgress = false;
+					dbVoter.Voted = true;
 				}
-				catch (Exception)
-				{
-					// ignored
-					await ResetVoter(voter);
-				}
+				var result = await _context.SaveChangesAsync();
+				await transaction.CommitAsync();
+				return result;
 			}
-			return task;
-		}
-		public  async Task<Voter> Login(Voter voter)
-		{
-			using (var connection = new DbManager(ConnectionName).Connection)
+			catch (Exception)
 			{
-				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Faculty,Voted ,VoteInProgress
-						FROM Voter v WHERE v.VoterCode=@VoterCode", voter);
+				await ResetVoter(voter);
+				return 0;
 			}
 		}
-		public  async Task<Voter> GetVoterPass(Voter member)
+		public async Task<Voter> Login(Voter voter)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT * FROM Voter WHERE IndexNumber=@IndexNumber", member);
-			}
-
+			return await _context.Voters.FirstOrDefaultAsync(v => v.VoterCode == voter.VoterCode);
+		}
+		public async Task<Voter> GetVoterPass(Voter member)
+		{
+			return await _context.Voters.FirstOrDefaultAsync(v => v.IndexNumber == member.IndexNumber);
 		}
 		public async Task<int> VoteCount(Position position)
 		{
-
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.ExecuteScalarAsync<int>(@"SELECT `Count` FROM vw_LiveView
-										WHERE PositionName = @positionName", position);
-
-			}
-
+			// Assuming vw_LiveView is mapped as a view or use FromSqlRaw
+			var count = await _context.Database.ExecuteSqlInterpolatedAsync($@"SELECT `Count` FROM vw_LiveView WHERE PositionName = {position.PositionName}");
+			return count;
 		}
 
 		public async Task<int> InsertSkippedVotes(SkippedVotes skipped)
 		{
+			await _context.SkippedVotes.AddAsync(skipped);
+			return await _context.SaveChangesAsync();
+		}
 
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return (await connection.InsertAsync(skipped)) ?? 0;
+		// Basic CRUD operations
+		public async Task<IEnumerable<Voter>> GetAllAsync()
+		{
+			return await _context.Voters.ToListAsync();
+		}
 
-			}
+		public async Task<Voter> GetByIdAsync(int id)
+		{
+			return await _context.Voters.FindAsync(id);
+		}
 
+		public async Task<Voter> AddAsync(Voter voter)
+		{
+			_context.Voters.Add(voter);
+			await _context.SaveChangesAsync();
+			return voter;
+		}
+
+		public async Task<Voter> UpdateAsync(Voter voter)
+		{
+			_context.Voters.Update(voter);
+			await _context.SaveChangesAsync();
+			return voter;
+		}
+
+		public async Task DeleteAsync(Voter voter)
+		{
+			_context.Voters.Remove(voter);
+			await _context.SaveChangesAsync();
 		}
 
 		

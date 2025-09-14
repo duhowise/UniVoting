@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using UniVoting.Model;
-using UniVoting.Services;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
 using MessageBoxButton = System.Windows.MessageBoxButton;

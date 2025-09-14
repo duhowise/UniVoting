@@ -1,83 +1,67 @@
-﻿using Dapper;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class PositionRepository:Repository<Position>
+	public class PositionRepository
 	{
+		private readonly VotingDbContext _context;
 
-		// Default constructor for DI (uses VotingSystem connection)
-		public PositionRepository() : base("VotingSystem")
+		public PositionRepository(VotingDbContext context)
 		{
-			
-		}
-		public override async Task<IEnumerable<Position>> GetAllAsync()
-		{
-			try
-			{
-				using (var connection = new DbManager(ConnectionName).Connection)
-				{
-					return await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID ASC");
-
-				}
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
+			_context = context;
 		}
 
-		public  async Task<IEnumerable<Position>> GetPositionsWithDetailsAsync()
+		public async Task<IEnumerable<Position>> GetAllAsync()
 		{
-			try
-			{
-				IEnumerable<Position> positions = new List<Position>();
-				using (var connection = new DbManager(ConnectionName).Connection)
-				{
-					positions = await connection.QueryAsync<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
-					foreach (var position in positions)
-					{
-						position.Candidates = await connection.QueryAsync<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
-						,CandidatePicture,RankId FROM Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
-					}
-				}
-				return positions;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-
-		}
-		public  IEnumerable<Position> GetPositionsWithDetails()
-		{
-			try
-			{
-				IEnumerable<Position> positions = new List<Position>();
-				using (var connection = new DbManager(ConnectionName).Connection)
-				{
-					positions = connection.Query<Position>(@"SELECT * FROM Position p  ORDER BY p.ID DESC");
-					foreach (var position in positions)
-					{
-						position.Candidates = connection.Query<Candidate>(@"SELECT  ID ,PositionID ,CandidateName
-						,CandidatePicture,RankId FROM Candidate C WHERE c.PositionID=@Id ORDER BY C.RankId ASC", position);
-					}
-				}
-				return positions;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-
+			return await _context.Positions
+				.OrderBy(p => p.Id)
+				.ToListAsync();
 		}
 
+		public async Task<IEnumerable<Position>> GetPositionsWithDetailsAsync()
+		{
+			return await _context.Positions
+				.Include(p => p.Candidates.OrderBy(c => c.RankId))
+				.OrderByDescending(p => p.Id)
+				.ToListAsync();
+		}
+
+		public IEnumerable<Position> GetPositionsWithDetails()
+		{
+			return _context.Positions
+				.Include(p => p.Candidates.OrderBy(c => c.RankId))
+				.OrderByDescending(p => p.Id)
+				.ToList();
+		}
+
+		public async Task<Position> GetByIdAsync(int id)
+		{
+			return await _context.Positions.FindAsync(id);
+		}
+
+		public async Task<Position> AddAsync(Position position)
+		{
+			_context.Positions.Add(position);
+			await _context.SaveChangesAsync();
+			return position;
+		}
+
+		public async Task<Position> UpdateAsync(Position position)
+		{
+			_context.Positions.Update(position);
+			await _context.SaveChangesAsync();
+			return position;
+		}
+
+		public async Task DeleteAsync(Position position)
+		{
+			_context.Positions.Remove(position);
+			await _context.SaveChangesAsync();
+		}
 	}
 }

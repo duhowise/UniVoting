@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Windows;
 using UniVoting.Model;
 using UniVoting.Services;
 using Wpf.Ui.Controls;

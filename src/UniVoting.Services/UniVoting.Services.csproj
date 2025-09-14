@@ -10,8 +10,9 @@
     <!-- FastReport.OpenSource for open-source reporting services -->
     <PackageReference Include="FastReport.OpenSource" Version="2025.2.11" />
     
-    <PackageReference Include="Dapper" Version="2.0.78" />
-    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.4" />
+  <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

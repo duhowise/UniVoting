@@ -1,104 +1,78 @@
-﻿using Dapper;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UniVoting.Data.Interfaces;
 
 namespace UniVoting.Data.Implementations
 {
-	public abstract class Repository<T> :IRepository<T> where T: class 
+	public abstract class Repository<T> : IRepository<T> where T : class 
 	{
-		protected string ConnectionName;
+		protected readonly VotingDbContext _context;
 
-		protected Repository(string connection)
+		protected Repository(VotingDbContext context)
 		{
-			ConnectionName = connection;
-            SimpleCRUD.SetDialect(SimpleCRUD.Dialect.MySQL);
-        }
+			_context = context;
+		}
+
 		public virtual async Task<IEnumerable<T>> GetAllAsync()
 		{
-
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.GetListAsync<T>();
-			}
-
+			return await _context.Set<T>().ToListAsync();
 		}
-		public virtual  IEnumerable<T> GetAll()
+
+		public virtual IEnumerable<T> GetAll()
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return connection.GetList<T>();
-			}
-
+			return _context.Set<T>().ToList();
 		}
+
 		public virtual T Insert(T member)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				var insert = Convert.ToInt32(connection.Insert(member));
-				return GetById(insert);
-			}
+			_context.Set<T>().Add(member);
+			_context.SaveChanges();
+			return member;
 		}
 
 		public virtual async Task<T> InsertAsync(T member)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				var insert = Convert.ToInt32(await connection.InsertAsync(member));
-				return await GetByIdAsync(insert);
-			}
-
+			await _context.Set<T>().AddAsync(member);
+			await _context.SaveChangesAsync();
+			return member;
 		}
 		
-		public  T GetById(int member)
+		public T GetById(int id)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return  connection.Get<T>(member);
-			}
+			return _context.Set<T>().Find(id);
 		}
-		public  virtual async Task<T> GetByIdAsync(int member)
+
+		public virtual async Task<T> GetByIdAsync(int id)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				return await connection.GetAsync<T>(member);
-			}
+			return await _context.Set<T>().FindAsync(id);
 		}
 
 		public virtual T Update(T member)
 		{
-		    using (var connection = new DbManager(ConnectionName).Connection)
-		    {
-		        return  GetById(Convert.ToInt32( connection.Update(member)));
-		    }
-        }
+			_context.Set<T>().Update(member);
+			_context.SaveChanges();
+			return member;
+		}
 
 		public virtual async Task<T> UpdateAsync(T member)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-			return	await GetByIdAsync(Convert.ToInt32(await connection.UpdateAsync(member)));
-			}
+			_context.Set<T>().Update(member);
+			await _context.SaveChangesAsync();
+			return member;
 		}
 
-		
 		public virtual void Delete(T member)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-				connection.Delete(member);
-			}
+			_context.Set<T>().Remove(member);
+			_context.SaveChanges();
 		}
 
 		public virtual async Task DeleteAsync(T member)
 		{
-			using (var connection = new DbManager(ConnectionName).Connection)
-			{
-			await	connection.DeleteAsync(member);
-			}
+			_context.Set<T>().Remove(member);
+			await _context.SaveChangesAsync();
 		}
 	}
-
-	
 }
