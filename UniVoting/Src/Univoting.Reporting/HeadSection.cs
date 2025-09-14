@@ -7,12 +7,13 @@ namespace Univoting.Reporting
 	using System.ComponentModel;
 	using System.Drawing;
 	using System.Windows.Forms;
+	using Telerik.Reporting;
 
 
 	/// <summary>
 	/// Summary description for HeadSection.
 	/// </summary>
-	public partial class HeadSection
+	public partial class HeadSection : Report
 	{
 		public HeadSection()
 		{

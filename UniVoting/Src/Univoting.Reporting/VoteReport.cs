@@ -4,11 +4,12 @@ namespace Univoting.Reporting
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
+    using Telerik.Reporting;
 
     /// <summary>
     /// Summary description for VoteReport.
     /// </summary>
-    public partial class VoteReport
+    public partial class VoteReport : Report
     {
         public VoteReport()
         {
