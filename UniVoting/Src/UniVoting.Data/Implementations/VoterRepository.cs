@@ -143,7 +143,7 @@ namespace UniVoting.Data.Implementations
 
 			using (var connection = new DbManager(ConnectionName).Connection)
 			{
-				return await connection.InsertAsync<int>(skipped);
+				return await connection.InsertAsync(skipped);
 
 			}
 
