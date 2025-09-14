@@ -17,16 +17,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.ComponentModel" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Transactions" />
     <Reference Include="Telerik.Reporting, Version=10.2.16.1025, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Telerik\Reporting R3 2016\Bin\Telerik.Reporting.dll</HintPath>
@@ -57,19 +47,20 @@
       <HintPath>C:\Program Files (x86)\Telerik\Reporting R3 2016\Examples\CSharp\WpfDemo\bin\Telerik.Windows.Data.dll</HintPath>
     </Reference>
     <PackageReference Include="Autofac" Version="4.6.2" />
-    <PackageReference Include="ControlzEx" Version="3.0.2.4" />
+    <PackageReference Include="ControlzEx" Version="6.0.0" />
     <PackageReference Include="Dapper" Version="1.50.4" />
-    <PackageReference Include="Dapper.SimpleCRUD" Version="1.13.0" />
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
     <PackageReference Include="ExcelDataReader" Version="3.4.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.4.0" />
-    <PackageReference Include="Google.Protobuf" Version="3.3.0" />
-    <PackageReference Include="MahApps.Metro" Version="1.6.0-alpha0184" />
-    <PackageReference Include="MahApps.Metro.Resources" Version="0.6.1.0" />
-    <PackageReference Include="MaterialDesignColors" Version="1.1.3" />
-    <PackageReference Include="MaterialDesignThemes" Version="2.3.2-ci1036" />
-    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.0.11" />
+    <PackageReference Include="Google.Protobuf" Version="3.32.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.11" />
+    <PackageReference Include="MahApps.Metro.Resources" Version="0.6.1" />
+    <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="5.2.1" />
     <PackageReference Include="MySql.Data" Version="8.0.10-rc" />
-    <PackageReference Include="SharpZipLib" Version="0.86.0" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="OvalPictureBox.cs">
