@@ -2,7 +2,8 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using MahApps.Metro;
+using MahApps.Metro; // Ensure MahApps.Metro is referenced in your project
+using MahApps.Metro.Theming;
 
 namespace UniVoting.Admin
 {
