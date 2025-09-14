@@ -1,4 +1,5 @@
 
+using Telerik.Reporting;
 namespace Univoting.Reporting
 {
     partial class VoteReport
