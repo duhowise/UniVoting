@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using Telerik.ReportViewer.Wpf;
 
 namespace UniVoting.Admin.Administrators
 {
