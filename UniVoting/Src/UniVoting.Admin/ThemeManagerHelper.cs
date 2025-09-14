@@ -86,8 +86,7 @@ namespace UniVoting.Admin
 
             resourceDictionary = new ResourceDictionary() {Source = new Uri(fileName, UriKind.Absolute)};
 
-            var newAccent = new Accent {Name = resDictName, Resources = resourceDictionary};
-            ThemeManager.AddAccent(newAccent.Name, newAccent.Resources.Source);
+            var newAccent = ThemeManager.AddAccent(resDictName, new Uri(fileName, UriKind.Absolute));
 
             if (changeImmediately)
             {
