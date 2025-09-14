@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 

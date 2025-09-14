@@ -1,4 +1,5 @@
-﻿using UniVoting.Model;
+﻿using MahApps.Metro.Controls;
+using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators

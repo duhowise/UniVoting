@@ -1,4 +1,5 @@
-﻿
+﻿using MahApps.Metro.Controls;
+
 namespace UniVoting.Admin.Clients
 {
     /// <summary>
