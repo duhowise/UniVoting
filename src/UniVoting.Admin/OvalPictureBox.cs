@@ -17,7 +17,7 @@ namespace UniVoting.Admin
             base.OnResize(e);
             using (var gp = new GraphicsPath())
             {
-                gp.AddEllipse(new System.Drawing.Rectangle(0, 0, this.Width - 1, this.Height - 1));
+                gp.AddEllipse(new Rectangle(0, 0, this.Width - 1, this.Height - 1));
                 this.Region = new Region(gp);
             }
         }

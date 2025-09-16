@@ -11,12 +11,12 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminMenuPage : Page
 	{
-		public Comissioner Comissioner { get; }
+		public Commissioner Comissioner { get; }
 		private readonly VotingService _votingService;
 		private readonly ElectionConfigurationService _electionConfigurationService;
 		private readonly ILoggerFactory _loggerFactory;
 
-		public AdminMenuPage(Comissioner comissioner, VotingService votingService, ElectionConfigurationService electionConfigurationService, ILoggerFactory loggerFactory)
+		public AdminMenuPage(Commissioner comissioner, VotingService votingService, ElectionConfigurationService electionConfigurationService, ILoggerFactory loggerFactory)
 		{
 			Comissioner = comissioner;
 			_votingService = votingService;

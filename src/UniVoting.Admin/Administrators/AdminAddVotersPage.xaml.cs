@@ -74,7 +74,7 @@ namespace UniVoting.Admin.Administrators
 			}
 		}
 
-		private async void BtnSave_Click(object sender, System.Windows.RoutedEventArgs e)
+		private async void BtnSave_Click(object sender, RoutedEventArgs e)
 		{
 			if (voters.Count != 0)
 			{
@@ -97,7 +97,7 @@ namespace UniVoting.Admin.Administrators
 			}
 		}
 
-		private void BtnImportFile_Click(object sender, System.Windows.RoutedEventArgs e)
+		private void BtnImportFile_Click(object sender, RoutedEventArgs e)
 		{
 			using (var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2007 Files |*.xls;*.xlsx;", ValidateNames = true })
 			{

@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
-using UniVoting.Data.Interfaces;
+using UniVoting.Data;
 using UniVoting.Model;
 
 namespace UniVoting.Services
@@ -12,11 +14,11 @@ namespace UniVoting.Services
     public class VotingService
     {
         private readonly ILogger<VotingService> _logger;
-        private readonly IService _electionservice;
+        private readonly VotingDbContext _dbContext;
 
-        public VotingService(IService electionService, ILogger<VotingService> logger)
+        public VotingService(VotingDbContext dbContext, ILogger<VotingService> logger)
         {
-            _electionservice = electionService;
+            _dbContext = dbContext;
             _logger = logger;
         }
 
@@ -24,7 +26,8 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.InsertSkippedVotes(skipped);
+                _dbContext.SkippedVotes.Add(skipped);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception exception)
             {
@@ -37,7 +40,21 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.InsertBulkVotes(votes, voter, skippedVotes);
+                using var transaction = await _dbContext.Database.BeginTransactionAsync();
+                
+                // Add votes
+                _dbContext.Votes.AddRange(votes);
+                
+                // Add skipped votes
+                _dbContext.SkippedVotes.AddRange(skippedVotes);
+                
+                // Update voter status
+                voter.Voted = true;
+                voter.VoteInProgress = false;
+                _dbContext.Voters.Update(voter);
+                
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
             }
             catch (Exception exception)
             {
@@ -50,7 +67,8 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.UpdateAsync(voter);
+                _dbContext.Voters.Update(voter);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -63,11 +81,25 @@ namespace UniVoting.Services
         {
             try
             {
-                await _electionservice.Voters.ResetVoter(voter);
+                // Reset voter status
+                voter.Voted = false;
+                voter.VoteInProgress = false;
+                
+                // Remove existing votes for this voter
+                var existingVotes = _dbContext.Votes.Where(v => v.VoterId == voter.Id);
+                _dbContext.Votes.RemoveRange(existingVotes);
+                
+                // Remove existing skipped votes for this voter
+                var existingSkippedVotes = _dbContext.SkippedVotes.Where(sv => sv.VoterId == voter.Id);
+                _dbContext.SkippedVotes.RemoveRange(existingSkippedVotes);
+                
+                _dbContext.Voters.Update(voter);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception exception)
             {
                 _logger.LogError(exception, "Failed to reset voter {VoterId}", voter.Id);
+                throw;
             }
         }
 
@@ -75,14 +107,15 @@ namespace UniVoting.Services
         {
             try
             {
-                return await _electionservice.Voters.GetVoterPass(voter);
+                return await _dbContext.Voters
+                    .FirstOrDefaultAsync(v => v.IndexNumber == voter.IndexNumber);
             }
             catch (Exception exception)
             {
                 _logger.LogError(exception, "Failed to get voter pass for voter with index number {IndexNumber}", voter.IndexNumber);
                 throw;
             }
-           }
+        }
     }
 
     // Cache service interface and implementation

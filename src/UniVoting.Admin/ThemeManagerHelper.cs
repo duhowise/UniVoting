@@ -35,8 +35,8 @@ namespace UniVoting.Admin
             resourceDictionary.Add("ProgressBrush", new LinearGradientBrush(
                 new GradientStopCollection(new[]
                 {
-                    new GradientStop((System.Windows.Media.Color) resourceDictionary["HighlightColor"], 0),
-                    new GradientStop((System.Windows.Media.Color) resourceDictionary["AccentColor3"], 1)
+                    new GradientStop((Color) resourceDictionary["HighlightColor"], 0),
+                    new GradientStop((Color) resourceDictionary["AccentColor3"], 1)
                 }),
                 new Point(0.001, 0.5), new Point(1.002, (int) 0.5)));
 

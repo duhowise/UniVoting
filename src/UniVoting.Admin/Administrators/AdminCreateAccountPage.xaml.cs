@@ -58,7 +58,7 @@ namespace UniVoting.Admin.Administrators
 			{
 				try
 				{
-					await _electionConfigurationService.SaveComissioner(new Comissioner
+					await _electionConfigurationService.SaveComissioner(new Commissioner
 					{
 						FullName = TextBoxName.Text,
 						UserName = Username.Text,

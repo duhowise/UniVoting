@@ -13,7 +13,7 @@ namespace UniVoting.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Rank> Ranks { get; set; }
-        public DbSet<Comissioner> Commissioners { get; set; }
+        public DbSet<Commissioner> Commissioners { get; set; }
         public DbSet<Setting> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -95,7 +95,7 @@ namespace UniVoting.Data
                 .HasForeignKey(c => c.RankId);
 
             // Comissioner
-            modelBuilder.Entity<Comissioner>()
+            modelBuilder.Entity<Commissioner>()
                 .HasKey(c => c.Id);
 
             // Setting

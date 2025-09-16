@@ -68,7 +68,7 @@ namespace UniVoting.Client
             }
         }
 
-        private async void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void BtnSkipVote_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new ContentDialog
             {

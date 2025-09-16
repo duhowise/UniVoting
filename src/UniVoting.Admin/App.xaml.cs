@@ -7,8 +7,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using UniVoting.Admin.Administrators;
-using UniVoting.Data.Implementations;
-using UniVoting.Data.Interfaces;
 using UniVoting.Services;
 
 namespace UniVoting.Admin
@@ -46,19 +44,10 @@ namespace UniVoting.Admin
 
 			// Register VotingDbContext with MySQL connection string
 			var connectionString = configuration.GetConnectionString("VotingSystem");
-			services.AddDbContext<UniVoting.Data.VotingDbContext>(options =>
+			services.AddDbContext<Data.VotingDbContext>(options =>
 				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-			// Register repositories
-			services.AddScoped<CandidateRepository>();
-			services.AddScoped<ComissionerRepository>();
-			services.AddScoped<VoterRepository>();
-			services.AddScoped<PositionRepository>();
-
-			// Register core service that depends on repositories
-			services.AddScoped<IService, ElectionService>();
-
-			// Register business services that depend on IService
+			// Register business services that depend on VotingDbContext
 			services.AddScoped<VotingService>();
 			services.AddScoped<LiveViewService>();
 			services.AddScoped<ElectionConfigurationService>();

@@ -2,28 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UniVoting.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using UniVoting.Data;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
 	public class ElectionConfigurationService
 	{
-		private readonly IService _electionservice;
+		private readonly VotingDbContext _dbContext;
 
-		public ElectionConfigurationService(IService electionService)
+		public ElectionConfigurationService(VotingDbContext dbContext)
 		{
-			_electionservice = electionService;
+			_dbContext = dbContext;
 		}
 
 		
 		#region Voters
-		public Task<int> AddVotersAsync(List<Voter> voters)
+		public async Task<int> AddVotersAsync(List<Voter> voters)
 		{
 			try
 			{
-				return _electionservice.Voters.InsertBulkVoters(voters);
-
+				_dbContext.Voters.AddRange(voters);
+				return await _dbContext.SaveChangesAsync();
 			}
 			catch (Exception e)
 			{
@@ -31,12 +32,12 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public Task<IEnumerable<Voter>> GetAllVotersAsync()
+		
+		public async Task<IEnumerable<Voter>> GetAllVotersAsync()
 		{
 			try
 			{
-				return _electionservice.Voters.GetAllAsync();
-
+				return await _dbContext.Voters.ToListAsync();
 			}
 			catch (Exception e)
 			{
@@ -44,12 +45,13 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public Task<Voter> LoginVoter(Voter voter)
+		
+		public async Task<Voter> LoginVoter(Voter voter)
 		{
 			try
 			{
-				return _electionservice.Voters.Login(voter);
-
+				return await _dbContext.Voters
+					.FirstOrDefaultAsync(v => v.VoterCode == voter.VoterCode && v.IndexNumber == voter.IndexNumber);
 			}
 			catch (Exception e)
 			{
@@ -60,97 +62,11 @@ namespace UniVoting.Services
 		#endregion
 
 		#region Election
-		//public static  Task<Setting> ConfigureElection(int id)
-		//{
-		//	try
-		//	{
-		//		return   new ElectionBaseRepository().GetByIdAsync<Setting>(id);
-
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		Console.WriteLine(e);
-		//		throw;
-		//	}
-		//}
 		public Setting ConfigureElection()
 		{
 			try
 			{
-				return _electionservice.Comissioners.ConfigureElection();
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		public async Task NewElection(Setting setting)
-		{
-			try
-			{
-				await _electionservice.Comissioners.AddNewConfiguration(setting);
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		#endregion
-		#region Candidate
-		public async Task AddCandidate(Candidate candidate)
-		{
-			try
-			{
-				await _electionservice.Candidates.InsertAsync(candidate);
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		public async Task SaveComissioner(Comissioner comissioner)
-		{
-			if (comissioner.Id==0)
-			{
-				try
-				{
-					await _electionservice.Comissioners.InsertAsync(comissioner);
-
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}
-			else
-			{
-				try
-				{
-					await _electionservice.Comissioners.UpdateAsync(comissioner);
-
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}
-			
-		}
-	   
-		public  Task<IEnumerable<Candidate>> GetAllCandidates()
-		{
-			try
-			{
-				return _electionservice.Candidates.GetAllAsync();
-				
+				return _dbContext.Settings.FirstOrDefault();
 			}
 			catch (Exception e)
 			{
@@ -159,34 +75,12 @@ namespace UniVoting.Services
 			}
 		}
 		
-		public Task<Candidate> SaveCandidate(Candidate candidate)
+		public async Task NewElection(Setting setting)
 		{
 			try
 			{
-				if (candidate.Id == 0)
-				{
-					return _electionservice.Candidates.InsertAsync(candidate);
-				}
-				else
-				{
-					return _electionservice.Candidates.UpdateAsync(candidate);
-
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-			
-		}
-	   
-		public void RemoveCandidate(Candidate candidate)
-		{
-			try
-			{
-				_electionservice.Candidates.Delete(candidate);
-
+				_dbContext.Settings.Add(setting);
+				await _dbContext.SaveChangesAsync();
 			}
 			catch (Exception e)
 			{
@@ -195,41 +89,14 @@ namespace UniVoting.Services
 			}
 		}
 		#endregion
-		#region Position
-		public Task<Position> AddPosition(Position position)
+		
+		#region Candidate
+		public async Task AddCandidate(Candidate candidate)
 		{
 			try
 			{
-				var data = _electionservice.Positions.InsertAsync(position);
-				return data;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		 
-		}
-		public async Task<Position> GetPosition(int positionid)
-		{
-			try
-			{
-				return await _electionservice.Positions.GetByIdAsync(positionid);
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		   
-		}
-		public IEnumerable<Position> GetAllPositions()
-		{
-			try
-			{
-				return _electionservice.Positions.GetPositionsWithDetails();
-
+				_dbContext.Candidates.Add(candidate);
+				await _dbContext.SaveChangesAsync();
 			}
 			catch (Exception e)
 			{
@@ -237,38 +104,20 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public IEnumerable<Position> GetPositionsSlim()
+		
+		public async Task SaveComissioner(Commissioner comissioner)
 		{
 			try
 			{
-				return _electionservice.Positions.GetAll();
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		public Task<IEnumerable<Position>> GetAllPositionsAsync()
-		{
-			try
-			{
-				return _electionservice.Positions.GetPositionsWithDetailsAsync();
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-		public async Task UpdatePosition(Position position)
-		{
-			try
-			{
-				await _electionservice.Positions.UpdateAsync(position);
-
+				if (comissioner.Id == 0)
+				{
+					_dbContext.Commissioners.Add(comissioner);
+				}
+				else
+				{
+					_dbContext.Commissioners.Update(comissioner);
+				}
+				await _dbContext.SaveChangesAsync();
 			}
 			catch (Exception e)
 			{
@@ -277,12 +126,148 @@ namespace UniVoting.Services
 			}
 		}
 	   
-		public void RemovePosition(Position position)
+		public async Task<IEnumerable<Candidate>> GetAllCandidates()
 		{
 			try
 			{
-				_electionservice.Positions.Delete(position);
-
+				return await _dbContext.Candidates.ToListAsync();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public async Task<Candidate> SaveCandidate(Candidate candidate)
+		{
+			try
+			{
+				if (candidate.Id == 0)
+				{
+					_dbContext.Candidates.Add(candidate);
+				}
+				else
+				{
+					_dbContext.Candidates.Update(candidate);
+				}
+				await _dbContext.SaveChangesAsync();
+				return candidate;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+	   
+		public async Task RemoveCandidate(Candidate candidate)
+		{
+			try
+			{
+				_dbContext.Candidates.Remove(candidate);
+				await _dbContext.SaveChangesAsync();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		#endregion
+		
+		#region Position
+		public async Task<Position> AddPosition(Position position)
+		{
+			try
+			{
+				_dbContext.Positions.Add(position);
+				await _dbContext.SaveChangesAsync();
+				return position;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public async Task<Position> GetPosition(int positionid)
+		{
+			try
+			{
+				return await _dbContext.Positions.FindAsync(positionid);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public IEnumerable<Position> GetAllPositions()
+		{
+			try
+			{
+				return _dbContext.Positions
+					.Include(p => p.Candidates)
+					.ToList();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public IEnumerable<Position> GetPositionsSlim()
+		{
+			try
+			{
+				return _dbContext.Positions.ToList();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public async Task<IEnumerable<Position>> GetAllPositionsAsync()
+		{
+			try
+			{
+				return await _dbContext.Positions
+					.Include(p => p.Candidates)
+					.ToListAsync();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		
+		public async Task UpdatePosition(Position position)
+		{
+			try
+			{
+				_dbContext.Positions.Update(position);
+				await _dbContext.SaveChangesAsync();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+	   
+		public async Task RemovePosition(Position position)
+		{
+			try
+			{
+				_dbContext.Positions.Remove(position);
+				await _dbContext.SaveChangesAsync();
 			}
 			catch (Exception e)
 			{
@@ -291,73 +276,55 @@ namespace UniVoting.Services
 			}
 		}
 		#endregion   
+		
 		#region User
-		public async Task<Comissioner> Login(Comissioner comissioner)
+		public async Task<Commissioner> Login(Commissioner comissioner)
 		{
-			Comissioner user=new Comissioner();
-			if (comissioner.IsChairman)
+			try
 			{
-				try
-				{ user= await _electionservice.Comissioners.LoginChairman(comissioner);}
-				catch (Exception e)
+				var query = _dbContext.Commissioners.AsQueryable();
+				
+				if (comissioner.IsChairman)
 				{
-					Console.WriteLine(e);
-					throw;
+					query = query.Where(c => c.IsChairman && c.UserName == comissioner.UserName && c.Password == comissioner.Password);
 				}
+				else if (comissioner.IsPresident)
+				{
+					query = query.Where(c => c.IsPresident && c.UserName == comissioner.UserName && c.Password == comissioner.Password);
+				}
+				else if (comissioner.IsAdmin)
+				{
+					query = query.Where(c => c.IsAdmin && c.UserName == comissioner.UserName && c.Password == comissioner.Password);
+				}
+				else
+				{
+					query = query.Where(c => c.UserName == comissioner.UserName && c.Password == comissioner.Password);
+				}
+				
+				return await query.FirstOrDefaultAsync();
 			}
-			else if (comissioner.IsPresident)
+			catch (Exception e)
 			{
-				try
-				{ user= await _electionservice.Comissioners.LoginPresident(comissioner);}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}else if (comissioner.IsAdmin)
-			{
-				try
-				{ user= await _electionservice.Comissioners.LoginAdmin(comissioner);}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
+				Console.WriteLine(e);
+				throw;
 			}
-			else if (comissioner.IsPresident)
-			{
-				try
-				{  user= await _electionservice.Comissioners.LoginPresident(comissioner);}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}else
-			{
-				try
-				{  user= await _electionservice.Comissioners.Login(comissioner);}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}
-			
-			return user;
 		}
 		#endregion
 
 		public async Task<IEnumerable<Candidate>> GetCandidateWithDetails()
 		{
-			var data = await _electionservice.Candidates.GetAllAsync();
-
-			var candidateWithDetails = data as IList<Candidate> ?? data.ToList();
-			foreach (var candidate in candidateWithDetails)
+			try
 			{
-				candidate.Position = _electionservice.Positions.GetById(Convert.ToInt32(candidate.PositionId));
+				return await _dbContext.Candidates
+					.Include(c => c.Position)
+					.Include(c => c.Rank)
+					.ToListAsync();
 			}
-			return candidateWithDetails;
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 		}
 	}
 }

@@ -36,7 +36,7 @@ namespace UniVoting.Admin.Administrators
 			{
                 try
                 {
-                    var admin = await _electionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password, IsAdmin = true });
+                    var admin = await _electionConfigurationService.Login(new Commissioner { UserName = Username.Text, Password = Password.Password, IsAdmin = true });
                     if (admin != null)
                     {
                         var mainWindow = App.GetService<MainWindow>();

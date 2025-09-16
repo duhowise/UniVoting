@@ -28,7 +28,7 @@ namespace UniVoting.Admin.Administrators
 
 			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
 			{
-				var chairman = await _electionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password, IsChairman = true });
+				var chairman = await _electionConfigurationService.Login(new Commissioner { UserName = Username.Text, Password = Password.Password, IsChairman = true });
 				if (chairman != null)
 				{
 					var reportWindow = App.GetService<ReportViewerWindow>();

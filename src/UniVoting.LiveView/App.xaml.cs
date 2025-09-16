@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using UniVoting.Data.Implementations;
-using UniVoting.Data.Interfaces;
 using UniVoting.Services;
 using Wpf.Ui.Appearance;
 
@@ -26,6 +27,14 @@ namespace UniVoting.LiveView
 
         private void ConfigureServices(ServiceCollection services)
         {
+            // Build configuration from appsettings.json
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            services.AddSingleton<IConfiguration>(configuration);
+
             // Register caching services
             services.AddMemoryCache();
             services.AddScoped<ICacheService, MemoryCacheService>();
@@ -33,16 +42,12 @@ namespace UniVoting.LiveView
             // Register Microsoft Extensions Logging
             services.AddLogging(builder => builder.AddConsole().AddDebug());
 
-            // Register repositories first (they have no dependencies)
-            services.AddScoped<CandidateRepository>();
-            services.AddScoped<ComissionerRepository>();
-            services.AddScoped<VoterRepository>();
-            services.AddScoped<PositionRepository>();
+            // Register VotingDbContext with MySQL connection string
+            var connectionString = configuration.GetConnectionString("VotingSystem");
+            services.AddDbContext<Data.VotingDbContext>(options =>
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-            // Register core service that depends on repositories
-            services.AddScoped<IService, ElectionService>();
-
-            // Register business services that depend on IService
+            // Register business services that depend on VotingDbContext
             services.AddScoped<VotingService>();
             services.AddScoped<LiveViewService>();
             services.AddScoped<ElectionConfigurationService>();

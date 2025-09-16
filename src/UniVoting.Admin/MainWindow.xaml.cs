@@ -27,7 +27,7 @@ namespace UniVoting.Admin
 			Wpf.Ui.Appearance.ApplicationThemeManager.Apply(this);
 		}
 
-		public void Initialize(Comissioner comissioner)
+		public void Initialize(Commissioner comissioner)
 		{
 			PageHolder.Content = new AdminMenuPage(comissioner, _votingService, _electionConfigurationService, _loggerFactory);
 		}

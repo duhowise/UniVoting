@@ -15,7 +15,7 @@ namespace UniVoting.Admin.Administrators
 	/// </summary>
 	public partial class AdminSetUpElectionPage : Page
 	{
-		private System.Windows.Media.Color _chosencolor;
+		private Color _chosencolor;
 		private readonly ElectionConfigurationService _electionConfigurationService;
 
 		public AdminSetUpElectionPage(ElectionConfigurationService electionConfigurationService)

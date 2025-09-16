@@ -15,15 +15,15 @@ namespace UniVoting.Client
 	public partial class ClientsLoginWindow : FluentWindow
 	{
 		private readonly ICacheService _cacheService;
-		private IEnumerable<Model.Position> _positions;
-		 private Stack<Model.Position> _positionsStack;
+		private IEnumerable<Position> _positions;
+		 private Stack<Position> _positionsStack;
 		private Voter _voter;
 		
 		public ClientsLoginWindow(ICacheService cacheService)
 		{
 			_cacheService = cacheService;
 			InitializeComponent();
-			_positionsStack=new Stack<Model.Position>();
+			_positionsStack=new Stack<Position>();
 			Loaded += ClientsLoginWindow_Loaded;
 			_voter=new Voter();
 			BtnGo.IsDefault = true;
@@ -45,8 +45,8 @@ namespace UniVoting.Client
 				VotingName.Text = election.ElectionName.ToUpper();
 				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
 
-				_positions = new List<Model.Position>();
-				_positions = await _cacheService.GetObjectAsync<IEnumerable<Model.Position>>("ElectionPositions");
+				_positions = new List<Position>();
+				_positions = await _cacheService.GetObjectAsync<IEnumerable<Position>>("ElectionPositions");
 				foreach (var position in _positions)
 				{
 					_positionsStack.Push(position);
