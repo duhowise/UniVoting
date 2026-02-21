@@ -40,6 +40,7 @@ namespace UniVoting.Admin.Administrators
         private int _candidateId;
         private readonly IElectionConfigurationService _electionService;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminSetUpCandidatesPage()
         {
             _candidateId = 0;

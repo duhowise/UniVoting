@@ -28,7 +28,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public Task<int> VotesSkipppedCountAsync(string position)
+		public Task<int> VotesSkippedCountAsync(string position)
 		{
 			try
 			{

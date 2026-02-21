@@ -7,6 +7,6 @@ namespace UniVoting.Services;
 public interface ILiveViewService
 {
     Task<int> VoteCountAsync(string position);
-    Task<int> VotesSkipppedCountAsync(string position);
+    Task<int> VotesSkippedCountAsync(string position);
     Task<IEnumerable<Position>> Positions();
 }

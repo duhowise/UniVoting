@@ -11,6 +11,7 @@ namespace UniVoting.Admin.Administrators
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminMenuPage()
         {
             InitializeComponent();

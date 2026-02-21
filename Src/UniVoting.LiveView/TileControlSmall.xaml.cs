@@ -13,6 +13,7 @@ namespace UniVoting.LiveView
         private readonly ILiveViewService _liveViewService;
         private readonly string _position;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public TileControlSmall()
         {
             InitializeComponent();
@@ -37,7 +38,7 @@ namespace UniVoting.LiveView
         {
             try
             {
-                VoteCount.Text = $"{await _liveViewService.VotesSkipppedCountAsync(_position.Trim())}";
+                VoteCount.Text = $"{await _liveViewService.VotesSkippedCountAsync(_position.Trim())}";
             }
             catch (SqlException exception) { _logger.Log(exception); }
             catch (Exception exception) { _logger.Log(exception); }

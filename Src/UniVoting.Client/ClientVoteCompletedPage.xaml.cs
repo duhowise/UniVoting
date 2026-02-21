@@ -20,6 +20,7 @@ namespace UniVoting.Client
         private readonly IVotingService _votingService;
         private readonly IElectionConfigurationService _electionService;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public ClientVoteCompletedPage()
         {
             InitializeComponent();

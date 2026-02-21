@@ -13,6 +13,7 @@ namespace UniVoting.LiveView
         private readonly ILiveViewService _liveViewService;
         private readonly string _position;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public TileControlLarge()
         {
             InitializeComponent();

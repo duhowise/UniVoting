@@ -14,6 +14,7 @@ namespace UniVoting.Admin
         private readonly IVotingService _votingService;
         private readonly ILogger _logger;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
         {
             InitializeComponent();
