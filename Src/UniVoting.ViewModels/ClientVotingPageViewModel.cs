@@ -6,7 +6,7 @@ using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
-namespace UniVoting.Client.ViewModels;
+namespace UniVoting.ViewModels;
 
 public partial class ClientVotingPageViewModel : ObservableObject
 {

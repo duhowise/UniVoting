@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using UniVoting.Model;
 using UniVoting.Services;
 
-namespace UniVoting.Admin.ViewModels;
+namespace UniVoting.ViewModels;
 
 public partial class AdminCreateAccountPageViewModel : ObservableObject
 {

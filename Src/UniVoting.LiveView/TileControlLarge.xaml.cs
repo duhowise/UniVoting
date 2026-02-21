@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Threading;
-using UniVoting.LiveView.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
 

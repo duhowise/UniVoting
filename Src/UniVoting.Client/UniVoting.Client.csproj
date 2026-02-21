@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UniVoting.Model\UniVoting.Model.csproj" />
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj" />
+    <ProjectReference Include="..\UniVoting.ViewModels\UniVoting.ViewModels.csproj" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="Resources\Entypo.ttf" />

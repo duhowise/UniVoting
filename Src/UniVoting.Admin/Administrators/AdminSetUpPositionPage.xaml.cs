@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using UniVoting.Admin.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
 

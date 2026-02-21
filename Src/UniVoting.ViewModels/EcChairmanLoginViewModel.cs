@@ -5,12 +5,11 @@ using CommunityToolkit.Mvvm.Input;
 using UniVoting.Model;
 using UniVoting.Services;
 
-namespace UniVoting.Admin.ViewModels;
+namespace UniVoting.ViewModels;
 
-public partial class AdminLoginViewModel : ObservableObject
+public partial class EcChairmanLoginViewModel : ObservableObject
 {
     private readonly IElectionConfigurationService _electionService;
-    private readonly IAdminSessionService _session;
 
     public event Action? LoginSucceeded;
     public event Action<string>? ErrorOccurred;
@@ -21,31 +20,29 @@ public partial class AdminLoginViewModel : ObservableObject
     [ObservableProperty]
     private string? _password;
 
+    public EcChairmanLoginViewModel(IElectionConfigurationService electionService)
+    {
+        _electionService = electionService;
+    }
+
     [ObservableProperty]
     private bool _isLoginEnabled = true;
 
-    public AdminLoginViewModel(IElectionConfigurationService electionService, IAdminSessionService session)
-    {
-        _electionService = electionService;
-        _session = session;
-    }
-
-    [RelayCommand(CanExecute = nameof(IsLoginEnabled))]
+    [RelayCommand]
     private async Task LoginAsync()
     {
         if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
         {
-            ErrorOccurred?.Invoke("Please Enter Username or password to Login.");
+            ErrorOccurred?.Invoke("Wrong username or password.");
             ClearCredentials();
             return;
         }
+        IsLoginEnabled = false;
         try
         {
-            IsLoginEnabled = false;
-            var admin = await _electionService.Login(new Comissioner { UserName = Username, Password = Password });
-            if (admin != null)
+            var chairman = await _electionService.Login(new Comissioner { UserName = Username, Password = Password, IsChairman = true });
+            if (chairman != null)
             {
-                _session.CurrentAdmin = admin;
                 LoginSucceeded?.Invoke();
             }
             else
@@ -57,6 +54,7 @@ public partial class AdminLoginViewModel : ObservableObject
         catch (Exception ex)
         {
             ErrorOccurred?.Invoke($"Could not connect to the database.\n\n{ex.Message}");
+            ClearCredentials();
         }
         finally
         {

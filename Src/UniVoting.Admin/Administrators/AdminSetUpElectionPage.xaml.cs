@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using UniVoting.Admin.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators

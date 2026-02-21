@@ -8,7 +8,7 @@ using Avalonia.Platform.Storage;
 using ExcelDataReader;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
-using UniVoting.Admin.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
 

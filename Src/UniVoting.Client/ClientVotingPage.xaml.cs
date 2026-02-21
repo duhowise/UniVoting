@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using UniVoting.Client.ViewModels;
+using UniVoting.Services;
+using UniVoting.ViewModels;
 
 namespace UniVoting.Client
 {

@@ -1,8 +1,9 @@
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using UniVoting.Model;
+using UniVoting.Services;
 
-namespace UniVoting.Client.ViewModels;
+namespace UniVoting.ViewModels;
 
 public partial class ConfirmDialogViewModel : ObservableObject
 {

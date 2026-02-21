@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
-using UniVoting.Client.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
 

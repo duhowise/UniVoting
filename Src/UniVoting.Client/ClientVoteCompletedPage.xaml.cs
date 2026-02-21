@@ -4,7 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using Avalonia.Threading;
-using UniVoting.Client.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Services;
 
 namespace UniVoting.Client

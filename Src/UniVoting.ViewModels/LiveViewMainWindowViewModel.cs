@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using UniVoting.Model;
 using UniVoting.Services;
 
-namespace UniVoting.LiveView.ViewModels;
+namespace UniVoting.ViewModels;
 
 public partial class LiveViewMainWindowViewModel : ObservableObject
 {
