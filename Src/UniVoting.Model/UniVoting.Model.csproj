@@ -7,8 +7,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
-    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
-  </ItemGroup>
 </Project>

@@ -1,72 +1,64 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using Dapper;
+using Microsoft.EntityFrameworkCore;
 using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class ComissionerRepository : Repository<Comissioner>, IComissionerRepository
-	{
+    public class ComissionerRepository : Repository<Comissioner>, IComissionerRepository
+    {
+        public ComissionerRepository(IDbContextFactory<ElectionDbContext> dbFactory) : base(dbFactory) { }
 
-		public ComissionerRepository(string connectionString) : base(connectionString)
-		{
-			
-		}
-		public  async Task<Comissioner> LoginChairman(Comissioner comissioner )
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password AND c.IsChairman=1", comissioner);
-			}
-		}
-		public  async Task<Comissioner> LoginAdmin(Comissioner comissioner)
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.isAdmin=1", comissioner);
-			}
-		}
-		public  async Task<Comissioner> LoginPresident(Comissioner comissioner)
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password  AND c.IsPresident =1", comissioner);
-			}
-		}
-		public  async Task AddNewConfiguration(Setting setting)
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
+        public async Task<Comissioner> LoginChairman(Comissioner comissioner)
+        {
+            await using var db = await DbFactory.CreateDbContextAsync();
+            return await db.Comissioners.FirstOrDefaultAsync(c =>
+                c.UserName == comissioner.UserName &&
+                c.Password == comissioner.Password &&
+                c.IsChairman) ?? new Comissioner();
+        }
 
-				await connection.ExecuteAsync(@"UPDATE dbo.Settings SET  ElectionName = @ElectionName ,EletionSubTitle = @EletionSubTitle ,logo = @logo  ,Colour = @Colour WHERE  id = 1", setting);
-			}
+        public async Task<Comissioner> LoginAdmin(Comissioner comissioner)
+        {
+            await using var db = await DbFactory.CreateDbContextAsync();
+            return await db.Comissioners.FirstOrDefaultAsync(c =>
+                c.UserName == comissioner.UserName &&
+                c.Password == comissioner.Password &&
+                c.IsAdmin) ?? new Comissioner();
+        }
 
-		}
-		public  async Task<Comissioner> Login(Comissioner comissioner )
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Comissioner>(@"select * FROM Comissioner c  WHERE   c.Username=@Username AND c.Password=@Password", comissioner);
-			}
-		}
-		public virtual Setting ConfigureElection()
-		{
-			try
-			{
-				using (var connection = new DbManager(connectionName).Connection)
-				{
-					return connection.QueryFirstOrDefault<Setting>(@"SELECT TOP 1  s.id ,s.ElectionName ,s.EletionSubTitle ,s.logo,s.Colour FROM Settings s WHERE s.id=1");
+        public async Task<Comissioner> LoginPresident(Comissioner comissioner)
+        {
+            await using var db = await DbFactory.CreateDbContextAsync();
+            return await db.Comissioners.FirstOrDefaultAsync(c =>
+                c.UserName == comissioner.UserName &&
+                c.Password == comissioner.Password &&
+                c.IsPresident) ?? new Comissioner();
+        }
 
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
+        public async Task AddNewConfiguration(Setting setting)
+        {
+            await using var db = await DbFactory.CreateDbContextAsync();
+            await db.Settings.Where(s => s.Id == 1).ExecuteUpdateAsync(s => s
+                .SetProperty(x => x.ElectionName, setting.ElectionName)
+                .SetProperty(x => x.EletionSubTitle, setting.EletionSubTitle)
+                .SetProperty(x => x.Logo, setting.Logo)
+                .SetProperty(x => x.Colour, setting.Colour));
+        }
 
+        public async Task<Comissioner> Login(Comissioner comissioner)
+        {
+            await using var db = await DbFactory.CreateDbContextAsync();
+            return await db.Comissioners.FirstOrDefaultAsync(c =>
+                c.UserName == comissioner.UserName &&
+                c.Password == comissioner.Password) ?? new Comissioner();
+        }
 
-		}
-	}
+        public Setting ConfigureElection()
+        {
+            using var db = DbFactory.CreateDbContext();
+            return db.Settings.FirstOrDefault(s => s.Id == 1) ?? new Setting();
+        }
+    }
 }

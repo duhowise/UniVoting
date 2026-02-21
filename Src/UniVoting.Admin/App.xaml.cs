@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Admin.Administrators;
 using UniVoting.Services;
@@ -15,8 +16,16 @@ namespace UniVoting.Admin
 
         public override void OnFrameworkInitializationCompleted()
         {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+            var connectionString = config.GetConnectionString("VotingSystem")
+                ?? throw new InvalidOperationException("Connection string 'VotingSystem' not found in appsettings.json.");
+
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddUniVotingServices();
+            serviceCollection.AddUniVotingServices(connectionString);
             serviceCollection.AddTransient<AdminLoginWindow>();
             serviceCollection.AddTransient<MainWindow>();
             serviceCollection.AddTransient<Administrators.AdminMenuPage>();

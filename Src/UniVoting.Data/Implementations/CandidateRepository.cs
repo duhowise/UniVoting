@@ -1,14 +1,11 @@
-﻿using UniVoting.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class CandidateRepository : Repository<Candidate>, ICandidateRepository
-	{
-
-		public CandidateRepository(string connectionString) : base(connectionString)
-		{
-			
-		}
-	}
+    public class CandidateRepository : Repository<Candidate>, ICandidateRepository
+    {
+        public CandidateRepository(IDbContextFactory<ElectionDbContext> dbFactory) : base(dbFactory) { }
+    }
 }
