@@ -43,7 +43,8 @@ namespace UniVoting.Admin.Administrators
                     var admin = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text });
                     if (admin != null)
                     {
-                        ActivatorUtilities.CreateInstance<MainWindow>(_sp, admin).Show();
+                        var mainWindow = _sp.GetRequiredService<MainWindow>();
+                        mainWindow.Show();
                         Close();
                     }
                     else
