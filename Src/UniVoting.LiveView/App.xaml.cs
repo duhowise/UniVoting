@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.LiveView
@@ -17,13 +16,12 @@ namespace UniVoting.LiveView
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices();
+            serviceCollection.AddTransient<MainWindow>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var liveViewService = Services.GetRequiredService<ILiveViewService>();
-                var logger = Services.GetRequiredService<ILogger>();
-                desktop.MainWindow = new MainWindow(liveViewService, logger);
+                desktop.MainWindow = Services.GetRequiredService<MainWindow>();
             }
             base.OnFrameworkInitializationCompleted();
         }

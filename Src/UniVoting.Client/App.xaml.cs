@@ -18,18 +18,17 @@ namespace UniVoting.Client
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices();
+            serviceCollection.AddTransient<ClientsLoginWindow>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var electionService = Services.GetRequiredService<IElectionConfigurationService>();
-                var votingService = Services.GetRequiredService<IVotingService>();
                 var logger = Services.GetRequiredService<ILogger>();
                 AppDomain.CurrentDomain.UnhandledException += (s, e) =>
                 {
                     if (e.ExceptionObject is Exception exp) logger.Log(exp);
                 };
-                desktop.MainWindow = new ClientsLoginWindow(electionService, votingService, logger);
+                desktop.MainWindow = Services.GetRequiredService<ClientsLoginWindow>();
             }
             base.OnFrameworkInitializationCompleted();
         }
