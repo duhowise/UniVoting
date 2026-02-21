@@ -19,14 +19,10 @@ namespace UniVoting.Admin
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _votingService = null!;
-            _logger = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public MainWindow(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
+        public MainWindow(IAdminSessionService session, IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
         {
             _electionService = electionService;
             _votingService = votingService;
@@ -34,7 +30,7 @@ namespace UniVoting.Admin
             _sp = sp;
             InitializeComponent();
             Navigate = (content) => PageHolder.Content = content;
-            PageHolder.Content = ActivatorUtilities.CreateInstance<AdminMenuPage>(_sp, comissioner);
+            PageHolder.Content = _sp.GetRequiredService<AdminMenuPage>();
         }
 
         protected override void OnClosing(Avalonia.Controls.WindowClosingEventArgs e)

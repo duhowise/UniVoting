@@ -21,30 +21,25 @@ namespace UniVoting.Client
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
         private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
         {
-            InitializeComponent();
-            _positionsStack = new Stack<Position>();
-            _voter = new Voter();
-            _votes = new ConcurrentBag<Vote>();
-            _skippedVotes = new ConcurrentBag<SkippedVotes>();
-            _electionService = null!;
-            _votingService = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public MainWindow(Stack<Position> positionsStack, Voter voter, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
+        public MainWindow(IClientSessionService session, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
         {
+            _session = session;
             _electionService = electionService;
             _votingService = votingService;
             _sp = sp;
+            _positionsStack = session.Positions;
+            _voter = session.CurrentVoter!;
+            _votes = session.Votes;
+            _skippedVotes = session.SkippedVotes;
             InitializeComponent();
-            _positionsStack = positionsStack;
-            _voter = voter;
-            _skippedVotes = new ConcurrentBag<SkippedVotes>();
-            _votes = new ConcurrentBag<Vote>();
             Loaded += MainWindow_Loaded1;
             Loaded += MainWindow_Loaded;
             CandidateControl.VoteCast += CandidateControl_VoteCast;
@@ -84,14 +79,15 @@ namespace UniVoting.Client
             else
             {
                 _voter.Voted = true;
-                ActivatorUtilities.CreateInstance<ClientVoteCompletedPage>(_sp, _votes, _voter, _skippedVotes).Show();
+                _sp.GetRequiredService<ClientVoteCompletedPage>().Show();
                 Hide();
             }
         }
 
         private ClientVotingPage VotingPageMaker(Stack<Position> positions)
         {
-            _votingPage = ActivatorUtilities.CreateInstance<ClientVotingPage>(_sp, _voter, positions.Pop(), _votes, _skippedVotes);
+            _session.CurrentPosition = positions.Pop();
+            _votingPage = _sp.GetRequiredService<ClientVotingPage>();
             _votingPage.VoteCompleted += VotingPage_VoteCompleted;
             return _votingPage;
         }

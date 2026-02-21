@@ -11,27 +11,28 @@ namespace UniVoting.LiveView
     {
         private readonly ILogger _logger;
         private readonly ILiveViewService _liveViewService;
-        private readonly string _position;
+        private string _position = string.Empty;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public TileControlSmall()
         {
-            InitializeComponent();
-            _position = string.Empty;
-            _logger = null!;
-            _liveViewService = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public TileControlSmall(string position, ILiveViewService liveViewService, ILogger logger)
+        public TileControlSmall(ILiveViewService liveViewService, ILogger logger)
         {
             _liveViewService = liveViewService;
             _logger = logger;
             InitializeComponent();
+        }
+
+        public void Initialize(string position)
+        {
+            _position = position.Trim();
+            Position.Text = _position.ToUpper();
             var timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 1) };
             timer.Tick += _timer_Tick;
             timer.Start();
-            _position = position.Trim();
-            Position.Text = _position.ToUpper();
         }
 
         private async void _timer_Tick(object? sender, EventArgs e)

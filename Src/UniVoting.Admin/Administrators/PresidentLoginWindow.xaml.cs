@@ -13,11 +13,10 @@ namespace UniVoting.Admin.Administrators
         private readonly IElectionConfigurationService _electionService;
         private readonly IServiceProvider _sp;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public PresidentLoginWindow()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public PresidentLoginWindow(IElectionConfigurationService electionService, IServiceProvider sp)

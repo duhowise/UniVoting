@@ -27,11 +27,10 @@ namespace UniVoting.Admin.Administrators
             set => SetValue(IdProperty, value);
         }
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public PositionControl()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public PositionControl(IElectionConfigurationService electionService, IServiceProvider sp)

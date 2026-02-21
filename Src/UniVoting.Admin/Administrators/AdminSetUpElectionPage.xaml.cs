@@ -15,10 +15,10 @@ namespace UniVoting.Admin.Administrators
         private Avalonia.Media.Color _chosencolor;
         private readonly IElectionConfigurationService _electionService;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminSetUpElectionPage()
         {
-            InitializeComponent();
-            _electionService = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public AdminSetUpElectionPage(IElectionConfigurationService electionService)

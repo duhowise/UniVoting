@@ -25,13 +25,10 @@ namespace UniVoting.Admin.Administrators
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminAddVotersPage()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _votingService = null!;
-            _dataSet = new DataSet();
-            voters = new List<Voter>();
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public AdminAddVotersPage(IElectionConfigurationService electionService, IVotingService votingService)

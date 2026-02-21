@@ -43,10 +43,7 @@ namespace UniVoting.Admin.Administrators
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminSetUpCandidatesPage()
         {
-            _candidateId = 0;
-            _rank = new List<int>();
-            _electionService = null!;
-            InitializeComponent();
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public AdminSetUpCandidatesPage(IElectionConfigurationService electionService)

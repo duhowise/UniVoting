@@ -39,28 +39,35 @@ namespace UniVoting.Client
         public YesOrNoCandidateControl()
         {
             InitializeComponent();
-            _votes = new ConcurrentBag<Vote>();
-            _position = new Position();
-            _candidate = new Candidate();
-            _voter = new Voter();
-            _skippedVotes = new ConcurrentBag<SkippedVotes>();
+            var session = App.Services.GetRequiredService<IClientSessionService>();
+            _votes = session.Votes;
+            _position = session.CurrentPosition ?? new Position();
+            _candidate = session.CurrentCandidate ?? new Candidate();
+            _voter = session.CurrentVoter ?? new Voter();
+            _skippedVotes = session.SkippedVotes;
             _sp = App.Services;
             _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
             _skipDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
+            BtnVoteNo.Click += BtnVoteNo_Click;
+            BtnVoteYes.Click += BtnVoteYes_Click;
+            _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;
+            _skipDialogControl.BtnYes.Click += SkipBtnYes_Click;
+            _confirmDialogControl.BtnNo.Click += BtnNo_Click;
+            _confirmDialogControl.BtnYes.Click += BtnYes_Click;
+            Loaded += YesOrNoCandidateControl_Loaded;
         }
 
-        public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
-            ConcurrentBag<SkippedVotes> skippedVotes, IServiceProvider sp)
+        public YesOrNoCandidateControl(IClientSessionService session, IServiceProvider sp)
         {
             InitializeComponent();
             _sp = sp;
-            _confirmDialogControl = ActivatorUtilities.CreateInstance<ConfirmDialogControl>(sp, candidate);
-            _skipDialogControl = ActivatorUtilities.CreateInstance<SkipVoteDialogControl>(sp, position);
-            _votes = votes;
-            _position = position;
-            _candidate = candidate;
-            _voter = voter;
-            _skippedVotes = skippedVotes;
+            _confirmDialogControl = sp.GetRequiredService<ConfirmDialogControl>();
+            _skipDialogControl = sp.GetRequiredService<SkipVoteDialogControl>();
+            _votes = session.Votes;
+            _position = session.CurrentPosition!;
+            _candidate = session.CurrentCandidate!;
+            _voter = session.CurrentVoter!;
+            _skippedVotes = session.SkippedVotes;
             BtnVoteNo.Click += BtnVoteNo_Click;
             BtnVoteYes.Click += BtnVoteYes_Click;
             _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;

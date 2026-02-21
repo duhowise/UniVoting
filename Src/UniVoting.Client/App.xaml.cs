@@ -25,6 +25,9 @@ namespace UniVoting.Client
             var connectionString = config.GetConnectionString("VotingSystem")
                 ?? throw new InvalidOperationException("Connection string 'VotingSystem' not found in appsettings.json.");
 
+            if (connectionString.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("Please update the connection string in appsettings.json before running the application.");
+
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices(connectionString);
             serviceCollection.AddTransient<ClientsLoginWindow>();
@@ -35,6 +38,7 @@ namespace UniVoting.Client
             serviceCollection.AddTransient<YesOrNoCandidateControl>();
             serviceCollection.AddTransient<ConfirmDialogControl>();
             serviceCollection.AddTransient<SkipVoteDialogControl>();
+            serviceCollection.AddSingleton<IClientSessionService, ClientSessionService>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

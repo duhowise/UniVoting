@@ -31,30 +31,37 @@ namespace UniVoting.Client
         private Candidate _candidate;
         private Voter _voter;
         private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
 
         public CandidateControl()
         {
             InitializeComponent();
-            _votes = new ConcurrentBag<Vote>();
-            _position = new Position();
-            _candidate = new Candidate();
-            _voter = new Voter();
+            _session = App.Services.GetRequiredService<IClientSessionService>();
+            _votes = _session.Votes;
+            _position = _session.CurrentPosition ?? new Position();
+            _candidate = _session.CurrentCandidate ?? new Candidate();
+            _voter = _session.CurrentVoter ?? new Voter();
             _sp = App.Services;
             _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
+            _confirmDialogControl.BtnYes.Click += BtnYesClick;
+            _confirmDialogControl.BtnNo.Click += BtnNoClick;
+            Loaded += CandidateControl_Loaded;
+            BtnVote.Click += BtnVote_Click;
         }
 
-        public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter, IServiceProvider sp)
+        public CandidateControl(IClientSessionService session, IServiceProvider sp)
         {
             InitializeComponent();
-            _votes = votes;
-            _position = position;
-            _candidate = candidate;
-            _voter = voter;
+            _session = session;
+            _votes = session.Votes;
+            _position = session.CurrentPosition!;
+            _candidate = session.CurrentCandidate!;
+            _voter = session.CurrentVoter!;
             _sp = sp;
             Loaded += CandidateControl_Loaded;
             BtnVote.Click += BtnVote_Click;
 
-            _confirmDialogControl = ActivatorUtilities.CreateInstance<ConfirmDialogControl>(_sp, candidate);
+            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
             _confirmDialogControl.BtnYes.Click += BtnYesClick;
             _confirmDialogControl.BtnNo.Click += BtnNoClick;
         }

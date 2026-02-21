@@ -23,6 +23,9 @@ namespace UniVoting.LiveView
             var connectionString = config.GetConnectionString("VotingSystem")
                 ?? throw new InvalidOperationException("Connection string 'VotingSystem' not found in appsettings.json.");
 
+            if (connectionString.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("Please update the connection string in appsettings.json before running the application.");
+
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices(connectionString);
             serviceCollection.AddTransient<MainWindow>();

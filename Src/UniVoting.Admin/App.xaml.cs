@@ -24,6 +24,9 @@ namespace UniVoting.Admin
             var connectionString = config.GetConnectionString("VotingSystem")
                 ?? throw new InvalidOperationException("Connection string 'VotingSystem' not found in appsettings.json.");
 
+            if (connectionString.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("Please update the connection string in appsettings.json before running the application.");
+
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices(connectionString);
             serviceCollection.AddTransient<AdminLoginWindow>();
@@ -40,6 +43,7 @@ namespace UniVoting.Admin
             serviceCollection.AddTransient<Administrators.AdminAddVotersPage>();
             serviceCollection.AddTransient<Administrators.AddPositionDialogControl>();
             serviceCollection.AddTransient<Administrators.PositionControl>();
+            serviceCollection.AddSingleton<IAdminSessionService, AdminSessionService>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -13,33 +14,27 @@ namespace UniVoting.Client
     public partial class ClientsLoginWindow : Window
     {
         private IEnumerable<Model.Position>? _positions;
-        private Stack<Model.Position> _positionsStack;
         private Voter _voter;
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
         private readonly ILogger _logger;
         private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public ClientsLoginWindow()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _votingService = null!;
-            _logger = null!;
-            _sp = null!;
-            _positionsStack = new Stack<Model.Position>();
-            _voter = new Voter();
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public ClientsLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
+        public ClientsLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp, IClientSessionService session)
         {
             _electionService = electionService;
             _votingService = votingService;
             _logger = logger;
             _sp = sp;
+            _session = session;
             InitializeComponent();
-            _positionsStack = new Stack<Model.Position>();
             Loaded += ClientsLoginWindow_Loaded;
             _voter = new Voter();
             BtnGo.Click += BtnGo_Click;
@@ -63,8 +58,9 @@ namespace UniVoting.Client
                     VotingSubtitle.Content = election.EletionSubTitle?.ToUpper();
                 }
                 _positions = _electionService.GetAllPositions();
+                _session.Positions = new Stack<Model.Position>();
                 foreach (var position in _positions)
-                    _positionsStack.Push(position);
+                    _session.Positions.Push(position);
             }
             catch (Exception exception)
             {
@@ -94,7 +90,10 @@ namespace UniVoting.Client
             {
                 if (!_voter.VoteInProgress && !_voter.Voted)
                 {
-                    ActivatorUtilities.CreateInstance<MainWindow>(_sp, _positionsStack, _voter).Show();
+                    _session.CurrentVoter = _voter;
+                    _session.Votes = new ConcurrentBag<Vote>();
+                    _session.SkippedVotes = new ConcurrentBag<SkippedVotes>();
+                    _sp.GetRequiredService<MainWindow>().Show();
                     Hide();
                 }
                 else

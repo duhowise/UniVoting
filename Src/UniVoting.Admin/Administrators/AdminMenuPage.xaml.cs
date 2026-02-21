@@ -2,14 +2,13 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
-using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {
     public partial class AdminMenuPage : UserControl
     {
-        public Comissioner Comissioner { get; }
+        private IAdminSessionService _session;
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
         private readonly IServiceProvider _sp;
@@ -17,16 +16,12 @@ namespace UniVoting.Admin.Administrators
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminMenuPage()
         {
-            InitializeComponent();
-            Comissioner = new Comissioner();
-            _electionService = null!;
-            _votingService = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public AdminMenuPage(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
+        public AdminMenuPage(IAdminSessionService session, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
         {
-            Comissioner = comissioner;
+            _session = session;
             _electionService = electionService;
             _votingService = votingService;
             _sp = sp;
@@ -43,14 +38,16 @@ namespace UniVoting.Admin.Administrators
 
         private void AdminMenuPage_Loaded(object? sender, RoutedEventArgs e)
         {
-            if (Comissioner.IsChairman)
+            var comissioner = _session.CurrentAdmin;
+            if (comissioner == null) return;
+            if (comissioner.IsChairman)
             {
                 BtnSetUpElection.IsEnabled = false;
                 BtnCreateAccount.IsEnabled = false;
                 BtnSetUpCandidates.IsEnabled = false;
                 BtnSetUpPostions.IsEnabled = false;
             }
-            else if (Comissioner.IsPresident)
+            else if (comissioner.IsPresident)
             {
                 BtnSetUpElection.IsEnabled = false;
                 BtnCreateAccount.IsEnabled = false;
@@ -58,7 +55,7 @@ namespace UniVoting.Admin.Administrators
                 BtnSetUpPostions.IsEnabled = false;
                 BtnSetUpVoters.IsEnabled = false;
             }
-            else if (!Comissioner.IsChairman && !Comissioner.IsAdmin && !Comissioner.IsPresident)
+            else if (!comissioner.IsChairman && !comissioner.IsAdmin && !comissioner.IsPresident)
             {
                 BtnSetUpElection.IsEnabled = false;
                 BtnCreateAccount.IsEnabled = false;

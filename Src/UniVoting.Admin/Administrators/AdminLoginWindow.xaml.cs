@@ -14,22 +14,21 @@ namespace UniVoting.Admin.Administrators
         private readonly IVotingService _votingService;
         private readonly ILogger _logger;
         private readonly IServiceProvider _sp;
+        private IAdminSessionService _session;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminLoginWindow()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _votingService = null!;
-            _logger = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public AdminLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
+        public AdminLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp, IAdminSessionService session)
         {
             _electionService = electionService;
             _votingService = votingService;
             _logger = logger;
             _sp = sp;
+            _session = session;
             InitializeComponent();
             BtnLogin.Click += BtnLogin_Click;
         }
@@ -43,8 +42,8 @@ namespace UniVoting.Admin.Administrators
                     var admin = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text });
                     if (admin != null)
                     {
-                        var mainWindow = _sp.GetRequiredService<MainWindow>();
-                        mainWindow.Show();
+                        _session.CurrentAdmin = admin;
+                        _sp.GetRequiredService<MainWindow>().Show();
                         Close();
                     }
                     else

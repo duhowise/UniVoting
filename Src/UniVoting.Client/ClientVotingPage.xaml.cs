@@ -21,30 +21,37 @@ namespace UniVoting.Client
         private SkipVoteDialogControl _skipVoteDialogControl;
         private Window? _dialogWindow;
         private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
 
         public ClientVotingPage()
         {
             InitializeComponent();
-            _votes = new ConcurrentBag<Vote>();
-            _skippedVotes = new ConcurrentBag<SkippedVotes>();
-            _position = new Position();
-            _voter = new Voter();
+            _session = App.Services.GetRequiredService<IClientSessionService>();
+            _votes = _session.Votes;
+            _skippedVotes = _session.SkippedVotes;
+            _position = _session.CurrentPosition ?? new Position();
+            _voter = _session.CurrentVoter ?? new Voter();
             _sp = App.Services;
             _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
+            _skipVoteDialogControl.BtnYes.Click += BtnYesClick;
+            _skipVoteDialogControl.BtnNo.Click += BtnNoClick;
+            BtnSkipVote.Click += BtnSkipVote_Click;
+            Loaded += ClientVotingPage_Loaded;
         }
 
-        public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes, IServiceProvider sp)
+        public ClientVotingPage(IClientSessionService session, IServiceProvider sp)
         {
             InitializeComponent();
-            _voter = voter;
-            _position = position;
-            _votes = votes;
-            _skippedVotes = skippedVotes;
+            _session = session;
+            _voter = session.CurrentVoter!;
+            _position = session.CurrentPosition!;
+            _votes = session.Votes;
+            _skippedVotes = session.SkippedVotes;
             _sp = sp;
             BtnSkipVote.Click += BtnSkipVote_Click;
             Loaded += ClientVotingPage_Loaded;
 
-            _skipVoteDialogControl = ActivatorUtilities.CreateInstance<SkipVoteDialogControl>(_sp, position);
+            _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
             _skipVoteDialogControl.BtnYes.Click += BtnYesClick;
             _skipVoteDialogControl.BtnNo.Click += BtnNoClick;
         }
@@ -59,13 +66,17 @@ namespace UniVoting.Client
                 if (_position.Candidates.Count() == 1)
                 {
                     BtnSkipVote.IsEnabled = false;
-                    candidatesHolder.Children.Add(ActivatorUtilities.CreateInstance<YesOrNoCandidateControl>(_sp, _votes, _position, _position.Candidates.FirstOrDefault()!, _voter, _skippedVotes));
+                    _session.CurrentCandidate = _position.Candidates.FirstOrDefault()!;
+                    candidatesHolder.Children.Add(_sp.GetRequiredService<YesOrNoCandidateControl>());
                 }
                 else
                 {
                     BtnSkipVote.IsEnabled = true;
                     foreach (var candidate in _position.Candidates)
-                        candidatesHolder.Children.Add(ActivatorUtilities.CreateInstance<CandidateControl>(_sp, _votes, _position, candidate, _voter));
+                    {
+                        _session.CurrentCandidate = candidate;
+                        candidatesHolder.Children.Add(_sp.GetRequiredService<CandidateControl>());
+                    }
                 }
             }
             else

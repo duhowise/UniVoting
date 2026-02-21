@@ -19,11 +19,7 @@ namespace UniVoting.LiveView
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
         {
-            InitializeComponent();
-            _positions = new List<Position>();
-            _liveViewService = null!;
-            _logger = null!;
-            _sp = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public MainWindow(ILiveViewService liveViewService, ILogger logger, IServiceProvider sp)
@@ -50,8 +46,13 @@ namespace UniVoting.LiveView
             {
                 foreach (var position in _positions)
                 {
-                    CastedVotesHolder.Children.Add(ActivatorUtilities.CreateInstance<TileControlLarge>(_sp, position.PositionName?.Trim() ?? string.Empty));
-                    SkippedVotesHolder.Children.Add(ActivatorUtilities.CreateInstance<TileControlSmall>(_sp, position.PositionName?.Trim() ?? string.Empty));
+                    var large = _sp.GetRequiredService<TileControlLarge>();
+                    large.Initialize(position.PositionName?.Trim() ?? string.Empty);
+                    CastedVotesHolder.Children.Add(large);
+
+                    var small = _sp.GetRequiredService<TileControlSmall>();
+                    small.Initialize(position.PositionName?.Trim() ?? string.Empty);
+                    SkippedVotesHolder.Children.Add(small);
                 }
             }
         }

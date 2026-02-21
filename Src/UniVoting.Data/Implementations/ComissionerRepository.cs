@@ -30,31 +30,40 @@ namespace UniVoting.Data.Implementations
             return comissioner;
         }
 
-        public async Task<Comissioner> LoginChairman(Comissioner comissioner)
+        public async Task<Comissioner> Login(Comissioner comissioner)
         {
             await using var db = await _dbFactory.CreateDbContextAsync();
-            return await db.Comissioners.FirstOrDefaultAsync(c =>
-                c.UserName == comissioner.UserName &&
-                c.Password == comissioner.Password &&
-                c.IsChairman) ?? new Comissioner();
+            var found = await db.Comissioners.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName);
+            if (found == null || !BCrypt.Net.BCrypt.Verify(comissioner.Password, found.Password))
+                return new Comissioner();
+            return found;
         }
 
         public async Task<Comissioner> LoginAdmin(Comissioner comissioner)
         {
             await using var db = await _dbFactory.CreateDbContextAsync();
-            return await db.Comissioners.FirstOrDefaultAsync(c =>
-                c.UserName == comissioner.UserName &&
-                c.Password == comissioner.Password &&
-                c.IsAdmin) ?? new Comissioner();
+            var found = await db.Comissioners.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName && c.IsAdmin);
+            if (found == null || !BCrypt.Net.BCrypt.Verify(comissioner.Password, found.Password))
+                return new Comissioner();
+            return found;
+        }
+
+        public async Task<Comissioner> LoginChairman(Comissioner comissioner)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            var found = await db.Comissioners.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName && c.IsChairman);
+            if (found == null || !BCrypt.Net.BCrypt.Verify(comissioner.Password, found.Password))
+                return new Comissioner();
+            return found;
         }
 
         public async Task<Comissioner> LoginPresident(Comissioner comissioner)
         {
             await using var db = await _dbFactory.CreateDbContextAsync();
-            return await db.Comissioners.FirstOrDefaultAsync(c =>
-                c.UserName == comissioner.UserName &&
-                c.Password == comissioner.Password &&
-                c.IsPresident) ?? new Comissioner();
+            var found = await db.Comissioners.FirstOrDefaultAsync(c => c.UserName == comissioner.UserName && c.IsPresident);
+            if (found == null || !BCrypt.Net.BCrypt.Verify(comissioner.Password, found.Password))
+                return new Comissioner();
+            return found;
         }
 
         public async Task AddNewConfiguration(Setting setting)
@@ -65,14 +74,6 @@ namespace UniVoting.Data.Implementations
                 .SetProperty(x => x.EletionSubTitle, setting.EletionSubTitle)
                 .SetProperty(x => x.Logo, setting.Logo)
                 .SetProperty(x => x.Colour, setting.Colour));
-        }
-
-        public async Task<Comissioner> Login(Comissioner comissioner)
-        {
-            await using var db = await _dbFactory.CreateDbContextAsync();
-            return await db.Comissioners.FirstOrDefaultAsync(c =>
-                c.UserName == comissioner.UserName &&
-                c.Password == comissioner.Password) ?? new Comissioner();
         }
 
         public Setting ConfigureElection()

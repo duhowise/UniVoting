@@ -23,19 +23,14 @@ namespace UniVoting.Client
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public ClientVoteCompletedPage()
         {
-            InitializeComponent();
-            _votes = new ConcurrentBag<Vote>();
-            _voter = new Voter();
-            _skippedVotes = new ConcurrentBag<SkippedVotes>();
-            _votingService = null!;
-            _electionService = null!;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        public ClientVoteCompletedPage(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVotes> skippedVotes, IVotingService votingService, IElectionConfigurationService electionService)
+        public ClientVoteCompletedPage(IClientSessionService session, IVotingService votingService, IElectionConfigurationService electionService)
         {
-            _votes = votes;
-            _voter = voter;
-            _skippedVotes = skippedVotes;
+            _votes = session.Votes;
+            _voter = session.CurrentVoter!;
+            _skippedVotes = session.SkippedVotes;
             _votingService = votingService;
             _electionService = electionService;
             InitializeComponent();

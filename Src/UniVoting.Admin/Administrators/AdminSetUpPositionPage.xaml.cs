@@ -14,12 +14,10 @@ namespace UniVoting.Admin.Administrators
         private readonly IElectionConfigurationService _electionService;
         private readonly IServiceProvider _sp;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminSetUpPositionPage()
         {
-            InitializeComponent();
-            _electionService = null!;
-            _sp = null!;
-            Instance = this;
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
         public AdminSetUpPositionPage(IElectionConfigurationService electionService, IServiceProvider sp)
@@ -37,7 +35,8 @@ namespace UniVoting.Admin.Administrators
             var positions = await _electionService.GetAllPositionsAsync();
             foreach (var position in positions)
             {
-                var pc = ActivatorUtilities.CreateInstance<PositionControl>(_sp, position.PositionName ?? string.Empty);
+                var pc = _sp.GetRequiredService<PositionControl>();
+                pc.TextBoxPosition.Text = position.PositionName ?? string.Empty;
                 pc.TextBoxFaculty.Text = position.Faculty;
                 pc.Id = position.Id;
                 PositionControlHolder.Children.Add(pc);
@@ -72,7 +71,9 @@ namespace UniVoting.Admin.Administrators
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
             await _electionService.AddPosition(new Model.Position { PositionName = pos, Faculty = fac });
-            PositionControlHolder.Children.Add(ActivatorUtilities.CreateInstance<PositionControl>(_sp, pos ?? string.Empty));
+            var newPc = _sp.GetRequiredService<PositionControl>();
+            newPc.TextBoxPosition.Text = pos ?? string.Empty;
+            PositionControlHolder.Children.Add(newPc);
             _dialogWindow?.Close();
         }
 

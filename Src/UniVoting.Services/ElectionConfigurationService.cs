@@ -102,6 +102,7 @@ namespace UniVoting.Services
 		}
 		public async Task SaveComissioner(Comissioner comissioner)
 		{
+			comissioner.Password = BCrypt.Net.BCrypt.HashPassword(comissioner.Password);
 			if (comissioner.Id==0)
 			{
 				try

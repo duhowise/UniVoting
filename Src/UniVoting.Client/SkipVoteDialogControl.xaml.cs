@@ -8,11 +8,15 @@ namespace UniVoting.Client
     {
         private readonly Position _position;
 
-        public SkipVoteDialogControl() { InitializeComponent(); _position = new Position(); }
-
-        public SkipVoteDialogControl(Position position)
+        public SkipVoteDialogControl()
         {
-            _position = position;
+            InitializeComponent();
+            _position = new Position();
+        }
+
+        public SkipVoteDialogControl(IClientSessionService session)
+        {
+            _position = session.CurrentPosition!;
             InitializeComponent();
             Loaded += SkipVoteDialogControl_Loaded;
         }

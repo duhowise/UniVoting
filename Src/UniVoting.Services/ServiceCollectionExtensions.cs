@@ -16,17 +16,17 @@ public static class ServiceCollectionExtensions
             options.UseSqlServer(connectionString));
 
         // Data repositories — MSDI resolves IDbContextFactory<ElectionDbContext> automatically
-        services.AddSingleton<ICandidateRepository, CandidateRepository>();
-        services.AddSingleton<IVoterRepository, VoterRepository>();
-        services.AddSingleton<IPositionRepository, PositionRepository>();
-        services.AddSingleton<IComissionerRepository, ComissionerRepository>();
-        services.AddSingleton<IService, ElectionService>();
+        services.AddTransient<ICandidateRepository, CandidateRepository>();
+        services.AddTransient<IVoterRepository, VoterRepository>();
+        services.AddTransient<IPositionRepository, PositionRepository>();
+        services.AddTransient<IComissionerRepository, ComissionerRepository>();
+        services.AddTransient<IService, ElectionService>();
 
         // Application services
         services.AddSingleton<ILogger, SystemEventLoggerService>();
-        services.AddSingleton<IElectionConfigurationService, ElectionConfigurationService>();
-        services.AddSingleton<IVotingService, VotingService>();
-        services.AddSingleton<ILiveViewService, LiveViewService>();
+        services.AddTransient<IElectionConfigurationService, ElectionConfigurationService>();
+        services.AddTransient<IVotingService, VotingService>();
+        services.AddTransient<ILiveViewService, LiveViewService>();
 
         return services;
     }
