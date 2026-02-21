@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using UniVoting.Model;
