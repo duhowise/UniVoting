@@ -9,7 +9,7 @@ namespace UniVoting.Data.Implementations
 	public class ComissionerRepository : Repository<Comissioner>, IComissionerRepository
 	{
 
-		public ComissionerRepository():base("VotingSystem")
+		public ComissionerRepository(string connectionString) : base(connectionString)
 		{
 			
 		}

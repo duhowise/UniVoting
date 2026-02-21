@@ -1,23 +1,12 @@
-﻿using System.Configuration;
-
 namespace UniVoting.Data
 {
 	public class ConnectionHelper
 	{
-	   
 		public string Connection;
 
-		public ConnectionHelper()
+		public ConnectionHelper(string connectionString)
 		{
-
-			Connection = ConfigurationManager.ConnectionStrings["VotingSystem"].ConnectionString;
-			
-
+			Connection = connectionString;
 		}
-
-		
-
 	}
-
-
 }

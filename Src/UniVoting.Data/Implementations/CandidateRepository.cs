@@ -6,7 +6,7 @@ namespace UniVoting.Data.Implementations
 	public class CandidateRepository : Repository<Candidate>, ICandidateRepository
 	{
 
-		public CandidateRepository():base("VotingSystem")
+		public CandidateRepository(string connectionString) : base(connectionString)
 		{
 			
 		}

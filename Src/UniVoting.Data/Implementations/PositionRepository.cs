@@ -10,7 +10,7 @@ namespace UniVoting.Data.Implementations
 	public class PositionRepository : Repository<Position>, IPositionRepository
 	{
 
-		public PositionRepository() : base("VotingSystem")
+		public PositionRepository(string connectionString) : base(connectionString)
 		{
 			
 		}

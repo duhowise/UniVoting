@@ -11,7 +11,7 @@ namespace UniVoting.Data.Implementations
 	public class VoterRepository : Repository<Voter>, IVoterRepository
 	{
 
-		public VoterRepository() : base("VotingSystem")
+		public VoterRepository(string connectionString) : base(connectionString)
 		{
 			
 		}

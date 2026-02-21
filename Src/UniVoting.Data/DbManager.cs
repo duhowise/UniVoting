@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
@@ -32,10 +31,10 @@ namespace UniVoting.Data
 		/// <summary>
 		/// Create a new Sql database connection
 		/// </summary>
-		/// <param name="connString">The name of the connection string</param>
+		/// <param name="connString">The raw connection string</param>
 		public DbManager(string connString)
 		{
-		   _conn = new SqlConnection(ConfigurationManager.ConnectionStrings[connString].ConnectionString);
+		   _conn = new SqlConnection(connString);
 		}
 
 		/// <inheritdoc />
