@@ -39,8 +39,8 @@ namespace UniVoting.Client
             _position = new Position();
             _candidate = new Candidate();
             _voter = new Voter();
-            _confirmDialogControl = new ConfirmDialogControl();
-            _sp = null!;
+            _sp = App.Services;
+            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
         }
 
         public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter, IServiceProvider sp)

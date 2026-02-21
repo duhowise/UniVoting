@@ -34,6 +34,7 @@ namespace UniVoting.Client
 
         private readonly ConfirmDialogControl _confirmDialogControl;
         private readonly SkipVoteDialogControl _skipDialogControl;
+        private readonly IServiceProvider _sp;
 
         public YesOrNoCandidateControl()
         {
@@ -43,14 +44,16 @@ namespace UniVoting.Client
             _candidate = new Candidate();
             _voter = new Voter();
             _skippedVotes = new ConcurrentBag<SkippedVotes>();
-            _confirmDialogControl = new ConfirmDialogControl();
-            _skipDialogControl = new SkipVoteDialogControl();
+            _sp = App.Services;
+            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
+            _skipDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
         }
 
         public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
             ConcurrentBag<SkippedVotes> skippedVotes, IServiceProvider sp)
         {
             InitializeComponent();
+            _sp = sp;
             _confirmDialogControl = ActivatorUtilities.CreateInstance<ConfirmDialogControl>(sp, candidate);
             _skipDialogControl = ActivatorUtilities.CreateInstance<SkipVoteDialogControl>(sp, position);
             _votes = votes;

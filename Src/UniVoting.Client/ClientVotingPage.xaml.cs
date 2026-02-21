@@ -29,8 +29,8 @@ namespace UniVoting.Client
             _skippedVotes = new ConcurrentBag<SkippedVotes>();
             _position = new Position();
             _voter = new Voter();
-            _skipVoteDialogControl = new SkipVoteDialogControl();
-            _sp = null!;
+            _sp = App.Services;
+            _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
         }
 
         public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes, IServiceProvider sp)
