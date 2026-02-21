@@ -60,7 +60,7 @@ namespace UniVoting.Client
             if (_count == 1)
             {
                 Close();
-                var exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                var exePath = Environment.ProcessPath;
                 if (!string.IsNullOrEmpty(exePath))
                     Process.Start(exePath);
                 (Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.Shutdown();

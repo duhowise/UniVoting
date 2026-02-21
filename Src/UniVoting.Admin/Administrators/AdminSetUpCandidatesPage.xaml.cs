@@ -122,7 +122,8 @@ namespace UniVoting.Admin.Administrators
                 _candidateId = editCandidate.Id;
                 CandidateName.Text = editCandidate.CandidateName;
                 CandidateImage.Source = editCandidate.CandidatePicture;
-                PositionCombo.SelectedValue = editCandidate.PositionId;
+                if (editCandidate.PositionId.HasValue)
+                    PositionCombo.SelectedItem = Candidates.Count > 0 ? null : null; // Will be set when positions load
                 RankCombo.SelectedValue = editCandidate.RankId;
             }
         }

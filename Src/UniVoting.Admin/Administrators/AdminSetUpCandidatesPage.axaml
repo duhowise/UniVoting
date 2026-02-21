@@ -48,7 +48,9 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Header="Candidate image" Grid.Row="0" Margin="10,0,0,0">
+                    <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Grid.Row="0" Margin="10,0,0,0">
+                        <StackPanel>
+                            <TextBlock FontSize="14" FontWeight="Bold" Margin="5,5,5,0">Candidate image</TextBlock>
                         <StackPanel>
                             <Label FontSize="16" HorizontalAlignment="Center">image size should be 256x256</Label>
                             <Image Name="CandidateImage" Width="250" Height="250"/>
@@ -56,18 +58,27 @@
                                 Upload image
                             </Button>
                         </StackPanel>
-                    </GroupBox>
-                    <GroupBox Grid.Column="1" Header="Candidate's details" Grid.Row="0">
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Grid.Row="0">
+                        <StackPanel>
+                            <TextBlock FontSize="14" FontWeight="Bold" Margin="5,5,5,0">Candidate's details</TextBlock>
                         <StackPanel>
                             <TextBox Width="260" FontSize="24" Margin="10" Name="CandidateName" TabIndex="0" VerticalAlignment="Center"/>
-                            <ComboBox DisplayMemberBinding="{Binding PositionName}" TabIndex="1"
-                                      Name="PositionCombo" FontSize="24" Margin="10" Width="260"/>
+                            <ComboBox TabIndex="1" Name="PositionCombo" FontSize="24" Margin="10" Width="260">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding PositionName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
                             <ComboBox TabIndex="2" Name="RankCombo" FontSize="24" Margin="10" Width="260"/>
                             <Button FontSize="20" Margin="10,65,10,5" Height="40" Name="SaveCandidate" TabIndex="3">
                                 Save Candidate
                             </Button>
                         </StackPanel>
-                    </GroupBox>
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </Border>
             <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList"

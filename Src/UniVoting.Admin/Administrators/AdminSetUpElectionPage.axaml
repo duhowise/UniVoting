@@ -18,7 +18,9 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Header="Election Details">
+                    <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="4">
+                        <StackPanel>
+                            <TextBlock FontSize="14" FontWeight="Bold" Margin="5,5,5,0">Election Details</TextBlock>
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -50,7 +52,8 @@
                                         Content="Save Election Details"/>
                             </StackPanel>
                         </Grid>
-                    </GroupBox>
+                        </StackPanel>
+                    </Border>
                 </Grid>
             </ScrollViewer>
         </Grid>
