@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UniVoting.Data.Interfaces;
@@ -7,19 +7,65 @@ using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-    public class PositionRepository : Repository<Position>, IPositionRepository
+    public class PositionRepository : IPositionRepository
     {
-        public PositionRepository(IDbContextFactory<ElectionDbContext> dbFactory) : base(dbFactory) { }
+        private readonly IDbContextFactory<ElectionDbContext> _dbFactory;
 
-        public override async Task<IEnumerable<Position>> GetAllAsync()
+        public PositionRepository(IDbContextFactory<ElectionDbContext> dbFactory)
         {
-            await using var db = await DbFactory.CreateDbContextAsync();
+            _dbFactory = dbFactory;
+        }
+
+        public IEnumerable<Position> GetAll()
+        {
+            using var db = _dbFactory.CreateDbContext();
+            return db.Positions.ToList();
+        }
+
+        public async Task<IEnumerable<Position>> GetAllAsync()
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
             return await db.Positions.OrderBy(p => p.Id).ToListAsync();
+        }
+
+        public async Task<Position> InsertAsync(Position position)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            await db.Positions.AddAsync(position);
+            await db.SaveChangesAsync();
+            return position;
+        }
+
+        public async Task<Position> UpdateAsync(Position position)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            db.Positions.Update(position);
+            await db.SaveChangesAsync();
+            return position;
+        }
+
+        public void Delete(Position position)
+        {
+            using var db = _dbFactory.CreateDbContext();
+            db.Positions.Remove(position);
+            db.SaveChanges();
+        }
+
+        public Position GetById(int id)
+        {
+            using var db = _dbFactory.CreateDbContext();
+            return db.Positions.Find(id)!;
+        }
+
+        public async Task<Position> GetByIdAsync(int id)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return (await db.Positions.FindAsync(id))!;
         }
 
         public async Task<IEnumerable<Position>> GetPositionsWithDetailsAsync()
         {
-            await using var db = await DbFactory.CreateDbContextAsync();
+            await using var db = await _dbFactory.CreateDbContextAsync();
             return await db.Positions
                 .Include(p => p.Candidates.OrderBy(c => c.RankId))
                 .OrderByDescending(p => p.Id)
@@ -28,7 +74,7 @@ namespace UniVoting.Data.Implementations
 
         public IEnumerable<Position> GetPositionsWithDetails()
         {
-            using var db = DbFactory.CreateDbContext();
+            using var db = _dbFactory.CreateDbContext();
             return db.Positions
                 .Include(p => p.Candidates.OrderBy(c => c.RankId))
                 .OrderByDescending(p => p.Id)

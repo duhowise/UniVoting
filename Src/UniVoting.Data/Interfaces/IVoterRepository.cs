@@ -4,8 +4,10 @@ using UniVoting.Model;
 
 namespace UniVoting.Data.Interfaces;
 
-public interface IVoterRepository : IRepository<Voter>
+public interface IVoterRepository
 {
+    Task<IEnumerable<Voter>> GetAllAsync();
+    Task<Voter> UpdateAsync(Voter voter);
     Task ResetVoter(Voter member);
     Task<int> InsertBulkVoters(List<Voter> voters);
     Task InsertBulkVotes(IEnumerable<Vote> votes, Voter voter, IEnumerable<SkippedVotes> skippedVotes);
