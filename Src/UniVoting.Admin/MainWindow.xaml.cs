@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Admin.Administrators;
 using UniVoting.Model;
 using UniVoting.Services;
@@ -13,6 +14,7 @@ namespace UniVoting.Admin
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
         private readonly ILogger _logger;
+        private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
@@ -21,21 +23,23 @@ namespace UniVoting.Admin
             _electionService = null!;
             _votingService = null!;
             _logger = null!;
+            _sp = null!;
         }
 
-        public MainWindow(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService, ILogger logger)
+        public MainWindow(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
         {
             _electionService = electionService;
             _votingService = votingService;
             _logger = logger;
+            _sp = sp;
             InitializeComponent();
             Navigate = (content) => PageHolder.Content = content;
-            PageHolder.Content = new AdminMenuPage(comissioner, _electionService, _votingService);
+            PageHolder.Content = ActivatorUtilities.CreateInstance<AdminMenuPage>(_sp, comissioner);
         }
 
         protected override void OnClosing(Avalonia.Controls.WindowClosingEventArgs e)
         {
-            new AdminLoginWindow(_electionService, _votingService, _logger).Show();
+            _sp.GetRequiredService<AdminLoginWindow>().Show();
             base.OnClosing(e);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
@@ -47,11 +48,11 @@ namespace UniVoting.Client
         }
 
         public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
-            ConcurrentBag<SkippedVotes> skippedVotes)
+            ConcurrentBag<SkippedVotes> skippedVotes, IServiceProvider sp)
         {
             InitializeComponent();
-            _confirmDialogControl = new ConfirmDialogControl(candidate);
-            _skipDialogControl = new SkipVoteDialogControl(position);
+            _confirmDialogControl = ActivatorUtilities.CreateInstance<ConfirmDialogControl>(sp, candidate);
+            _skipDialogControl = ActivatorUtilities.CreateInstance<SkipVoteDialogControl>(sp, position);
             _votes = votes;
             _position = position;
             _candidate = candidate;

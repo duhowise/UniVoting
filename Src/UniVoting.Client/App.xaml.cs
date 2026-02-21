@@ -19,6 +19,13 @@ namespace UniVoting.Client
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices();
             serviceCollection.AddTransient<ClientsLoginWindow>();
+            serviceCollection.AddTransient<MainWindow>();
+            serviceCollection.AddTransient<ClientVotingPage>();
+            serviceCollection.AddTransient<ClientVoteCompletedPage>();
+            serviceCollection.AddTransient<CandidateControl>();
+            serviceCollection.AddTransient<YesOrNoCandidateControl>();
+            serviceCollection.AddTransient<ConfirmDialogControl>();
+            serviceCollection.AddTransient<SkipVoteDialogControl>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

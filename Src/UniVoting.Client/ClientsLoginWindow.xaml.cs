@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
@@ -17,6 +18,7 @@ namespace UniVoting.Client
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
         private readonly ILogger _logger;
+        private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public ClientsLoginWindow()
@@ -25,15 +27,17 @@ namespace UniVoting.Client
             _electionService = null!;
             _votingService = null!;
             _logger = null!;
+            _sp = null!;
             _positionsStack = new Stack<Model.Position>();
             _voter = new Voter();
         }
 
-        public ClientsLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger)
+        public ClientsLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
         {
             _electionService = electionService;
             _votingService = votingService;
             _logger = logger;
+            _sp = sp;
             InitializeComponent();
             _positionsStack = new Stack<Model.Position>();
             Loaded += ClientsLoginWindow_Loaded;
@@ -90,7 +94,7 @@ namespace UniVoting.Client
             {
                 if (!_voter.VoteInProgress && !_voter.Voted)
                 {
-                    new MainWindow(_positionsStack, _voter, _electionService, _votingService).Show();
+                    ActivatorUtilities.CreateInstance<MainWindow>(_sp, _positionsStack, _voter).Show();
                     Hide();
                 }
                 else

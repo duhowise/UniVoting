@@ -17,6 +17,8 @@ namespace UniVoting.LiveView
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices();
             serviceCollection.AddTransient<MainWindow>();
+            serviceCollection.AddTransient<TileControlLarge>();
+            serviceCollection.AddTransient<TileControlSmall>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

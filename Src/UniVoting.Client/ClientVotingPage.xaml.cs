@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
@@ -19,6 +20,7 @@ namespace UniVoting.Client
 
         private SkipVoteDialogControl _skipVoteDialogControl;
         private Window? _dialogWindow;
+        private readonly IServiceProvider _sp;
 
         public ClientVotingPage()
         {
@@ -28,19 +30,21 @@ namespace UniVoting.Client
             _position = new Position();
             _voter = new Voter();
             _skipVoteDialogControl = new SkipVoteDialogControl();
+            _sp = null!;
         }
 
-        public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes)
+        public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes, IServiceProvider sp)
         {
             InitializeComponent();
             _voter = voter;
             _position = position;
             _votes = votes;
             _skippedVotes = skippedVotes;
+            _sp = sp;
             BtnSkipVote.Click += BtnSkipVote_Click;
             Loaded += ClientVotingPage_Loaded;
 
-            _skipVoteDialogControl = new SkipVoteDialogControl(position);
+            _skipVoteDialogControl = ActivatorUtilities.CreateInstance<SkipVoteDialogControl>(_sp, position);
             _skipVoteDialogControl.BtnYes.Click += BtnYesClick;
             _skipVoteDialogControl.BtnNo.Click += BtnNoClick;
         }
@@ -55,13 +59,13 @@ namespace UniVoting.Client
                 if (_position.Candidates.Count() == 1)
                 {
                     BtnSkipVote.IsEnabled = false;
-                    candidatesHolder.Children.Add(new YesOrNoCandidateControl(_votes, _position, _position.Candidates.FirstOrDefault()!, _voter, _skippedVotes));
+                    candidatesHolder.Children.Add(ActivatorUtilities.CreateInstance<YesOrNoCandidateControl>(_sp, _votes, _position, _position.Candidates.FirstOrDefault()!, _voter, _skippedVotes));
                 }
                 else
                 {
                     BtnSkipVote.IsEnabled = true;
                     foreach (var candidate in _position.Candidates)
-                        candidatesHolder.Children.Add(new CandidateControl(_votes, _position, candidate, _voter));
+                        candidatesHolder.Children.Add(ActivatorUtilities.CreateInstance<CandidateControl>(_sp, _votes, _position, candidate, _voter));
                 }
             }
             else

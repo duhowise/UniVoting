@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using UniVoting.Services;
@@ -14,6 +16,7 @@ namespace UniVoting.Admin.Administrators
         private AddPositionDialogControl _addPositionDialogControl = null!;
         private Window? _dialogWindow;
         private readonly IElectionConfigurationService _electionService;
+        private readonly IServiceProvider _sp;
 
         public static readonly StyledProperty<int> IdProperty =
             AvaloniaProperty.Register<PositionControl, int>(nameof(Id));
@@ -28,18 +31,21 @@ namespace UniVoting.Admin.Administrators
         {
             InitializeComponent();
             _electionService = null!;
+            _sp = null!;
         }
 
-        public PositionControl(IElectionConfigurationService electionService)
+        public PositionControl(IElectionConfigurationService electionService, IServiceProvider sp)
         {
             _electionService = electionService;
+            _sp = sp;
             InitializeComponent();
             Loaded += PositionControl_Loaded;
         }
 
-        public PositionControl(string name, IElectionConfigurationService electionService)
+        public PositionControl(string name, IElectionConfigurationService electionService, IServiceProvider sp)
         {
             _electionService = electionService;
+            _sp = sp;
             InitializeComponent();
             TextBoxPosition.Text = name;
             Loaded += PositionControl_Loaded;
@@ -47,7 +53,7 @@ namespace UniVoting.Admin.Administrators
 
         private void PositionControl_Loaded(object? sender, RoutedEventArgs e)
         {
-            _addPositionDialogControl = new AddPositionDialogControl();
+            _addPositionDialogControl = _sp.GetRequiredService<AddPositionDialogControl>();
             _addPositionDialogControl.BtnCancel.Click += BtnCancel_Click;
             _addPositionDialogControl.BtnSave.Click += BtnSave_Click;
         }

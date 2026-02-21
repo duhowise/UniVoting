@@ -1,5 +1,7 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
@@ -9,16 +11,19 @@ namespace UniVoting.Admin.Administrators
     public partial class EcChairmanLoginWindow : Window
     {
         private readonly IElectionConfigurationService _electionService;
+        private readonly IServiceProvider _sp;
 
         public EcChairmanLoginWindow()
         {
             InitializeComponent();
             _electionService = null!;
+            _sp = null!;
         }
 
-        public EcChairmanLoginWindow(IElectionConfigurationService electionService)
+        public EcChairmanLoginWindow(IElectionConfigurationService electionService, IServiceProvider sp)
         {
             _electionService = electionService;
+            _sp = sp;
             InitializeComponent();
             WindowState = WindowState.Maximized;
             BtnLogin.Click += BtnLogin_Click;
@@ -32,7 +37,7 @@ namespace UniVoting.Admin.Administrators
                 var chairman = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text, IsChairman = true });
                 if (chairman != null)
                 {
-                    new ReportViewerWindow().Show();
+                    _sp.GetRequiredService<ReportViewerWindow>().Show();
                     Close();
                 }
                 else

@@ -1,5 +1,7 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
@@ -10,17 +12,20 @@ namespace UniVoting.Admin.Administrators
         private AddPositionDialogControl _addPositionDialogControl = null!;
         private Window? _dialogWindow;
         private readonly IElectionConfigurationService _electionService;
+        private readonly IServiceProvider _sp;
 
         public AdminSetUpPositionPage()
         {
             InitializeComponent();
             _electionService = null!;
+            _sp = null!;
             Instance = this;
         }
 
-        public AdminSetUpPositionPage(IElectionConfigurationService electionService)
+        public AdminSetUpPositionPage(IElectionConfigurationService electionService, IServiceProvider sp)
         {
             _electionService = electionService;
+            _sp = sp;
             InitializeComponent();
             Instance = this;
             Loaded += Instance_Loaded;
@@ -32,14 +37,13 @@ namespace UniVoting.Admin.Administrators
             var positions = await _electionService.GetAllPositionsAsync();
             foreach (var position in positions)
             {
-                var pc = new PositionControl(_electionService);
-                pc.TextBoxPosition.Text = position.PositionName;
+                var pc = ActivatorUtilities.CreateInstance<PositionControl>(_sp, position.PositionName ?? string.Empty);
                 pc.TextBoxFaculty.Text = position.Faculty;
                 pc.Id = position.Id;
                 PositionControlHolder.Children.Add(pc);
             }
 
-            _addPositionDialogControl = new AddPositionDialogControl();
+            _addPositionDialogControl = _sp.GetRequiredService<AddPositionDialogControl>();
             _addPositionDialogControl.BtnCancel.Click += BtnCancelClick;
             _addPositionDialogControl.BtnSave.Click += BtnSaveClick;
         }
@@ -68,7 +72,7 @@ namespace UniVoting.Admin.Administrators
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
             await _electionService.AddPosition(new Model.Position { PositionName = pos, Faculty = fac });
-            PositionControlHolder.Children.Add(new PositionControl(pos, _electionService));
+            PositionControlHolder.Children.Add(ActivatorUtilities.CreateInstance<PositionControl>(_sp, pos ?? string.Empty));
             _dialogWindow?.Close();
         }
 

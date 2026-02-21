@@ -18,6 +18,19 @@ namespace UniVoting.Admin
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddUniVotingServices();
             serviceCollection.AddTransient<AdminLoginWindow>();
+            serviceCollection.AddTransient<MainWindow>();
+            serviceCollection.AddTransient<Administrators.AdminMenuPage>();
+            serviceCollection.AddTransient<Administrators.AdminDispensePasswordWindow>();
+            serviceCollection.AddTransient<Administrators.PresidentLoginWindow>();
+            serviceCollection.AddTransient<Administrators.EcChairmanLoginWindow>();
+            serviceCollection.AddTransient<Administrators.ReportViewerWindow>();
+            serviceCollection.AddTransient<Administrators.AdminSetUpPositionPage>();
+            serviceCollection.AddTransient<Administrators.AdminSetUpElectionPage>();
+            serviceCollection.AddTransient<Administrators.AdminCreateAccountPage>();
+            serviceCollection.AddTransient<Administrators.AdminSetUpCandidatesPage>();
+            serviceCollection.AddTransient<Administrators.AdminAddVotersPage>();
+            serviceCollection.AddTransient<Administrators.AddPositionDialogControl>();
+            serviceCollection.AddTransient<Administrators.PositionControl>();
             Services = serviceCollection.BuildServiceProvider();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

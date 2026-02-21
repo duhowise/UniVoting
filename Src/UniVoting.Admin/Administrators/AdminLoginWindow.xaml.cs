@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
@@ -12,6 +13,7 @@ namespace UniVoting.Admin.Administrators
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
         private readonly ILogger _logger;
+        private readonly IServiceProvider _sp;
 
         public AdminLoginWindow()
         {
@@ -19,13 +21,15 @@ namespace UniVoting.Admin.Administrators
             _electionService = null!;
             _votingService = null!;
             _logger = null!;
+            _sp = null!;
         }
 
-        public AdminLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger)
+        public AdminLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp)
         {
             _electionService = electionService;
             _votingService = votingService;
             _logger = logger;
+            _sp = sp;
             InitializeComponent();
             BtnLogin.Click += BtnLogin_Click;
         }
@@ -39,7 +43,7 @@ namespace UniVoting.Admin.Administrators
                     var admin = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text });
                     if (admin != null)
                     {
-                        new MainWindow(admin, _electionService, _votingService, _logger).Show();
+                        ActivatorUtilities.CreateInstance<MainWindow>(_sp, admin).Show();
                         Close();
                     }
                     else

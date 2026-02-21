@@ -1,5 +1,7 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -10,6 +12,7 @@ namespace UniVoting.Admin.Administrators
         public Comissioner Comissioner { get; }
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
+        private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminMenuPage()
@@ -18,13 +21,15 @@ namespace UniVoting.Admin.Administrators
             Comissioner = new Comissioner();
             _electionService = null!;
             _votingService = null!;
+            _sp = null!;
         }
 
-        public AdminMenuPage(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService)
+        public AdminMenuPage(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
         {
             Comissioner = comissioner;
             _electionService = electionService;
             _votingService = votingService;
+            _sp = sp;
             InitializeComponent();
             BtnDeclareVotes.Click += BtnDeclareVotes_Click;
             BtnDispensePassword.Click += BtnDispensePassword_Click;
@@ -33,7 +38,7 @@ namespace UniVoting.Admin.Administrators
 
         private void BtnDispensePassword_Click(object? sender, RoutedEventArgs e)
         {
-            new AdminDispensePasswordWindow(_electionService).Show();
+            _sp.GetRequiredService<AdminDispensePasswordWindow>().Show();
         }
 
         private void AdminMenuPage_Loaded(object? sender, RoutedEventArgs e)
@@ -65,32 +70,32 @@ namespace UniVoting.Admin.Administrators
 
         private void BtnDeclareVotes_Click(object? sender, RoutedEventArgs e)
         {
-            new PresidentLoginWindow(_electionService).Show();
+            _sp.GetRequiredService<PresidentLoginWindow>().Show();
         }
 
         private void BtnCreateAccount_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminCreateAccountPage(_electionService));
+            MainWindow.Navigate?.Invoke(_sp.GetRequiredService<AdminCreateAccountPage>());
         }
 
         private void BtnSetUpElection_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminSetUpElectionPage(_electionService));
+            MainWindow.Navigate?.Invoke(_sp.GetRequiredService<AdminSetUpElectionPage>());
         }
 
         private void BtnSetUpPostions_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminSetUpPositionPage(_electionService));
+            MainWindow.Navigate?.Invoke(_sp.GetRequiredService<AdminSetUpPositionPage>());
         }
 
         private void BtnSetUpCandidates_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminSetUpCandidatesPage(_electionService));
+            MainWindow.Navigate?.Invoke(_sp.GetRequiredService<AdminSetUpCandidatesPage>());
         }
 
         private void BtnSetUpVoters_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminAddVotersPage(_electionService, _votingService));
+            MainWindow.Navigate?.Invoke(_sp.GetRequiredService<AdminAddVotersPage>());
         }
     }
 }

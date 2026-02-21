@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
@@ -13,6 +14,7 @@ namespace UniVoting.LiveView
         IEnumerable<Position> _positions;
         readonly ILiveViewService _liveViewService;
         readonly ILogger _logger;
+        readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
@@ -21,12 +23,14 @@ namespace UniVoting.LiveView
             _positions = new List<Position>();
             _liveViewService = null!;
             _logger = null!;
+            _sp = null!;
         }
 
-        public MainWindow(ILiveViewService liveViewService, ILogger logger)
+        public MainWindow(ILiveViewService liveViewService, ILogger logger, IServiceProvider sp)
         {
             _liveViewService = liveViewService;
             _logger = logger;
+            _sp = sp;
             InitializeComponent();
             _positions = new List<Position>();
             Loaded += MainWindow_Loaded;
@@ -46,8 +50,8 @@ namespace UniVoting.LiveView
             {
                 foreach (var position in _positions)
                 {
-                    CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim() ?? string.Empty, _liveViewService, _logger));
-                    SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim() ?? string.Empty, _liveViewService, _logger));
+                    CastedVotesHolder.Children.Add(ActivatorUtilities.CreateInstance<TileControlLarge>(_sp, position.PositionName?.Trim() ?? string.Empty));
+                    SkippedVotesHolder.Children.Add(ActivatorUtilities.CreateInstance<TileControlSmall>(_sp, position.PositionName?.Trim() ?? string.Empty));
                 }
             }
         }

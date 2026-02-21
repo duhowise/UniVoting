@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
@@ -29,6 +30,7 @@ namespace UniVoting.Client
         private Position _position;
         private Candidate _candidate;
         private Voter _voter;
+        private readonly IServiceProvider _sp;
 
         public CandidateControl()
         {
@@ -38,19 +40,21 @@ namespace UniVoting.Client
             _candidate = new Candidate();
             _voter = new Voter();
             _confirmDialogControl = new ConfirmDialogControl();
+            _sp = null!;
         }
 
-        public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter)
+        public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter, IServiceProvider sp)
         {
             InitializeComponent();
             _votes = votes;
             _position = position;
             _candidate = candidate;
             _voter = voter;
+            _sp = sp;
             Loaded += CandidateControl_Loaded;
             BtnVote.Click += BtnVote_Click;
 
-            _confirmDialogControl = new ConfirmDialogControl(candidate);
+            _confirmDialogControl = ActivatorUtilities.CreateInstance<ConfirmDialogControl>(_sp, candidate);
             _confirmDialogControl.BtnYes.Click += BtnYesClick;
             _confirmDialogControl.BtnNo.Click += BtnNoClick;
         }

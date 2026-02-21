@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
@@ -19,6 +20,7 @@ namespace UniVoting.Client
         private ConcurrentBag<SkippedVotes> _skippedVotes;
         private readonly IElectionConfigurationService _electionService;
         private readonly IVotingService _votingService;
+        private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
@@ -30,12 +32,14 @@ namespace UniVoting.Client
             _skippedVotes = new ConcurrentBag<SkippedVotes>();
             _electionService = null!;
             _votingService = null!;
+            _sp = null!;
         }
 
-        public MainWindow(Stack<Position> positionsStack, Voter voter, IElectionConfigurationService electionService, IVotingService votingService)
+        public MainWindow(Stack<Position> positionsStack, Voter voter, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
         {
             _electionService = electionService;
             _votingService = votingService;
+            _sp = sp;
             InitializeComponent();
             _positionsStack = positionsStack;
             _voter = voter;
@@ -80,14 +84,14 @@ namespace UniVoting.Client
             else
             {
                 _voter.Voted = true;
-                new ClientVoteCompletedPage(_votes, _voter, _skippedVotes, _votingService, _electionService).Show();
+                ActivatorUtilities.CreateInstance<ClientVoteCompletedPage>(_sp, _votes, _voter, _skippedVotes).Show();
                 Hide();
             }
         }
 
         private ClientVotingPage VotingPageMaker(Stack<Position> positions)
         {
-            _votingPage = new ClientVotingPage(_voter, positions.Pop(), _votes, _skippedVotes);
+            _votingPage = ActivatorUtilities.CreateInstance<ClientVotingPage>(_sp, _voter, positions.Pop(), _votes, _skippedVotes);
             _votingPage.VoteCompleted += VotingPage_VoteCompleted;
             return _votingPage;
         }
