@@ -4,20 +4,23 @@ namespace UniVoting.Data.Implementations
 {
 	public class ElectionService : IService
 	{
-		private CandidateRepository _candidates;
-		private VoterRepository _voters;
-		private PositionRepository _positions;
-		private ComissionerRepository _comissioners;
+		private readonly ICandidateRepository _candidates;
+		private readonly IVoterRepository _voters;
+		private readonly IPositionRepository _positions;
+		private readonly IComissionerRepository _comissioners;
 
-		public CandidateRepository Candidates => _candidates ?? (_candidates = new CandidateRepository());
+		public ElectionService(ICandidateRepository candidates, IVoterRepository voters,
+			IPositionRepository positions, IComissionerRepository comissioners)
+		{
+			_candidates = candidates;
+			_voters = voters;
+			_positions = positions;
+			_comissioners = comissioners;
+		}
 
-		public VoterRepository Voters => _voters ?? (_voters = new VoterRepository());
-
-
-		public PositionRepository Positions => _positions ?? (_positions = new PositionRepository());
-		
-
-		public ComissionerRepository Comissioners=>_comissioners??(_comissioners=new ComissionerRepository());
-		
+		public ICandidateRepository Candidates => _candidates;
+		public IVoterRepository Voters => _voters;
+		public IPositionRepository Positions => _positions;
+		public IComissionerRepository Comissioners => _comissioners;
 	}
 }

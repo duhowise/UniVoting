@@ -22,9 +22,22 @@ namespace UniVoting.Admin.Administrators
         private int _faculty;
         private int _added;
         private List<Voter> voters = null!;
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IVotingService _votingService;
 
         public AdminAddVotersPage()
         {
+            InitializeComponent();
+            _electionService = null!;
+            _votingService = null!;
+            _dataSet = new DataSet();
+            voters = new List<Voter>();
+        }
+
+        public AdminAddVotersPage(IElectionConfigurationService electionService, IVotingService votingService)
+        {
+            _electionService = electionService;
+            _votingService = votingService;
             InitializeComponent();
             _dataSet = new DataSet();
             voters = new List<Voter>();
@@ -38,7 +51,7 @@ namespace UniVoting.Admin.Administrators
         {
             if (!string.IsNullOrWhiteSpace(Searchterm.Text))
             {
-                var voter = await VotingService.GetVoterPass(new Voter { IndexNumber = Searchterm.Text });
+                var voter = await _votingService.GetVoterPass(new Voter { IndexNumber = Searchterm.Text });
                 if (voter != null)
                 {
                     await MessageBoxManager.GetMessageBoxStandard($"Name: {voter.VoterName}", $"Password: {voter.VoterCode}").ShowAsync();
@@ -76,7 +89,7 @@ namespace UniVoting.Admin.Administrators
                     try
                     {
                         BtnSave.IsEnabled = false;
-                        _added = await ElectionConfigurationService.AddVotersAsync(voters);
+                        _added = await _electionService.AddVotersAsync(voters);
                         AddedCount.IsVisible = true;
                         AddedCount.Content = $"Added {_added} Voters";
                         voters.Clear();
@@ -164,7 +177,7 @@ namespace UniVoting.Admin.Administrators
         {
             if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
             {
-                await VotingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
+                await _votingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
                 await MessageBoxManager.GetMessageBoxStandard("Success", "Successfully reset Voter").ShowAsync();
             }
         }

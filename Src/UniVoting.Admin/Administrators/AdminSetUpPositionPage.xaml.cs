@@ -9,9 +9,18 @@ namespace UniVoting.Admin.Administrators
         public static AdminSetUpPositionPage? Instance;
         private AddPositionDialogControl _addPositionDialogControl = null!;
         private Window? _dialogWindow;
+        private readonly IElectionConfigurationService _electionService;
 
         public AdminSetUpPositionPage()
         {
+            InitializeComponent();
+            _electionService = null!;
+            Instance = this;
+        }
+
+        public AdminSetUpPositionPage(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
             InitializeComponent();
             Instance = this;
             Loaded += Instance_Loaded;
@@ -20,14 +29,15 @@ namespace UniVoting.Admin.Administrators
         private async void Instance_Loaded(object? sender, RoutedEventArgs e)
         {
             PositionControlHolder.Children.Clear();
-            var positions = await ElectionConfigurationService.GetAllPositionsAsync();
+            var positions = await _electionService.GetAllPositionsAsync();
             foreach (var position in positions)
-                PositionControlHolder.Children.Add(new PositionControl
-                {
-                    TextBoxPosition = { Text = position.PositionName },
-                    TextBoxFaculty = { Text = position.Faculty },
-                    Id = position.Id
-                });
+            {
+                var pc = new PositionControl(_electionService);
+                pc.TextBoxPosition.Text = position.PositionName;
+                pc.TextBoxFaculty.Text = position.Faculty;
+                pc.Id = position.Id;
+                PositionControlHolder.Children.Add(pc);
+            }
 
             _addPositionDialogControl = new AddPositionDialogControl();
             _addPositionDialogControl.BtnCancel.Click += BtnCancelClick;
@@ -57,8 +67,8 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-            await ElectionConfigurationService.AddPosition(new Model.Position { PositionName = pos, Faculty = fac });
-            PositionControlHolder.Children.Add(new PositionControl(pos));
+            await _electionService.AddPosition(new Model.Position { PositionName = pos, Faculty = fac });
+            PositionControlHolder.Children.Add(new PositionControl(pos, _electionService));
             _dialogWindow?.Close();
         }
 

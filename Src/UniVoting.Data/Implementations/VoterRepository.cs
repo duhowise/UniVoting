@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Transactions;
 using Dapper;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class VoterRepository:Repository<Voter>
+	public class VoterRepository : Repository<Voter>, IVoterRepository
 	{
 
 		public VoterRepository() : base("VotingSystem")

@@ -1,18 +1,29 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using UniVoting.Model;
+using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {
     public partial class AdminMenuPage : UserControl
     {
         public Comissioner Comissioner { get; }
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IVotingService _votingService;
 
-        public AdminMenuPage() { InitializeComponent(); Comissioner = new Comissioner(); }
+        public AdminMenuPage()
+        {
+            InitializeComponent();
+            Comissioner = new Comissioner();
+            _electionService = null!;
+            _votingService = null!;
+        }
 
-        public AdminMenuPage(Comissioner comissioner)
+        public AdminMenuPage(Comissioner comissioner, IElectionConfigurationService electionService, IVotingService votingService)
         {
             Comissioner = comissioner;
+            _electionService = electionService;
+            _votingService = votingService;
             InitializeComponent();
             BtnDeclareVotes.Click += BtnDeclareVotes_Click;
             BtnDispensePassword.Click += BtnDispensePassword_Click;
@@ -21,7 +32,7 @@ namespace UniVoting.Admin.Administrators
 
         private void BtnDispensePassword_Click(object? sender, RoutedEventArgs e)
         {
-            new AdminDispensePasswordWindow().Show();
+            new AdminDispensePasswordWindow(_electionService).Show();
         }
 
         private void AdminMenuPage_Loaded(object? sender, RoutedEventArgs e)
@@ -53,32 +64,32 @@ namespace UniVoting.Admin.Administrators
 
         private void BtnDeclareVotes_Click(object? sender, RoutedEventArgs e)
         {
-            new PresidentLoginWindow().Show();
+            new PresidentLoginWindow(_electionService).Show();
         }
 
         private void BtnCreateAccount_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminCreateAccountPage());
+            MainWindow.Navigate?.Invoke(new AdminCreateAccountPage(_electionService));
         }
 
         private void BtnSetUpElection_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminSetUpElectionPage());
+            MainWindow.Navigate?.Invoke(new AdminSetUpElectionPage(_electionService));
         }
 
         private void BtnSetUpPostions_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminSetUpPositionPage());
+            MainWindow.Navigate?.Invoke(new AdminSetUpPositionPage(_electionService));
         }
 
         private void BtnSetUpCandidates_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminSetUpCandidatesPage());
+            MainWindow.Navigate?.Invoke(new AdminSetUpCandidatesPage(_electionService));
         }
 
         private void BtnSetUpVoters_Click(object? sender, RoutedEventArgs e)
         {
-            MainWindow.Navigate?.Invoke(new AdminAddVotersPage());
+            MainWindow.Navigate?.Invoke(new AdminAddVotersPage(_electionService, _votingService));
         }
     }
 }

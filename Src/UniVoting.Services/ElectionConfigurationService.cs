@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UniVoting.Data.Implementations;
 using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
-	public class ElectionConfigurationService
+	public class ElectionConfigurationService : IElectionConfigurationService
 	{
-	private static IService _electionservice=new ElectionService();
+		private readonly IService _electionservice;
 
-		
+		public ElectionConfigurationService(IService electionService)
+		{
+			_electionservice = electionService;
+		}
+
 		#region Voters
-		public static Task<int> AddVotersAsync(List<Voter> voters)
+		public Task<int> AddVotersAsync(List<Voter> voters)
 		{
 			try
 			{
@@ -27,7 +30,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static Task<IEnumerable<Voter>> GetAllVotersAsync()
+		public Task<IEnumerable<Voter>> GetAllVotersAsync()
 		{
 			try
 			{
@@ -40,7 +43,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static Task<Voter> LoginVoter(Voter voter)
+		public Task<Voter> LoginVoter(Voter voter)
 		{
 			try
 			{
@@ -56,20 +59,7 @@ namespace UniVoting.Services
 		#endregion
 
 		#region Election
-		//public static  Task<Setting> ConfigureElection(int id)
-		//{
-		//	try
-		//	{
-		//		return   new ElectionBaseRepository().GetByIdAsync<Setting>(id);
-
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		Console.WriteLine(e);
-		//		throw;
-		//	}
-		//}
-		public static Setting ConfigureElection()
+		public Setting ConfigureElection()
 		{
 			try
 			{
@@ -82,7 +72,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async Task NewElection(Setting setting)
+		public async Task NewElection(Setting setting)
 		{
 			try
 			{
@@ -141,7 +131,7 @@ namespace UniVoting.Services
 			
 		}
 	   
-		public  Task<IEnumerable<Candidate>> GetAllCandidates()
+		public Task<IEnumerable<Candidate>> GetAllCandidates()
 		{
 			try
 			{
@@ -155,7 +145,7 @@ namespace UniVoting.Services
 			}
 		}
 		
-		public static Task<Candidate> SaveCandidate(Candidate candidate)
+		public Task<Candidate> SaveCandidate(Candidate candidate)
 		{
 			try
 			{
@@ -192,7 +182,7 @@ namespace UniVoting.Services
 		}
 		#endregion
 		#region Position
-		public static Task<Position> AddPosition(Position position)
+		public Task<Position> AddPosition(Position position)
 		{
 			try
 			{
@@ -206,7 +196,7 @@ namespace UniVoting.Services
 			}
 		 
 		}
-		public static async Task<Position> GetPosition(int positionid)
+		public async Task<Position> GetPosition(int positionid)
 		{
 			try
 			{
@@ -220,7 +210,7 @@ namespace UniVoting.Services
 			}
 		   
 		}
-		public static IEnumerable<Position> GetAllPositions()
+		public IEnumerable<Position> GetAllPositions()
 		{
 			try
 			{
@@ -233,7 +223,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static IEnumerable<Position> GetPositionsSlim()
+		public IEnumerable<Position> GetPositionsSlim()
 		{
 			try
 			{
@@ -246,7 +236,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static Task<IEnumerable<Position>> GetAllPositionsAsync()
+		public Task<IEnumerable<Position>> GetAllPositionsAsync()
 		{
 			try
 			{
@@ -259,7 +249,7 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static async Task UpdatePosition(Position position)
+		public async Task UpdatePosition(Position position)
 		{
 			try
 			{
@@ -273,7 +263,7 @@ namespace UniVoting.Services
 			}
 		}
 	   
-		public static void RemovePosition(Position position)
+		public void RemovePosition(Position position)
 		{
 			try
 			{
@@ -288,7 +278,7 @@ namespace UniVoting.Services
 		}
 		#endregion   
 		#region User
-		public static async Task<Comissioner> Login(Comissioner comissioner)
+		public async Task<Comissioner> Login(Comissioner comissioner)
 		{
 			Comissioner user=new Comissioner();
 			if (comissioner.IsChairman)
@@ -320,16 +310,7 @@ namespace UniVoting.Services
 					throw;
 				}
 			}
-			else if (comissioner.IsPresident)
-			{
-				try
-				{  user= await _electionservice.Comissioners.LoginPresident(comissioner);}
-				catch (Exception e)
-				{
-					Console.WriteLine(e);
-					throw;
-				}
-			}else
+			else
 			{
 				try
 				{  user= await _electionservice.Comissioners.Login(comissioner);}

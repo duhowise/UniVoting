@@ -14,9 +14,25 @@ namespace UniVoting.Client
         private IEnumerable<Model.Position>? _positions;
         private Stack<Model.Position> _positionsStack;
         private Voter _voter;
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IVotingService _votingService;
+        private readonly ILogger _logger;
 
         public ClientsLoginWindow()
         {
+            InitializeComponent();
+            _electionService = null!;
+            _votingService = null!;
+            _logger = null!;
+            _positionsStack = new Stack<Model.Position>();
+            _voter = new Voter();
+        }
+
+        public ClientsLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger)
+        {
+            _electionService = electionService;
+            _votingService = votingService;
+            _logger = logger;
             InitializeComponent();
             _positionsStack = new Stack<Model.Position>();
             Loaded += ClientsLoginWindow_Loaded;
@@ -33,7 +49,7 @@ namespace UniVoting.Client
         {
             try
             {
-                var election = ElectionConfigurationService.ConfigureElection();
+                var election = _electionService.ConfigureElection();
                 if (election?.Logo != null)
                     MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
                 if (election != null)
@@ -41,7 +57,7 @@ namespace UniVoting.Client
                     VotingName.Text = election.ElectionName?.ToUpper();
                     VotingSubtitle.Content = election.EletionSubTitle?.ToUpper();
                 }
-                _positions = ElectionConfigurationService.GetAllPositions();
+                _positions = _electionService.GetAllPositions();
                 foreach (var position in _positions)
                     _positionsStack.Push(position);
             }
@@ -57,7 +73,7 @@ namespace UniVoting.Client
             {
                 try
                 {
-                    _voter = await ElectionConfigurationService.LoginVoter(new Voter { VoterCode = Pin.Text });
+                    _voter = await _electionService.LoginVoter(new Voter { VoterCode = Pin.Text });
                     ConfirmVoterAsync();
                 }
                 catch (Exception exception)
@@ -73,7 +89,7 @@ namespace UniVoting.Client
             {
                 if (!_voter.VoteInProgress && !_voter.Voted)
                 {
-                    new MainWindow(_positionsStack, _voter).Show();
+                    new MainWindow(_positionsStack, _voter, _electionService, _votingService).Show();
                     Hide();
                 }
                 else

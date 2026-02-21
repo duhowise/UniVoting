@@ -13,9 +13,17 @@ namespace UniVoting.Admin.Administrators
     public partial class AdminSetUpElectionPage : UserControl
     {
         private Avalonia.Media.Color _chosencolor;
+        private readonly IElectionConfigurationService _electionService;
 
         public AdminSetUpElectionPage()
         {
+            InitializeComponent();
+            _electionService = null!;
+        }
+
+        public AdminSetUpElectionPage(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
             InitializeComponent();
             BtnUploadImage.Click += BtnUploadImage_Click;
             Colorbox.GotFocus += Colorbox_GotFocus;
@@ -43,7 +51,7 @@ namespace UniVoting.Admin.Administrators
         {
             if (!string.IsNullOrWhiteSpace(TextBoxElectionName.Text) || !string.IsNullOrWhiteSpace(TextBoxSubtitle.Text))
             {
-                await ElectionConfigurationService.NewElection(new Setting
+                await _electionService.NewElection(new Setting
                 {
                     ElectionName = TextBoxElectionName.Text,
                     EletionSubTitle = TextBoxSubtitle.Text,

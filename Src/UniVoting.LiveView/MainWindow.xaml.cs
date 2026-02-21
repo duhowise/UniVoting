@@ -11,13 +11,23 @@ namespace UniVoting.LiveView
     public partial class MainWindow : Window
     {
         IEnumerable<Position> _positions;
+        readonly ILiveViewService _liveViewService;
         readonly ILogger _logger;
 
         public MainWindow()
         {
             InitializeComponent();
             _positions = new List<Position>();
-            _logger = new SystemEventLoggerService();
+            _liveViewService = null!;
+            _logger = null!;
+        }
+
+        public MainWindow(ILiveViewService liveViewService, ILogger logger)
+        {
+            _liveViewService = liveViewService;
+            _logger = logger;
+            InitializeComponent();
+            _positions = new List<Position>();
             Loaded += MainWindow_Loaded;
         }
 
@@ -25,7 +35,7 @@ namespace UniVoting.LiveView
         {
             try
             {
-                _positions = await LiveViewService.Positions();
+                _positions = await _liveViewService.Positions();
             }
             catch (Exception exception)
             {
@@ -35,8 +45,8 @@ namespace UniVoting.LiveView
             {
                 foreach (var position in _positions)
                 {
-                    CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim() ?? string.Empty));
-                    SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim() ?? string.Empty));
+                    CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim() ?? string.Empty, _liveViewService, _logger));
+                    SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim() ?? string.Empty, _liveViewService, _logger));
                 }
             }
         }

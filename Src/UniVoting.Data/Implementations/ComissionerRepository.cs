@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Dapper;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class ComissionerRepository:Repository<Comissioner>
+	public class ComissionerRepository : Repository<Comissioner>, IComissionerRepository
 	{
 
 		public ComissionerRepository():base("VotingSystem")

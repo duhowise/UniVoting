@@ -10,8 +10,17 @@ namespace UniVoting.Admin.Administrators
 {
     public partial class AdminCreateAccountPage : UserControl
     {
+        private readonly IElectionConfigurationService _electionService;
+
         public AdminCreateAccountPage()
         {
+            InitializeComponent();
+            _electionService = null!;
+        }
+
+        public AdminCreateAccountPage(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
             InitializeComponent();
             BtnSave.Click += BtnSave_Click;
             IsChairman.IsCheckedChanged += IsChairman_Checked;
@@ -43,7 +52,7 @@ namespace UniVoting.Admin.Administrators
             {
                 try
                 {
-                    await new ElectionConfigurationService().SaveComissioner(new Comissioner
+                    await _electionService.SaveComissioner(new Comissioner
                     {
                         FullName = TextBoxName.Text,
                         UserName = Username.Text,

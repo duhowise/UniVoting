@@ -8,8 +8,17 @@ namespace UniVoting.Admin.Administrators
 {
     public partial class EcChairmanLoginWindow : Window
     {
+        private readonly IElectionConfigurationService _electionService;
+
         public EcChairmanLoginWindow()
         {
+            InitializeComponent();
+            _electionService = null!;
+        }
+
+        public EcChairmanLoginWindow(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
             InitializeComponent();
             WindowState = WindowState.Maximized;
             BtnLogin.Click += BtnLogin_Click;
@@ -20,7 +29,7 @@ namespace UniVoting.Admin.Administrators
         {
             if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Text))
             {
-                var chairman = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text, IsChairman = true });
+                var chairman = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text, IsChairman = true });
                 if (chairman != null)
                 {
                     new ReportViewerWindow().Show();

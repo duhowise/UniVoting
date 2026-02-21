@@ -38,9 +38,19 @@ namespace UniVoting.Admin.Administrators
         internal ObservableCollection<CandidateDto> Candidates = new ObservableCollection<CandidateDto>();
         private List<int> _rank;
         private int _candidateId;
+        private readonly IElectionConfigurationService _electionService;
 
         public AdminSetUpCandidatesPage()
         {
+            _candidateId = 0;
+            _rank = new List<int>();
+            _electionService = null!;
+            InitializeComponent();
+        }
+
+        public AdminSetUpCandidatesPage(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
             _candidateId = 0;
             InitializeComponent();
             SaveCandidate.Click += SaveCandidate_Click;
@@ -65,23 +75,23 @@ namespace UniVoting.Admin.Administrators
                     PositionId = position?.Id ?? 0,
                     RankId = rankVal
                 };
-                await ElectionConfigurationService.SaveCandidate(candidate);
+                await _electionService.SaveCandidate(candidate);
                 Util.Clear(this);
-                PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
+                PositionCombo.ItemsSource = await _electionService.GetAllPositionsAsync();
                 await RefreshCandidateList();
             }
         }
 
         private async void Page_Loaded(object? sender, RoutedEventArgs e)
         {
-            PositionCombo.ItemsSource = await ElectionConfigurationService.GetAllPositionsAsync();
+            PositionCombo.ItemsSource = await _electionService.GetAllPositionsAsync();
             await RefreshCandidateList();
         }
 
         private async System.Threading.Tasks.Task RefreshCandidateList()
         {
             Candidates.Clear();
-            var candidates = await new ElectionConfigurationService().GetCandidateWithDetails();
+            var candidates = await _electionService.GetCandidateWithDetails();
             foreach (var candidate in candidates)
             {
                 var newcandidate = new CandidateDto(

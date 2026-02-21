@@ -17,6 +17,8 @@ namespace UniVoting.Client
         private Voter _voter;
         private ConcurrentBag<Vote> _votes;
         private ConcurrentBag<SkippedVotes> _skippedVotes;
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IVotingService _votingService;
 
         public MainWindow()
         {
@@ -25,10 +27,14 @@ namespace UniVoting.Client
             _voter = new Voter();
             _votes = new ConcurrentBag<Vote>();
             _skippedVotes = new ConcurrentBag<SkippedVotes>();
+            _electionService = null!;
+            _votingService = null!;
         }
 
-        public MainWindow(Stack<Position> positionsStack, Voter voter)
+        public MainWindow(Stack<Position> positionsStack, Voter voter, IElectionConfigurationService electionService, IVotingService votingService)
         {
+            _electionService = electionService;
+            _votingService = votingService;
             InitializeComponent();
             _positionsStack = positionsStack;
             _voter = voter;
@@ -57,7 +63,7 @@ namespace UniVoting.Client
         {
             try
             {
-                var election = ElectionConfigurationService.ConfigureElection();
+                var election = _electionService.ConfigureElection();
                 if (election?.Logo != null)
                     MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
             }
@@ -73,7 +79,7 @@ namespace UniVoting.Client
             else
             {
                 _voter.Voted = true;
-                new ClientVoteCompletedPage(_votes, _voter, _skippedVotes).Show();
+                new ClientVoteCompletedPage(_votes, _voter, _skippedVotes, _votingService, _electionService).Show();
                 Hide();
             }
         }
@@ -89,7 +95,7 @@ namespace UniVoting.Client
         {
             PageHolder.Content = VotingPageMaker(_positionsStack);
             _voter.VoteInProgress = true;
-            await VotingService.UpdateVoter(_voter);
+            await _votingService.UpdateVoter(_voter);
         }
 
         private void VotingPage_VoteCompleted(object? source, EventArgs args) => ProcessVote();

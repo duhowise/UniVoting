@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UniVoting.Data.Implementations;
 using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Services
 {
-	public class LiveViewService
+	public class LiveViewService : ILiveViewService
 	{
-		private static readonly IService Electionservice=new ElectionService();
-		
-		public static Task<int> VoteCountAsync(string position)
+		private readonly IService _electionservice;
+
+		public LiveViewService(IService electionService)
+		{
+			_electionservice = electionService;
+		}
+
+		public Task<int> VoteCountAsync(string position)
 		{
 			try
 			{
-				return Electionservice.Voters.VoteCount(new Position { PositionName = position?.Trim() });
+				return _electionservice.Voters.VoteCount(new Position { PositionName = position?.Trim() });
 
 			}
 			catch (Exception e)
@@ -24,11 +28,11 @@ namespace UniVoting.Services
 				throw;
 			}
 		}
-		public static Task<int> VotesSkipppedCountAsync(string position)
+		public Task<int> VotesSkipppedCountAsync(string position)
 		{
 			try
 			{
-				return Electionservice.Voters.VoteSkipCount(new Position { PositionName = position });
+				return _electionservice.Voters.VoteSkipCount(new Position { PositionName = position });
 
 			}
 			catch (Exception e)
@@ -38,11 +42,11 @@ namespace UniVoting.Services
 			}
 		}
 
-		public static Task<IEnumerable<Position>> Positions()
+		public Task<IEnumerable<Position>> Positions()
 		{
 			try
 			{
-				return Electionservice.Positions.GetAllAsync();
+				return _electionservice.Positions.GetAllAsync();
 
 			}
 			catch (Exception e)

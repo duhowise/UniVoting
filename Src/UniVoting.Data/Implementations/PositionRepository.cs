@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class PositionRepository:Repository<Position>
+	public class PositionRepository : Repository<Position>, IPositionRepository
 	{
 
 		public PositionRepository() : base("VotingSystem")

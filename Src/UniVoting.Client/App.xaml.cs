@@ -2,6 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -9,29 +10,26 @@ namespace UniVoting.Client
 {
     public partial class App : Application
     {
-        private static readonly ILogger _logger = new SystemEventLoggerService();
+        public static IServiceProvider Services { get; private set; } = null!;
 
-        public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+        public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
         public override void OnFrameworkInitializationCompleted()
         {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddUniVotingServices();
+            Services = serviceCollection.BuildServiceProvider();
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                try
+                var electionService = Services.GetRequiredService<IElectionConfigurationService>();
+                var votingService = Services.GetRequiredService<IVotingService>();
+                var logger = Services.GetRequiredService<ILogger>();
+                AppDomain.CurrentDomain.UnhandledException += (s, e) =>
                 {
-                    AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-                    {
-                        if (e.ExceptionObject is Exception exp) _logger.Log(exp);
-                    };
-                    desktop.MainWindow = new ClientsLoginWindow();
-                }
-                catch (Exception exception)
-                {
-                    _logger.Log(exception);
-                }
+                    if (e.ExceptionObject is Exception exp) logger.Log(exp);
+                };
+                desktop.MainWindow = new ClientsLoginWindow(electionService, votingService, logger);
             }
             base.OnFrameworkInitializationCompleted();
         }

@@ -13,6 +13,7 @@ namespace UniVoting.Admin.Administrators
     {
         private AddPositionDialogControl _addPositionDialogControl = null!;
         private Window? _dialogWindow;
+        private readonly IElectionConfigurationService _electionService;
 
         public static readonly StyledProperty<int> IdProperty =
             AvaloniaProperty.Register<PositionControl, int>(nameof(Id));
@@ -23,20 +24,24 @@ namespace UniVoting.Admin.Administrators
             set => SetValue(IdProperty, value);
         }
 
-        public PositionControl(string name)
-        {
-            InitializeComponent();
-            TextBoxPosition.Text = name;
-            if (!string.IsNullOrWhiteSpace(TextBoxPosition.Text))
-            {
-                var value = ElectionConfigurationService.AddPosition(new Position { PositionName = TextBoxPosition.Text });
-                Id = value.Id;
-            }
-        }
-
         public PositionControl()
         {
             InitializeComponent();
+            _electionService = null!;
+        }
+
+        public PositionControl(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
+            InitializeComponent();
+            Loaded += PositionControl_Loaded;
+        }
+
+        public PositionControl(string name, IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
+            InitializeComponent();
+            TextBoxPosition.Text = name;
             Loaded += PositionControl_Loaded;
         }
 
@@ -51,7 +56,7 @@ namespace UniVoting.Admin.Administrators
         {
             var pos = _addPositionDialogControl.TextBoxPosition.Text;
             var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-            await ElectionConfigurationService.UpdatePosition(new Position { Id = Id, PositionName = pos, Faculty = fac });
+            await _electionService.UpdatePosition(new Position { Id = Id, PositionName = pos, Faculty = fac });
             _dialogWindow?.Close();
         }
 
@@ -85,7 +90,7 @@ namespace UniVoting.Admin.Administrators
                 if (response == ButtonResult.Yes)
                 {
                     AdminSetUpPositionPage.Instance?.RemovePosition(this);
-                    ElectionConfigurationService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
+                    _electionService.RemovePosition(new Position { Id = Id, PositionName = TextBoxPosition.Text });
                 }
             }
         }

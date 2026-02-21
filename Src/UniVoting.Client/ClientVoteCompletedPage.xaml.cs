@@ -17,6 +17,8 @@ namespace UniVoting.Client
         private Voter _voter;
         private ConcurrentBag<SkippedVotes> _skippedVotes;
         private int _count;
+        private readonly IVotingService _votingService;
+        private readonly IElectionConfigurationService _electionService;
 
         public ClientVoteCompletedPage()
         {
@@ -24,13 +26,17 @@ namespace UniVoting.Client
             _votes = new ConcurrentBag<Vote>();
             _voter = new Voter();
             _skippedVotes = new ConcurrentBag<SkippedVotes>();
+            _votingService = null!;
+            _electionService = null!;
         }
 
-        public ClientVoteCompletedPage(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
+        public ClientVoteCompletedPage(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVotes> skippedVotes, IVotingService votingService, IElectionConfigurationService electionService)
         {
             _votes = votes;
             _voter = voter;
             _skippedVotes = skippedVotes;
+            _votingService = votingService;
+            _electionService = electionService;
             InitializeComponent();
             _count = 0;
             Loaded += ClientVoteCompletedPage_Loaded;
@@ -40,16 +46,16 @@ namespace UniVoting.Client
         {
             try
             {
-                var election = ElectionConfigurationService.ConfigureElection();
+                var election = _electionService.ConfigureElection();
                 if (election?.Logo != null)
                     MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
-                await VotingService.CastVote(_votes, _voter, _skippedVotes);
+                await _votingService.CastVote(_votes, _voter, _skippedVotes);
                 Text.Text = $"Good Bye {_voter.VoterName?.ToUpper()}, Thank You For Voting";
             }
             catch (Exception)
             {
                 Text.Text = "Sorry An Error Occurred.\nYour Votes Were not Submitted.\nContact the Administrators";
-                await VotingService.ResetVoter(_voter);
+                await _votingService.ResetVoter(_voter);
             }
             var timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 0, 3);
