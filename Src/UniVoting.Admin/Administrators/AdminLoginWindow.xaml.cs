@@ -31,6 +31,12 @@ namespace UniVoting.Admin.Administrators
             _session = session;
             InitializeComponent();
             BtnLogin.Click += BtnLogin_Click;
+            BtnForgotPassword.Click += BtnForgotPassword_Click;
+        }
+
+        private void BtnForgotPassword_Click(object? sender, RoutedEventArgs e)
+        {
+            _sp.GetRequiredService<ResetPasswordWindow>().Show();
         }
 
         private async void BtnLogin_Click(object? sender, RoutedEventArgs e)
