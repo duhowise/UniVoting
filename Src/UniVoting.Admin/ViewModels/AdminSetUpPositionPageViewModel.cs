@@ -41,8 +41,7 @@ public partial class AdminSetUpPositionPageViewModel : ObservableObject
     [RelayCommand]
     private async Task SavePositionAsync()
     {
-        await _electionService.AddPosition(new Position { PositionName = NewPositionName, Faculty = NewFaculty });
-        var position = new Position { PositionName = NewPositionName, Faculty = NewFaculty };
+        var position = await _electionService.AddPosition(new Position { PositionName = NewPositionName, Faculty = NewFaculty });
         Positions.Add(position);
         NewPositionName = string.Empty;
         NewFaculty = string.Empty;

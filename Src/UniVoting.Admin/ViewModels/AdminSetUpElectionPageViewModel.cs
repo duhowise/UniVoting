@@ -77,7 +77,7 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveElectionAsync()
     {
-        if (!string.IsNullOrWhiteSpace(ElectionName) || !string.IsNullOrWhiteSpace(Subtitle))
+        if (!string.IsNullOrWhiteSpace(ElectionName) && !string.IsNullOrWhiteSpace(Subtitle))
         {
             await _electionService.NewElection(new Setting
             {

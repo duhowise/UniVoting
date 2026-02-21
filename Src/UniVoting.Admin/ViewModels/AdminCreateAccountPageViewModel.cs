@@ -63,7 +63,7 @@ public partial class AdminCreateAccountPageViewModel : ObservableObject
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (!string.IsNullOrWhiteSpace(Name) || !string.IsNullOrWhiteSpace(Password))
+        if (!string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Password))
         {
             try
             {

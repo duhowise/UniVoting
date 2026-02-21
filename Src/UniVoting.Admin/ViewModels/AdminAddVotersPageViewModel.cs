@@ -53,7 +53,7 @@ public partial class AdminAddVotersPageViewModel : ObservableObject
 
     public void AddVoterFromFields()
     {
-        if (!string.IsNullOrWhiteSpace(VoterName) || !string.IsNullOrWhiteSpace(IndexNumber))
+        if (!string.IsNullOrWhiteSpace(VoterName) && !string.IsNullOrWhiteSpace(IndexNumber))
         {
             _pendingVoters.Add(new Voter
             {
