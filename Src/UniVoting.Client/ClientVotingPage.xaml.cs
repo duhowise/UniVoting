@@ -1,18 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 using System.Linq;
 
 namespace UniVoting.Client
 {
-    /// <summary>
-    /// Interaction logic for ClientVotingPage.xaml
-    /// </summary>
     public partial class ClientVotingPage : Page
     {
         private ConcurrentBag<Vote> _votes;
@@ -22,9 +17,8 @@ namespace UniVoting.Client
         public delegate void VoteCompletedEventHandler(object source, EventArgs args);
         public event VoteCompletedEventHandler VoteCompleted;
 
-        private CustomDialog _customDialog;
-        private SkipVoteDialogControl skipVoteDialogControl;
-        private MetroWindow _metroWindow;
+        private SkipVoteDialogControl _skipVoteDialogControl;
+        private Window _dialogWindow;
 
         public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes)
         {
@@ -35,15 +29,11 @@ namespace UniVoting.Client
             _skippedVotes = skippedVotes;
             BtnSkipVote.Click += BtnSkipVote_Click;
             Loaded += ClientVotingPage_Loaded;
-          _metroWindow=  (Window.GetWindow(this) as MetroWindow);
-            _customDialog = new CustomDialog();
-            skipVoteDialogControl = new SkipVoteDialogControl(position);
-            skipVoteDialogControl.BtnYes.Click += BtnYesClick;
-            skipVoteDialogControl.BtnNo.Click += BtnNoClick;
-            _customDialog.Content = skipVoteDialogControl;
 
+            _skipVoteDialogControl = new SkipVoteDialogControl(position);
+            _skipVoteDialogControl.BtnYes.Click += BtnYesClick;
+            _skipVoteDialogControl.BtnNo.Click += BtnNoClick;
         }
-
 
         private void ClientVotingPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -72,38 +62,30 @@ namespace UniVoting.Client
             }
         }
 
-        private async void BtnSkipVote_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnSkipVote_Click(object sender, RoutedEventArgs e)
         {
-
-            var metroWindow = (Window.GetWindow(this) as MetroWindow);
-            var dialogSettings = new MetroDialogSettings
+            _dialogWindow = new Window
             {
-                ColorScheme = MetroDialogColorScheme.Accented,
-                AffirmativeButtonText = "OK",
-                AnimateShow = true,
-                NegativeButtonText = "Cancel",
-                FirstAuxiliaryButtonText = "Cancel",
-                DialogMessageFontSize = 18
+                Content = _skipVoteDialogControl,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStyle = WindowStyle.ToolWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                Title = "Skip Vote"
             };
-            
-            await metroWindow.ShowMetroDialogAsync(_customDialog);
-
-            //MessageDialogResult result = await metroWindow.ShowMessageAsync("Skip Vote", $"Are You Sure You Want to Skip {_position.PositionName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
+            _dialogWindow.Show();
         }
 
-        private async void BtnYesClick(object sender, RoutedEventArgs e)
+        private void BtnYesClick(object sender, RoutedEventArgs e)
         {
-            var metroWindow = (Window.GetWindow(this) as MetroWindow);
-
             _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteCompleted(this);
-            await metroWindow.HideMetroDialogAsync(_customDialog);
+            _dialogWindow?.Close();
         }
-        private async void BtnNoClick(object sender, RoutedEventArgs e)
-        {
-            var metroWindow = (Window.GetWindow(this) as MetroWindow);
 
-            await metroWindow.HideMetroDialogAsync(_customDialog);
+        private void BtnNoClick(object sender, RoutedEventArgs e)
+        {
+            _dialogWindow?.Close();
         }
 
         private void OnVoteCompleted(object source)

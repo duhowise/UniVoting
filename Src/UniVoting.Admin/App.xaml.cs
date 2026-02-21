@@ -1,40 +1,32 @@
-﻿using System;
+using System;
 using System.Windows;
-using System.Windows.Media;
-using MahApps.Metro;
+using Wpf.Ui.Appearance;
 using UniVoting.Admin.Administrators;
 using UniVoting.Admin.StatUp;
+using UniVoting.Model;
+using UniVoting.Services;
 
 namespace UniVoting.Admin
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
+        private static readonly ILogger _logger = new SystemEventLoggerService();
 
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			var bootstrapper = new BootStrapper();
-			var container = bootstrapper.BootStrap();
-			// add custom accent and theme resource dictionaries
-			ThemeManager.AddAccent("CustomAccent1", new Uri("pack://application:,,,/UniVoting.Admin;component/CustomAccents/CustomAccent.xaml"));
-
-			// create custom accents
-			ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
-			ThemeManagerHelper.CreateAppStyleBy(Colors.GreenYellow);
-			ThemeManagerHelper.CreateAppStyleBy(Colors.Indigo, true);
-
-
-
-			MainWindow=new AdminLoginWindow();
-			MainWindow.Show();
-			base.OnStartup(e);
-		}
-
-		private void App_OnStartup(object sender, StartupEventArgs e)
-		{
-		   
-		}
-	}
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            try
+            {
+                var bootstrapper = new BootStrapper();
+                var container = bootstrapper.BootStrap();
+                ApplicationThemeManager.Apply(ApplicationTheme.Light);
+                MainWindow = new AdminLoginWindow();
+                MainWindow.Show();
+                base.OnStartup(e);
+            }
+            catch (Exception exception)
+            {
+                _logger.Log(exception);
+            }
+        }
+    }
 }

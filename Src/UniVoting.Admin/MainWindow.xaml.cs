@@ -1,33 +1,22 @@
-﻿using System.ComponentModel;
-using MahApps.Metro.Controls;
+using System.ComponentModel;
+using System.Windows;
 using UniVoting.Admin.Administrators;
 using UniVoting.Model;
 
 namespace UniVoting.Admin
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : MetroWindow
-	{
-
+    public partial class MainWindow : Window
+    {
         public MainWindow(Comissioner comissioner)
-		{
-			InitializeComponent();
-           
-			
-		   PageHolder.Content = new AdminMenuPage(comissioner);
-
-		}
-
-      
+        {
+            InitializeComponent();
+            PageHolder.Content = new AdminMenuPage(comissioner);
+        }
 
         protected override void OnClosing(CancelEventArgs e)
-		{
-			new AdminLoginWindow().Show();
-			base.OnClosing(e);
-		}
-
-
+        {
+            new AdminLoginWindow().Show();
+            base.OnClosing(e);
+        }
     }
 }

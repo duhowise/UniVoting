@@ -1,51 +1,43 @@
-﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
 using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {
-	
-	/// <summary>
-	/// Interaction logic for AdminLoginWindow.xaml
-	/// </summary>
-	public partial class AdminLoginWindow : MetroWindow
-	{
-		public AdminLoginWindow()
-		{
-			InitializeComponent();
-			BtnLogin.IsDefault = true;
-			Username.Focus();
-			BtnLogin.Click += BtnLogin_Click;
-			
-		}
+    public partial class AdminLoginWindow : Window
+    {
+        public AdminLoginWindow()
+        {
+            InitializeComponent();
+            BtnLogin.IsDefault = true;
+            Username.Focus();
+            BtnLogin.Click += BtnLogin_Click;
+        }
 
-		private async void BtnLogin_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
-			{
-				var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password});
-				if (admin != null)
-				{
-					new MainWindow(admin).Show();
-					Close();
-				}
-				else
-				{
-					await this.ShowMessageAsync("Login Error", "Wrong username or password.");
-					Util.Clear(this);
-					BtnLogin.IsEnabled = true;
-					Username.Focus();
-
-				}
-			}
-			else
-			{
-				await this.ShowMessageAsync("Login Error", "Please Enter Username or password to Login.");
-				Util.Clear(this);
-				Username.Focus();
-
-			}
-		}
-	}
+        private async void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
+            {
+                var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password });
+                if (admin != null)
+                {
+                    new MainWindow(admin).Show();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("Wrong username or password.", "Login Error");
+                    Util.Clear(this);
+                    BtnLogin.IsEnabled = true;
+                    Username.Focus();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please Enter Username or password to Login.", "Login Error");
+                Util.Clear(this);
+                Username.Focus();
+            }
+        }
+    }
 }

@@ -1,20 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
 namespace UniVoting.Client
 {
-    /// <inheritdoc>
-    ///     <cref></cref>
-    /// </inheritdoc>
-    /// <summary>
-    /// Interaction logic for YesOrNoCandidateControl.xaml
-    /// </summary>
     public partial class YesOrNoCandidateControl : UserControl
     {
         private readonly ConcurrentBag<Vote> _votes;
@@ -22,6 +14,7 @@ namespace UniVoting.Client
         private readonly Candidate _candidate;
         private readonly Voter _voter;
         private readonly ConcurrentBag<SkippedVotes> _skippedVotes;
+        private Window _dialogWindow;
 
         public int CandidateId
         {
@@ -29,25 +22,21 @@ namespace UniVoting.Client
             set => SetValue(CandidateIdProperty, value);
         }
 
-
         public delegate void VoteNoEventHandler(object source, EventArgs args);
         public static event VoteNoEventHandler VoteNo;
         public delegate void VoteCastEventHandler(object source, EventArgs args);
         public static readonly DependencyProperty CandidateIdProperty = DependencyProperty.Register("CandidateId", typeof(int), typeof(YesOrNoCandidateControl), new PropertyMetadata(0));
-        private readonly CustomDialog _customDialog;
-        private  MetroWindow _metroWindow;
-        readonly SkipVoteDialogControl _skipDialogControl;
-        public static event VoteCastEventHandler VoteCast;
 
+        private readonly ConfirmDialogControl _confirmDialogControl;
+        private readonly SkipVoteDialogControl _skipDialogControl;
+        public static event VoteCastEventHandler VoteCast;
 
         public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
             ConcurrentBag<SkippedVotes> skippedVotes)
         {
             InitializeComponent();
-            _customDialog = new CustomDialog();
-            var confirmDialogControl = new ConfirmDialogControl(candidate);
+            _confirmDialogControl = new ConfirmDialogControl(candidate);
             _skipDialogControl = new SkipVoteDialogControl(position);
-            _customDialog.Content = confirmDialogControl;
             _votes = votes;
             _position = position;
             this._candidate = candidate;
@@ -57,59 +46,73 @@ namespace UniVoting.Client
             BtnVoteYes.Click += BtnVoteYes_Click;
             _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;
             _skipDialogControl.BtnYes.Click += SkipBtnYes_Click;
-            confirmDialogControl.BtnNo.Click += BtnNo_Click;
-            confirmDialogControl.BtnYes.Click += BtnYes_Click            ;
+            _confirmDialogControl.BtnNo.Click += BtnNo_Click;
+            _confirmDialogControl.BtnYes.Click += BtnYes_Click;
             Loaded += YesOrNoCandidateControl_Loaded;
         }
 
-        private async void SkipBtnYes_Click(object sender, RoutedEventArgs e)
+        private void SkipBtnYes_Click(object sender, RoutedEventArgs e)
         {
             _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteNo(this);
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+            _dialogWindow?.Close();
         }
 
-        private async void SkipBtnNo_Click(object sender, RoutedEventArgs e)
+        private void SkipBtnNo_Click(object sender, RoutedEventArgs e)
         {
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
-
+            _dialogWindow?.Close();
         }
 
-        private async void BtnYes_Click(object sender, RoutedEventArgs e)
+        private void BtnYes_Click(object sender, RoutedEventArgs e)
         {
             _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
             OnVoteCast(this);
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+            _dialogWindow?.Close();
         }
 
-        private async void BtnNo_Click(object sender, RoutedEventArgs e)
+        private void BtnNo_Click(object sender, RoutedEventArgs e)
         {
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
-
+            _dialogWindow?.Close();
         }
 
         private void YesOrNoCandidateControl_Loaded(object sender, RoutedEventArgs e)
         {
-            _metroWindow = (Window.GetWindow(this) as MetroWindow);
             CandidateId = _candidate.Id;
             CandidateName.Text = _candidate.CandidateName.ToUpper();
             CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-        private async void BtnVoteYes_Click(object sender, RoutedEventArgs e)
+        private void BtnVoteYes_Click(object sender, RoutedEventArgs e)
         {
             BtnVoteYes.IsEnabled = false;
-            await _metroWindow.ShowMetroDialogAsync(_customDialog);
+            _dialogWindow = new Window
+            {
+                Content = _confirmDialogControl,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStyle = WindowStyle.ToolWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                Title = "Confirm Vote"
+            };
             BtnVoteYes.IsEnabled = true;
+            _dialogWindow.Show();
         }
 
-        private async void BtnVoteNo_Click(object sender, RoutedEventArgs e)
+        private void BtnVoteNo_Click(object sender, RoutedEventArgs e)
         {
-            _customDialog.Content = _skipDialogControl;
-         await   _metroWindow.ShowMetroDialogAsync(_customDialog);
+            _dialogWindow = new Window
+            {
+                Content = _skipDialogControl,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStyle = WindowStyle.ToolWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this),
+                Title = "Skip Vote"
+            };
+            _dialogWindow.Show();
         }
-        
+
         private static void OnVoteCast(object source)
         {
             VoteCast?.Invoke(source, EventArgs.Empty);
@@ -120,5 +123,4 @@ namespace UniVoting.Client
             VoteNo?.Invoke(source, EventArgs.Empty);
         }
     }
-
 }
