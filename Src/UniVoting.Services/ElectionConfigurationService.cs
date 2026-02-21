@@ -325,6 +325,20 @@ namespace UniVoting.Services
 			return user;
 		}
 		#endregion
+		#region Password Reset
+		public async Task<bool> ResetPasswordAsync(string username, string fullName, string newPassword)
+		{
+			try
+			{
+				return await _electionservice.Comissioners.ResetPasswordAsync(username, fullName, newPassword);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+		#endregion
 
 		public async Task<IEnumerable<Candidate>> GetCandidateWithDetails()
 		{

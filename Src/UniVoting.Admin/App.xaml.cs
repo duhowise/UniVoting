@@ -43,6 +43,7 @@ namespace UniVoting.Admin
             serviceCollection.AddTransient<Administrators.AdminAddVotersPage>();
             serviceCollection.AddTransient<Administrators.AddPositionDialogControl>();
             serviceCollection.AddTransient<Administrators.PositionControl>();
+            serviceCollection.AddTransient<Administrators.ResetPasswordWindow>();
             serviceCollection.AddSingleton<IAdminSessionService, AdminSessionService>();
             Services = serviceCollection.BuildServiceProvider();
 

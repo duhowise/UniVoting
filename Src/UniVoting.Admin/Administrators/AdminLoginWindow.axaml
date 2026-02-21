@@ -17,6 +17,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -28,6 +29,9 @@
                 <TextBox Grid.Row="1" Grid.Column="1" Width="250" FontSize="24" Margin="10" Name="Password" TabIndex="1" PasswordChar="*"/>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" Margin="10" Height="40" Name="BtnLogin" TabIndex="2">
                     Login
+                </Button>
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" Margin="10,0,10,10" Height="30" Name="BtnForgotPassword" TabIndex="3" Background="Transparent">
+                    Forgot Password?
                 </Button>
             </Grid>
         </StackPanel>

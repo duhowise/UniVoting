@@ -24,5 +24,6 @@ public interface IElectionConfigurationService
     Task UpdatePosition(Position position);
     void RemovePosition(Position position);
     Task<Comissioner> Login(Comissioner comissioner);
+    Task<bool> ResetPasswordAsync(string username, string fullName, string newPassword);
     Task<IEnumerable<Candidate>> GetCandidateWithDetails();
 }

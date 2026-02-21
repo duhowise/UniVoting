@@ -66,6 +66,18 @@ namespace UniVoting.Data.Implementations
             return found;
         }
 
+        public async Task<bool> ResetPasswordAsync(string username, string fullName, string newPassword)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            var found = await db.Comissioners.FirstOrDefaultAsync(c => c.UserName == username && c.FullName == fullName);
+            if (found == null)
+                return false;
+            found.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            db.Comissioners.Update(found);
+            await db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task AddNewConfiguration(Setting setting)
         {
             await using var db = await _dbFactory.CreateDbContextAsync();
