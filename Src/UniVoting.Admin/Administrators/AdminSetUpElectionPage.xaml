@@ -62,7 +62,8 @@
                             </StackPanel>
                             <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
                                 <TextBox Name="Colorbox" FontSize="16" Foreground="{DynamicResource SystemAccentColorBrush}"
-                                         FontFamily="Segoe UI Light" Margin="10,5,10,50" />
+                                         FontFamily="Segoe UI Light" Margin="10,5,10,50"
+                                         ToolTip="Enter colour as comma-separated RGB values (e.g. 255,128,0)" />
                                 <Rectangle Name="ColoView" Height="250" Width="auto" Margin="5,5,5,8"></Rectangle>
                                 <Button FontSize="20" FontFamily="Segoe UI Bold" Name="SaveElection"
                                         Height="40" TabIndex="10" Margin="5,1"
