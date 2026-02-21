@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Windows;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
@@ -20,7 +21,7 @@ namespace UniVoting.LiveView
             Loaded += MainWindow_Loaded;
         }
 
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded(object? sender, RoutedEventArgs e)
         {
             try
             {
@@ -34,8 +35,8 @@ namespace UniVoting.LiveView
             {
                 foreach (var position in _positions)
                 {
-                    CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim()));
-                    SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim()));
+                    CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim() ?? string.Empty));
+                    SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim() ?? string.Empty));
                 }
             }
         }

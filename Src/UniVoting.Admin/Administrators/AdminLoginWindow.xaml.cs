@@ -1,4 +1,7 @@
-using System.Windows;
+using System;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -9,16 +12,14 @@ namespace UniVoting.Admin.Administrators
         public AdminLoginWindow()
         {
             InitializeComponent();
-            BtnLogin.IsDefault = true;
-            Username.Focus();
             BtnLogin.Click += BtnLogin_Click;
         }
 
-        private async void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private async void BtnLogin_Click(object? sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
+            if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Text))
             {
-                var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password });
+                var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text });
                 if (admin != null)
                 {
                     new MainWindow(admin).Show();
@@ -26,7 +27,7 @@ namespace UniVoting.Admin.Administrators
                 }
                 else
                 {
-                    MessageBox.Show("Wrong username or password.", "Login Error");
+                    await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
                     Util.Clear(this);
                     BtnLogin.IsEnabled = true;
                     Username.Focus();
@@ -34,7 +35,7 @@ namespace UniVoting.Admin.Administrators
             }
             else
             {
-                MessageBox.Show("Please Enter Username or password to Login.", "Login Error");
+                await MessageBoxManager.GetMessageBoxStandard("Login Error", "Please Enter Username or password to Login.").ShowAsync();
                 Util.Clear(this);
                 Username.Focus();
             }

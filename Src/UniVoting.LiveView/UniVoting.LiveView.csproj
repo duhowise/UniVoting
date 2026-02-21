@@ -1,20 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AssemblyName>UniVoting.LiveView</AssemblyName>
     <RootNamespace>UniVoting.LiveView</RootNamespace>
-    <UseWPF>true</UseWPF>
     <ApplicationIcon>viewer.ico</ApplicationIcon>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.0" />
+    <PackageReference Include="Avalonia" Version="11.3.12" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.12" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.3.1.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageReference Include="WPF-UI" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\*.xaml" />
+    <None Include="CustomAccents\*.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniVoting.Data\UniVoting.Data.csproj" />
@@ -22,7 +27,7 @@
     <ProjectReference Include="..\UniVoting.Services\UniVoting.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Entypo.ttf" />
-    <Resource Include="viewer.ico" />
+    <AvaloniaResource Include="Resources\Entypo.ttf" />
+    <AvaloniaResource Include="viewer.ico" />
   </ItemGroup>
 </Project>

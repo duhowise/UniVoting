@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Concurrent;
-using System.Windows;
-using System.Windows.Media;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
@@ -10,10 +12,8 @@ namespace UniVoting.Client
 {
     public partial class MainWindow : Window
     {
-        AppDomain currentDomain = AppDomain.CurrentDomain;
-
         private readonly Stack<Position> _positionsStack;
-        private ClientVotingPage _votingPage;
+        private ClientVotingPage? _votingPage;
         private Voter _voter;
         private ConcurrentBag<Vote> _votes;
         private ConcurrentBag<SkippedVotes> _skippedVotes;
@@ -22,35 +22,29 @@ namespace UniVoting.Client
         {
             InitializeComponent();
             _positionsStack = positionsStack;
-            this._voter = voter;
+            _voter = voter;
             _skippedVotes = new ConcurrentBag<SkippedVotes>();
             _votes = new ConcurrentBag<Vote>();
+            Loaded += MainWindow_Loaded1;
             Loaded += MainWindow_Loaded;
-            PageHolder.Navigated += PageHolder_Navigated;
             CandidateControl.VoteCast += CandidateControl_VoteCast;
             YesOrNoCandidateControl.VoteCast += YesOrNoCandidateControl_VoteCast;
             YesOrNoCandidateControl.VoteNo += YesOrNoCandidateControl_VoteNo;
-            Loaded += MainWindow_Loaded1;
-            currentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private async void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var exp = e.ExceptionObject as Exception;
-            MessageBox.Show(exp?.Message);
+            if (exp != null)
+                await MessageBoxManager.GetMessageBoxStandard("Error", exp.Message).ShowAsync();
         }
 
-        private void YesOrNoCandidateControl_VoteNo(object source, EventArgs args)
-        {
-            ProcessVote();
-        }
+        private void YesOrNoCandidateControl_VoteNo(object? source, EventArgs args) => ProcessVote();
+        private void YesOrNoCandidateControl_VoteCast(object? source, EventArgs args) => ProcessVote();
+        private void CandidateControl_VoteCast(object? source, EventArgs args) => ProcessVote();
 
-        private void YesOrNoCandidateControl_VoteCast(object source, EventArgs args)
-        {
-            ProcessVote();
-        }
-
-        private async void MainWindow_Loaded1(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded1(object? sender, RoutedEventArgs e)
         {
             try
             {
@@ -59,11 +53,6 @@ namespace UniVoting.Client
                     MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
             }
             catch { }
-        }
-
-        private void CandidateControl_VoteCast(object source, EventArgs args)
-        {
-            ProcessVote();
         }
 
         private void ProcessVote()
@@ -80,11 +69,6 @@ namespace UniVoting.Client
             }
         }
 
-        private void PageHolder_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {
-            PageHolder.NavigationService.RemoveBackEntry();
-        }
-
         private ClientVotingPage VotingPageMaker(Stack<Position> positions)
         {
             _votingPage = new ClientVotingPage(_voter, positions.Pop(), _votes, _skippedVotes);
@@ -92,16 +76,13 @@ namespace UniVoting.Client
             return _votingPage;
         }
 
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded(object? sender, RoutedEventArgs e)
         {
             PageHolder.Content = VotingPageMaker(_positionsStack);
             _voter.VoteInProgress = true;
             await VotingService.UpdateVoter(_voter);
         }
 
-        private void VotingPage_VoteCompleted(object source, EventArgs args)
-        {
-            ProcessVote();
-        }
+        private void VotingPage_VoteCompleted(object? source, EventArgs args) => ProcessVote();
     }
 }

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -10,7 +11,7 @@ namespace UniVoting.Client
 {
     public partial class ClientsLoginWindow : Window
     {
-        private IEnumerable<Model.Position> _positions;
+        private IEnumerable<Model.Position>? _positions;
         private Stack<Model.Position> _positionsStack;
         private Voter _voter;
 
@@ -20,16 +21,15 @@ namespace UniVoting.Client
             _positionsStack = new Stack<Model.Position>();
             Loaded += ClientsLoginWindow_Loaded;
             _voter = new Voter();
-            BtnGo.IsDefault = true;
             BtnGo.Click += BtnGo_Click;
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override void OnClosing(WindowClosingEventArgs e)
         {
             e.Cancel = true;
         }
 
-        private void ClientsLoginWindow_Loaded(object sender, RoutedEventArgs e)
+        private void ClientsLoginWindow_Loaded(object? sender, RoutedEventArgs e)
         {
             try
             {
@@ -43,17 +43,15 @@ namespace UniVoting.Client
                 }
                 _positions = ElectionConfigurationService.GetAllPositions();
                 foreach (var position in _positions)
-                {
                     _positionsStack.Push(position);
-                }
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message, "Election Positions Error");
+                _ = MessageBoxManager.GetMessageBoxStandard("Election Positions Error", exception.Message).ShowAsync();
             }
         }
 
-        private async void BtnGo_Click(object sender, RoutedEventArgs e)
+        private async void BtnGo_Click(object? sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(Pin.Text))
             {
@@ -64,13 +62,12 @@ namespace UniVoting.Client
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show(exception.Message, "Election Login Error");
-                    throw;
+                    await MessageBoxManager.GetMessageBoxStandard("Election Login Error", exception.Message).ShowAsync();
                 }
             }
         }
 
-        public void ConfirmVoterAsync()
+        public async void ConfirmVoterAsync()
         {
             if (_voter != null)
             {
@@ -81,15 +78,15 @@ namespace UniVoting.Client
                 }
                 else
                 {
-                    MessageBox.Show("Please Contact Admin Your Details May Not Be Available\n Possible Cause: You May Have Already Voted",
-                        "Error Confirming Voter");
-                    Pin.Text = String.Empty;
+                    await MessageBoxManager.GetMessageBoxStandard("Error Confirming Voter",
+                        "Please Contact Admin Your Details May Not Be Available\n Possible Cause: You May Have Already Voted").ShowAsync();
+                    Pin.Text = string.Empty;
                 }
             }
             else
             {
-                MessageBox.Show("Wrong Code!", "Error Confirming Voter");
-                Pin.Text = String.Empty;
+                await MessageBoxManager.GetMessageBoxStandard("Error Confirming Voter", "Wrong Code!").ShowAsync();
+                Pin.Text = string.Empty;
             }
         }
     }

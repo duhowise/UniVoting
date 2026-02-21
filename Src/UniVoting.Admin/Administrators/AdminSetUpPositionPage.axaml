@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Admin.Administrators.AdminSetUpPositionPage">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5" Margin="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label FontSize="36" HorizontalAlignment="Center">Create Position</Label>
+            <ScrollViewer Padding="5" Grid.Row="1">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Name="PositionControlHolder" Grid.Row="0" Grid.Column="0"/>
+                    <Button Grid.Row="0" Grid.Column="1" FontSize="20" Margin="10" Height="40" Name="BtnAdd" TabIndex="0" Click="BtnAdd_Click">
+                        Add New Position
+                    </Button>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

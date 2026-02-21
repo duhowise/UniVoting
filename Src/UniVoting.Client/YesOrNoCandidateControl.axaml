@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Client.YesOrNoCandidateControl"
+             Width="250">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="0" Margin="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="20" Grid.Row="1"
+                       Name="CandidateName" Margin="-2,0,0,0" HorizontalAlignment="Left"
+                       Width="240" FontWeight="Bold">Candidate Name</TextBlock>
+            <Image Name="CandidateImage" Grid.Row="2"/>
+            <Label Grid.Row="3" FontSize="18" VerticalAlignment="Center" Margin="0" HorizontalAlignment="Center">Vote YES or NO</Label>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" Foreground="White"
+                        Margin="10" Height="40" Name="BtnVoteYes" Background="LightGreen" TabIndex="6" Content="YES"/>
+                <Button Grid.Row="3" HorizontalAlignment="Left" FontSize="20" Foreground="White"
+                        Margin="10" Height="40" Name="BtnVoteNo" TabIndex="7" Content="NO" Background="Red"/>
+            </StackPanel>
+            <Label x:Name="Rank" Content="2" HorizontalAlignment="Left" FontSize="30"
+                   VerticalAlignment="Top" Grid.Row="2"/>
+        </Grid>
+    </Border>
+</UserControl>

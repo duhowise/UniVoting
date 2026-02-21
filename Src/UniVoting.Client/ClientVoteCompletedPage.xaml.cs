@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Concurrent;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
+using System.Diagnostics;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Threading;
 using UniVoting.Model;
 using UniVoting.Services;
-using static System.Diagnostics.Process;
 
 namespace UniVoting.Client
 {
@@ -26,7 +28,7 @@ namespace UniVoting.Client
             Loaded += ClientVoteCompletedPage_Loaded;
         }
 
-        private async void ClientVoteCompletedPage_Loaded(object sender, RoutedEventArgs e)
+        private async void ClientVoteCompletedPage_Loaded(object? sender, RoutedEventArgs e)
         {
             try
             {
@@ -41,13 +43,13 @@ namespace UniVoting.Client
                 Text.Text = "Sorry An Error Occurred.\nYour Votes Were not Submitted.\nContact the Administrators";
                 await VotingService.ResetVoter(_voter);
             }
-            var _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0, 0, 0, 3);
-            _timer.Tick += _timer_Tick;
-            _timer.Start();
+            var timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0, 3);
+            timer.Tick += _timer_Tick;
+            timer.Start();
         }
 
-        private void _timer_Tick(object sender, EventArgs e)
+        private void _timer_Tick(object? sender, EventArgs e)
         {
             _count++;
             RestartApplication();
@@ -57,9 +59,11 @@ namespace UniVoting.Client
         {
             if (_count == 1)
             {
-                this.Hide();
-                Start(Application.ResourceAssembly.Location);
-                if (Application.Current != null) Application.Current.Shutdown();
+                Close();
+                var exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                if (!string.IsNullOrEmpty(exePath))
+                    Process.Start(exePath);
+                (Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.Shutdown();
             }
         }
     }

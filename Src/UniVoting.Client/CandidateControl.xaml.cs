@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Concurrent;
-using System.Windows;
-using System.Windows.Controls;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
@@ -10,19 +11,19 @@ namespace UniVoting.Client
     public partial class CandidateControl : UserControl
     {
         private ConfirmDialogControl _confirmDialogControl;
-        private Window _dialogWindow;
+        private Window? _dialogWindow;
+
+        public static readonly StyledProperty<int> CandidateIdProperty =
+            AvaloniaProperty.Register<CandidateControl, int>(nameof(CandidateId));
 
         public int CandidateId
         {
-            get => (int)GetValue(CandidateIdProperty);
+            get => GetValue(CandidateIdProperty);
             set => SetValue(CandidateIdProperty, value);
         }
 
-        public static readonly DependencyProperty CandidateIdProperty =
-            DependencyProperty.Register("CandidateId", typeof(int), typeof(CandidateControl), new PropertyMetadata(0));
-
-        public delegate void VoteCastEventHandler(object source, EventArgs args);
-        public static event VoteCastEventHandler VoteCast;
+        public delegate void VoteCastEventHandler(object? source, EventArgs args);
+        public static event VoteCastEventHandler? VoteCast;
 
         private ConcurrentBag<Vote> _votes;
         private Position _position;
@@ -32,10 +33,10 @@ namespace UniVoting.Client
         public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter)
         {
             InitializeComponent();
-            this._votes = votes;
-            this._position = position;
-            this._candidate = candidate;
-            this._voter = voter;
+            _votes = votes;
+            _position = position;
+            _candidate = candidate;
+            _voter = voter;
             Loaded += CandidateControl_Loaded;
             BtnVote.Click += BtnVote_Click;
 
@@ -44,45 +45,39 @@ namespace UniVoting.Client
             _confirmDialogControl.BtnNo.Click += BtnNoClick;
         }
 
-        private void CandidateControl_Loaded(object sender, RoutedEventArgs e)
+        private void CandidateControl_Loaded(object? sender, RoutedEventArgs e)
         {
             CandidateId = _candidate.Id;
-            CandidateName.Text = _candidate.CandidateName.ToUpper();
-            CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
+            CandidateName.Text = _candidate.CandidateName?.ToUpper() ?? string.Empty;
+            if (_candidate.CandidatePicture != null)
+                CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-        private void BtnVote_Click(object sender, RoutedEventArgs e)
+        private void BtnVote_Click(object? sender, RoutedEventArgs e)
         {
             BtnVote.IsEnabled = false;
+            var owner = TopLevel.GetTopLevel(this) as Window;
             _dialogWindow = new Window
             {
                 Content = _confirmDialogControl,
                 SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStyle = WindowStyle.ToolWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = Window.GetWindow(this),
                 Title = "Confirm Vote"
             };
             BtnVote.IsEnabled = true;
-            _dialogWindow.Show();
+            _dialogWindow.Show(owner);
         }
 
-        private static void OnVoteCast(object source)
-        {
-            VoteCast?.Invoke(source, EventArgs.Empty);
-        }
+        private static void OnVoteCast(object? source) => VoteCast?.Invoke(source, EventArgs.Empty);
 
-        private void BtnYesClick(object sender, RoutedEventArgs e)
+        private void BtnYesClick(object? sender, RoutedEventArgs e)
         {
             _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
             OnVoteCast(this);
             _dialogWindow?.Close();
         }
 
-        private void BtnNoClick(object sender, RoutedEventArgs e)
-        {
-            _dialogWindow?.Close();
-        }
+        private void BtnNoClick(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
     }
 }

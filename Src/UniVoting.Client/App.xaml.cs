@@ -1,6 +1,7 @@
 using System;
-using System.Windows;
-using Wpf.Ui.Appearance;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -10,25 +11,29 @@ namespace UniVoting.Client
     {
         private static readonly ILogger _logger = new SystemEventLoggerService();
 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        public override void Initialize()
         {
-            if (e.ExceptionObject is Exception exp) _logger.Log(exp);
+            AvaloniaXamlLoader.Load(this);
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        public override void OnFrameworkInitializationCompleted()
         {
-            try
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-                ApplicationThemeManager.Apply(ApplicationTheme.Light);
-                MainWindow = new ClientsLoginWindow();
-                MainWindow.Show();
-                base.OnStartup(e);
+                try
+                {
+                    AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+                    {
+                        if (e.ExceptionObject is Exception exp) _logger.Log(exp);
+                    };
+                    desktop.MainWindow = new ClientsLoginWindow();
+                }
+                catch (Exception exception)
+                {
+                    _logger.Log(exception);
+                }
             }
-            catch (Exception exception)
-            {
-                _logger.Log(exception);
-            }
+            base.OnFrameworkInitializationCompleted();
         }
     }
 }

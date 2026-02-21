@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Admin.Administrators.AdminCreateAccountPage">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5" Margin="3"
+            VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label FontSize="24" HorizontalAlignment="Center">Ec Members Account Creation</Label>
+            <ScrollViewer Padding="5" Grid.Row="1">
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Width="50" Height="30" VerticalAlignment="Center" Text="📋"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Width="250" FontSize="16" Margin="5" Name="TextBoxName" TabIndex="0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" Width="50" Height="30" VerticalAlignment="Center" Text="👤"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Width="250" FontSize="16" Margin="5" Name="Username" TabIndex="1"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="10" Width="50" Height="30" VerticalAlignment="Center" Text="🔑"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Width="250" FontSize="16" Margin="10" Name="Password" TabIndex="3" PasswordChar="*"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Width="250" FontSize="16" Margin="10" Name="RepeatPassword" TabIndex="4" PasswordChar="*"/>
+                    <CheckBox Name="IsChairman" Grid.Row="4" Margin="10" HorizontalAlignment="Left" FontSize="16" Content="Ec Chairman" Grid.Column="1"/>
+                    <CheckBox Name="IsPresident" Grid.Row="4" Margin="10" FontSize="16" HorizontalAlignment="Right" Content="President" Grid.Column="1"/>
+                    <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" Margin="10" Height="40" Name="BtnSave" TabIndex="5">
+                        Save
+                    </Button>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

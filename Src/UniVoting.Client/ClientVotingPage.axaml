@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Client.ClientVotingPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" HorizontalAlignment="Right">Welcome student voter</Label>
+        </Grid>
+        <Label FontSize="30" Margin="10" Grid.Row="1" Name="PositionName" HorizontalAlignment="Center">President</Label>
+        <ScrollViewer Grid.Row="2" HorizontalAlignment="Center">
+            <WrapPanel Name="candidatesHolder" ItemWidth="250"/>
+        </ScrollViewer>
+        <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" Margin="10" Height="40" Name="BtnSkipVote" TabIndex="6" Content="SKIP &gt;&gt;"/>
+    </Grid>
+</UserControl>

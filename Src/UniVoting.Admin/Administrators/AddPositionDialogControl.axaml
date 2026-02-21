@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Admin.Administrators.AddPositionDialogControl">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label FontSize="20" Grid.Row="0" HorizontalAlignment="Center">Create Position</Label>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBox Width="260" FontSize="24" Margin="10" Name="TextBoxPosition" TabIndex="0" VerticalAlignment="Center"/>
+            <TextBox Width="260" FontSize="24" Margin="10" Name="TextBoxFaculty" TabIndex="1" VerticalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="BtnSave" Content="Save" Foreground="White" HorizontalAlignment="Right" Margin="20" Width="80" Height="40"/>
+            <Button x:Name="BtnCancel" Content="Cancel" Foreground="White" HorizontalAlignment="Left" Margin="20" Width="80" Height="40"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

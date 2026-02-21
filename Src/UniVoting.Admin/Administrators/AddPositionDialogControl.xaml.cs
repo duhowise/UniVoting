@@ -1,10 +1,7 @@
-﻿using System.Windows.Controls;
+using Avalonia.Controls;
 
 namespace UniVoting.Admin.Administrators
 {
-    /// <summary>
-    /// Interaction logic for AddPositionDialogControl.xaml
-    /// </summary>
     public partial class AddPositionDialogControl : UserControl
     {
         public AddPositionDialogControl()

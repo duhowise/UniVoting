@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="UniVoting.LiveView.MainWindow"
+        WindowState="Maximized"
+        Title="UNIVOTING">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label FontSize="16" Grid.Column="0" Grid.Row="0" Margin="0">Casted Votes</Label>
+        <UniformGrid Grid.Column="0" Grid.Row="1" Name="CastedVotesHolder"/>
+        <Label FontSize="16" Grid.Column="1" Grid.Row="0" Margin="0">Skipped Votes</Label>
+        <UniformGrid Grid.Row="1" Grid.Column="1" Name="SkippedVotesHolder"/>
+    </Grid>
+</Window>

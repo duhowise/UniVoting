@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Admin.Administrators.AdminMenuPage">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5" Margin="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label FontSize="36" HorizontalAlignment="Center">Election Manager</Label>
+            <WrapPanel ItemWidth="250" Grid.Row="1">
+                <Button Height="200" Margin="5" Name="BtnCreateAccount" Click="BtnCreateAccount_Click">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="👤"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Create Account</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">Create a new user Account</Label>
+                    </StackPanel>
+                </Button>
+                <Button Height="200" Margin="5" Name="BtnSetUpElection" Click="BtnSetUpElection_Click">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="👍"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Election</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">Set up an election</Label>
+                    </StackPanel>
+                </Button>
+                <Button Height="200" Margin="5" Name="BtnSetUpPostions" Click="BtnSetUpPostions_Click">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="📍"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Positions</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">Add election positions</Label>
+                    </StackPanel>
+                </Button>
+                <Button Height="200" Margin="5" Name="BtnSetUpCandidates" Click="BtnSetUpCandidates_Click">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="📋"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Candidates</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">Add election candidates</Label>
+                    </StackPanel>
+                </Button>
+                <Button Height="200" Margin="5" Name="BtnSetUpVoters" Click="BtnSetUpVoters_Click">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="👥"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Voters</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">Add election Voters</Label>
+                    </StackPanel>
+                </Button>
+                <Button Height="200" Margin="5" Name="BtnDeclareVotes">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="📊"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Declare Result</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">display vote results</Label>
+                    </StackPanel>
+                </Button>
+                <Button Height="200" Margin="5" Name="BtnDispensePassword">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Center" FontSize="40" Text="🔖"/>
+                        <Label FontSize="14" HorizontalAlignment="Center">Dispense Password</Label>
+                        <Label FontSize="12" HorizontalAlignment="Center">give out passwords to voters</Label>
+                    </StackPanel>
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </Border>
+</UserControl>

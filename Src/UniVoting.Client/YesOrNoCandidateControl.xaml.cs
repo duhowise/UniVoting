@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Concurrent;
-using System.Windows;
-using System.Windows.Controls;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
@@ -14,22 +15,24 @@ namespace UniVoting.Client
         private readonly Candidate _candidate;
         private readonly Voter _voter;
         private readonly ConcurrentBag<SkippedVotes> _skippedVotes;
-        private Window _dialogWindow;
+        private Window? _dialogWindow;
+
+        public static readonly StyledProperty<int> CandidateIdProperty =
+            AvaloniaProperty.Register<YesOrNoCandidateControl, int>(nameof(CandidateId));
 
         public int CandidateId
         {
-            get => (int)GetValue(CandidateIdProperty);
+            get => GetValue(CandidateIdProperty);
             set => SetValue(CandidateIdProperty, value);
         }
 
-        public delegate void VoteNoEventHandler(object source, EventArgs args);
-        public static event VoteNoEventHandler VoteNo;
-        public delegate void VoteCastEventHandler(object source, EventArgs args);
-        public static readonly DependencyProperty CandidateIdProperty = DependencyProperty.Register("CandidateId", typeof(int), typeof(YesOrNoCandidateControl), new PropertyMetadata(0));
+        public delegate void VoteNoEventHandler(object? source, EventArgs args);
+        public static event VoteNoEventHandler? VoteNo;
+        public delegate void VoteCastEventHandler(object? source, EventArgs args);
+        public static event VoteCastEventHandler? VoteCast;
 
         private readonly ConfirmDialogControl _confirmDialogControl;
         private readonly SkipVoteDialogControl _skipDialogControl;
-        public static event VoteCastEventHandler VoteCast;
 
         public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
             ConcurrentBag<SkippedVotes> skippedVotes)
@@ -39,7 +42,7 @@ namespace UniVoting.Client
             _skipDialogControl = new SkipVoteDialogControl(position);
             _votes = votes;
             _position = position;
-            this._candidate = candidate;
+            _candidate = candidate;
             _voter = voter;
             _skippedVotes = skippedVotes;
             BtnVoteNo.Click += BtnVoteNo_Click;
@@ -51,76 +54,62 @@ namespace UniVoting.Client
             Loaded += YesOrNoCandidateControl_Loaded;
         }
 
-        private void SkipBtnYes_Click(object sender, RoutedEventArgs e)
+        private void SkipBtnYes_Click(object? sender, RoutedEventArgs e)
         {
             _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteNo(this);
             _dialogWindow?.Close();
         }
 
-        private void SkipBtnNo_Click(object sender, RoutedEventArgs e)
-        {
-            _dialogWindow?.Close();
-        }
+        private void SkipBtnNo_Click(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
 
-        private void BtnYes_Click(object sender, RoutedEventArgs e)
+        private void BtnYes_Click(object? sender, RoutedEventArgs e)
         {
             _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
             OnVoteCast(this);
             _dialogWindow?.Close();
         }
 
-        private void BtnNo_Click(object sender, RoutedEventArgs e)
-        {
-            _dialogWindow?.Close();
-        }
+        private void BtnNo_Click(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
 
-        private void YesOrNoCandidateControl_Loaded(object sender, RoutedEventArgs e)
+        private void YesOrNoCandidateControl_Loaded(object? sender, RoutedEventArgs e)
         {
             CandidateId = _candidate.Id;
-            CandidateName.Text = _candidate.CandidateName.ToUpper();
-            CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
+            CandidateName.Text = _candidate.CandidateName?.ToUpper() ?? string.Empty;
+            if (_candidate.CandidatePicture != null)
+                CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-        private void BtnVoteYes_Click(object sender, RoutedEventArgs e)
+        private void BtnVoteYes_Click(object? sender, RoutedEventArgs e)
         {
             BtnVoteYes.IsEnabled = false;
+            var owner = TopLevel.GetTopLevel(this) as Window;
             _dialogWindow = new Window
             {
                 Content = _confirmDialogControl,
                 SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStyle = WindowStyle.ToolWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = Window.GetWindow(this),
                 Title = "Confirm Vote"
             };
             BtnVoteYes.IsEnabled = true;
-            _dialogWindow.Show();
+            _dialogWindow.Show(owner);
         }
 
-        private void BtnVoteNo_Click(object sender, RoutedEventArgs e)
+        private void BtnVoteNo_Click(object? sender, RoutedEventArgs e)
         {
+            var owner = TopLevel.GetTopLevel(this) as Window;
             _dialogWindow = new Window
             {
                 Content = _skipDialogControl,
                 SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStyle = WindowStyle.ToolWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = Window.GetWindow(this),
                 Title = "Skip Vote"
             };
-            _dialogWindow.Show();
+            _dialogWindow.Show(owner);
         }
 
-        private static void OnVoteCast(object source)
-        {
-            VoteCast?.Invoke(source, EventArgs.Empty);
-        }
-
-        private static void OnVoteNo(object source)
-        {
-            VoteNo?.Invoke(source, EventArgs.Empty);
-        }
+        private static void OnVoteCast(object? source) => VoteCast?.Invoke(source, EventArgs.Empty);
+        private static void OnVoteNo(object? source) => VoteNo?.Invoke(source, EventArgs.Empty);
     }
 }

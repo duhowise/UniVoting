@@ -1,42 +1,45 @@
 using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {
-    public partial class AdminCreateAccountPage : Page
+    public partial class AdminCreateAccountPage : UserControl
     {
         public AdminCreateAccountPage()
         {
             InitializeComponent();
             BtnSave.Click += BtnSave_Click;
-            IsChairman.Checked += IsChairman_Checked;
-            IsPresident.Checked += IsPresident_Checked;
-            RepeatPassword.PasswordChanged += RepeatPassword_PasswordChanged;
+            IsChairman.IsCheckedChanged += IsChairman_Checked;
+            IsPresident.IsCheckedChanged += IsPresident_Checked;
+            RepeatPassword.TextChanged += RepeatPassword_PasswordChanged;
         }
 
-        private void RepeatPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        private void RepeatPassword_PasswordChanged(object? sender, TextChangedEventArgs e)
         {
-            RepeatPassword.Foreground = !Password.Password.Equals(RepeatPassword.Password)
+            var pwd = Password.Text ?? string.Empty;
+            var repeat = RepeatPassword.Text ?? string.Empty;
+            RepeatPassword.Foreground = !pwd.Equals(repeat)
                 ? new SolidColorBrush(Colors.OrangeRed) : Password.Foreground;
         }
 
-        private void IsPresident_Checked(object sender, RoutedEventArgs e)
+        private void IsPresident_Checked(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             IsChairman.IsChecked = false;
         }
 
-        private void IsChairman_Checked(object sender, RoutedEventArgs e)
+        private void IsChairman_Checked(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             IsPresident.IsChecked = false;
         }
 
-        private async void BtnSave_Click(object sender, RoutedEventArgs e)
+        private async void BtnSave_Click(object? sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(TextBoxName.Text) || !string.IsNullOrWhiteSpace(Password.Password))
+            if (!string.IsNullOrWhiteSpace(TextBoxName.Text) || !string.IsNullOrWhiteSpace(Password.Text))
             {
                 try
                 {
@@ -44,18 +47,18 @@ namespace UniVoting.Admin.Administrators
                     {
                         FullName = TextBoxName.Text,
                         UserName = Username.Text,
-                        Password = Password.Password,
+                        Password = Password.Text,
                         IsChairman = Convert.ToBoolean(IsChairman.IsChecked),
                         IsPresident = Convert.ToBoolean(IsPresident.IsChecked)
                     });
-                    MessageBox.Show($"{Username.Text} Successfully created", "Success!");
+                    await MessageBoxManager.GetMessageBoxStandard("Success!", $"{Username.Text} Successfully created").ShowAsync();
                     Util.Clear(this);
                     TextBoxName.Focus();
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception);
-                    MessageBox.Show("Something Went Wrong", "Wait!");
+                    await MessageBoxManager.GetMessageBoxStandard("Wait!", "Something Went Wrong").ShowAsync();
                 }
             }
         }

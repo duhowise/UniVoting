@@ -1,14 +1,23 @@
-using System.Windows;
-using Wpf.Ui.Appearance;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
 
 namespace UniVoting.LiveView
 {
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        public override void Initialize()
         {
-            ApplicationThemeManager.Apply(ApplicationTheme.Light);
-            base.OnStartup(e);
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.MainWindow = new MainWindow();
+            }
+            base.OnFrameworkInitializationCompleted();
         }
     }
 }

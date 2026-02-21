@@ -1,6 +1,6 @@
-using System;
-using System.Windows;
-using Wpf.Ui.Appearance;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
 using UniVoting.Admin.Administrators;
 using UniVoting.Admin.StatUp;
 using UniVoting.Model;
@@ -12,21 +12,27 @@ namespace UniVoting.Admin
     {
         private static readonly ILogger _logger = new SystemEventLoggerService();
 
-        protected override void OnStartup(StartupEventArgs e)
+        public override void Initialize()
         {
-            try
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var bootstrapper = new BootStrapper();
-                var container = bootstrapper.BootStrap();
-                ApplicationThemeManager.Apply(ApplicationTheme.Light);
-                MainWindow = new AdminLoginWindow();
-                MainWindow.Show();
-                base.OnStartup(e);
+                try
+                {
+                    var bootstrapper = new BootStrapper();
+                    bootstrapper.BootStrap();
+                    desktop.MainWindow = new AdminLoginWindow();
+                }
+                catch (System.Exception exception)
+                {
+                    _logger.Log(exception);
+                }
             }
-            catch (Exception exception)
-            {
-                _logger.Log(exception);
-            }
+            base.OnFrameworkInitializationCompleted();
         }
     }
 }
