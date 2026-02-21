@@ -55,9 +55,9 @@ namespace UniVoting.Client
                 await MessageBoxManager.GetMessageBoxStandard("Error", exp.Message).ShowAsync();
         }
 
-        private void YesOrNoCandidateControl_VoteNo(object? source, EventArgs args) => ProcessVote();
-        private void YesOrNoCandidateControl_VoteCast(object? source, EventArgs args) => ProcessVote();
-        private void CandidateControl_VoteCast(object? source, EventArgs args) => ProcessVote();
+        private void YesOrNoCandidateControl_VoteNo() => ProcessVote();
+        private void YesOrNoCandidateControl_VoteCast() => ProcessVote();
+        private void CandidateControl_VoteCast() => ProcessVote();
 
         private async void MainWindow_Loaded1(object? sender, RoutedEventArgs e)
         {
@@ -99,6 +99,6 @@ namespace UniVoting.Client
             await _votingService.UpdateVoter(_voter);
         }
 
-        private void VotingPage_VoteCompleted(object? source, EventArgs args) => ProcessVote();
+        private void VotingPage_VoteCompleted() => ProcessVote();
     }
 }

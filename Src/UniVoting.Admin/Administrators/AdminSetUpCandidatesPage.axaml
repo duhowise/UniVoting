@@ -2,27 +2,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="UniVoting.Admin.Administrators.AdminSetUpCandidatesPage">
     <UserControl.Resources>
-        <DataTemplate x:Key="DataTemplateItem">
-            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4"
-                    Padding="5" Margin="5" Width="400" Height="120">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="{Binding CandidatePicture}" Height="100" Width="100"/>
-                    <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
-                        <Label Content="{Binding CandidateName}" FontSize="18" HorizontalAlignment="Center"/>
-                        <Label Content="{Binding Position}" FontSize="16" HorizontalAlignment="Center"/>
-                        <Label Content="{Binding Rank}" FontSize="14" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-        </DataTemplate>
+                    <DataTemplate x:Key="DataTemplateItem">
+                        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4"
+                                Padding="5" Margin="5" Width="400" Height="120">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding CandidatePicture}" Height="100" Width="100"/>
+                                <StackPanel Grid.Column="1" Grid.Row="0" Margin="5">
+                                    <Label Content="{Binding CandidateName}" FontSize="18" HorizontalAlignment="Center"/>
+                                    <Label Content="{Binding PositionName}" FontSize="16" HorizontalAlignment="Center"/>
+                                    <Label Content="{Binding Rank}" FontSize="14" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -53,8 +53,8 @@
                             <TextBlock FontSize="14" FontWeight="Bold" Margin="5,5,5,0">Candidate image</TextBlock>
                         <StackPanel>
                             <Label FontSize="16" HorizontalAlignment="Center">image size should be 256x256</Label>
-                            <Image Name="CandidateImage" Width="250" Height="250"/>
-                            <Button FontSize="20" Margin="10" Height="40" Name="BtnUploadImage" TabIndex="3" Click="BtnUploadImage_Click">
+                            <Image Name="CandidateImage" Width="250" Height="250" Source="{Binding CandidateImage}"/>
+                            <Button FontSize="20" Margin="10" Height="40" Name="BtnUploadImage" TabIndex="3" Command="{Binding UploadImageCommand}">
                                 Upload image
                             </Button>
                         </StackPanel>
@@ -64,15 +64,17 @@
                         <StackPanel>
                             <TextBlock FontSize="14" FontWeight="Bold" Margin="5,5,5,0">Candidate's details</TextBlock>
                         <StackPanel>
-                            <TextBox Width="260" FontSize="24" Margin="10" Name="CandidateName" TabIndex="0" VerticalAlignment="Center"/>
-                            <ComboBox TabIndex="1" Name="PositionCombo" FontSize="24" Margin="10" Width="260">
+                            <TextBox Width="260" FontSize="24" Margin="10" Name="CandidateName" Text="{Binding CandidateName}" TabIndex="0" VerticalAlignment="Center"/>
+                            <ComboBox TabIndex="1" Name="PositionCombo" FontSize="24" Margin="10" Width="260"
+                                      ItemsSource="{Binding Positions}" SelectedItem="{Binding SelectedPosition}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding PositionName}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <ComboBox TabIndex="2" Name="RankCombo" FontSize="24" Margin="10" Width="260"/>
+                            <ComboBox TabIndex="2" Name="RankCombo" FontSize="24" Margin="10" Width="260"
+                                      ItemsSource="{Binding Ranks}" SelectedItem="{Binding SelectedRank}"/>
                             <Button FontSize="20" Margin="10,65,10,5" Height="40" Name="SaveCandidate" TabIndex="3">
                                 Save Candidate
                             </Button>
@@ -82,6 +84,7 @@
                 </Grid>
             </Border>
             <ListBox Grid.Column="1" Margin="10" Height="600" Name="CandidatesList"
+                     ItemsSource="{Binding Candidates}"
                      ItemTemplate="{DynamicResource DataTemplateItem}"/>
         </Grid>
     </Grid>

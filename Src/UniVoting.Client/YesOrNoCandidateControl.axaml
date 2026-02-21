@@ -12,9 +12,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontSize="20" Grid.Row="1"
-                       Name="CandidateName" Margin="-2,0,0,0" HorizontalAlignment="Left"
-                       Width="240" FontWeight="Bold">Candidate Name</TextBlock>
-            <Image Name="CandidateImage" Grid.Row="2"/>
+                       Text="{Binding CandidateName}"
+                       Margin="-2,0,0,0" HorizontalAlignment="Left"
+                       Width="240" FontWeight="Bold"/>
+            <Image Grid.Row="2" Source="{Binding CandidateImage}"/>
             <Label Grid.Row="3" FontSize="18" VerticalAlignment="Center" Margin="0" HorizontalAlignment="Center">Vote YES or NO</Label>
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Grid.Row="3" HorizontalAlignment="Right" FontSize="20" Foreground="White"
@@ -22,7 +23,7 @@
                 <Button Grid.Row="3" HorizontalAlignment="Left" FontSize="20" Foreground="White"
                         Margin="10" Height="40" Name="BtnVoteNo" TabIndex="7" Content="NO" Background="Red"/>
             </StackPanel>
-            <Label x:Name="Rank" Content="2" HorizontalAlignment="Left" FontSize="30"
+            <Label Content="{Binding RankText}" HorizontalAlignment="Left" FontSize="30"
                    VerticalAlignment="Top" Grid.Row="2"/>
         </Grid>
     </Border>

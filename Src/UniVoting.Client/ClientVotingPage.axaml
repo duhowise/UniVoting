@@ -13,9 +13,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label FontSize="24" Grid.Column="1" Name="TextBoxWelcome" HorizontalAlignment="Right">Welcome student voter</Label>
+            <Label FontSize="24" Grid.Column="1" Content="{Binding WelcomeText}" HorizontalAlignment="Right"/>
         </Grid>
-        <Label FontSize="30" Margin="10" Grid.Row="1" Name="PositionName" HorizontalAlignment="Center">President</Label>
+        <Label FontSize="30" Margin="10" Grid.Row="1" Content="{Binding PositionName}" HorizontalAlignment="Center"/>
         <ScrollViewer Grid.Row="2" HorizontalAlignment="Center">
             <WrapPanel Name="candidatesHolder" ItemWidth="250"/>
         </ScrollViewer>

@@ -5,7 +5,7 @@
         Title="Thank You"
         WindowStartupLocation="CenterScreen">
     <Grid Name="MainGrid">
-        <TextBlock FontSize="48" Name="Text" TextWrapping="Wrap"
-                   HorizontalAlignment="Center" VerticalAlignment="Center">Thank You For Voting</TextBlock>
+        <TextBlock FontSize="48" Text="{Binding ThankYouText}" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

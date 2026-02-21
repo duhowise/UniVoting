@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Specialized;
+using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
+using UniVoting.Admin.ViewModels;
+using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
@@ -11,7 +14,7 @@ namespace UniVoting.Admin.Administrators
         public static AdminSetUpPositionPage? Instance;
         private AddPositionDialogControl _addPositionDialogControl = null!;
         private Window? _dialogWindow;
-        private readonly IElectionConfigurationService _electionService;
+        private readonly AdminSetUpPositionPageViewModel _viewModel;
         private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
@@ -22,33 +25,61 @@ namespace UniVoting.Admin.Administrators
 
         public AdminSetUpPositionPage(IElectionConfigurationService electionService, IServiceProvider sp)
         {
-            _electionService = electionService;
             _sp = sp;
+            _viewModel = new AdminSetUpPositionPageViewModel(electionService);
+            _viewModel.ShowAddPositionDialog += ShowAddDialog;
+            _viewModel.CloseDialog += () => _dialogWindow?.Close();
+            DataContext = _viewModel;
             InitializeComponent();
             Instance = this;
-            Loaded += Instance_Loaded;
+            Loaded += async (_, _) =>
+            {
+                await _viewModel.LoadAsync();
+                RefreshPositionControls();
+                _viewModel.Positions.CollectionChanged += Positions_CollectionChanged;
+            };
         }
 
-        private async void Instance_Loaded(object? sender, RoutedEventArgs e)
+        private void Positions_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems != null)
+            {
+                foreach (Position pos in e.NewItems)
+                {
+                    AddPositionControl(pos);
+                }
+            }
+            else
+            {
+                RefreshPositionControls();
+            }
+        }
+
+        private void RefreshPositionControls()
         {
             PositionControlHolder.Children.Clear();
-            var positions = await _electionService.GetAllPositionsAsync();
-            foreach (var position in positions)
+            foreach (var position in _viewModel.Positions)
             {
-                var pc = _sp.GetRequiredService<PositionControl>();
-                pc.TextBoxPosition.Text = position.PositionName ?? string.Empty;
-                pc.TextBoxFaculty.Text = position.Faculty;
-                pc.Id = position.Id;
-                PositionControlHolder.Children.Add(pc);
+                AddPositionControl(position);
             }
-
-            _addPositionDialogControl = _sp.GetRequiredService<AddPositionDialogControl>();
-            _addPositionDialogControl.BtnCancel.Click += BtnCancelClick;
-            _addPositionDialogControl.BtnSave.Click += BtnSaveClick;
         }
 
-        private void BtnAdd_Click(object? sender, RoutedEventArgs e)
+        private void AddPositionControl(Position position)
         {
+            var pc = _sp.GetRequiredService<PositionControl>();
+            pc.TextBoxPosition.Text = position.PositionName ?? string.Empty;
+            pc.TextBoxFaculty.Text = position.Faculty;
+            pc.Id = position.Id;
+            PositionControlHolder.Children.Add(pc);
+        }
+
+        private void ShowAddDialog()
+        {
+            _addPositionDialogControl = _sp.GetRequiredService<AddPositionDialogControl>();
+            _addPositionDialogControl.BtnCancel.Click -= BtnCancelClick;
+            _addPositionDialogControl.BtnSave.Click -= BtnSaveClick;
+            _addPositionDialogControl.BtnCancel.Click += BtnCancelClick;
+            _addPositionDialogControl.BtnSave.Click += BtnSaveClick;
             var owner = TopLevel.GetTopLevel(this) as Window;
             _dialogWindow = new Window
             {
@@ -58,28 +89,24 @@ namespace UniVoting.Admin.Administrators
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Title = "Add Position"
             };
-            _dialogWindow.Show(owner);
+            _dialogWindow.Show(owner!);
+        }
+
+        private async void BtnSaveClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            _viewModel.NewPositionName = _addPositionDialogControl.TextBoxPosition.Text;
+            _viewModel.NewFaculty = _addPositionDialogControl.TextBoxFaculty.Text;
+            await _viewModel.SavePositionCommand.ExecuteAsync(null);
+        }
+
+        private void BtnCancelClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            _dialogWindow?.Close();
         }
 
         public void RemovePosition(UserControl c)
         {
             PositionControlHolder.Children.Remove(c);
-        }
-
-        private async void BtnSaveClick(object? sender, RoutedEventArgs e)
-        {
-            var pos = _addPositionDialogControl.TextBoxPosition.Text;
-            var fac = _addPositionDialogControl.TextBoxFaculty.Text;
-            await _electionService.AddPosition(new Model.Position { PositionName = pos, Faculty = fac });
-            var newPc = _sp.GetRequiredService<PositionControl>();
-            newPc.TextBoxPosition.Text = pos ?? string.Empty;
-            PositionControlHolder.Children.Add(newPc);
-            _dialogWindow?.Close();
-        }
-
-        private void BtnCancelClick(object? sender, RoutedEventArgs e)
-        {
-            _dialogWindow?.Close();
         }
     }
 }

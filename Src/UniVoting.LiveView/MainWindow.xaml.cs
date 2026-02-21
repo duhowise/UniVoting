@@ -1,20 +1,16 @@
 using System;
-using System.Collections.Generic;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
+using UniVoting.LiveView.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
-using Position = UniVoting.Model.Position;
 
 namespace UniVoting.LiveView
 {
     public partial class MainWindow : Window
     {
-        IEnumerable<Position> _positions;
-        readonly ILiveViewService _liveViewService;
-        readonly ILogger _logger;
-        readonly IServiceProvider _sp;
+        private readonly LiveViewMainWindowViewModel _viewModel;
+        private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
@@ -24,27 +20,11 @@ namespace UniVoting.LiveView
 
         public MainWindow(ILiveViewService liveViewService, ILogger logger, IServiceProvider sp)
         {
-            _liveViewService = liveViewService;
-            _logger = logger;
             _sp = sp;
-            InitializeComponent();
-            _positions = new List<Position>();
-            Loaded += MainWindow_Loaded;
-        }
-
-        private async void MainWindow_Loaded(object? sender, RoutedEventArgs e)
-        {
-            try
+            _viewModel = new LiveViewMainWindowViewModel(liveViewService, logger);
+            _viewModel.PositionsLoaded += positions =>
             {
-                _positions = await _liveViewService.Positions();
-            }
-            catch (Exception exception)
-            {
-                _logger.Log(exception);
-            }
-            finally
-            {
-                foreach (var position in _positions)
+                foreach (var position in positions)
                 {
                     var large = _sp.GetRequiredService<TileControlLarge>();
                     large.Initialize(position.PositionName?.Trim() ?? string.Empty);
@@ -54,7 +34,10 @@ namespace UniVoting.LiveView
                     small.Initialize(position.PositionName?.Trim() ?? string.Empty);
                     SkippedVotesHolder.Children.Add(small);
                 }
-            }
+            };
+            DataContext = _viewModel;
+            InitializeComponent();
+            Loaded += async (_, _) => await _viewModel.LoadAsync();
         }
     }
 }
