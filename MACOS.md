@@ -10,9 +10,9 @@ This document describes the current macOS compatibility status of each component
 | `UniVoting.Data` | `net9.0` | ✅ Yes (uses `Microsoft.Data.SqlClient`) |
 | `UniVoting.Services` | `net9.0` | ✅ Yes |
 | `UniVoting.Core` | `net9.0` | ✅ Yes |
-| `UniVoting.Admin` | `net9.0-windows` (WPF) | ❌ UI requires migration (see below) |
-| `UniVoting.Client` | `net9.0-windows` (WPF) | ❌ UI requires migration (see below) |
-| `UniVoting.LiveView` | `net9.0-windows` (WPF) | ❌ UI requires migration (see below) |
+| `UniVoting.Admin` | `net9.0` (Avalonia UI) | ✅ Yes |
+| `UniVoting.Client` | `net9.0` (Avalonia UI) | ✅ Yes |
+| `UniVoting.LiveView` | `net9.0` (Avalonia UI) | ✅ Yes |
 
 ---
 
@@ -61,30 +61,41 @@ The connection string format in each file:
 
 ---
 
-## Building the Backend Libraries on macOS
+## Building All Projects on macOS
 
-The backend projects build and run on macOS natively:
+All projects (including the UI apps) now build and run on macOS natively:
 
 ```bash
+# Backend libraries
 dotnet build Src/UniVoting.Model/UniVoting.Model.csproj
 dotnet build Src/UniVoting.Data/UniVoting.Data.csproj
 dotnet build Src/UniVoting.Services/UniVoting.Services.csproj
 dotnet build Src/UniVoting.Core/UniVoting.Core.csproj
+
+# UI apps (now Avalonia, runs on macOS)
+dotnet build Src/UniVoting.Admin/UniVoting.Admin.csproj
+dotnet build Src/UniVoting.Client/UniVoting.Client.csproj
+dotnet build Src/UniVoting.LiveView/UniVoting.LiveView.csproj
+
+# Or build everything at once:
+dotnet build UniVoting.sln
 ```
 
-The WPF UI projects can be **compiled** on macOS (the `EnableWindowsTargeting` flag allows cross-compilation) but cannot be **executed** on macOS — WPF renders through DirectX and is Windows-only.
+To run an app:
+
+```bash
+dotnet run --project Src/UniVoting.Admin/UniVoting.Admin.csproj
+dotnet run --project Src/UniVoting.Client/UniVoting.Client.csproj
+dotnet run --project Src/UniVoting.LiveView/UniVoting.LiveView.csproj
+```
 
 ---
 
-## UI Migration: WPF → Avalonia UI
+## UI Migration: WPF → Avalonia UI (Completed)
 
-The three WPF app projects (`Admin`, `Client`, `LiveView`) must be migrated to **[Avalonia UI](https://avaloniaui.net/)** to run on macOS. Avalonia:
+The three app projects (`Admin`, `Client`, `LiveView`) have been migrated from WPF to **[Avalonia UI](https://avaloniaui.net/)** 11.3.12. All three projects now target `net9.0` (cross-platform) and build/run on Windows, macOS, and Linux.
 
-- Supports Windows, macOS, and Linux natively
-- Uses XAML with nearly identical syntax to WPF
-- Provides a Fluent theme that closely matches the current WPF-UI look
-
-The steps below are based on the **actual code in this repository**.
+The migration steps below are kept as reference documentation.
 
 ---
 
