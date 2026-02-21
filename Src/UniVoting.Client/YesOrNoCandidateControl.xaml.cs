@@ -1,20 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
-using System.Windows;
-using System.Windows.Controls;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
 namespace UniVoting.Client
 {
-    /// <inheritdoc>
-    ///     <cref></cref>
-    /// </inheritdoc>
-    /// <summary>
-    /// Interaction logic for YesOrNoCandidateControl.xaml
-    /// </summary>
     public partial class YesOrNoCandidateControl : UserControl
     {
         private readonly ConcurrentBag<Vote> _votes;
@@ -22,103 +16,123 @@ namespace UniVoting.Client
         private readonly Candidate _candidate;
         private readonly Voter _voter;
         private readonly ConcurrentBag<SkippedVotes> _skippedVotes;
+        private Window? _dialogWindow;
+
+        public static readonly StyledProperty<int> CandidateIdProperty =
+            AvaloniaProperty.Register<YesOrNoCandidateControl, int>(nameof(CandidateId));
 
         public int CandidateId
         {
-            get => (int)GetValue(CandidateIdProperty);
+            get => GetValue(CandidateIdProperty);
             set => SetValue(CandidateIdProperty, value);
         }
 
+        public delegate void VoteNoEventHandler(object? source, EventArgs args);
+        public static event VoteNoEventHandler? VoteNo;
+        public delegate void VoteCastEventHandler(object? source, EventArgs args);
+        public static event VoteCastEventHandler? VoteCast;
 
-        public delegate void VoteNoEventHandler(object source, EventArgs args);
-        public static event VoteNoEventHandler VoteNo;
-        public delegate void VoteCastEventHandler(object source, EventArgs args);
-        public static readonly DependencyProperty CandidateIdProperty = DependencyProperty.Register("CandidateId", typeof(int), typeof(YesOrNoCandidateControl), new PropertyMetadata(0));
-        private readonly CustomDialog _customDialog;
-        private  MetroWindow _metroWindow;
-        readonly SkipVoteDialogControl _skipDialogControl;
-        public static event VoteCastEventHandler VoteCast;
+        private readonly ConfirmDialogControl _confirmDialogControl;
+        private readonly SkipVoteDialogControl _skipDialogControl;
+        private readonly IServiceProvider _sp;
 
-
-        public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
-            ConcurrentBag<SkippedVotes> skippedVotes)
+        public YesOrNoCandidateControl()
         {
             InitializeComponent();
-            _customDialog = new CustomDialog();
-            var confirmDialogControl = new ConfirmDialogControl(candidate);
-            _skipDialogControl = new SkipVoteDialogControl(position);
-            _customDialog.Content = confirmDialogControl;
-            _votes = votes;
-            _position = position;
-            this._candidate = candidate;
-            _voter = voter;
-            _skippedVotes = skippedVotes;
+            var session = App.Services.GetRequiredService<IClientSessionService>();
+            _votes = session.Votes;
+            _position = session.CurrentPosition ?? new Position();
+            _candidate = session.CurrentCandidate ?? new Candidate();
+            _voter = session.CurrentVoter ?? new Voter();
+            _skippedVotes = session.SkippedVotes;
+            _sp = App.Services;
+            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
+            _skipDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
             BtnVoteNo.Click += BtnVoteNo_Click;
             BtnVoteYes.Click += BtnVoteYes_Click;
             _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;
             _skipDialogControl.BtnYes.Click += SkipBtnYes_Click;
-            confirmDialogControl.BtnNo.Click += BtnNo_Click;
-            confirmDialogControl.BtnYes.Click += BtnYes_Click            ;
+            _confirmDialogControl.BtnNo.Click += BtnNo_Click;
+            _confirmDialogControl.BtnYes.Click += BtnYes_Click;
             Loaded += YesOrNoCandidateControl_Loaded;
         }
 
-        private async void SkipBtnYes_Click(object sender, RoutedEventArgs e)
+        public YesOrNoCandidateControl(IClientSessionService session, IServiceProvider sp)
+        {
+            InitializeComponent();
+            _sp = sp;
+            _confirmDialogControl = sp.GetRequiredService<ConfirmDialogControl>();
+            _skipDialogControl = sp.GetRequiredService<SkipVoteDialogControl>();
+            _votes = session.Votes;
+            _position = session.CurrentPosition!;
+            _candidate = session.CurrentCandidate!;
+            _voter = session.CurrentVoter!;
+            _skippedVotes = session.SkippedVotes;
+            BtnVoteNo.Click += BtnVoteNo_Click;
+            BtnVoteYes.Click += BtnVoteYes_Click;
+            _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;
+            _skipDialogControl.BtnYes.Click += SkipBtnYes_Click;
+            _confirmDialogControl.BtnNo.Click += BtnNo_Click;
+            _confirmDialogControl.BtnYes.Click += BtnYes_Click;
+            Loaded += YesOrNoCandidateControl_Loaded;
+        }
+
+        private void SkipBtnYes_Click(object? sender, RoutedEventArgs e)
         {
             _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
             OnVoteNo(this);
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+            _dialogWindow?.Close();
         }
 
-        private async void SkipBtnNo_Click(object sender, RoutedEventArgs e)
-        {
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+        private void SkipBtnNo_Click(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
 
-        }
-
-        private async void BtnYes_Click(object sender, RoutedEventArgs e)
+        private void BtnYes_Click(object? sender, RoutedEventArgs e)
         {
             _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
             OnVoteCast(this);
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+            _dialogWindow?.Close();
         }
 
-        private async void BtnNo_Click(object sender, RoutedEventArgs e)
-        {
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+        private void BtnNo_Click(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
 
-        }
-
-        private void YesOrNoCandidateControl_Loaded(object sender, RoutedEventArgs e)
+        private void YesOrNoCandidateControl_Loaded(object? sender, RoutedEventArgs e)
         {
-            _metroWindow = (Window.GetWindow(this) as MetroWindow);
             CandidateId = _candidate.Id;
-            CandidateName.Text = _candidate.CandidateName.ToUpper();
-            CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
+            CandidateName.Text = _candidate.CandidateName?.ToUpper() ?? string.Empty;
+            if (_candidate.CandidatePicture != null)
+                CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-        private async void BtnVoteYes_Click(object sender, RoutedEventArgs e)
+        private void BtnVoteYes_Click(object? sender, RoutedEventArgs e)
         {
             BtnVoteYes.IsEnabled = false;
-            await _metroWindow.ShowMetroDialogAsync(_customDialog);
+            var owner = TopLevel.GetTopLevel(this) as Window;
+            _dialogWindow = new Window
+            {
+                Content = _confirmDialogControl,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Title = "Confirm Vote"
+            };
             BtnVoteYes.IsEnabled = true;
+            _dialogWindow.Show(owner);
         }
 
-        private async void BtnVoteNo_Click(object sender, RoutedEventArgs e)
+        private void BtnVoteNo_Click(object? sender, RoutedEventArgs e)
         {
-            _customDialog.Content = _skipDialogControl;
-         await   _metroWindow.ShowMetroDialogAsync(_customDialog);
-        }
-        
-        private static void OnVoteCast(object source)
-        {
-            VoteCast?.Invoke(source, EventArgs.Empty);
+            var owner = TopLevel.GetTopLevel(this) as Window;
+            _dialogWindow = new Window
+            {
+                Content = _skipDialogControl,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Title = "Skip Vote"
+            };
+            _dialogWindow.Show(owner);
         }
 
-        private static void OnVoteNo(object source)
-        {
-            VoteNo?.Invoke(source, EventArgs.Empty);
-        }
+        private static void OnVoteCast(object? source) => VoteCast?.Invoke(source, EventArgs.Empty);
+        private static void OnVoteNo(object? source) => VoteNo?.Invoke(source, EventArgs.Empty);
     }
-
 }

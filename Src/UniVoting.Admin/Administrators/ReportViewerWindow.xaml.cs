@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Telerik.ReportViewer.Wpf;
+using Avalonia.Controls;
 
 namespace UniVoting.Admin.Administrators
 {
@@ -8,8 +7,6 @@ namespace UniVoting.Admin.Administrators
         public ReportViewerWindow()
         {
             InitializeComponent();
-            WindowState=WindowState.Maximized;
-            this.ReportViewer1.ZoomMode=ZoomMode.PageWidth;
         }
     }
 }

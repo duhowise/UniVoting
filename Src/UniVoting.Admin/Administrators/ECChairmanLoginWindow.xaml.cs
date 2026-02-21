@@ -1,54 +1,58 @@
-﻿using System.Windows;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using System;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {
-	/// <summary>
-	/// Interaction logic for ECChairmanLoginWindow.xaml
-	/// </summary>
-	public partial class EcChairmanLoginWindow : MetroWindow
-	{
-		public EcChairmanLoginWindow()
-		{
-			InitializeComponent();
-			WindowState = WindowState.Maximized;
-			BtnLogin.IsDefault = true;
-			BtnLogin.Click += BtnLogin_Click;
-			Username.Focus();
-		}
+    public partial class EcChairmanLoginWindow : Window
+    {
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IServiceProvider _sp;
 
-		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
-		{
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
+        public EcChairmanLoginWindow()
+        {
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
+        }
 
-			if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Password))
-			{
-				var chairman = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Password, IsChairman = true });
-				if (chairman != null)
-				{
-					new ReportViewerWindow().Show();
-					Close();
-				}
-				else
-				{
-					await this.ShowMessageAsync("Login Error", "Wrong username or password.");
-					Util.Clear(this);
-					BtnLogin.IsEnabled = true;
-					Username.Focus();
+        public EcChairmanLoginWindow(IElectionConfigurationService electionService, IServiceProvider sp)
+        {
+            _electionService = electionService;
+            _sp = sp;
+            InitializeComponent();
+            WindowState = WindowState.Maximized;
+            BtnLogin.Click += BtnLogin_Click;
+            Username.Focus();
+        }
 
-				}
-			}
-			else
-			{
-				await this.ShowMessageAsync("Login Error", "Wrong username or password.");
-				Util.Clear(this);
-				Username.Focus();
-
-			}
-
-
-		}
-	}
+        private async void BtnLogin_Click(object? sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Text))
+            {
+                var chairman = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text, IsChairman = true });
+                if (chairman != null)
+                {
+                    _sp.GetRequiredService<ReportViewerWindow>().Show();
+                    Close();
+                }
+                else
+                {
+                    await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
+                    Util.Clear(this);
+                    BtnLogin.IsEnabled = true;
+                    Username.Focus();
+                }
+            }
+            else
+            {
+                await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
+                Util.Clear(this);
+                Username.Focus();
+            }
+        }
+    }
 }

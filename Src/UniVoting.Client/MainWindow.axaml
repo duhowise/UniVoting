@@ -1,0 +1,10 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="UniVoting.Client.MainWindow"
+        WindowState="Maximized"
+        Title="UNIVOTING"
+        WindowStartupLocation="CenterScreen">
+    <Grid Name="MainGrid">
+        <ContentControl Name="PageHolder"/>
+    </Grid>
+</Window>

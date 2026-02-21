@@ -1,24 +1,27 @@
-﻿using System.Windows.Controls;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniVoting.Model;
 
 namespace UniVoting.Client
 {
-    /// <inheritdoc />
-    /// <summary>
-    /// Interaction logic for SkipVoteDialogControl.xaml
-    /// </summary>
     public partial class SkipVoteDialogControl : UserControl
     {
         private readonly Position _position;
 
-        public SkipVoteDialogControl(Position position)
+        public SkipVoteDialogControl()
         {
-            _position = position;
+            InitializeComponent();
+            _position = new Position();
+        }
+
+        public SkipVoteDialogControl(IClientSessionService session)
+        {
+            _position = session.CurrentPosition!;
             InitializeComponent();
             Loaded += SkipVoteDialogControl_Loaded;
         }
 
-        private void SkipVoteDialogControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void SkipVoteDialogControl_Loaded(object? sender, RoutedEventArgs e)
         {
             TextBoxConfirm.Text = $"Are You Sure You Want to Skip {_position.PositionName} ?";
         }

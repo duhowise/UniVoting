@@ -1,0 +1,61 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Admin.Administrators.AdminSetUpElectionPage">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5" Margin="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label FontSize="36" HorizontalAlignment="Center">Set Up Election</Label>
+            <ScrollViewer Padding="5" Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="4">
+                        <StackPanel>
+                            <TextBlock FontSize="14" FontWeight="Bold" Margin="5,5,5,0">Election Details</TextBlock>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="0" Grid.Column="0" Width="250" FontSize="18" Margin="10" Name="TextBoxElectionName" TabIndex="1"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Width="250" FontSize="18" Margin="10" Name="TextBoxSubtitle" TabIndex="2"/>
+                            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
+                                <Label FontSize="16" HorizontalAlignment="Center">Logo For The Election</Label>
+                                <Label FontSize="14" HorizontalAlignment="Center">example departmentlogo.png / facultylogo.jpg</Label>
+                                <Label FontSize="12" HorizontalAlignment="Center">image size should be 256x256</Label>
+                                <Image Name="Logo" Width="250" Height="250"/>
+                                <Button FontSize="20" Margin="10" Height="40" Name="BtnUploadImage" TabIndex="4">
+                                    Upload image
+                                </Button>
+                                <Rectangle Height="100"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
+                                <TextBox Name="Colorbox" FontSize="16" Margin="10,5,10,50"
+                                         Watermark="Enter colour as comma-separated RGB (e.g. 255,128,0)"/>
+                                <Rectangle Name="ColoView" Height="250" Width="250" Margin="5,5,5,8"/>
+                                <Button FontSize="20" Name="SaveElection" Height="40" TabIndex="10" Margin="5,1"
+                                        Content="Save Election Details"/>
+                            </StackPanel>
+                        </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

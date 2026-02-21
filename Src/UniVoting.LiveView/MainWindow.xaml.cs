@@ -1,56 +1,60 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using MahApps.Metro.Controls;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
 namespace UniVoting.LiveView
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : MetroWindow
-	{
-		IEnumerable<Position> _positions;
-	    readonly ILogger _logger;
+    public partial class MainWindow : Window
+    {
+        IEnumerable<Position> _positions;
+        readonly ILiveViewService _liveViewService;
+        readonly ILogger _logger;
+        readonly IServiceProvider _sp;
 
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public MainWindow()
-		{
-			InitializeComponent();
-			_positions=new List<Position>();
-            _logger = new SystemEventLoggerService();
+        {
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
+        }
+
+        public MainWindow(ILiveViewService liveViewService, ILogger logger, IServiceProvider sp)
+        {
+            _liveViewService = liveViewService;
+            _logger = logger;
+            _sp = sp;
+            InitializeComponent();
+            _positions = new List<Position>();
             Loaded += MainWindow_Loaded;
-		   
-		}
-	
-		private async void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
-		{
-		    try
-		    {
-		        _positions = await LiveViewService.Positions();
+        }
 
-		    }
-		    catch (SqlException exception)
-		    {
-		        SystemEventLoggerService.Log(exception.StackTrace);
-
-		    }
-		    catch (Exception exception)
-		    {
-		        _logger.Log(exception);
-
-		    }
-		    finally
-		    {
-		        foreach (var position in _positions)
-		        {
-		            CastedVotesHolder.Children.Add(new TileControlLarge(position.PositionName?.Trim()));
-		            SkippedVotesHolder.Children.Add(new TileControlSmall(position.PositionName?.Trim()));
-		        }
+        private async void MainWindow_Loaded(object? sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _positions = await _liveViewService.Positions();
             }
-            
-		}
-	}
+            catch (Exception exception)
+            {
+                _logger.Log(exception);
+            }
+            finally
+            {
+                foreach (var position in _positions)
+                {
+                    var large = _sp.GetRequiredService<TileControlLarge>();
+                    large.Initialize(position.PositionName?.Trim() ?? string.Empty);
+                    CastedVotesHolder.Children.Add(large);
+
+                    var small = _sp.GetRequiredService<TileControlSmall>();
+                    small.Initialize(position.PositionName?.Trim() ?? string.Empty);
+                    SkippedVotesHolder.Children.Add(small);
+                }
+            }
+        }
+    }
 }

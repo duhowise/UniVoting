@@ -1,111 +1,104 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Windows;
-using System.Windows.Media;
-using Akavache;
-using MahApps.Metro.Controls;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
 namespace UniVoting.Client
 {
-	/// <summary>
-	///     Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : MetroWindow
-	{
-	    AppDomain currentDomain = AppDomain.CurrentDomain;
-
+    public partial class MainWindow : Window
+    {
         private readonly Stack<Position> _positionsStack;
-		private ClientVotingPage _votingPage;
-		private Voter _voter;
-		private ConcurrentBag<Vote> _votes;
-		private ConcurrentBag<SkippedVotes> _skippedVotes;
-		public MainWindow(Stack<Position> positionsStack, Voter voter)
-		{
-			InitializeComponent();
-			IgnoreTaskbarOnMaximize = true;
-			_positionsStack = positionsStack;
-			this._voter = voter;
-			_skippedVotes = new ConcurrentBag<SkippedVotes>();
-			_votes=new ConcurrentBag<Vote>();
-			Loaded += MainWindow_Loaded;
-			PageHolder.Navigated += PageHolder_Navigated;
-			CandidateControl.VoteCast += CandidateControl_VoteCast;
-            YesOrNoCandidateControl.VoteCast += YesOrNoCandidateControl_VoteCast;
-            YesOrNoCandidateControl.VoteNo += YesOrNoCandidateControl_VoteNo		    ;
-			Loaded += MainWindow_Loaded1;
-            currentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        private ClientVotingPage? _votingPage;
+        private Voter _voter;
+        private ConcurrentBag<Vote> _votes;
+        private ConcurrentBag<SkippedVotes> _skippedVotes;
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IVotingService _votingService;
+        private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
 
-
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
+        public MainWindow()
+        {
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        public MainWindow(IClientSessionService session, IElectionConfigurationService electionService, IVotingService votingService, IServiceProvider sp)
+        {
+            _session = session;
+            _electionService = electionService;
+            _votingService = votingService;
+            _sp = sp;
+            _positionsStack = session.Positions;
+            _voter = session.CurrentVoter!;
+            _votes = session.Votes;
+            _skippedVotes = session.SkippedVotes;
+            InitializeComponent();
+            Loaded += MainWindow_Loaded1;
+            Loaded += MainWindow_Loaded;
+            CandidateControl.VoteCast += CandidateControl_VoteCast;
+            YesOrNoCandidateControl.VoteCast += YesOrNoCandidateControl_VoteCast;
+            YesOrNoCandidateControl.VoteNo += YesOrNoCandidateControl_VoteNo;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
+
+        private async void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var exp = e.ExceptionObject as Exception;
-            MessageBox.Show(exp?.Message);
+            if (exp != null)
+                await MessageBoxManager.GetMessageBoxStandard("Error", exp.Message).ShowAsync();
         }
 
-        private void YesOrNoCandidateControl_VoteNo(object source, EventArgs args)
+        private void YesOrNoCandidateControl_VoteNo(object? source, EventArgs args) => ProcessVote();
+        private void YesOrNoCandidateControl_VoteCast(object? source, EventArgs args) => ProcessVote();
+        private void CandidateControl_VoteCast(object? source, EventArgs args) => ProcessVote();
+
+        private async void MainWindow_Loaded1(object? sender, RoutedEventArgs e)
         {
-            ProcessVote();
+            try
+            {
+                var election = _electionService.ConfigureElection();
+                if (election?.Logo != null)
+                    MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
+            }
+            catch { }
         }
 
-        private void YesOrNoCandidateControl_VoteCast(object source, EventArgs args)
+        private void ProcessVote()
         {
-           ProcessVote();
+            if (_positionsStack.Count != 0)
+            {
+                PageHolder.Content = VotingPageMaker(_positionsStack);
+            }
+            else
+            {
+                _voter.Voted = true;
+                _sp.GetRequiredService<ClientVoteCompletedPage>().Show();
+                Hide();
+            }
         }
 
-        private async void MainWindow_Loaded1(object sender, RoutedEventArgs e)
-		{
-			var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
-		    MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
-		}
+        private ClientVotingPage VotingPageMaker(Stack<Position> positions)
+        {
+            _session.CurrentPosition = positions.Pop();
+            _votingPage = _sp.GetRequiredService<ClientVotingPage>();
+            _votingPage.VoteCompleted += VotingPage_VoteCompleted;
+            return _votingPage;
+        }
 
-		private void CandidateControl_VoteCast(object source, EventArgs args)
-		{
-		    ProcessVote();
-		}
+        private async void MainWindow_Loaded(object? sender, RoutedEventArgs e)
+        {
+            PageHolder.Content = VotingPageMaker(_positionsStack);
+            _voter.VoteInProgress = true;
+            await _votingService.UpdateVoter(_voter);
+        }
 
-	    private void ProcessVote()
-	    {
-	        if (_positionsStack.Count != 0)
-	        {
-	            PageHolder.Content = VotingPageMaker(_positionsStack);
-	        }
-	        else
-	        {
-	            _voter.Voted = true;
-	            new ClientVoteCompletedPage(_votes, _voter, _skippedVotes).Show();
-	            Hide();
-	        }
-	    }
-
-	    private void PageHolder_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
-		{
-			PageHolder.NavigationService.RemoveBackEntry();
-		}
-
-		private ClientVotingPage VotingPageMaker(Stack<Position> positions)
-		{
-			_votingPage = new ClientVotingPage(_voter, positions.Pop(),_votes,_skippedVotes);
-		   _votingPage.VoteCompleted += VotingPage_VoteCompleted;
-			return _votingPage;
-		}
-
-	private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-		{
-		 PageHolder.Content = VotingPageMaker(_positionsStack);
-			_voter.VoteInProgress = true;
-			await VotingService.UpdateVoter(_voter);
-		}
-
-		private void VotingPage_VoteCompleted(object source, EventArgs args)
-		{
-			ProcessVote();
-		}
-	}
+        private void VotingPage_VoteCompleted(object? source, EventArgs args) => ProcessVote();
+    }
 }

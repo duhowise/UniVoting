@@ -1,31 +1,31 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UniVoting.Model;
 
 namespace UniVoting.Client
 {
-    /// <summary>
-    /// Interaction logic for ConfirmDialogControl.xaml
-    /// </summary>
     public partial class ConfirmDialogControl : UserControl
     {
         private readonly Candidate _candidate;
 
-        public ConfirmDialogControl(Candidate candidate)
+        public ConfirmDialogControl()
         {
-            _candidate = candidate;
             InitializeComponent();
-            Loaded += ConfirmDialogControl_Loaded;
-
-            
+            _candidate = new Candidate();
         }
 
-       private void ConfirmDialogControl_Loaded(object sender, RoutedEventArgs e)
-       {
-           TextBoxConfirm.Text = $"Are you sure you want to vote for {_candidate.CandidateName}";
-           CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
-       }
+        public ConfirmDialogControl(IClientSessionService session)
+        {
+            _candidate = session.CurrentCandidate!;
+            InitializeComponent();
+            Loaded += ConfirmDialogControl_Loaded;
+        }
 
-
+        private void ConfirmDialogControl_Loaded(object? sender, RoutedEventArgs e)
+        {
+            TextBoxConfirm.Text = $"Are you sure you want to vote for {_candidate.CandidateName}";
+            if (_candidate.CandidatePicture != null)
+                CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
+        }
     }
 }

@@ -1,83 +1,84 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System;
+using System.IO;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Platform.Storage;
+using SixLabors.ImageSharp;
 using UniVoting.Model;
 using UniVoting.Services;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace UniVoting.Admin.Administrators
 {
-	/// <summary>
-	/// Interaction logic for AdminSetUpElectionPage.xaml
-	/// </summary>
-	public partial class AdminSetUpElectionPage : Page
-	{
-		private System.Windows.Media.Color _chosencolor;
-		public AdminSetUpElectionPage()
-		{
-			InitializeComponent();
-			BtnUploadImage.Click += BtnUploadImage_Click;
-			Loaded += AdminSetUpElectionPage_Loaded;
-			Colorbox.GotFocus += Colorbox_GotFocus;
-			SaveElection.Click += SaveElection_Click;                                             
-		}
-		private void Colorbox_GotFocus(object sender, RoutedEventArgs e)
-		{
-			using (var color = new ColorDialog())
-			{
-				if (color.ShowDialog() != DialogResult.None)
-				{
-					Colorbox.Text = color.Color.Name;
-					_chosencolor = System.Windows.Media.Color.FromRgb(color.Color.R, color.Color.G, color.Color.B);
-					ColoView.Fill = new SolidColorBrush(_chosencolor);
-				}
-			}
-		}
-		private async void SaveElection_Click(object sender, RoutedEventArgs e)
-		{
-			if (
-				!string.IsNullOrWhiteSpace(TextBoxElectionName.Text)||!string.IsNullOrWhiteSpace(TextBoxElectionName.Text))
-			{
-				await ElectionConfigurationService.NewElection(new Setting
-				{
-					ElectionName = TextBoxElectionName.Text,
-					EletionSubTitle = TextBoxSubtitle.Text,
-					Colour = string.Join(",", _chosencolor.R.ToString(), _chosencolor.G.ToString(), _chosencolor.B.ToString()),
-					Logo = Util.ConvertToBytes(Logo)
+    public partial class AdminSetUpElectionPage : UserControl
+    {
+        private Avalonia.Media.Color _chosencolor;
+        private readonly IElectionConfigurationService _electionService;
 
-				});
-				Util.Clear(this);
-			}
-		}
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
+        public AdminSetUpElectionPage()
+        {
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
+        }
 
-		
+        public AdminSetUpElectionPage(IElectionConfigurationService electionService)
+        {
+            _electionService = electionService;
+            InitializeComponent();
+            BtnUploadImage.Click += BtnUploadImage_Click;
+            Colorbox.GotFocus += Colorbox_GotFocus;
+            SaveElection.Click += SaveElection_Click;
+        }
 
+        private void Colorbox_GotFocus(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            var colorText = Colorbox.Text?.Trim() ?? string.Empty;
+            if (colorText.Contains(","))
+            {
+                var parts = colorText.Split(',');
+                if (parts.Length == 3 &&
+                    byte.TryParse(parts[0], out byte r) &&
+                    byte.TryParse(parts[1], out byte g) &&
+                    byte.TryParse(parts[2], out byte b))
+                {
+                    _chosencolor = Avalonia.Media.Color.FromRgb(r, g, b);
+                    ColoView.Fill = new SolidColorBrush(_chosencolor);
+                }
+            }
+        }
 
+        private async void SaveElection_Click(object? sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(TextBoxElectionName.Text) || !string.IsNullOrWhiteSpace(TextBoxSubtitle.Text))
+            {
+                await _electionService.NewElection(new Setting
+                {
+                    ElectionName = TextBoxElectionName.Text,
+                    EletionSubTitle = TextBoxSubtitle.Text,
+                    Colour = string.Join(",", _chosencolor.R.ToString(), _chosencolor.G.ToString(), _chosencolor.B.ToString()),
+                    Logo = Util.ConvertToBytes(Logo)
+                });
+                Util.Clear(this);
+            }
+        }
 
-		private void AdminSetUpElectionPage_Loaded(object sender, RoutedEventArgs e)
-		{
-			//Colorbox.ItemsSource = Enum.GetNames(typeof(System.Drawing.KnownColor));
-		}
-
-		private void BtnUploadImage_Click(object sender, RoutedEventArgs e)
-		{
-			var op = new OpenFileDialog
-			{
-				Title = "Select a picture",
-				Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-						 "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-						 "Portable Network Graphic (*.png)|*.png"
-			};
-			if (op.ShowDialog() == true)
-			{
-			   var image=new BitmapImage(new Uri(op.FileName));
-				System.Drawing.Image converted = Util.ConvertImage(image);
-			  var final = Util.ResizeImage(converted, 300, 300);
-				Logo.Source = Util.BitmapToImageSource(final);
-			}
-		}
-	}
+        private async void BtnUploadImage_Click(object? sender, RoutedEventArgs e)
+        {
+            var topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel == null) return;
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Select a picture",
+                AllowMultiple = false,
+                FileTypeFilter = new[] { new FilePickerFileType("Images") { Patterns = new[] { "*.jpg", "*.jpeg", "*.png" } } }
+            });
+            if (files.Count > 0)
+            {
+                var filePath = files[0].Path.LocalPath;
+                using var img = SixLabors.ImageSharp.Image.Load(filePath);
+                var resized = Util.ResizeImage(img, 300, 300);
+                Logo.Source = Util.BitmapToImageSource(resized);
+            }
+        }
+    }
 }

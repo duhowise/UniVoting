@@ -1,13 +1,9 @@
-﻿using UniVoting.Data.Implementations;
+﻿namespace UniVoting.Data.Interfaces;
 
-namespace UniVoting.Data.Interfaces
+public interface IService
 {
-	public interface IService
-	{
-		CandidateRepository Candidates { get; }
-		VoterRepository Voters { get; }
-		PositionRepository Positions { get; }
-		ComissionerRepository Comissioners { get; }
-		
-	}
+    ICandidateRepository Candidates { get; }
+    IVoterRepository Voters { get; }
+    IPositionRepository Positions { get; }
+    IComissionerRepository Comissioners { get; }
 }

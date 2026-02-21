@@ -1,106 +1,113 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reactive.Linq;
-using System.Windows;
-using System.Windows.Media;
-using Akavache;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using Microsoft.Extensions.DependencyInjection;
+using MsBox.Avalonia;
 using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Client
 {
-	/// <summary>
-	/// Interaction logic for ClientsLoginWindow.xaml
-	/// </summary>
-	public partial class ClientsLoginWindow : MetroWindow
-	{
-		private IEnumerable<Model.Position> _positions;
-		 private Stack<Model.Position> _positionsStack;
-		private Voter _voter;
-		public ClientsLoginWindow()
-		{
-			InitializeComponent();
-			_positionsStack=new Stack<Model.Position>();
-			Loaded += ClientsLoginWindow_Loaded;
-			_voter=new Voter();
-			IgnoreTaskbarOnMaximize = true;
-			BtnGo.IsDefault = true;
-			BtnGo.Click += BtnGo_Click;
-		}
-		
-		protected override void OnClosing(CancelEventArgs e)
-		{
-			e.Cancel = true;
-		}
-		
-		private async void ClientsLoginWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
-		{
-			try
-			{
-                //ThemeManagerHelper.CreateAppStyleBy(System.Windows.Media.Color.FromArgb(255, 122, 200, 122),true);
-				var election = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
-				MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) {Opacity = 0.2};
-				VotingName.Text = election.ElectionName.ToUpper();
-				VotingSubtitle.Content = election.EletionSubTitle.ToUpper();
+    public partial class ClientsLoginWindow : Window
+    {
+        private IEnumerable<Model.Position>? _positions;
+        private Voter _voter;
+        private readonly IElectionConfigurationService _electionService;
+        private readonly IVotingService _votingService;
+        private readonly ILogger _logger;
+        private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
 
-				_positions = new List<Model.Position>();
-				_positions = await BlobCache.UserAccount.GetObject<IEnumerable<Model.Position>>("ElectionPositions");
-				foreach (var position in _positions)
-				{
-					_positionsStack.Push(position);
-				}
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message, "Election Positions Error");
-			}
-		}
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
+        public ClientsLoginWindow()
+        {
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
+        }
 
-		private async void BtnGo_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			if (!string.IsNullOrWhiteSpace(Pin.Text))
-			{
-				try
-				{
-					_voter = await ElectionConfigurationService.LoginVoter(new Voter { VoterCode = Pin.Text });
-					ConfirmVoterAsync();
-				}
-				catch (Exception exception)
-				{
-					MessageBox.Show(exception.Message, "Election Login Error");
-					throw;
-				}
-			}
-			
-		   
-		}
+        public ClientsLoginWindow(IElectionConfigurationService electionService, IVotingService votingService, ILogger logger, IServiceProvider sp, IClientSessionService session)
+        {
+            _electionService = electionService;
+            _votingService = votingService;
+            _logger = logger;
+            _sp = sp;
+            _session = session;
+            InitializeComponent();
+            Loaded += ClientsLoginWindow_Loaded;
+            _voter = new Voter();
+            BtnGo.Click += BtnGo_Click;
+        }
 
-		public async void ConfirmVoterAsync()
-		{
-			if (_voter!=null)
-			{
-				if (!_voter.VoteInProgress && !_voter.Voted)
-				{
-					new MainWindow(_positionsStack, _voter).Show();
-					Hide();
-				}
-				else
-				{
-					var dialogSettings =new MetroDialogSettings {DialogMessageFontSize = 18, AffirmativeButtonText="Ok"};
-					await this.ShowMessageAsync("Error Confirming Voter","Please Contact Admin Your Details May Not Be Available\n Possible Cause: You May Have Already Voted",MessageDialogStyle.Affirmative,dialogSettings);
-				Pin.Text=String.Empty;
-				}
-			}
-			else
-			{
-				var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok" };
-				await this.ShowMessageAsync("Error Confirming Voter", "Wrong Code!", MessageDialogStyle.Affirmative, dialogSettings);
-				Pin.Text=String.Empty;
-			}
-			
-		}
-	}
+        protected override void OnClosing(WindowClosingEventArgs e)
+        {
+            e.Cancel = true;
+        }
+
+        private void ClientsLoginWindow_Loaded(object? sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var election = _electionService.ConfigureElection();
+                if (election?.Logo != null)
+                    MainGrid.Background = new ImageBrush(Util.BytesToBitmapImage(election.Logo)) { Opacity = 0.2 };
+                if (election != null)
+                {
+                    VotingName.Text = election.ElectionName?.ToUpper();
+                    VotingSubtitle.Content = election.EletionSubTitle?.ToUpper();
+                }
+                _positions = _electionService.GetAllPositions();
+                _session.Positions = new Stack<Model.Position>();
+                foreach (var position in _positions)
+                    _session.Positions.Push(position);
+            }
+            catch (Exception exception)
+            {
+                _ = MessageBoxManager.GetMessageBoxStandard("Election Positions Error", exception.Message).ShowAsync();
+            }
+        }
+
+        private async void BtnGo_Click(object? sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(Pin.Text))
+            {
+                try
+                {
+                    _voter = await _electionService.LoginVoter(new Voter { VoterCode = Pin.Text });
+                    ConfirmVoterAsync();
+                }
+                catch (Exception exception)
+                {
+                    await MessageBoxManager.GetMessageBoxStandard("Election Login Error", exception.Message).ShowAsync();
+                }
+            }
+        }
+
+        public async void ConfirmVoterAsync()
+        {
+            if (_voter != null)
+            {
+                if (!_voter.VoteInProgress && !_voter.Voted)
+                {
+                    _session.CurrentVoter = _voter;
+                    _session.Votes = new ConcurrentBag<Vote>();
+                    _session.SkippedVotes = new ConcurrentBag<SkippedVotes>();
+                    _sp.GetRequiredService<MainWindow>().Show();
+                    Hide();
+                }
+                else
+                {
+                    await MessageBoxManager.GetMessageBoxStandard("Error Confirming Voter",
+                        "Please Contact Admin Your Details May Not Be Available\n Possible Cause: You May Have Already Voted").ShowAsync();
+                    Pin.Text = string.Empty;
+                }
+            }
+            else
+            {
+                await MessageBoxManager.GetMessageBoxStandard("Error Confirming Voter", "Wrong Code!").ShowAsync();
+                Pin.Text = string.Empty;
+            }
+        }
+    }
 }

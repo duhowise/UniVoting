@@ -1,106 +1,104 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
-using System.Windows;
-using System.Windows.Controls;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using Position = UniVoting.Model.Position;
 
 namespace UniVoting.Client
 {
-    /// <summary>
-    /// Interaction logic for CandidateControl.xaml
-    /// </summary>
     public partial class CandidateControl : UserControl
     {
-        private CustomDialog _customDialog;
-        private ConfirmDialogControl confirmDialogControl;
-        private MetroWindow _metroWindow;
+        private ConfirmDialogControl _confirmDialogControl;
+        private Window? _dialogWindow;
+
+        public static readonly StyledProperty<int> CandidateIdProperty =
+            AvaloniaProperty.Register<CandidateControl, int>(nameof(CandidateId));
 
         public int CandidateId
         {
-            get => (int)GetValue(CandidateIdProperty);
+            get => GetValue(CandidateIdProperty);
             set => SetValue(CandidateIdProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for CandidateId.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CandidateIdProperty =
-            DependencyProperty.Register("CandidateId", typeof(int), typeof(CandidateControl), new PropertyMetadata(0));
-        public delegate void VoteCastEventHandler(object source, EventArgs args);
-        public static event VoteCastEventHandler VoteCast;
+        public delegate void VoteCastEventHandler(object? source, EventArgs args);
+        public static event VoteCastEventHandler? VoteCast;
 
         private ConcurrentBag<Vote> _votes;
         private Position _position;
         private Candidate _candidate;
         private Voter _voter;
-        public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter)
+        private readonly IServiceProvider _sp;
+        private readonly IClientSessionService _session;
+
+        public CandidateControl()
         {
             InitializeComponent();
-            this._votes = votes;
-            this._position = position;
-            this._candidate = candidate;
-            this._voter = voter;
+            _session = App.Services.GetRequiredService<IClientSessionService>();
+            _votes = _session.Votes;
+            _position = _session.CurrentPosition ?? new Position();
+            _candidate = _session.CurrentCandidate ?? new Candidate();
+            _voter = _session.CurrentVoter ?? new Voter();
+            _sp = App.Services;
+            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
+            _confirmDialogControl.BtnYes.Click += BtnYesClick;
+            _confirmDialogControl.BtnNo.Click += BtnNoClick;
+            Loaded += CandidateControl_Loaded;
+            BtnVote.Click += BtnVote_Click;
+        }
+
+        public CandidateControl(IClientSessionService session, IServiceProvider sp)
+        {
+            InitializeComponent();
+            _session = session;
+            _votes = session.Votes;
+            _position = session.CurrentPosition!;
+            _candidate = session.CurrentCandidate!;
+            _voter = session.CurrentVoter!;
+            _sp = sp;
             Loaded += CandidateControl_Loaded;
             BtnVote.Click += BtnVote_Click;
 
-            //you can move this initiallisation code to the BtnVote.Click to only work when the button is clicked
-            //to prevent performance issues
-            _customDialog = new CustomDialog();
-            confirmDialogControl = new ConfirmDialogControl(candidate);
-            confirmDialogControl.BtnYes.Click += BtnYesClick;
-            confirmDialogControl.BtnNo.Click += BtnNoClick;
-            _customDialog.Content = confirmDialogControl;
+            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
+            _confirmDialogControl.BtnYes.Click += BtnYesClick;
+            _confirmDialogControl.BtnNo.Click += BtnNoClick;
         }
 
-        private void CandidateControl_Loaded(object sender, RoutedEventArgs e)
+        private void CandidateControl_Loaded(object? sender, RoutedEventArgs e)
         {
             CandidateId = _candidate.Id;
-            CandidateName.Text = _candidate.CandidateName.ToUpper();
-            CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
+            CandidateName.Text = _candidate.CandidateName?.ToUpper() ?? string.Empty;
+            if (_candidate.CandidatePicture != null)
+                CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
             Rank.Content = $"#{_candidate.RankId}";
         }
 
-        private async void BtnVote_Click(object sender, RoutedEventArgs e)
+        private void BtnVote_Click(object? sender, RoutedEventArgs e)
         {
             BtnVote.IsEnabled = false;
-            _metroWindow = Window.GetWindow(this) as MetroWindow;
-            //var dialogSettings = new MetroDialogSettings
-            //{
-            //    ColorScheme = ne(""),
-            //    AffirmativeButtonText = "OK",
-            //    AnimateShow = true,
-            //    NegativeButtonText = "Cancel",
-            //    FirstAuxiliaryButtonText = "Cancel",
-            //    DialogMessageFontSize = 18
-            //};
-            //var dialogSettings = new MetroDialogSettings { DialogMessageFontSize = 18, AffirmativeButtonText = "Ok", };
-
-            /* MessageDialogResult result = await metroWindow.ShowMessageAsync("Cast Vote", $"Are You Sure You Want to Vote For {_candidate.CandidateName} ?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
-             if (result==MessageDialogResult.Affirmative)
-             {
-
-             }*/
-
+            var owner = TopLevel.GetTopLevel(this) as Window;
+            _dialogWindow = new Window
+            {
+                Content = _confirmDialogControl,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Title = "Confirm Vote"
+            };
             BtnVote.IsEnabled = true;
-            await _metroWindow.ShowMetroDialogAsync(_customDialog);
+            _dialogWindow.Show(owner);
         }
 
-        private static void OnVoteCast(object source)
-        {
-            VoteCast?.Invoke(source, EventArgs.Empty);
-        }
+        private static void OnVoteCast(object? source) => VoteCast?.Invoke(source, EventArgs.Empty);
 
-        private async void BtnYesClick(object sender, RoutedEventArgs e)
+        private void BtnYesClick(object? sender, RoutedEventArgs e)
         {
             _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
             OnVoteCast(this);
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
+            _dialogWindow?.Close();
+        }
 
-        }
-        private async void BtnNoClick(object sender, RoutedEventArgs e)
-        {
-            await _metroWindow.HideMetroDialogAsync(_customDialog);
-        }
+        private void BtnNoClick(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
     }
 }

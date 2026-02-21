@@ -1,54 +1,48 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Windows.Controls;
-using System.Windows.Threading;
+using System;
+using Avalonia.Controls;
+using Avalonia.Threading;
+using Microsoft.Data.SqlClient;
 using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.LiveView
 {
-    /// <inheritdoc cref="UserControl" />
-    /// <summary>
-    /// Interaction logic for TileControlSmall.xaml
-    /// </summary>
     public partial class TileControlSmall : UserControl
     {
         private readonly ILogger _logger;
-        private readonly string _position;
-        public TileControlSmall(String position)
+        private readonly ILiveViewService _liveViewService;
+        private string _position = string.Empty;
+
+        /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
+        public TileControlSmall()
         {
-            InitializeComponent();
-           _logger=new SystemEventLoggerService();
-            var timer = new DispatcherTimer
-            {
-                Interval = new TimeSpan(0, 0, 0, 1)
-            };
-            timer.Tick += _timer_Tick;
-            timer.Start();
-            _position = position.Trim();
-            Position.Text = _position.ToUpper();
+            throw new NotSupportedException("This constructor is required by Avalonia's XAML runtime loader and must not be called directly.");
         }
 
-        private async void _timer_Tick(object sender, EventArgs e)
+        public TileControlSmall(ILiveViewService liveViewService, ILogger logger)
+        {
+            _liveViewService = liveViewService;
+            _logger = logger;
+            InitializeComponent();
+        }
+
+        public void Initialize(string position)
+        {
+            _position = position.Trim();
+            Position.Text = _position.ToUpper();
+            var timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 1) };
+            timer.Tick += _timer_Tick;
+            timer.Start();
+        }
+
+        private async void _timer_Tick(object? sender, EventArgs e)
         {
             try
             {
-                VoteCount.Text = $"{await LiveViewService.VotesSkipppedCountAsync(_position.Trim())}";
+                VoteCount.Text = $"{await _liveViewService.VotesSkippedCountAsync(_position.Trim())}";
             }
-            catch (SqlException exception)
-            {
-                _logger.Log(exception);
-
-            }
-            catch (Exception exception)
-            {
-                _logger.Log(exception);
-            }
-            //finally
-            //{
-            //    VoteCount.Text = $"{await LiveViewService.VotesSkipppedCountAsync(_position)}";
-            //}
-
+            catch (SqlException exception) { _logger.Log(exception); }
+            catch (Exception exception) { _logger.Log(exception); }
         }
     }
 }

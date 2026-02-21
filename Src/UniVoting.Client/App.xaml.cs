@@ -1,102 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using Akavache;
+using System;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Model;
 using UniVoting.Services;
 
-
 namespace UniVoting.Client
 {
-    /// <summary>
-    ///     Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
-	{
-	    private Setting _electionData;
-	    private static readonly ILogger _logger = new SystemEventLoggerService();
+    {
+        public static IServiceProvider Services { get; private set; } = null!;
 
-        private IEnumerable<Position> _positions;
-		public App()
-		{
-		    try
-		    {
-		        BlobCache.ApplicationName = $"VotingApplication";
-		        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        public override void Initialize() => AvaloniaXamlLoader.Load(this);
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+            var connectionString = config.GetConnectionString("VotingSystem")
+                ?? throw new InvalidOperationException("Connection string 'VotingSystem' not found in appsettings.json.");
+
+            if (connectionString.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase))
+                throw new InvalidOperationException("Please update the connection string in appsettings.json before running the application.");
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddUniVotingServices(connectionString);
+            serviceCollection.AddTransient<ClientsLoginWindow>();
+            serviceCollection.AddTransient<MainWindow>();
+            serviceCollection.AddTransient<ClientVotingPage>();
+            serviceCollection.AddTransient<ClientVoteCompletedPage>();
+            serviceCollection.AddTransient<CandidateControl>();
+            serviceCollection.AddTransient<YesOrNoCandidateControl>();
+            serviceCollection.AddTransient<ConfirmDialogControl>();
+            serviceCollection.AddTransient<SkipVoteDialogControl>();
+            serviceCollection.AddSingleton<IClientSessionService, ClientSessionService>();
+            Services = serviceCollection.BuildServiceProvider();
+
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var logger = Services.GetRequiredService<ILogger>();
+                AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+                {
+                    if (e.ExceptionObject is Exception exp) logger.Log(exp);
+                };
+                desktop.MainWindow = Services.GetRequiredService<ClientsLoginWindow>();
             }
-		    catch (Exception e)
-		    {
-		        _logger.Log(e);
-
-		    }
-            
-		}
-
-		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-		{
-		    if (e.ExceptionObject is Exception exp) _logger.Log(exp);
-		}
-	
-		protected override async void OnStartup(StartupEventArgs e)
-		{
-		    try
-		    {
-		        await BlobCache.UserAccount.InvalidateAll();
-
-		        await GetSettings();
-		        await SetTheme();
-		        MainWindow = new ClientsLoginWindow();
-		        MainWindow.Show();
-		        base.OnStartup(e);
-            }
-		    catch (Exception exception)
-		    {
-		        _logger.Log(exception);
-
-            }
-
+            base.OnFrameworkInitializationCompleted();
         }
-
-	    public static async Task SetTheme()
-	    {
-	        var data = new Setting();
-
-	        try
-	        {
-	            //get color from  local cache
-	            data = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings");
-	        }
-	        catch (Exception exception)
-	        {
-	            MessageBox.Show(exception.Message, " colour Settings Error");
-	        }
-
-	        var rgb = data.Colour.Split(',');
-	        //ThemeManagerHelper.CreateAppStyleBy(Colors.Red);
-		
-	        ThemeManagerHelper.CreateAppStyleBy(new Color { R = Convert.ToByte(rgb[0]), G = Convert.ToByte(rgb[1]), B = Convert.ToByte(rgb[2]) }, true);
-	    }
-		private async Task GetSettings()
-		{
-			_positions = new List<Position>();
-            try
-		    {
-                //ElectionSettings
-		        _electionData = await BlobCache.UserAccount.GetObject<Setting>("ElectionSettings")
-		            .Catch(Observable.Return(_electionData = ElectionConfigurationService.ConfigureElection()));
-		      await	BlobCache.UserAccount.InsertObject("ElectionSettings", _electionData);
-		        //ElectionPositions
-		        _positions = await BlobCache.UserAccount.GetObject<IEnumerable<Position>>("ElectionPositions")
-		            .Catch(Observable.Return( _positions = ElectionConfigurationService.GetAllPositions()));
-		        await	BlobCache.UserAccount.InsertObject("ElectionPositions", _positions);
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message, " Election Settings Error");
-			}
-		}
-	}
+    }
 }

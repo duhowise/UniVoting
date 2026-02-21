@@ -1,154 +1,112 @@
-﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
-using Dapper;
+using Microsoft.EntityFrameworkCore;
+using UniVoting.Data.Interfaces;
 using UniVoting.Model;
 
 namespace UniVoting.Data.Implementations
 {
-	public class VoterRepository:Repository<Voter>
-	{
+    public class VoterRepository : IVoterRepository
+    {
+        private readonly IDbContextFactory<ElectionDbContext> _dbFactory;
 
-		public VoterRepository() : base("VotingSystem")
-		{
-			
-		}
-		public  async Task ResetVoter(Voter member)
-		{
-			using (var transaction = new TransactionScope())
-			{
-				using (var connection = new DbManager(connectionName).Connection)
-				{
-					try
-					{
-						var voter= await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName ,VoterCode ,IndexNumber ,Voted ,VoteInProgress FROM dbo.Voter WHERE IndexNumber=@IndexNumber",member);
-						await connection.ExecuteAsync(@"DELETE FROM SkippedVotes WHERE VoterId=@Id", voter);
-						await connection.ExecuteAsync(@"DELETE FROM Vote WHERE VoterId=@Id", voter);
-						await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=0 WHERE IndexNumber=@IndexNumber", voter);
-						transaction.Complete();
-					}
-					catch (Exception)
-					{
-						transaction.Dispose();
-					}
+        public VoterRepository(IDbContextFactory<ElectionDbContext> dbFactory)
+        {
+            _dbFactory = dbFactory;
+        }
 
-				}
+        public async Task<IEnumerable<Voter>> GetAllAsync()
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return await db.Voters.ToListAsync();
+        }
 
+        public async Task<Voter> UpdateAsync(Voter voter)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            db.Voters.Update(voter);
+            await db.SaveChangesAsync();
+            return voter;
+        }
 
+        public async Task ResetVoter(Voter member)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            var voter = await db.Voters.FirstOrDefaultAsync(v => v.IndexNumber == member.IndexNumber);
+            if (voter == null) return;
+            await db.SkippedVoteses.Where(sv => sv.VoterId == voter.Id).ExecuteDeleteAsync();
+            await db.Votes.Where(v => v.VoterId == voter.Id).ExecuteDeleteAsync();
+            await db.Voters.Where(v => v.Id == voter.Id).ExecuteUpdateAsync(s => s
+                .SetProperty(x => x.VoteInProgress, false)
+                .SetProperty(x => x.Voted, false));
+        }
 
-			}
-		}
-		public  async Task<int> InsertBulkVoters(List<Voter> member)
-		{
-			int count = 0;
-			using (var transaction = new TransactionScope())
-			{
-				using (var connection = new DbManager(connectionName).Connection)
-				{
-					try
-					{
-						count = await connection.ExecuteAsync(@"INSERT INTO dbo.Voter(VoterName ,VoterCode ,IndexNumber,Faculty) VALUES(@VoterName,@VoterCode,@IndexNumber,@Faculty)", member);
-						transaction.Complete();
-					}
-					catch (Exception)
-					{
-						// ignored
-					}
+        public async Task<int> InsertBulkVoters(List<Voter> members)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            await db.Voters.AddRangeAsync(members);
+            return await db.SaveChangesAsync();
+        }
 
-				}
+        public async Task<int> VoteSkipCount(Position position)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return await db.LiveViewSkippedCounts
+                .Where(v => v.PositionName == position.PositionName)
+                .Select(v => v.Count)
+                .FirstOrDefaultAsync();
+        }
 
+        public async Task InsertBulkVotes(IEnumerable<Vote> votes, Voter voter, IEnumerable<SkippedVotes> skippedVotes)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            await using var tx = await db.Database.BeginTransactionAsync();
+            try
+            {
+                await db.Votes.AddRangeAsync(votes);
+                await db.SkippedVoteses.AddRangeAsync(skippedVotes);
+                await db.Voters.Where(v => v.Id == voter.Id).ExecuteUpdateAsync(s => s
+                    .SetProperty(x => x.VoteInProgress, false)
+                    .SetProperty(x => x.Voted, true));
+                await db.SaveChangesAsync();
+                await tx.CommitAsync();
+            }
+            catch
+            {
+                await tx.RollbackAsync();
+                await ResetVoter(voter);
+            }
+        }
 
+        public async Task<Voter> Login(Voter voter)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return await db.Voters.FirstOrDefaultAsync(v => v.VoterCode == voter.VoterCode) ?? new Voter();
+        }
 
-			}
+        public async Task<Voter> GetVoterPass(Voter member)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return await db.Voters.FirstOrDefaultAsync(v => v.IndexNumber == member.IndexNumber) ?? new Voter();
+        }
 
-			return count;
-		}
-		public  async Task<int> VoteSkipCount(Position position)
-		{
-			try
-			{
-				using (var connection = new DbManager(connectionName).Connection)
-				{
-					return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveViewSkipped
-										WHERE PositionName = @positionName", position);
+        public async Task<int> VoteCount(Position position)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            return await db.LiveViewCounts
+                .Where(v => v.PositionName == position.PositionName)
+                .Select(v => v.Count)
+                .FirstOrDefaultAsync();
+        }
 
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-
-
-		}
-		public  async Task InsertBulkVotes(IEnumerable<Vote> votes, Voter voter, IEnumerable<SkippedVotes> skippedVotes)
-		{
-			using (var transaction = new TransactionScope())
-			{
-				try
-				{
-					using (var connection = new DbManager(connectionName).Connection)
-					{
-						//save votes
-					    await connection.ExecuteAsync(@"INSERT INTO dbo.Vote(VoterID ,CandidateID ,PositionID)VALUES(@VoterID,@CandidateID,@PositionID)", votes);
-						//save skipped
-						await connection.ExecuteAsync(@"INSERT INTO dbo.SkippedVotes(Positionid,VoterId)VALUES(@Positionid,@VoterId)", skippedVotes);
-						//update voter					
-						await connection.ExecuteAsync(@"UPDATE Voter SET VoteInProgress=0,Voted=1 WHERE ID=@Id", voter);
-
-						transaction.Complete();
-					}
-				}
-				catch (Exception)
-				{
-					// ignored
-					await ResetVoter(voter);
-				}
-			}
-			
-		}
-		public  async Task<Voter> Login(Voter voter)
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT  ID ,VoterName,VoterCode,IndexNumber,Faculty,Voted ,VoteInProgress
-						FROM dbo.Voter v WHERE v.VoterCode=@VoterCode", voter);
-			}
-		}
-		public  async Task<Voter> GetVoterPass(Voter member)
-		{
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.QueryFirstOrDefaultAsync<Voter>(@"SELECT * FROM dbo.Voter WHERE IndexNumber=@IndexNumber", member);
-			}
-
-		}
-		public async Task<int> VoteCount(Position position)
-		{
-
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.ExecuteScalarAsync<int>(@"SELECT [Count] FROM dbo.vw_LiveView
-										WHERE PositionName = @positionName", position);
-
-			}
-
-		}
-
-		public async Task<int> InsertSkippedVotes(SkippedVotes skipped)
-		{
-
-			using (var connection = new DbManager(connectionName).Connection)
-			{
-				return await connection.InsertAsync<int>(skipped);
-
-			}
-
-		}
-
-		
-
-	}
+        public async Task<int> InsertSkippedVotes(SkippedVotes skipped)
+        {
+            await using var db = await _dbFactory.CreateDbContextAsync();
+            await db.SkippedVoteses.AddAsync(skipped);
+            await db.SaveChangesAsync();
+            return skipped.Id;
+        }
+    }
 }

@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Client.SkipVoteDialogControl">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock FontSize="20" x:Name="TextBoxConfirm" Margin="10" HorizontalAlignment="Center"
+                   Text="Are you sure you want to skip this vote " TextWrapping="Wrap"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button FontSize="20" Foreground="White" Width="100" Margin="10" Height="40" Name="BtnNo" TabIndex="1">NO</Button>
+            <Button FontSize="20" Foreground="White" Width="100" Margin="10" Height="40" Name="BtnYes" TabIndex="0">YES</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="UniVoting.Admin.Administrators.AdminLoginWindow"
+        Title="UNIVOTING" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="42">UNIVOTING</Label>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36">Comprehensive Voting App For Desktop And Mobile</Label>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="10" Width="50" Height="50" VerticalAlignment="Center" Text="👤"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Width="250" FontSize="24" Margin="10" Name="Username" TabIndex="0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" Width="50" Height="50" VerticalAlignment="Center" Text="🔑"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Width="250" FontSize="24" Margin="10" Name="Password" TabIndex="1" PasswordChar="*"/>
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" Margin="10" Height="40" Name="BtnLogin" TabIndex="2">
+                    Login
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

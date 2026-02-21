@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="UniVoting.Admin.Administrators.AdminAddVotersPage">
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5" Margin="3"
+            Height="583" Width="866">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <TextBox Width="250" HorizontalAlignment="Right" Name="Searchterm" FontSize="16" Margin="30,0,0,20" TabIndex="0"/>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Name="BtnSearch" TabIndex="2">
+                        🔍
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label FontSize="36" HorizontalAlignment="Center">Setup Voters</Label>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Padding="5" Grid.Column="0" Margin="5">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" Width="250" FontSize="16" Margin="10" Name="TextBoxName" TabIndex="2"/>
+                        <TextBox Grid.Row="1" Width="250" FontSize="16" Margin="10" Name="TextBoxIndexNumber" TabIndex="3"/>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+                            <Button HorizontalAlignment="Left" FontSize="16" Margin="10" Height="40" Name="BtnImportFile" TabIndex="6">
+                                Import From File
+                            </Button>
+                            <Button FontSize="14" HorizontalAlignment="Right" Margin="10" Height="40" Name="BtnSave" TabIndex="5">
+                                Save
+                            </Button>
+                        </StackPanel>
+                        <Label FontSize="14" Grid.Row="3" Name="ImportedFilename" HorizontalAlignment="Left">Imported Filename:</Label>
+                        <Label FontSize="14" Grid.Row="4" IsVisible="False" Name="AddedCount" HorizontalAlignment="Left">Added:</Label>
+                    </Grid>
+                </ScrollViewer>
+                <DataGrid Grid.Column="1" Name="VoterGrid" Margin="0,10,10,10"
+                          AutoGenerateColumns="True" FontSize="16" Grid.RowSpan="2" IsReadOnly="True"/>
+                <TextBox x:Name="ResetIndexNumber" HorizontalAlignment="Left" Height="54" Margin="10,33,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="376" Grid.Row="1" Grid.Column="0"/>
+                <Button x:Name="BtnReset" Content="Reset" HorizontalAlignment="Right" Margin="20" Width="72" Height="40"
+                        Grid.Row="2" Grid.Column="0" Click="BtnReset_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
