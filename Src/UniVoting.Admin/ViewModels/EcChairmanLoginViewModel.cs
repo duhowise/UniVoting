@@ -25,6 +25,9 @@ public partial class EcChairmanLoginViewModel : ObservableObject
         _electionService = electionService;
     }
 
+    [ObservableProperty]
+    private bool _isLoginEnabled = true;
+
     [RelayCommand]
     private async Task LoginAsync()
     {
@@ -34,15 +37,28 @@ public partial class EcChairmanLoginViewModel : ObservableObject
             ClearCredentials();
             return;
         }
-        var chairman = await _electionService.Login(new Comissioner { UserName = Username, Password = Password, IsChairman = true });
-        if (chairman != null)
+        IsLoginEnabled = false;
+        try
         {
-            LoginSucceeded?.Invoke();
+            var chairman = await _electionService.Login(new Comissioner { UserName = Username, Password = Password, IsChairman = true });
+            if (chairman != null)
+            {
+                LoginSucceeded?.Invoke();
+            }
+            else
+            {
+                ErrorOccurred?.Invoke("Wrong username or password.");
+                ClearCredentials();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ErrorOccurred?.Invoke("Wrong username or password.");
+            ErrorOccurred?.Invoke($"Could not connect to the database.\n\n{ex.Message}");
             ClearCredentials();
+        }
+        finally
+        {
+            IsLoginEnabled = true;
         }
     }
 

@@ -1,7 +1,5 @@
-using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using UniVoting.Admin.ViewModels;
 using UniVoting.Services;
@@ -24,13 +22,6 @@ namespace UniVoting.Admin.Administrators
             _viewModel.PickImageRequested += PickImageAsync;
             DataContext = _viewModel;
             InitializeComponent();
-            Colorbox.GotFocus += Colorbox_GotFocus;
-        }
-
-        private void Colorbox_GotFocus(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            _viewModel.UpdateColourPreview(Colorbox.Text);
-            ColoView.Fill = new SolidColorBrush(_viewModel.ChosenColor);
         }
 
         private async Task<string?> PickImageAsync()

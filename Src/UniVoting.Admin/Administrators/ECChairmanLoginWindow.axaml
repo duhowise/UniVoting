@@ -27,7 +27,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" Margin="10" Width="50" Height="50" VerticalAlignment="Center" Text="🔑"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Width="250" FontSize="24" Margin="10" Text="{Binding Password}" TabIndex="1" PasswordChar="*"/>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20" Margin="10" Height="40"
-                        Command="{Binding LoginCommand}" TabIndex="2">
+                        Command="{Binding LoginCommand}" IsEnabled="{Binding IsLoginEnabled}" TabIndex="2">
                     Login
                 </Button>
             </Grid>

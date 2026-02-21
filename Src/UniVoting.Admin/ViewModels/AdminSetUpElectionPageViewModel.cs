@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,7 +15,6 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
     private readonly IElectionConfigurationService _electionService;
 
     public event Func<Task<string?>>? PickImageRequested;
-    public event Action<string>? ErrorOccurred;
     public event Action<string>? SuccessOccurred;
 
     [ObservableProperty]
@@ -33,12 +33,17 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
     private byte[] _logoBytes = Array.Empty<byte>();
 
     [ObservableProperty]
-    private Avalonia.Media.Color _chosenColor;
+    private Color _chosenColor;
+
+    [ObservableProperty]
+    private IBrush _chosenColorBrush = Brushes.Transparent;
 
     public AdminSetUpElectionPageViewModel(IElectionConfigurationService electionService)
     {
         _electionService = electionService;
     }
+
+    partial void OnColourTextChanged(string? value) => UpdateColourPreview(value);
 
     public void UpdateColourPreview(string? colourText)
     {
@@ -46,11 +51,12 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
         {
             var parts = colourText.Split(',');
             if (parts.Length == 3 &&
-                byte.TryParse(parts[0], out byte r) &&
-                byte.TryParse(parts[1], out byte g) &&
-                byte.TryParse(parts[2], out byte b))
+                byte.TryParse(parts[0].Trim(), out byte r) &&
+                byte.TryParse(parts[1].Trim(), out byte g) &&
+                byte.TryParse(parts[2].Trim(), out byte b))
             {
-                ChosenColor = Avalonia.Media.Color.FromRgb(r, g, b);
+                ChosenColor = Color.FromRgb(r, g, b);
+                ChosenColorBrush = new SolidColorBrush(ChosenColor);
             }
         }
     }
@@ -91,6 +97,7 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
             ColourText = string.Empty;
             Logo = null;
             LogoBytes = Array.Empty<byte>();
+            ChosenColorBrush = Brushes.Transparent;
             SuccessOccurred?.Invoke("Election saved successfully.");
         }
     }

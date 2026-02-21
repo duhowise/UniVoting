@@ -21,8 +21,9 @@ namespace UniVoting.Client
             _session = App.Services.GetRequiredService<IClientSessionService>();
             _sp = App.Services;
             _viewModel = new ClientVotingPageViewModel(_session);
-            SetupView();
+            SetupViewModel();
             InitializeComponent();
+            WireHandlers();
         }
 
         public ClientVotingPage(IClientSessionService session, IServiceProvider sp)
@@ -30,16 +31,28 @@ namespace UniVoting.Client
             _session = session;
             _sp = sp;
             _viewModel = new ClientVotingPageViewModel(session);
-            SetupView();
+            SetupViewModel();
             InitializeComponent();
+            WireHandlers();
         }
 
-        private void SetupView()
+        private void SetupViewModel()
         {
             _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
             _viewModel.VoteCompleted += () => VoteCompleted?.Invoke();
             _viewModel.ShowSkipDialog += ShowSkipDialog;
             DataContext = _viewModel;
+        }
+
+        private void WireHandlers()
+        {
+            BtnSkipVote.Click += (_, _) => _viewModel.SkipVoteCommand.Execute(null);
+            _skipVoteDialogControl.BtnYes.Click += (_, _) =>
+            {
+                _viewModel.RecordSkip();
+                _dialogWindow?.Close();
+            };
+            _skipVoteDialogControl.BtnNo.Click += (_, _) => _dialogWindow?.Close();
             Loaded += (_, _) => LoadCandidates();
         }
 
@@ -74,14 +87,6 @@ namespace UniVoting.Client
             {
                 VoteCompleted?.Invoke();
             }
-
-            BtnSkipVote.Click += (_, _) => _viewModel.SkipVoteCommand.Execute(null);
-            _skipVoteDialogControl.BtnYes.Click += (_, _) =>
-            {
-                _viewModel.RecordSkip();
-                _dialogWindow?.Close();
-            };
-            _skipVoteDialogControl.BtnNo.Click += (_, _) => _dialogWindow?.Close();
         }
 
         private void ShowSkipDialog()

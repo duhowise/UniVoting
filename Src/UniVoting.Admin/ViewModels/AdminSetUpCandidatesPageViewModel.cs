@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -70,6 +71,7 @@ public partial class AdminSetUpCandidatesPageViewModel : ObservableObject
                 PositionId = c.PositionId ?? 0,
                 CandidateName = c.CandidateName,
                 CandidatePicture = c.CandidatePicture != null ? ByteToBitmap(c.CandidatePicture) : null,
+                PictureBytes = c.CandidatePicture ?? Array.Empty<byte>(),
                 RankId = (int)(c.RankId ?? 1),
                 PositionName = c.Position?.PositionName ?? string.Empty
             });
@@ -123,6 +125,7 @@ public partial class AdminSetUpCandidatesPageViewModel : ObservableObject
         CandidateImage = item.CandidatePicture;
         CandidateImageBytes = item.PictureBytes ?? Array.Empty<byte>();
         SelectedRank = item.RankId;
+        SelectedPosition = Positions.FirstOrDefault(p => p.Id == item.PositionId);
     }
 
     private void ClearForm()
@@ -132,7 +135,7 @@ public partial class AdminSetUpCandidatesPageViewModel : ObservableObject
         CandidateImage = null;
         CandidateImageBytes = Array.Empty<byte>();
         SelectedPosition = null;
-        SelectedRank = 0;
+        SelectedRank = 1;
     }
 
     private static Bitmap ByteToBitmap(byte[] bytes)

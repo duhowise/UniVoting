@@ -48,7 +48,7 @@
                                 <TextBox Name="Colorbox" FontSize="16" Margin="10,5,10,50"
                                          Text="{Binding ColourText}"
                                          Watermark="Enter colour as comma-separated RGB (e.g. 255,128,0)"/>
-                                <Rectangle Name="ColoView" Height="250" Width="250" Margin="5,5,5,8"/>
+                                <Rectangle Name="ColoView" Height="250" Width="250" Margin="5,5,5,8" Fill="{Binding ChosenColorBrush}"/>
                                 <Button FontSize="20" Name="SaveElection" Height="40" TabIndex="10" Margin="5,1"
                                         Command="{Binding SaveElectionCommand}"
                                         Content="Save Election Details"/>

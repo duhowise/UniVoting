@@ -38,17 +38,28 @@ public partial class PresidentLoginViewModel : ObservableObject
             return;
         }
         IsLoginEnabled = false;
-        var president = await _electionService.Login(new Comissioner { UserName = Username, Password = Password, IsPresident = true });
-        if (president != null)
+        try
         {
-            LoginSucceeded?.Invoke();
+            var president = await _electionService.Login(new Comissioner { UserName = Username, Password = Password, IsPresident = true });
+            if (president != null)
+            {
+                LoginSucceeded?.Invoke();
+            }
+            else
+            {
+                ErrorOccurred?.Invoke("Wrong username or password.");
+                ClearCredentials();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ErrorOccurred?.Invoke("Wrong username or password.");
+            ErrorOccurred?.Invoke($"Could not connect to the database.\n\n{ex.Message}");
             ClearCredentials();
         }
-        IsLoginEnabled = true;
+        finally
+        {
+            IsLoginEnabled = true;
+        }
     }
 
     public void ClearCredentials()

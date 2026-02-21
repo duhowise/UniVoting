@@ -45,7 +45,7 @@ public partial class AdminDispensePasswordViewModel : ObservableObject
     [RelayCommand]
     private async Task RefreshAsync()
     {
-        _allVoters = (List<Voter>)await _electionService.GetAllVotersAsync();
+        _allVoters = (await _electionService.GetAllVotersAsync()).ToList();
         Voters = new ObservableCollection<Voter>(_allVoters);
         SearchTerm = string.Empty;
     }

@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using UniVoting.Admin.ViewModels;
+using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
@@ -30,7 +32,41 @@ namespace UniVoting.Admin.Administrators
             DataContext = _viewModel;
             InitializeComponent();
             Instance = this;
-            Loaded += async (_, _) => await _viewModel.LoadAsync();
+            Loaded += async (_, _) =>
+            {
+                await _viewModel.LoadAsync();
+                RefreshPositionControls();
+                _viewModel.Positions.CollectionChanged += Positions_CollectionChanged;
+            };
+        }
+
+        private void Positions_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems != null)
+            {
+                foreach (Position pos in e.NewItems)
+                    AddPositionControl(pos);
+            }
+            else
+            {
+                RefreshPositionControls();
+            }
+        }
+
+        private void RefreshPositionControls()
+        {
+            PositionControlHolder.Children.Clear();
+            foreach (var position in _viewModel.Positions)
+                AddPositionControl(position);
+        }
+
+        private void AddPositionControl(Position position)
+        {
+            var pc = _sp.GetRequiredService<PositionControl>();
+            pc.TextBoxPosition.Text = position.PositionName ?? string.Empty;
+            pc.TextBoxFaculty.Text = position.Faculty;
+            pc.Id = position.Id;
+            PositionControlHolder.Children.Add(pc);
         }
 
         private void ShowAddDialog()
