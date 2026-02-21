@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using MsBox.Avalonia;
+using UniVoting.Admin.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -11,8 +10,7 @@ namespace UniVoting.Admin.Administrators
 {
     public partial class AdminDispensePasswordWindow : Window
     {
-        private List<Voter> voters = new List<Voter>();
-        private readonly IElectionConfigurationService _electionService;
+        private readonly AdminDispensePasswordViewModel _viewModel;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminDispensePasswordWindow()
@@ -22,51 +20,20 @@ namespace UniVoting.Admin.Administrators
 
         public AdminDispensePasswordWindow(IElectionConfigurationService electionService)
         {
-            _electionService = electionService;
+            _viewModel = new AdminDispensePasswordViewModel(electionService);
+            _viewModel.ShowVoterInfo += async (title, msg) =>
+                await MessageBoxManager.GetMessageBoxStandard(title, msg).ShowAsync();
+            DataContext = _viewModel;
             InitializeComponent();
-            Loaded += AdminDispensePasswordWindow_Loaded;
-            StudentName.TextChanged += StudentName_TextChanged;
             StudentsSearchList.DoubleTapped += StudentsSearchList_DoubleTapped;
-            RefreshList.Click += RefreshList_Click;
-        }
-
-        private void RefreshList_Click(object? sender, RoutedEventArgs e)
-        {
-            RefreshStudentList();
+            Loaded += async (_, _) => await _viewModel.LoadAsync();
         }
 
         private async void StudentsSearchList_DoubleTapped(object? sender, TappedEventArgs e)
         {
             var student = StudentsSearchList.SelectedItem as Voter;
-            if (student != null)
-            {
-                await MessageBoxManager.GetMessageBoxStandard($"Name: {student.VoterName}", $"Password: {student.VoterCode}").ShowAsync();
-                StudentName.Text = string.Empty;
-                StudentName.Focus();
-            }
-        }
-
-        private void StudentName_TextChanged(object? sender, TextChangedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(StudentName.Text))
-            {
-                StudentsSearchList.ItemsSource = voters.FindAll(x =>
-                    (x.VoterName?.ToLower().StartsWith(StudentName.Text.ToLower()) ?? false) ||
-                    (x.IndexNumber?.ToLower().StartsWith(StudentName.Text.ToLower()) ?? false));
-            }
-        }
-
-        private void AdminDispensePasswordWindow_Loaded(object? sender, RoutedEventArgs e)
-        {
-            StudentName.Focus();
-            RefreshStudentList();
-        }
-
-        private async void RefreshStudentList()
-        {
-            voters = new List<Voter>();
-            voters = (List<Voter>)await _electionService.GetAllVotersAsync();
-            StudentsSearchList.ItemsSource = voters;
+            _viewModel.ShowSelectedVoterInfo(student);
+            _viewModel.SearchTerm = string.Empty;
         }
     }
 }

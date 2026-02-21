@@ -1,78 +1,69 @@
 using System;
-using System.Collections.Concurrent;
 using System.Linq;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
-using UniVoting.Model;
-using Position = UniVoting.Model.Position;
+using UniVoting.Client.ViewModels;
 
 namespace UniVoting.Client
 {
     public partial class ClientVotingPage : UserControl
     {
-        private ConcurrentBag<Vote> _votes;
-        private ConcurrentBag<SkippedVotes> _skippedVotes;
-        private Position _position;
-        private Voter _voter;
-        public delegate void VoteCompletedEventHandler(object? source, EventArgs args);
-        public event VoteCompletedEventHandler? VoteCompleted;
+        public event Action? VoteCompleted;
 
-        private SkipVoteDialogControl _skipVoteDialogControl;
+        private readonly ClientVotingPageViewModel _viewModel;
+        private SkipVoteDialogControl _skipVoteDialogControl = null!;
         private Window? _dialogWindow;
         private readonly IServiceProvider _sp;
         private readonly IClientSessionService _session;
 
         public ClientVotingPage()
         {
-            InitializeComponent();
             _session = App.Services.GetRequiredService<IClientSessionService>();
-            _votes = _session.Votes;
-            _skippedVotes = _session.SkippedVotes;
-            _position = _session.CurrentPosition ?? new Position();
-            _voter = _session.CurrentVoter ?? new Voter();
             _sp = App.Services;
-            _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
-            _skipVoteDialogControl.BtnYes.Click += BtnYesClick;
-            _skipVoteDialogControl.BtnNo.Click += BtnNoClick;
-            BtnSkipVote.Click += BtnSkipVote_Click;
-            Loaded += ClientVotingPage_Loaded;
+            _viewModel = new ClientVotingPageViewModel(_session);
+            SetupView();
+            InitializeComponent();
         }
 
         public ClientVotingPage(IClientSessionService session, IServiceProvider sp)
         {
-            InitializeComponent();
             _session = session;
-            _voter = session.CurrentVoter!;
-            _position = session.CurrentPosition!;
-            _votes = session.Votes;
-            _skippedVotes = session.SkippedVotes;
             _sp = sp;
-            BtnSkipVote.Click += BtnSkipVote_Click;
-            Loaded += ClientVotingPage_Loaded;
-
-            _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
-            _skipVoteDialogControl.BtnYes.Click += BtnYesClick;
-            _skipVoteDialogControl.BtnNo.Click += BtnNoClick;
+            _viewModel = new ClientVotingPageViewModel(session);
+            SetupView();
+            InitializeComponent();
         }
 
-        private void ClientVotingPage_Loaded(object? sender, RoutedEventArgs e)
+        private void SetupView()
         {
-            TextBoxWelcome.Content = $"Welcome, {_voter.VoterName ?? string.Empty}";
-            if (string.IsNullOrWhiteSpace(_position.Faculty) ||
-                _position.Faculty.Trim().Equals(_voter.Faculty?.Trim(), StringComparison.OrdinalIgnoreCase))
+            _skipVoteDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
+            _viewModel.VoteCompleted += () => VoteCompleted?.Invoke();
+            _viewModel.ShowSkipDialog += ShowSkipDialog;
+            DataContext = _viewModel;
+            Loaded += (_, _) => LoadCandidates();
+        }
+
+        private void LoadCandidates()
+        {
+            _viewModel.Initialize();
+            var position = _viewModel.CurrentPosition;
+            var voter = _viewModel.CurrentVoter;
+
+            bool isFacultyMatch = string.IsNullOrWhiteSpace(position.Faculty) ||
+                position.Faculty.Trim().Equals(voter.Faculty?.Trim(), StringComparison.OrdinalIgnoreCase);
+
+            if (isFacultyMatch)
             {
-                PositionName.Content = _position.PositionName?.ToUpper();
-                if (_position.Candidates.Count() == 1)
+                if (position.Candidates.Count() == 1)
                 {
                     BtnSkipVote.IsEnabled = false;
-                    _session.CurrentCandidate = _position.Candidates.FirstOrDefault()!;
+                    _session.CurrentCandidate = position.Candidates.First();
                     candidatesHolder.Children.Add(_sp.GetRequiredService<YesOrNoCandidateControl>());
                 }
                 else
                 {
                     BtnSkipVote.IsEnabled = true;
-                    foreach (var candidate in _position.Candidates)
+                    foreach (var candidate in position.Candidates)
                     {
                         _session.CurrentCandidate = candidate;
                         candidatesHolder.Children.Add(_sp.GetRequiredService<CandidateControl>());
@@ -81,11 +72,19 @@ namespace UniVoting.Client
             }
             else
             {
-                OnVoteCompleted(this);
+                VoteCompleted?.Invoke();
             }
+
+            BtnSkipVote.Click += (_, _) => _viewModel.SkipVoteCommand.Execute(null);
+            _skipVoteDialogControl.BtnYes.Click += (_, _) =>
+            {
+                _viewModel.RecordSkip();
+                _dialogWindow?.Close();
+            };
+            _skipVoteDialogControl.BtnNo.Click += (_, _) => _dialogWindow?.Close();
         }
 
-        private void BtnSkipVote_Click(object? sender, RoutedEventArgs e)
+        private void ShowSkipDialog()
         {
             var owner = TopLevel.GetTopLevel(this) as Window;
             _dialogWindow = new Window
@@ -95,18 +94,7 @@ namespace UniVoting.Client
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 Title = "Skip Vote"
             };
-            _dialogWindow.Show(owner);
+            _dialogWindow.Show(owner!);
         }
-
-        private void BtnYesClick(object? sender, RoutedEventArgs e)
-        {
-            _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
-            OnVoteCompleted(this);
-            _dialogWindow?.Close();
-        }
-
-        private void BtnNoClick(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
-
-        private void OnVoteCompleted(object? source) => VoteCompleted?.Invoke(source, EventArgs.Empty);
     }
 }

@@ -1,16 +1,15 @@
 using System;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
-using UniVoting.Model;
+using UniVoting.Admin.ViewModels;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators
 {
     public partial class PresidentLoginWindow : Window
     {
-        private readonly IElectionConfigurationService _electionService;
+        private readonly PresidentLoginViewModel _viewModel;
         private readonly IServiceProvider _sp;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
@@ -21,41 +20,17 @@ namespace UniVoting.Admin.Administrators
 
         public PresidentLoginWindow(IElectionConfigurationService electionService, IServiceProvider sp)
         {
-            _electionService = electionService;
             _sp = sp;
+            _viewModel = new PresidentLoginViewModel(electionService);
+            _viewModel.LoginSucceeded += () =>
+            {
+                _sp.GetRequiredService<EcChairmanLoginWindow>().Show();
+                Close();
+            };
+            _viewModel.ErrorOccurred += async msg =>
+                await MessageBoxManager.GetMessageBoxStandard("Login Error", msg).ShowAsync();
+            DataContext = _viewModel;
             InitializeComponent();
-            WindowState = WindowState.Maximized;
-            BtnLogin.Click += BtnLogin_Click;
-            Username.Focus();
-        }
-
-        private async void BtnLogin_Click(object? sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Text))
-            {
-                BtnLogin.IsEnabled = false;
-                var president = await _electionService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text, IsPresident = true });
-                if (president != null)
-                {
-                    _sp.GetRequiredService<EcChairmanLoginWindow>().Show();
-                    BtnLogin.IsEnabled = true;
-                    Close();
-                }
-                else
-                {
-                    await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
-                    Util.Clear(this);
-                    BtnLogin.IsEnabled = true;
-                    Username.Focus();
-                }
-            }
-            else
-            {
-                await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
-                Util.Clear(this);
-                BtnLogin.IsEnabled = true;
-                Username.Focus();
-            }
         }
     }
 }

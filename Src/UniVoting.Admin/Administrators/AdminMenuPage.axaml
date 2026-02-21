@@ -9,49 +9,49 @@
             </Grid.RowDefinitions>
             <Label FontSize="36" HorizontalAlignment="Center">Election Manager</Label>
             <WrapPanel ItemWidth="250" Grid.Row="1">
-                <Button Height="200" Margin="5" Name="BtnCreateAccount" Click="BtnCreateAccount_Click">
+                <Button Height="200" Margin="5" Command="{Binding CreateAccountCommand}" IsEnabled="{Binding IsCreateAccountEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="👤"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Create Account</Label>
                         <Label FontSize="12" HorizontalAlignment="Center">Create a new user Account</Label>
                     </StackPanel>
                 </Button>
-                <Button Height="200" Margin="5" Name="BtnSetUpElection" Click="BtnSetUpElection_Click">
+                <Button Height="200" Margin="5" Command="{Binding SetUpElectionCommand}" IsEnabled="{Binding IsSetUpElectionEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="👍"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Election</Label>
                         <Label FontSize="12" HorizontalAlignment="Center">Set up an election</Label>
                     </StackPanel>
                 </Button>
-                <Button Height="200" Margin="5" Name="BtnSetUpPostions" Click="BtnSetUpPostions_Click">
+                <Button Height="200" Margin="5" Command="{Binding SetUpPositionsCommand}" IsEnabled="{Binding IsSetUpPositionsEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="📍"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Positions</Label>
                         <Label FontSize="12" HorizontalAlignment="Center">Add election positions</Label>
                     </StackPanel>
                 </Button>
-                <Button Height="200" Margin="5" Name="BtnSetUpCandidates" Click="BtnSetUpCandidates_Click">
+                <Button Height="200" Margin="5" Command="{Binding SetUpCandidatesCommand}" IsEnabled="{Binding IsSetUpCandidatesEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="📋"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Candidates</Label>
                         <Label FontSize="12" HorizontalAlignment="Center">Add election candidates</Label>
                     </StackPanel>
                 </Button>
-                <Button Height="200" Margin="5" Name="BtnSetUpVoters" Click="BtnSetUpVoters_Click">
+                <Button Height="200" Margin="5" Command="{Binding SetUpVotersCommand}" IsEnabled="{Binding IsSetUpVotersEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="👥"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Voters</Label>
                         <Label FontSize="12" HorizontalAlignment="Center">Add election Voters</Label>
                     </StackPanel>
                 </Button>
-                <Button Height="200" Margin="5" Name="BtnDeclareVotes">
+                <Button Height="200" Margin="5" Command="{Binding DeclareVotesCommand}" IsEnabled="{Binding IsDeclareVotesEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="📊"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Declare Result</Label>
                         <Label FontSize="12" HorizontalAlignment="Center">display vote results</Label>
                     </StackPanel>
                 </Button>
-                <Button Height="200" Margin="5" Name="BtnDispensePassword">
+                <Button Height="200" Margin="5" Command="{Binding DispensePasswordCommand}" IsEnabled="{Binding IsDispensePasswordEnabled}">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" FontSize="40" Text="🔖"/>
                         <Label FontSize="14" HorizontalAlignment="Center">Dispense Password</Label>

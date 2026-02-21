@@ -32,23 +32,25 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Row="0" Grid.Column="0" Width="250" FontSize="18" Margin="10" Name="TextBoxElectionName" TabIndex="1"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Width="250" FontSize="18" Margin="10" Name="TextBoxSubtitle" TabIndex="2"/>
+                            <TextBox Grid.Row="0" Grid.Column="0" Width="250" FontSize="18" Margin="10" Text="{Binding ElectionName}" TabIndex="1"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Width="250" FontSize="18" Margin="10" Text="{Binding Subtitle}" TabIndex="2"/>
                             <StackPanel Grid.Column="0" Grid.Row="1" Margin="10">
                                 <Label FontSize="16" HorizontalAlignment="Center">Logo For The Election</Label>
                                 <Label FontSize="14" HorizontalAlignment="Center">example departmentlogo.png / facultylogo.jpg</Label>
                                 <Label FontSize="12" HorizontalAlignment="Center">image size should be 256x256</Label>
-                                <Image Name="Logo" Width="250" Height="250"/>
-                                <Button FontSize="20" Margin="10" Height="40" Name="BtnUploadImage" TabIndex="4">
+                                <Image Name="Logo" Width="250" Height="250" Source="{Binding Logo}"/>
+                                <Button FontSize="20" Margin="10" Height="40" Command="{Binding UploadImageCommand}" TabIndex="4">
                                     Upload image
                                 </Button>
                                 <Rectangle Height="100"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
                                 <TextBox Name="Colorbox" FontSize="16" Margin="10,5,10,50"
+                                         Text="{Binding ColourText}"
                                          Watermark="Enter colour as comma-separated RGB (e.g. 255,128,0)"/>
                                 <Rectangle Name="ColoView" Height="250" Width="250" Margin="5,5,5,8"/>
                                 <Button FontSize="20" Name="SaveElection" Height="40" TabIndex="10" Margin="5,1"
+                                        Command="{Binding SaveElectionCommand}"
                                         Content="Save Election Details"/>
                             </StackPanel>
                         </Grid>

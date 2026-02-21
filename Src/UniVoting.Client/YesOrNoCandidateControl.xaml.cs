@@ -1,138 +1,81 @@
 using System;
-using System.Collections.Concurrent;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
-using UniVoting.Model;
-using Position = UniVoting.Model.Position;
+using UniVoting.Client.ViewModels;
 
 namespace UniVoting.Client
 {
     public partial class YesOrNoCandidateControl : UserControl
     {
-        private readonly ConcurrentBag<Vote> _votes;
-        private readonly Position _position;
-        private readonly Candidate _candidate;
-        private readonly Voter _voter;
-        private readonly ConcurrentBag<SkippedVotes> _skippedVotes;
+        private YesOrNoCandidateViewModel _viewModel = null!;
         private Window? _dialogWindow;
 
-        public static readonly StyledProperty<int> CandidateIdProperty =
-            AvaloniaProperty.Register<YesOrNoCandidateControl, int>(nameof(CandidateId));
-
-        public int CandidateId
+        public static event Action? VoteNo
         {
-            get => GetValue(CandidateIdProperty);
-            set => SetValue(CandidateIdProperty, value);
+            add => YesOrNoCandidateViewModel.VoteNo += value;
+            remove => YesOrNoCandidateViewModel.VoteNo -= value;
         }
 
-        public delegate void VoteNoEventHandler(object? source, EventArgs args);
-        public static event VoteNoEventHandler? VoteNo;
-        public delegate void VoteCastEventHandler(object? source, EventArgs args);
-        public static event VoteCastEventHandler? VoteCast;
-
-        private readonly ConfirmDialogControl _confirmDialogControl;
-        private readonly SkipVoteDialogControl _skipDialogControl;
-        private readonly IServiceProvider _sp;
+        public static event Action? VoteCast
+        {
+            add => YesOrNoCandidateViewModel.VoteCast += value;
+            remove => YesOrNoCandidateViewModel.VoteCast -= value;
+        }
 
         public YesOrNoCandidateControl()
         {
             InitializeComponent();
             var session = App.Services.GetRequiredService<IClientSessionService>();
-            _votes = session.Votes;
-            _position = session.CurrentPosition ?? new Position();
-            _candidate = session.CurrentCandidate ?? new Candidate();
-            _voter = session.CurrentVoter ?? new Voter();
-            _skippedVotes = session.SkippedVotes;
-            _sp = App.Services;
-            _confirmDialogControl = _sp.GetRequiredService<ConfirmDialogControl>();
-            _skipDialogControl = _sp.GetRequiredService<SkipVoteDialogControl>();
-            BtnVoteNo.Click += BtnVoteNo_Click;
-            BtnVoteYes.Click += BtnVoteYes_Click;
-            _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;
-            _skipDialogControl.BtnYes.Click += SkipBtnYes_Click;
-            _confirmDialogControl.BtnNo.Click += BtnNo_Click;
-            _confirmDialogControl.BtnYes.Click += BtnYes_Click;
-            Loaded += YesOrNoCandidateControl_Loaded;
+            SetupViewModel(session, App.Services);
         }
 
         public YesOrNoCandidateControl(IClientSessionService session, IServiceProvider sp)
         {
             InitializeComponent();
-            _sp = sp;
-            _confirmDialogControl = sp.GetRequiredService<ConfirmDialogControl>();
-            _skipDialogControl = sp.GetRequiredService<SkipVoteDialogControl>();
-            _votes = session.Votes;
-            _position = session.CurrentPosition!;
-            _candidate = session.CurrentCandidate!;
-            _voter = session.CurrentVoter!;
-            _skippedVotes = session.SkippedVotes;
-            BtnVoteNo.Click += BtnVoteNo_Click;
-            BtnVoteYes.Click += BtnVoteYes_Click;
-            _skipDialogControl.BtnNo.Click += SkipBtnNo_Click;
-            _skipDialogControl.BtnYes.Click += SkipBtnYes_Click;
-            _confirmDialogControl.BtnNo.Click += BtnNo_Click;
-            _confirmDialogControl.BtnYes.Click += BtnYes_Click;
-            Loaded += YesOrNoCandidateControl_Loaded;
+            SetupViewModel(session, sp);
         }
 
-        private void SkipBtnYes_Click(object? sender, RoutedEventArgs e)
+        private void SetupViewModel(IClientSessionService session, IServiceProvider sp)
         {
-            _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
-            OnVoteNo(this);
-            _dialogWindow?.Close();
-        }
+            _viewModel = new YesOrNoCandidateViewModel(session);
+            DataContext = _viewModel;
 
-        private void SkipBtnNo_Click(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
+            var confirmDialog = sp.GetRequiredService<ConfirmDialogControl>();
+            var skipDialog = sp.GetRequiredService<SkipVoteDialogControl>();
 
-        private void BtnYes_Click(object? sender, RoutedEventArgs e)
-        {
-            _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
-            OnVoteCast(this);
-            _dialogWindow?.Close();
-        }
-
-        private void BtnNo_Click(object? sender, RoutedEventArgs e) => _dialogWindow?.Close();
-
-        private void YesOrNoCandidateControl_Loaded(object? sender, RoutedEventArgs e)
-        {
-            CandidateId = _candidate.Id;
-            CandidateName.Text = _candidate.CandidateName?.ToUpper() ?? string.Empty;
-            if (_candidate.CandidatePicture != null)
-                CandidateImage.Source = Util.ByteToImageSource(_candidate.CandidatePicture);
-            Rank.Content = $"#{_candidate.RankId}";
-        }
-
-        private void BtnVoteYes_Click(object? sender, RoutedEventArgs e)
-        {
-            BtnVoteYes.IsEnabled = false;
-            var owner = TopLevel.GetTopLevel(this) as Window;
-            _dialogWindow = new Window
+            _viewModel.ShowConfirmDialog += () =>
             {
-                Content = _confirmDialogControl,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Title = "Confirm Vote"
+                var owner = Avalonia.Controls.TopLevel.GetTopLevel(this) as Window;
+                _dialogWindow = new Window
+                {
+                    Content = confirmDialog,
+                    SizeToContent = SizeToContent.WidthAndHeight,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Title = "Confirm Vote"
+                };
+                _dialogWindow.Show(owner!);
             };
-            BtnVoteYes.IsEnabled = true;
-            _dialogWindow.Show(owner);
-        }
-
-        private void BtnVoteNo_Click(object? sender, RoutedEventArgs e)
-        {
-            var owner = TopLevel.GetTopLevel(this) as Window;
-            _dialogWindow = new Window
+            _viewModel.ShowSkipDialog += () =>
             {
-                Content = _skipDialogControl,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Title = "Skip Vote"
+                var owner = Avalonia.Controls.TopLevel.GetTopLevel(this) as Window;
+                _dialogWindow = new Window
+                {
+                    Content = skipDialog,
+                    SizeToContent = SizeToContent.WidthAndHeight,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Title = "Skip Vote"
+                };
+                _dialogWindow.Show(owner!);
             };
-            _dialogWindow.Show(owner);
-        }
+            _viewModel.CloseDialog += () => _dialogWindow?.Close();
 
-        private static void OnVoteCast(object? source) => VoteCast?.Invoke(source, EventArgs.Empty);
-        private static void OnVoteNo(object? source) => VoteNo?.Invoke(source, EventArgs.Empty);
+            BtnVoteYes.Click += (_, _) => _viewModel.VoteYesCommand.Execute(null);
+            BtnVoteNo.Click += (_, _) => _viewModel.VoteNoBtnClickCommand.Execute(null);
+
+            confirmDialog.BtnYes.Click += (_, _) => _viewModel.ConfirmYesVote();
+            confirmDialog.BtnNo.Click += (_, _) => _viewModel.CancelDialog();
+            skipDialog.BtnYes.Click += (_, _) => _viewModel.ConfirmSkip();
+            skipDialog.BtnNo.Click += (_, _) => _viewModel.CancelDialog();
+        }
     }
 }

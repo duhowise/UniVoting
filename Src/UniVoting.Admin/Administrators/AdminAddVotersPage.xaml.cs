@@ -4,11 +4,11 @@ using System.Data;
 using System.IO;
 using System.Text;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using ExcelDataReader;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
+using UniVoting.Admin.ViewModels;
 using UniVoting.Model;
 using UniVoting.Services;
 
@@ -16,14 +16,7 @@ namespace UniVoting.Admin.Administrators
 {
     public partial class AdminAddVotersPage : UserControl
     {
-        private DataSet _dataSet = null!;
-        private int _indexName;
-        private int _indexNUmber;
-        private int _faculty;
-        private int _added;
-        private List<Voter> voters = null!;
-        private readonly IElectionConfigurationService _electionService;
-        private readonly IVotingService _votingService;
+        private readonly AdminAddVotersPageViewModel _viewModel;
 
         /// <summary>Required by Avalonia's XAML runtime loader. Do not use in application code.</summary>
         public AdminAddVotersPage()
@@ -33,75 +26,30 @@ namespace UniVoting.Admin.Administrators
 
         public AdminAddVotersPage(IElectionConfigurationService electionService, IVotingService votingService)
         {
-            _electionService = electionService;
-            _votingService = votingService;
+            _viewModel = new AdminAddVotersPageViewModel(electionService, votingService);
+            _viewModel.ShowMessage += async (title, msg) =>
+                await MessageBoxManager.GetMessageBoxStandard(title, msg).ShowAsync();
+            DataContext = _viewModel;
             InitializeComponent();
-            _dataSet = new DataSet();
-            voters = new List<Voter>();
-            BtnSearch.Click += BtnSearch_Click;
+            BtnSearch.Click += async (_, _) => await _viewModel.SearchCommand.ExecuteAsync(null);
             BtnImportFile.Click += BtnImportFile_Click;
             BtnSave.Click += BtnSave_Click;
-            TextBoxIndexNumber.LostFocus += TextBoxIndexNumber_LostFocus;
+            BtnReset.Click += async (_, _) => await _viewModel.ResetVoterCommand.ExecuteAsync(null);
+            TextBoxIndexNumber.LostFocus += (_, _) => _viewModel.AddVoterFromFields();
         }
 
-        private async void BtnSearch_Click(object? sender, RoutedEventArgs e)
+        private async void BtnSave_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(Searchterm.Text))
-            {
-                var voter = await _votingService.GetVoterPass(new Voter { IndexNumber = Searchterm.Text });
-                if (voter != null)
-                {
-                    await MessageBoxManager.GetMessageBoxStandard($"Name: {voter.VoterName}", $"Password: {voter.VoterCode}").ShowAsync();
-                    Searchterm.Text = string.Empty;
-                }
-                else
-                {
-                    await MessageBoxManager.GetMessageBoxStandard("Password", $"Voter with Index Number: {Searchterm.Text} not found!").ShowAsync();
-                    Searchterm.Text = string.Empty;
-                }
-            }
-        }
-
-        private void TextBoxIndexNumber_LostFocus(object? sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(TextBoxName.Text) || !string.IsNullOrWhiteSpace(TextBoxIndexNumber.Text))
-            {
-                voters.Add(new Voter
-                {
-                    VoterName = TextBoxName.Text,
-                    IndexNumber = TextBoxIndexNumber.Text,
-                    VoterCode = Util.GenerateRandomPassword(6)
-                });
-            }
-        }
-
-        private async void BtnSave_Click(object? sender, RoutedEventArgs e)
-        {
-            if (voters.Count != 0)
+            if (_viewModel.HasPendingVoters)
             {
                 var result = await MessageBoxManager.GetMessageBoxStandard("Save Voter List",
                     "Are You Sure You Want To Add this List Of Voters", ButtonEnum.YesNo).ShowAsync();
                 if (result == ButtonResult.Yes)
-                {
-                    try
-                    {
-                        BtnSave.IsEnabled = false;
-                        _added = await _electionService.AddVotersAsync(voters);
-                        AddedCount.IsVisible = true;
-                        AddedCount.Content = $"Added {_added} Voters";
-                        voters.Clear();
-                        _dataSet.Reset();
-                        BtnSave.IsEnabled = true;
-                    }
-                    catch (Exception exception)
-                    {
-                        await MessageBoxManager.GetMessageBoxStandard("Voter Addition Error", exception.Message).ShowAsync();
-                    }
-                }
+                    await _viewModel.SaveCommand.ExecuteAsync(null);
             }
         }
 
-        private async void BtnImportFile_Click(object? sender, RoutedEventArgs e)
+        private async void BtnImportFile_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             var topLevel = TopLevel.GetTopLevel(this);
             if (topLevel == null) return;
@@ -116,66 +64,50 @@ namespace UniVoting.Admin.Administrators
             {
                 var filePath = files[0].Path.LocalPath;
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                var stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
-                ImportedFilename.Content = "File Name " + Path.GetFileName(filePath);
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
+                using var reader = ExcelReaderFactory.CreateReader(stream);
+                var dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
                 {
-                    _dataSet = new DataSet();
-                    _dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
+                    ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
+                });
+
+                int indexName = 0, indexNumber = 0, faculty = 0;
+                var importedVoters = new List<Voter>();
+
+                foreach (DataTable table in dataSet.Tables)
+                {
+                    VoterGrid.ItemsSource = dataSet.Tables[table.TableName]?.DefaultView;
+                    foreach (DataGridColumn col in VoterGrid.Columns)
                     {
-                        ConfigureDataTable = data => new ExcelDataTableConfiguration { UseHeaderRow = true }
-                    });
-                    foreach (DataTable table in _dataSet.Tables)
-                    {
-                        VoterGrid.ItemsSource = _dataSet.Tables[table.TableName]?.DefaultView;
-                    }
-                    foreach (DataGridColumn column in VoterGrid.Columns)
-                    {
-                        if (column.Header?.ToString()?.ToLower() == "fullname") { _indexName = column.DisplayIndex; break; }
-                    }
-                    foreach (DataGridColumn column in VoterGrid.Columns)
-                    {
-                        if (column.Header?.ToString()?.ToLower() == "indexnumber") { _indexNUmber = column.DisplayIndex; break; }
-                    }
-                    foreach (DataGridColumn column in VoterGrid.Columns)
-                    {
-                        if (column.Header?.ToString()?.ToLower() == "faculty") { _faculty = column.DisplayIndex; break; }
-                    }
-                    if (VoterGrid.ItemsSource is System.Data.DataView dv)
-                    {
-                        foreach (DataRowView row in dv)
-                        {
-                            try
-                            {
-                                var voterInfo = new Voter
-                                {
-                                    VoterName = row[_indexName]?.ToString(),
-                                    IndexNumber = row[_indexNUmber]?.ToString(),
-                                    Faculty = row[_faculty]?.ToString(),
-                                    VoterCode = Util.GenerateRandomPassword(6)
-                                };
-                                voters.Add(voterInfo);
-                            }
-                            catch (Exception exception)
-                            {
-                                Console.WriteLine(exception);
-                            }
-                        }
+                        var header = col.Header?.ToString()?.ToLower();
+                        if (header == "fullname") indexName = col.DisplayIndex;
+                        else if (header == "indexnumber") indexNumber = col.DisplayIndex;
+                        else if (header == "faculty") faculty = col.DisplayIndex;
                     }
                 }
-            }
-            catch (Exception exception)
-            {
-                await MessageBoxManager.GetMessageBoxStandard("File Read Error", exception.Message).ShowAsync();
-            }
-        }
 
-        private async void BtnReset_Click(object? sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(ResetIndexNumber.Text))
+                if (VoterGrid.ItemsSource is DataView dv)
+                {
+                    foreach (DataRowView row in dv)
+                    {
+                        try
+                        {
+                            importedVoters.Add(new Voter
+                            {
+                                VoterName = row[indexName]?.ToString(),
+                                IndexNumber = row[indexNumber]?.ToString(),
+                                Faculty = row[faculty]?.ToString(),
+                                VoterCode = Util.GenerateRandomPassword(6)
+                            });
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex); }
+                    }
+                }
+                _viewModel.AddVotersFromData(importedVoters, Path.GetFileName(filePath));
+            }
+            catch (Exception ex)
             {
-                await _votingService.ResetVoter(new Voter { IndexNumber = ResetIndexNumber.Text });
-                await MessageBoxManager.GetMessageBoxStandard("Success", "Successfully reset Voter").ShowAsync();
+                await MessageBoxManager.GetMessageBoxStandard("File Read Error", ex.Message).ShowAsync();
             }
         }
     }

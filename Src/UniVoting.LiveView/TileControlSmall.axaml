@@ -8,12 +8,10 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" TextWrapping="Wrap" Name="Position" FontSize="30"
-                           HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Foreground="White">
-                    Loading...
-                </TextBlock>
+                <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="{Binding PositionText}" FontSize="30"
+                           HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Foreground="White"/>
                 <TextBlock Grid.Row="1" TextWrapping="Wrap" FontSize="40" HorizontalAlignment="Center"
-                           VerticalAlignment="Bottom" Name="VoteCount" Margin="0,10,0,5" Foreground="White">0</TextBlock>
+                           VerticalAlignment="Bottom" Text="{Binding VoteCount}" Margin="0,10,0,5" Foreground="White"/>
             </Grid>
         </Border>
     </Grid>

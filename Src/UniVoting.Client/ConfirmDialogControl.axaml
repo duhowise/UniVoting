@@ -8,8 +8,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock FontSize="20" x:Name="TextBoxConfirm" Margin="5" HorizontalAlignment="Center"
-                   Text="Are you sure you want to vote for " TextWrapping="Wrap"/>
-        <Image Name="CandidateImage" Grid.Row="1" Width="250" HorizontalAlignment="Center"/>
+                   Text="{Binding ConfirmText}" TextWrapping="Wrap"/>
+        <Image Name="CandidateImage" Grid.Row="1" Width="250" HorizontalAlignment="Center" Source="{Binding CandidateImage}"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button FontSize="20" Foreground="White" Width="100" Margin="10" Height="40" Name="BtnNo" TabIndex="1">NO</Button>
             <Button FontSize="20" Foreground="White" Width="100" Margin="10" Height="40" Name="BtnYes" TabIndex="0">YES</Button>
