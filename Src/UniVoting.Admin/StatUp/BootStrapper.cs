@@ -7,7 +7,7 @@ namespace UniVoting.Admin.StatUp
 {
 	public class BootStrapper
 	{
-		public IContainer BootStrap()
+		public Autofac.IContainer BootStrap()
 		{
 			var builder =new ContainerBuilder();
 

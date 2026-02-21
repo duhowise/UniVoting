@@ -4,11 +4,10 @@ using System.Data;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using Microsoft.Win32;
 using ExcelDataReader;
 using UniVoting.Model;
 using UniVoting.Services;
-using MessageBox = System.Windows.MessageBox;
 
 namespace UniVoting.Admin.Administrators
 {
@@ -90,9 +89,9 @@ namespace UniVoting.Admin.Administrators
 
         private void BtnImportFile_Click(object sender, RoutedEventArgs e)
         {
-            using (var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2007 Files |*.xls;*.xlsx;", ValidateNames = true })
+            var openFileDialog = new OpenFileDialog() { Filter = @"Excel 1996-2007 Files |*.xls;*.xlsx;" };
             {
-                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+                if (openFileDialog.ShowDialog() != true) return;
                 try
                 {
                     var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read);

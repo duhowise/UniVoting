@@ -8,6 +8,8 @@
     <ApplicationIcon>admin.ico</ApplicationIcon>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.0" />
@@ -15,7 +17,13 @@
     <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
     <PackageReference Include="ExcelDataReader" Version="3.7.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
-    <PackageReference Include="Wpf.Ui" Version="3.0.5" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+    <PackageReference Include="WPF-UI" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Exclude Telerik theme XAML files (no longer used) -->
+    <Page Remove="Administrators\Themes\**\*.xaml" />
+    <None Include="Administrators\Themes\**\*.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UniVoting.Data\UniVoting.Data.csproj" />

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using UniVoting.Model;
 using UniVoting.Services;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using Microsoft.Win32;
 
 namespace UniVoting.Admin.Administrators
 {
@@ -26,12 +25,17 @@ namespace UniVoting.Admin.Administrators
 		}
 		private void Colorbox_GotFocus(object sender, RoutedEventArgs e)
 		{
-			using (var color = new ColorDialog())
+			// Color is entered as comma-separated RGB (e.g. "255,128,0")
+			var colorText = Colorbox.Text.Trim();
+			if (colorText.Contains(","))
 			{
-				if (color.ShowDialog() != DialogResult.None)
+				var parts = colorText.Split(',');
+				if (parts.Length == 3 &&
+					byte.TryParse(parts[0], out byte r) &&
+					byte.TryParse(parts[1], out byte g) &&
+					byte.TryParse(parts[2], out byte b))
 				{
-					Colorbox.Text = color.Color.Name;
-					_chosencolor = System.Windows.Media.Color.FromRgb(color.Color.R, color.Color.G, color.Color.B);
+					_chosencolor = System.Windows.Media.Color.FromRgb(r, g, b);
 					ColoView.Fill = new SolidColorBrush(_chosencolor);
 				}
 			}

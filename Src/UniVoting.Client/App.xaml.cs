@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using Wpf.Ui.Appearance;
+using UniVoting.Model;
 using UniVoting.Services;
 
 namespace UniVoting.Client

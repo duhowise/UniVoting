@@ -81,8 +81,7 @@ namespace UniVoting.Client
                 }
                 else
                 {
-                    MessageBox.Show("Please Contact Admin Your Details May Not Be Available
- Possible Cause: You May Have Already Voted",
+                    MessageBox.Show("Please Contact Admin Your Details May Not Be Available\n Possible Cause: You May Have Already Voted",
                         "Error Confirming Voter");
                     Pin.Text = String.Empty;
                 }
