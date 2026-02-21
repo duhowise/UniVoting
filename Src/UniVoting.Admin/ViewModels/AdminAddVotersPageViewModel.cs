@@ -15,7 +15,6 @@ public partial class AdminAddVotersPageViewModel : ObservableObject
     private readonly IVotingService _votingService;
     private List<Voter> _pendingVoters = new();
 
-    public event Func<Task<string?>>? PickExcelFileRequested;
     public event Action<string, string>? ShowMessage;
 
     [ObservableProperty]

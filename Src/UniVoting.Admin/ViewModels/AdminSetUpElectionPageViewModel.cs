@@ -15,6 +15,7 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
     private readonly IElectionConfigurationService _electionService;
 
     public event Func<Task<string?>>? PickImageRequested;
+    public event Action<string>? ErrorOccurred;
     public event Action<string>? SuccessOccurred;
 
     [ObservableProperty]
@@ -47,7 +48,7 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
 
     public void UpdateColourPreview(string? colourText)
     {
-        if (colourText?.Contains(",") == true)
+        if (!string.IsNullOrWhiteSpace(colourText) && colourText.Contains(","))
         {
             var parts = colourText.Split(',');
             if (parts.Length == 3 &&
@@ -85,20 +86,27 @@ public partial class AdminSetUpElectionPageViewModel : ObservableObject
     {
         if (!string.IsNullOrWhiteSpace(ElectionName) && !string.IsNullOrWhiteSpace(Subtitle))
         {
-            await _electionService.NewElection(new Setting
+            try
             {
-                ElectionName = ElectionName,
-                EletionSubTitle = Subtitle,
-                Colour = string.Join(",", ChosenColor.R, ChosenColor.G, ChosenColor.B),
-                Logo = LogoBytes
-            });
-            ElectionName = string.Empty;
-            Subtitle = string.Empty;
-            ColourText = string.Empty;
-            Logo = null;
-            LogoBytes = Array.Empty<byte>();
-            ChosenColorBrush = Brushes.Transparent;
-            SuccessOccurred?.Invoke("Election saved successfully.");
+                await _electionService.NewElection(new Setting
+                {
+                    ElectionName = ElectionName,
+                    EletionSubTitle = Subtitle,
+                    Colour = string.Join(",", ChosenColor.R, ChosenColor.G, ChosenColor.B),
+                    Logo = LogoBytes
+                });
+                ElectionName = string.Empty;
+                Subtitle = string.Empty;
+                ColourText = string.Empty;
+                Logo = null;
+                LogoBytes = Array.Empty<byte>();
+                ChosenColorBrush = Brushes.Transparent;
+                SuccessOccurred?.Invoke("Election saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                ErrorOccurred?.Invoke($"Failed to save election: {ex.Message}");
+            }
         }
     }
 }

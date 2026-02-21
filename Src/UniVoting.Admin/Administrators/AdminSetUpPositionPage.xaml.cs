@@ -45,7 +45,9 @@ namespace UniVoting.Admin.Administrators
             if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems != null)
             {
                 foreach (Position pos in e.NewItems)
+                {
                     AddPositionControl(pos);
+                }
             }
             else
             {
@@ -57,7 +59,9 @@ namespace UniVoting.Admin.Administrators
         {
             PositionControlHolder.Children.Clear();
             foreach (var position in _viewModel.Positions)
+            {
                 AddPositionControl(position);
+            }
         }
 
         private void AddPositionControl(Position position)

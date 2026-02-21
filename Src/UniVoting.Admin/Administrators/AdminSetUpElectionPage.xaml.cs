@@ -20,6 +20,10 @@ namespace UniVoting.Admin.Administrators
         {
             _viewModel = new AdminSetUpElectionPageViewModel(electionService);
             _viewModel.PickImageRequested += PickImageAsync;
+            _viewModel.SuccessOccurred += async msg =>
+                await MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Success", msg).ShowAsync();
+            _viewModel.ErrorOccurred += async msg =>
+                await MsBox.Avalonia.MessageBoxManager.GetMessageBoxStandard("Error", msg).ShowAsync();
             DataContext = _viewModel;
             InitializeComponent();
         }

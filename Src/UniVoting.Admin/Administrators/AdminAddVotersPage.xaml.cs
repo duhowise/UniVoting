@@ -94,9 +94,9 @@ namespace UniVoting.Admin.Administrators
                         {
                             importedVoters.Add(new Voter
                             {
-                                VoterName = row[indexName]?.ToString(),
-                                IndexNumber = row[indexNumber]?.ToString(),
-                                Faculty = row[faculty]?.ToString(),
+                                VoterName = row[indexName]?.ToString() ?? string.Empty,
+                                IndexNumber = row[indexNumber]?.ToString() ?? string.Empty,
+                                Faculty = row[faculty]?.ToString() ?? string.Empty,
                                 VoterCode = Util.GenerateRandomPassword(6)
                             });
                         }

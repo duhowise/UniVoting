@@ -69,9 +69,9 @@ public partial class AdminCreateAccountPageViewModel : ObservableObject
             {
                 await _electionService.SaveComissioner(new Comissioner
                 {
-                    FullName = Name,
-                    UserName = Username,
-                    Password = Password,
+                    FullName = Name ?? string.Empty,
+                    UserName = Username ?? string.Empty,
+                    Password = Password ?? string.Empty,
                     IsChairman = IsChairman,
                     IsPresident = IsPresident
                 });

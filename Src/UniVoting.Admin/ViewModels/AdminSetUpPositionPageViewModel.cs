@@ -41,7 +41,7 @@ public partial class AdminSetUpPositionPageViewModel : ObservableObject
     [RelayCommand]
     private async Task SavePositionAsync()
     {
-        var position = await _electionService.AddPosition(new Position { PositionName = NewPositionName, Faculty = NewFaculty });
+        var position = await _electionService.AddPosition(new Position { PositionName = NewPositionName ?? string.Empty, Faculty = NewFaculty ?? string.Empty });
         Positions.Add(position);
         NewPositionName = string.Empty;
         NewFaculty = string.Empty;
@@ -53,7 +53,7 @@ public partial class AdminSetUpPositionPageViewModel : ObservableObject
 
     public async Task UpdatePositionAsync(int id, string? positionName, string? faculty)
     {
-        await _electionService.UpdatePosition(new Position { Id = id, PositionName = positionName, Faculty = faculty });
+        await _electionService.UpdatePosition(new Position { Id = id, PositionName = positionName ?? string.Empty, Faculty = faculty ?? string.Empty });
     }
 
     public void RemovePosition(Position position)
