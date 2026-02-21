@@ -18,6 +18,14 @@ namespace UniVoting.Client
         private ConcurrentBag<SkippedVotes> _skippedVotes;
         private int _count;
 
+        public ClientVoteCompletedPage()
+        {
+            InitializeComponent();
+            _votes = new ConcurrentBag<Vote>();
+            _voter = new Voter();
+            _skippedVotes = new ConcurrentBag<SkippedVotes>();
+        }
+
         public ClientVoteCompletedPage(ConcurrentBag<Vote> votes, Voter voter, ConcurrentBag<SkippedVotes> skippedVotes)
         {
             _votes = votes;

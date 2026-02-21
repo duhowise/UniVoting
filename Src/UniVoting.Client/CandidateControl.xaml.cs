@@ -30,6 +30,16 @@ namespace UniVoting.Client
         private Candidate _candidate;
         private Voter _voter;
 
+        public CandidateControl()
+        {
+            InitializeComponent();
+            _votes = new ConcurrentBag<Vote>();
+            _position = new Position();
+            _candidate = new Candidate();
+            _voter = new Voter();
+            _confirmDialogControl = new ConfirmDialogControl();
+        }
+
         public CandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter)
         {
             InitializeComponent();

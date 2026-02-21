@@ -9,6 +9,8 @@ namespace UniVoting.Admin
     {
         public static Action<object?>? Navigate;
 
+        public MainWindow() { InitializeComponent(); }
+
         public MainWindow(Comissioner comissioner)
         {
             InitializeComponent();

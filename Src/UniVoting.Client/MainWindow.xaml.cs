@@ -18,6 +18,15 @@ namespace UniVoting.Client
         private ConcurrentBag<Vote> _votes;
         private ConcurrentBag<SkippedVotes> _skippedVotes;
 
+        public MainWindow()
+        {
+            InitializeComponent();
+            _positionsStack = new Stack<Position>();
+            _voter = new Voter();
+            _votes = new ConcurrentBag<Vote>();
+            _skippedVotes = new ConcurrentBag<SkippedVotes>();
+        }
+
         public MainWindow(Stack<Position> positionsStack, Voter voter)
         {
             InitializeComponent();

@@ -8,6 +8,8 @@ namespace UniVoting.Client
     {
         private readonly Candidate _candidate;
 
+        public ConfirmDialogControl() { InitializeComponent(); _candidate = new Candidate(); }
+
         public ConfirmDialogControl(Candidate candidate)
         {
             _candidate = candidate;

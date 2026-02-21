@@ -12,6 +12,8 @@ namespace UniVoting.LiveView
         private readonly ILogger _logger;
         private readonly string _position;
 
+        public TileControlSmall() { InitializeComponent(); _position = string.Empty; }
+
         public TileControlSmall(string position)
         {
             InitializeComponent();

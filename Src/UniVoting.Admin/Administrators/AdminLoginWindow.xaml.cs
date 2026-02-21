@@ -19,18 +19,25 @@ namespace UniVoting.Admin.Administrators
         {
             if (!string.IsNullOrWhiteSpace(Username.Text) && !string.IsNullOrWhiteSpace(Password.Text))
             {
-                var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text });
-                if (admin != null)
+                try
                 {
-                    new MainWindow(admin).Show();
-                    Close();
+                    var admin = await ElectionConfigurationService.Login(new Comissioner { UserName = Username.Text, Password = Password.Text });
+                    if (admin != null)
+                    {
+                        new MainWindow(admin).Show();
+                        Close();
+                    }
+                    else
+                    {
+                        await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
+                        Util.Clear(this);
+                        BtnLogin.IsEnabled = true;
+                        Username.Focus();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    await MessageBoxManager.GetMessageBoxStandard("Login Error", "Wrong username or password.").ShowAsync();
-                    Util.Clear(this);
-                    BtnLogin.IsEnabled = true;
-                    Username.Focus();
+                    await MessageBoxManager.GetMessageBoxStandard("Connection Error", $"Could not connect to the database.\n\n{ex.Message}").ShowAsync();
                 }
             }
             else

@@ -8,6 +8,8 @@ namespace UniVoting.Admin.Administrators
     {
         public Comissioner Comissioner { get; }
 
+        public AdminMenuPage() { InitializeComponent(); Comissioner = new Comissioner(); }
+
         public AdminMenuPage(Comissioner comissioner)
         {
             Comissioner = comissioner;

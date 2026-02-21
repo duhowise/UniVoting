@@ -20,6 +20,16 @@ namespace UniVoting.Client
         private SkipVoteDialogControl _skipVoteDialogControl;
         private Window? _dialogWindow;
 
+        public ClientVotingPage()
+        {
+            InitializeComponent();
+            _votes = new ConcurrentBag<Vote>();
+            _skippedVotes = new ConcurrentBag<SkippedVotes>();
+            _position = new Position();
+            _voter = new Voter();
+            _skipVoteDialogControl = new SkipVoteDialogControl();
+        }
+
         public ClientVotingPage(Voter voter, Position position, ConcurrentBag<Vote> votes, ConcurrentBag<SkippedVotes> skippedVotes)
         {
             InitializeComponent();

@@ -34,6 +34,18 @@ namespace UniVoting.Client
         private readonly ConfirmDialogControl _confirmDialogControl;
         private readonly SkipVoteDialogControl _skipDialogControl;
 
+        public YesOrNoCandidateControl()
+        {
+            InitializeComponent();
+            _votes = new ConcurrentBag<Vote>();
+            _position = new Position();
+            _candidate = new Candidate();
+            _voter = new Voter();
+            _skippedVotes = new ConcurrentBag<SkippedVotes>();
+            _confirmDialogControl = new ConfirmDialogControl();
+            _skipDialogControl = new SkipVoteDialogControl();
+        }
+
         public YesOrNoCandidateControl(ConcurrentBag<Vote> votes, Position position, Candidate candidate, Voter voter,
             ConcurrentBag<SkippedVotes> skippedVotes)
         {
