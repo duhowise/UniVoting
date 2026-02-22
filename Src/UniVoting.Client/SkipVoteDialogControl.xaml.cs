@@ -1,5 +1,6 @@
 using Avalonia.Controls;
-using UniVoting.Client.ViewModels;
+using UniVoting.Services;
+using UniVoting.ViewModels;
 
 namespace UniVoting.Client
 {

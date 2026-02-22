@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using MsBox.Avalonia;
-using UniVoting.Admin.ViewModels;
+using UniVoting.ViewModels;
 using UniVoting.Services;
 
 namespace UniVoting.Admin.Administrators

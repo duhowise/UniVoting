@@ -4,22 +4,20 @@ using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using UniVoting.Model;
+using UniVoting.Services;
 using Position = UniVoting.Model.Position;
 
-namespace UniVoting.Client.ViewModels;
+namespace UniVoting.ViewModels;
 
-public partial class YesOrNoCandidateViewModel : ObservableObject
+public partial class CandidateControlViewModel : ObservableObject
 {
     private readonly ConcurrentBag<Vote> _votes;
-    private readonly ConcurrentBag<SkippedVotes> _skippedVotes;
     private readonly Position _position;
     private readonly Voter _voter;
 
     public static event Action? VoteCast;
-    public static event Action? VoteNo;
 
     public event Action? ShowConfirmDialog;
-    public event Action? ShowSkipDialog;
     public event Action? CloseDialog;
 
     [ObservableProperty]
@@ -36,10 +34,9 @@ public partial class YesOrNoCandidateViewModel : ObservableObject
 
     public Candidate Candidate { get; }
 
-    public YesOrNoCandidateViewModel(IClientSessionService session)
+    public CandidateControlViewModel(IClientSessionService session)
     {
         _votes = session.Votes;
-        _skippedVotes = session.SkippedVotes;
         _position = session.CurrentPosition ?? new Position();
         _voter = session.CurrentVoter ?? new Voter();
         Candidate = session.CurrentCandidate ?? new Candidate();
@@ -52,24 +49,14 @@ public partial class YesOrNoCandidateViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void VoteYes() => ShowConfirmDialog?.Invoke();
+    private void Vote() => ShowConfirmDialog?.Invoke();
 
-    [RelayCommand]
-    private void VoteNoBtnClick() => ShowSkipDialog?.Invoke();
-
-    public void ConfirmYesVote()
+    public void ConfirmVote()
     {
         _votes.Add(new Vote { CandidateId = CandidateId, PositionId = _position.Id, VoterId = _voter.Id });
         VoteCast?.Invoke();
         CloseDialog?.Invoke();
     }
 
-    public void ConfirmSkip()
-    {
-        _skippedVotes.Add(new SkippedVotes { Positionid = _position.Id, VoterId = _voter.Id });
-        VoteNo?.Invoke();
-        CloseDialog?.Invoke();
-    }
-
-    public void CancelDialog() => CloseDialog?.Invoke();
+    public void CancelVote() => CloseDialog?.Invoke();
 }

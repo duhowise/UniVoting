@@ -10,7 +10,7 @@ using SixLabors.ImageSharp.Processing;
 using UniVoting.Model;
 using UniVoting.Services;
 
-namespace UniVoting.Admin.ViewModels;
+namespace UniVoting.ViewModels;
 
 public partial class AdminSetUpCandidatesPageViewModel : ObservableObject
 {

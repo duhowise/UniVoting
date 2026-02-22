@@ -1,11 +1,7 @@
 using UniVoting.Model;
+using UniVoting.Services;
 
 namespace UniVoting.Admin;
-
-public interface IAdminSessionService
-{
-    Comissioner? CurrentAdmin { get; set; }
-}
 
 public class AdminSessionService : IAdminSessionService
 {
